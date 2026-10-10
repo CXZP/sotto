@@ -158,7 +158,7 @@ export function aboutPage(lang, sites, stores) {
 
 <h3 class="group">${th ? "ความเป็นส่วนตัว: เบราว์เซอร์ของคุณติดต่อใครบ้าง" : "Privacy: who your browser talks to"}</h3>
 <div class="card">
-  <div class="row"><div><div class="row-title">${th ? "ไม่มี analytics ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม" : "No analytics, no ads, no tracking cookies"}</div><div class="row-sub">${th ? "Sotto ไม่นับยอดเข้าชมและไม่เก็บว่าคุณดูอะไร" : "Sotto doesn't count visits or record what you look at."}</div></div></div>
+  <div class="row"><div><div class="row-title">${th ? "ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม" : "No ads, no tracking cookies"}</div><div class="row-sub">${th ? "นับสถิติแบบไม่ระบุตัวตน ไม่เก็บ IP ผลรวมเปิดให้ดูที่หน้าสถิติ" : "Anonymous counts without storing IPs; totals are public on the stats page."}</div></div></div>
   <div class="row"><div><div class="row-title">${th ? "แต่บริการเหล่านี้เห็น IP ของคุณ เพราะเบราว์เซอร์ต้องโหลดไฟล์จากเขา" : "These services do see your IP, because your browser loads files from them"}</div><div class="row-sub">
     GitHub Pages (${th ? "ตัวเว็บ" : "the site"}) · Google Fonts (${th ? "ฟอนต์" : "fonts"}) · ${th ? "เซิร์ฟเวอร์รูปของร้านค้า" : "store image servers"} · jsDelivr + Supabase (${th ? "เฉพาะส่วน community" : "community features only"})</div></div></div>
   <div class="row"><div><div class="row-sub">${th ? "ถ้าคุณเข้าสู่ระบบ เราเก็บอีเมลไว้ส่งลิงก์ และชื่อที่แสดงกับโพสต์ของคุณ ลบบัญชีได้โดยติดต่อผ่าน GitHub" : "If you sign in we keep your email (to send the link) and the display name on your posts. Ask via GitHub to delete your account."}</div></div></div>

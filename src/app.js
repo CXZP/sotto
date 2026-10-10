@@ -1,14 +1,15 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv31tlg4";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv31tlg4";
-import { renderChart } from "./chart.js?v=mv31tlg4";
-import { makeT } from "./i18n.js?v=mv31tlg4";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv31tlg4";
-import { LEGAL } from "./legal.js?v=mv31tlg4";
-import * as community from "./community.js?v=mv31tlg4";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv31tlg4";
-import { redactImage } from "./redact.js?v=mv31tlg4";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv31tlg4";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv31tlg4";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv321icg";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv321icg";
+import { renderChart } from "./chart.js?v=mv321icg";
+import { makeT } from "./i18n.js?v=mv321icg";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv321icg";
+import { LEGAL } from "./legal.js?v=mv321icg";
+import { track, stats, trackingOff } from "./analytics.js?v=mv321icg";
+import * as community from "./community.js?v=mv321icg";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv321icg";
+import { redactImage } from "./redact.js?v=mv321icg";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv321icg";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv321icg";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -29,6 +30,7 @@ let t = makeT(state.lang);
 let db;
 let headphones = []; // catalog items we can calculate for
 let sources = []; // catalog items with output data
+let lastViewKey = "";
 
 function load(key, fallback) {
   try {
@@ -129,7 +131,7 @@ function renderChrome(r) {
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
 }
 
 function setSeg(selector, key, value) {
@@ -152,6 +154,7 @@ function render() {
   else if (r.name === "discuss") main.innerHTML = r.sub === "new" ? newThreadPage() : r.sub === "thread" ? threadPage(r.id) : discussPage();
   else if (r.name === "account") main.innerHTML = accountPage();
   else if (r.name === "saved") main.innerHTML = savedPage();
+  else if (r.name === "stats") main.innerHTML = statsPage();
   else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${LEGAL[r.name][state.lang] ?? LEGAL[r.name].en}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
@@ -159,6 +162,11 @@ function render() {
   else main.innerHTML = buildPage();
   wire(main, r);
   scrollTo({ top: 0 });
+  const key = `${r.name}/${r.sub ?? ""}/${r.id ?? r.term ?? ""}`;
+  if (key !== lastViewKey) {
+    lastViewKey = key;
+    track("view", { path: [r.name, r.sub, r.term].filter(Boolean).join("/"), item: r.name === "item" ? r.id : null, lang: state.lang });
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -813,6 +821,7 @@ function wire(main, r) {
   if (r.name === "discuss") (r.sub === "new" ? wireNewThread : r.sub === "thread" ? wireThread : wireDiscuss)(main);
   if (r.name === "account") wireAccount(main);
   if (r.name === "saved") wireSaved(main);
+  if (r.name === "stats") wireStats(main);
   if (r.name === "inbox") wireInbox(main);
   if (r.name === "item") wireBookmarks(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
@@ -1424,7 +1433,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv31tlg4" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv321icg" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -2257,6 +2266,63 @@ async function updateBell() {
   badge.textContent = n > 99 ? "99+" : String(n);
   badge.hidden = !n;
 }
+
+// ---------------------------------------------------------------------------
+// Public usage statistics (#stats). Aggregates only; see supabase/analytics.sql.
+
+function statsPage() {
+  return `<div class="discuss"><header class="deal-head"><h1>${esc(t("st_title"))}</h1><p class="muted">${esc(t("st_lead"))} <a href="#privacy">${esc(t("lg_privacy"))}</a></p>
+    ${trackingOff ? `<p class="small muted">${esc(t("st_you_off"))}</p>` : ""}</header><div id="stats"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
+}
+
+async function wireStats(main) {
+  const el = main.querySelector("#stats");
+  let d;
+  try {
+    d = await stats();
+  } catch {
+    el.innerHTML = `<p class="muted">${esc(t("cm_offline"))}</p>`;
+    return;
+  }
+  if (!el.isConnected) return;
+  const last30 = d.daily.slice(-30);
+  const sum = (k) => last30.reduce((n, r) => n + r[k], 0);
+  const max = Math.max(1, ...last30.map((r) => r.views));
+  const table = (title, rows, cols) =>
+    `<section class="card pad"><h3>${esc(title)}</h3>${rows.length ? `<table class="stat-table">${rows.map((r) => `<tr>${cols.map((c) => `<td>${c(r)}</td>`).join("")}</tr>`).join("")}</table>` : `<p class="muted small">${esc(t("ac_none"))}</p>`}</section>`;
+  const itemName = (id) => {
+    const i = findItem(id);
+    return `<a href="#item/${encodeURIComponent(id)}">${esc(i ? displayName(i) : id)}</a>`;
+  };
+  el.innerHTML = `
+    <div class="stat-tiles">
+      <div class="card pad"><span class="muted small">${esc(t("st_views"))}</span><b>${fmt(sum("views"), 0)}</b></div>
+      <div class="card pad"><span class="muted small">${esc(t("st_visitors"))}</span><b>${fmt(sum("visitors"), 0)}</b></div>
+      <div class="card pad"><span class="muted small">${esc(t("st_clicks"))}</span><b>${fmt(sum("store_clicks"), 0)}</b></div>
+    </div>
+    <section class="card pad"><h3>${esc(t("st_daily"))}</h3>
+      <div class="bars">${last30.map((r) => `<div class="bar" title="${esc(`${r.day}: ${r.views} ${t("st_views_s")} · ${r.visitors} ${t("st_visitors_s")}`)}"><i style="height:${(r.views / max) * 100}%"></i><i class="v" style="height:${(r.visitors / max) * 100}%"></i></div>`).join("") || `<p class="muted small">${esc(t("ac_none"))}</p>`}</div>
+      <p class="muted small"><span class="key"></span> ${esc(t("st_views_s"))} <span class="key v"></span> ${esc(t("st_visitors_s"))}</p></section>
+    <div class="stat-grid">
+      ${table(t("st_items"), d.items, [(r) => itemName(r.item_id), (r) => fmt(r.views, 0)])}
+      ${table(t("st_stores"), d.stores, [(r) => esc(db.stores[r.store]?.name ?? r.store ?? "—"), (r) => fmt(r.clicks, 0)])}
+      ${table(t("st_pages"), d.pages, [(r) => esc(r.path ?? "—"), (r) => fmt(r.views, 0)])}
+      ${table(t("st_refs"), d.refs, [(r) => esc(r.ref_host), (r) => fmt(r.visitors, 0)])}
+      ${table(t("st_devices"), d.devices, [(r) => esc(`${r.device} · ${r.lang}`), (r) => fmt(r.visitors, 0)])}
+    </div>
+    <p class="muted small">${esc(t("st_method"))}</p>`;
+}
+
+// Store clicks (which store, from which product) and script errors.
+document.addEventListener("click", (e) => {
+  const a = e.target.closest?.("a[href^='https://']");
+  if (!a || !db) return;
+  const host = new URL(a.href).hostname.replace(/^www\./, "");
+  const store = Object.entries(db.stores).find(([, s]) => s.host?.replace(/^www\./, "") === host)?.[0];
+  if (store) track("outbound", { store, item: route().name === "item" ? route().id : null, path: route().name });
+});
+addEventListener("error", (e) => track("error", { path: route().name, message: `${e.message} @ ${(e.filename ?? "").split("/").pop()}:${e.lineno}` }));
+addEventListener("unhandledrejection", (e) => track("error", { path: route().name, message: `promise: ${e.reason?.message ?? e.reason}` }));
 
 // ---------------------------------------------------------------------------
 // Sources page data

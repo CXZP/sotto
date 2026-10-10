@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv31tlg4";
+import { REPO } from "./content.js?v=mv321icg";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -33,7 +33,7 @@ export const LEGAL = {
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv31tlg4" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv321icg" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -58,14 +58,15 @@ export const LEGAL = {
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv31tlg4" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv321icg" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `
 <h1>นโยบายความเป็นส่วนตัว</h1>
 <p class="muted">อัปเดต ${LEGAL_UPDATED} · ตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล (PDPA)</p>
 <h2>ถ้าคุณแค่เข้ามาดู</h2>
-<p>เราไม่มี analytics ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม และไม่บันทึกว่าคุณดูอะไร การตั้งค่า (ภาษา โหมด ธีม) กับ bookmark ตอนยังไม่ล็อกอิน เก็บไว้ในเบราว์เซอร์ของคุณเอง</p>
+<p>ไม่มีโฆษณา และไม่มีคุกกี้ติดตาม เรานับสถิติแบบไม่ระบุตัวตน: ทุกครั้งที่เปิดหน้า กดไปร้านค้า หรือเกิด error จะบันทึกชื่อหน้า รุ่นที่ดู โดเมนเว็บที่ส่งมา ภาษา และประเภทอุปกรณ์ (มือถือ/คอม) <b>ไม่เก็บ IP</b> แต่ใช้ IP + เบราว์เซอร์ + รหัสสุ่มประจำวัน มาเข้ารหัสทางเดียว เพื่อนับคนไม่ซ้ำภายในวันนั้น รหัสสุ่มถูกลบทุกวัน จึงย้อนหาตัวคนหรือตามข้ามวันไม่ได้ ผลรวมเปิดให้ทุกคนดูที่<a href="#stats">หน้าสถิติ</a> ถ้าเบราว์เซอร์ตั้ง Do Not Track หรือ GPC ไว้ เราไม่นับเลย</p>
+<p>การตั้งค่า (ภาษา โหมด ธีม) กับ bookmark ตอนยังไม่ล็อกอิน เก็บไว้ในเบราว์เซอร์ของคุณเอง</p>
 <p>แต่บริการเหล่านี้เห็น IP และข้อมูลเบราว์เซอร์ของคุณ เพราะเบราว์เซอร์ต้องโหลดไฟล์จากเขา: GitHub Pages (ตัวเว็บ), Google Fonts (ฟอนต์), เซิร์ฟเวอร์รูปของร้านค้า, jsDelivr และ Supabase (ส่วน community)</p>
 <h2>ถ้าคุณล็อกอิน</h2>
 <table class="legal-table"><tr><th>ข้อมูล</th><th>ใช้ทำอะไร</th><th>ใครเห็น</th></tr>
@@ -84,7 +85,8 @@ export const LEGAL = {
 <h1>Privacy notice</h1>
 <p class="muted">Updated ${LEGAL_UPDATED} · under Thailand's Personal Data Protection Act (PDPA)</p>
 <h2>If you only browse</h2>
-<p>No analytics, no ads, no tracking cookies, and no record of what you view. Preferences (language, mode, theme) and signed-out bookmarks stay in your own browser.</p>
+<p>No ads and no tracking cookies. We count usage anonymously: each page view, store click or script error records the page, the product viewed, the referring site's domain, language and device class (phone/computer). <b>Your IP isn't stored</b>; a one-way hash of IP + browser + a daily random salt counts unique visitors within that day, and the salt is deleted daily, so it can't be reversed or linked across days. Totals are public on the <a href="#stats">stats page</a>. If your browser sends Do Not Track or GPC, nothing is counted.</p>
+<p>Preferences (language, mode, theme) and signed-out bookmarks stay in your own browser.</p>
 <p>These services do see your IP and browser details because your browser loads files from them: GitHub Pages (the site), Google Fonts (fonts), store image servers, jsDelivr and Supabase (community features).</p>
 <h2>If you sign in</h2>
 <table class="legal-table"><tr><th>Data</th><th>Used for</th><th>Who sees it</th></tr>

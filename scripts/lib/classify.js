@@ -35,13 +35,14 @@ export function condition(title) {
   return "new";
 }
 
+// Marketing words stores append. Applied last, and only if a name is left.
+const MARKETING = /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi;
+
 const NOISE = [
   /\((?:[^)]*)\)/g,
   /\[(?:[^\]]*)\]/g,
   /\b(open[- ]box|b[- ]stock|refurbished|apos certified|certified|pre[- ]owned|used|demo|clearance|new|pre[- ]?order|limited edition)\b/gi,
   /\b(in[- ]ear monitors?|iems?|earphones?|earbuds?|headphones?|wired|universal|over[- ]ear|on[- ]ear|open[- ]back|planar magnetic|planar|dynamic drivers?|dynamic|drivers?|hybrid|portable|desktop|usb|dac\/amp|dac amp|headphone amp(lifier)?|amplifier|amp|dac|dongle|balanced|monitors?)\b/gi,
-  // Marketing words stores append that don't change the product.
-  /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi,
   // Product-type phrases that don't name the model ("JM21 Music Player" == "JM21 Digital Audio Player").
   /\b\d+(?:\.\d+)?\s?mm\b|\b(?:type[- ]?c|usb[- ]?c)\b(?! to)/gi,
   /\b(high[- ]performance|entry[- ]level|composite diaphragm|\d+\s?w power|audio|armature|standard package|package|tribrid|quadbrid|(?:transportable )?digital player|\d{4} revision)\b/gi,
@@ -80,7 +81,14 @@ export function modelKey(vendor, title) {
   let t = ` ${title} `;
   const v = (vendor ?? "").trim();
   if (v) t = t.replace(new RegExp(`\\b${escapeRe(v)}\\b`, "gi"), " ");
-  for (const re of NOISE) t = t.replace(re, " ");
+  // A pass that would erase the whole name is skipped: "CrinEar Reference" and
+  // "QDC HiFi" are model names that happen to be marketing words.
+  for (const re of NOISE) {
+    const next = t.replace(re, " ");
+    if (/[a-z0-9]/i.test(next)) t = next;
+  }
+  const bare = t.replace(MARKETING, " ");
+  if (/[a-z0-9]/i.test(bare.replace(/[|–—:,/+&-]+/g, ""))) t = bare;
   const model = t.replace(/\s+/g, " ").trim();
   const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return { key: `${slug(v) || "unknown"}--${slug(model) || "unknown"}`, model };

@@ -6,13 +6,15 @@ const has = (s, re) => re.test(s);
 const RULES = [
   // Things that are not part of a headphone chain, checked first.
   ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
-  ["accessory", /\b(ear ?tips?|eartip|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|batter(y|ies)|faceplates?)\b/i],
+  ["skip", /\b(beanie|t-?shirts?|hoodies?|merch|toys?|bricks|keychains?|mouse ?pads?|posters?)\b/i],
+  ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
   ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],
-  ["adapter", /\b(adapters?|adaptors?|converter plugs?|jack converters?)\b/i],
+  ["adapter", /\b(adapters?|adaptors?|converters?|converter plugs?|jack converters?)\b/i],
   ["skip", /\b(microphones?|turntables?|phono|cd players?|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power supply|lps|power conditioner|streamers?|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
   ["wireless", /\b(tws|true wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
   ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
-  ["dongle", /\b(dongle|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac)\b/i],
+  ["dongle", /\b(dongle|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac)\b/i],
   ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
   ["iem", /\b(iems?|in[- ]ear|earphones?|earbuds?|universal iem|monitors?)\b/i],
   ["headphone", /\b(headphones?|over[- ]ear|open[- ]back|closed[- ]back|planar)\b/i],
@@ -20,9 +22,9 @@ const RULES = [
 
 export function classify(p) {
   const title = p.title ?? "";
-  const meta = `${p.type ?? ""} ${(Array.isArray(p.tags) ? p.tags.join(" ") : p.tags) ?? ""}`;
-  // The title is the strongest signal; type/tags break ties.
-  for (const text of [title, `${title} ${meta}`]) {
+  const tags = (Array.isArray(p.tags) ? p.tags.join(" ") : p.tags) ?? "";
+  // Title first, then the store's product type, then tags (tags are noisy: "Desktop HiFi" on an IEM).
+  for (const text of [title, p.type ?? "", tags]) {
     for (const [cat, re] of RULES) if (has(text, re)) return cat;
   }
   return "other";

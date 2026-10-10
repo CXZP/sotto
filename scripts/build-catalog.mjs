@@ -13,7 +13,7 @@ import { extractSpecs, verify } from "./lib/specs.js";
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
-const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|stand|cover|skin|sticker|no device|without)\b/i;
+const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
 const files = (await readdir(new URL("cache/raw/", root))).filter((f) => f.endsWith(".json"));
 const groups = new Map();
@@ -24,7 +24,10 @@ for (const file of files) {
   stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
   for (const p of snap.products) {
     stats.products++;
-    const category = classify(p);
+    let category = classify(p);
+    // Stores file small USB DACs under "AMP & DAC". A sub-$40 "desktop" unit that
+    // doesn't call itself desktop/tube/preamp is a dongle.
+    if (category === "desktop" && Math.max(...p.variants.map((v) => v.price || 0)) < 40 && !/desktop|tube|preamp/i.test(p.title)) category = "dongle";
     stats.byCategory[category] = (stats.byCategory[category] ?? 0) + 1;
     if (!KEEP.has(category)) continue;
     stats.kept++;
@@ -74,9 +77,16 @@ for (const file of files) {
 
 // Variants like "Case only" or "Leather case" are accessories sold on the same
 // page. They must not become the product's price.
+// "Only Blue Leather Case" is an accessory; "M21 + Leather Case" and "M21 without Case" are the product.
+function isAccessoryVariant(title) {
+  if (/\b(only|spare|replacement|no device)\b/i.test(title)) return true;
+  if (/\+|\b(with|without|w\/o?|bundle|set)\b/i.test(title)) return false;
+  return ACCESSORY_VARIANT.test(title);
+}
+
 function mainPrice(variants) {
   const priced = variants.filter((v) => v.price > 0);
-  const main = priced.filter((v) => !ACCESSORY_VARIANT.test(v.title));
+  const main = priced.filter((v) => !isAccessoryVariant(v.title));
   // If every variant looks like an accessory, the product itself probably is one.
   const use = main.length ? main : priced;
   if (!use.length) return { price: null };
@@ -207,6 +217,22 @@ for (const g of catalog) {
   if (g.specs.sensitivity?.some((s) => s.unit)) w.sensitivityWithUnit++;
   if (g.specs.power) w.power++;
   if (g.specs.zout) w.zout++;
+}
+
+// Stores spell brands differently (MoonDrop / Moondrop / MOONDROP). Use one
+// spelling per brand: the most common, preferring mixed case on ties.
+{
+  const norm = (b) => b.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const spellings = new Map();
+  for (const i of catalog) {
+    if (!i.brand) continue;
+    const m = spellings.get(norm(i.brand)) ?? new Map();
+    m.set(i.brand, (m.get(i.brand) ?? 0) + 1);
+    spellings.set(norm(i.brand), m);
+  }
+  const mixed = (s) => s !== s.toUpperCase() && s !== s.toLowerCase();
+  const pick = new Map([...spellings].map(([k, m]) => [k, [...m].sort((a, b) => b[1] - a[1] || mixed(b[0]) - mixed(a[0]))[0][0]]));
+  for (const i of catalog) if (i.brand) i.brand = pick.get(norm(i.brand));
 }
 
 await writeFile(new URL("data/catalog.json", root), JSON.stringify({ builtAt: new Date().toISOString(), stores: stats.stores, items: catalog }));

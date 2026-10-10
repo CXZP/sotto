@@ -1,11 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js";
-import { renderChart } from "./chart.js";
-import { makeT } from "./i18n.js";
-import { LEARN, aboutPage, REPO } from "./content.js";
-import * as community from "./community.js";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js";
-import { redactImage } from "./redact.js";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2wr92c";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2wr92c";
+import { renderChart } from "./chart.js?v=mv2wr92c";
+import { makeT } from "./i18n.js?v=mv2wr92c";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2wr92c";
+import * as community from "./community.js?v=mv2wr92c";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2wr92c";
+import { redactImage } from "./redact.js?v=mv2wr92c";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2wr92c";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -48,6 +49,7 @@ function save(key, value) {
 function route() {
   const h = location.hash.slice(1).split("?")[0];
   if (h.startsWith("item/")) return { name: "item", id: decodeURIComponent(h.slice(5)) };
+  if (h.startsWith("learn/")) return { name: "learn", term: decodeURIComponent(h.slice(6)) };
   return { name: h || "build" };
 }
 function query() {
@@ -128,7 +130,7 @@ function render() {
   if (r.name === "catalog") main.innerHTML = catalogPage();
   else if (r.name === "item") main.innerHTML = itemPage(r.id);
   else if (r.name === "deal") main.innerHTML = dealPage();
-  else if (r.name === "learn") main.innerHTML = `<article class="prose">${LEARN[state.lang]}</article>`;
+  else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
   wire(main, r);
@@ -202,7 +204,11 @@ function buildResults(hp) {
   const detail = state.mode === "detail";
   const conn = connectionCard(src, hp);
   const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level, crest: CREST }) : { status: "no-output" };
-  return [verdictCard(ev, hp, detail), conn.html, reverseCard(hp, level)].join("");
+  // With an amp in the chain, "no amp needed" is the wrong message. Say whether the
+  // device alone would also have been loud enough, so people don't buy one for loudness.
+  let alone = null;
+  if (src.amp && src.device.outputs?.length) alone = evaluate(hp, src.device.outputs, { level, crest: CREST }).status;
+  return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, alone }), conn.html, reverseCard(hp, level)].join("");
 }
 
 function connectionCard({ device, amp, outputs }, hp) {
@@ -244,9 +250,12 @@ const VERDICT = {
   "no-output": ["bad", "v_no_output"],
 };
 
-function verdictCard(ev, hp, detail) {
-  const [tone, key, subKey] = VERDICT[ev.status] ?? VERDICT.unknown;
+function verdictCard(ev, hp, detail, chain = {}) {
+  let [tone, key, subKey] = VERDICT[ev.status] ?? VERDICT.unknown;
+  if (ev.status === "ok" && chain.amp) key = "v_ok_amp";
   let sub = subKey ? t(subKey) : "";
+  if (chain.amp && chain.alone && ["ok", "overkill", "tight"].includes(ev.status))
+    sub = [sub, t(["ok", "overkill"].includes(chain.alone) ? "v_alone_ok" : "v_alone_no", { device: chain.device.name[state.lang], amp: displayName(chain.amp) })].filter(Boolean).join(" · ");
   if (ev.status === "ambiguous") sub = t("v_ambiguous_sub", { a: t(VERDICT[ev.r.status][1]), b: t(VERDICT[ev.alt.r.status][1]) });
   else if (ev.unitAmbiguous) sub = t("v_unit_note");
   let body = `<div class="verdict"><span class="badge ${tone}" aria-hidden="true"></span><div><p class="big">${esc(t(key))}</p>${sub ? `<p class="sub">${esc(sub)}</p>` : ""}</div></div>`;
@@ -407,10 +416,12 @@ function catalogPage() {
   const specsOnly = p.get("specs") === "1";
   const stockOnly = p.get("stock") === "1";
   const limit = Number(p.get("n") ?? 60);
+  const brand = p.get("brand") ?? "";
   const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
+      (!brand || i.brand === brand) &&
       (!q || `${i.brand} ${i.model}`.toLowerCase().includes(q)) &&
       (!specsOnly || hpModel(i) || sourceOutputs(i).length) &&
       (!stockOnly || i.offers.some((o) => o.available)),
@@ -441,6 +452,7 @@ function catalogPage() {
   return `<div class="catalog">
     <div class="filters">
       <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
+      <select class="mini-select" id="cbrand" aria-label="${esc(t("brand"))}"><option value="">${esc(t("brand_all"))}</option>${brandOptions(cat, brand)}</select>
       <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
       <div class="chips">
         <a class="chip${specsOnly ? " on" : ""}" href="${link({ specs: specsOnly ? null : "1", n: null })}">${esc(t("only_specs"))}</a>
@@ -467,6 +479,17 @@ function catalogPage() {
         .join("")}</tbody></table></div>`}
     ${res.length > limit ? `<div class="more"><a class="pill" href="${link({ n: limit + 120 })}">${esc(t("more"))}</a></div>` : ""}
   </div>`;
+}
+
+/** Brands in the current category, most models first, with counts. */
+function brandOptions(cat, selected) {
+  const count = new Map();
+  for (const i of db.items) if (i.brand && (cat === "all" || i.category === cat)) count.set(i.brand, (count.get(i.brand) ?? 0) + 1);
+  if (selected && !count.has(selected)) count.set(selected, 0);
+  return [...count]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([b, n]) => `<option value="${esc(b)}"${b === selected ? " selected" : ""}>${esc(b)} (${n})</option>`)
+    .join("");
 }
 
 function sensOrPower(i) {
@@ -514,7 +537,7 @@ function itemPage(id) {
   return `<article class="item">
     <header class="item-head${im ? " has-img" : ""}">
       ${im ? `<a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a>` : ""}
-      <div class="item-title"><p class="muted">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
+      <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
       <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
@@ -567,7 +590,14 @@ function wire(main, r) {
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
   if (r.name === "deal") wireDeal(main);
+  if (r.name === "learn") wireTool(main.querySelector("[data-tool]"));
   if (r.name === "catalog") {
+    main.querySelector("#cbrand")?.addEventListener("change", (e) => {
+      const p = query();
+      e.target.value ? p.set("brand", e.target.value) : p.delete("brand");
+      p.delete("n");
+      go(`#catalog?${p}`);
+    });
     const input = main.querySelector("#cq");
     let timer;
     input?.addEventListener("input", () => {
@@ -1129,6 +1159,111 @@ async function renderPaid(el, item) {
       fail(e);
     }
   });
+}
+
+// ---------------------------------------------------------------------------
+// Learn: glossary index, one page per term, small calculators.
+
+function learnPage(termId) {
+  const L = state.lang;
+  if (termId) {
+    const term = TERM.get(termId);
+    if (!term) return `<div class="card empty"><p>${esc(t("it_not_found"))}</p></div>`;
+    const c = term[L] ?? term.en;
+    return `<article class="term">
+      <p class="small"><a href="#learn">← ${esc(t("lr_back"))}</a></p>
+      <h1>${esc(c.title)}</h1>
+      <p class="muted small">${esc(t("lr_updated", { date: day(GLOSSARY_UPDATED) }))}</p>
+      <div class="card pad prose term-body">${c.body}</div>
+      ${term.tool ? `<section class="card pad tool" data-tool="${term.tool}">${toolHtml(term.tool)}</section>` : ""}
+      ${
+        term.related.length
+          ? `<section class="card pad"><h3>${esc(t("lr_related"))}</h3><div class="row-inline">${term.related
+              .filter((id) => TERM.has(id))
+              .map((id) => `<a class="pill" href="#learn/${id}">${esc((TERM.get(id)[L] ?? TERM.get(id).en).title)}</a>`)
+              .join("")}</div></section>`
+          : ""
+      }
+      ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2wr92c" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+    </article>`;
+  }
+  return `<div class="learn">
+    <header class="deal-head"><h1>${esc(t("nav_learn"))}</h1><p class="muted">${esc(t("lr_lead"))}</p></header>
+    <section class="card pad"><h3>${esc(t("lr_glossary"))}</h3>
+      <div class="gloss-grid">${TERMS.map((term) => {
+        const c = term[L] ?? term.en;
+        return `<a class="gloss" href="#learn/${term.id}"><b>${esc(c.title)}</b><span class="muted small">${esc(c.short)}</span>${term.tool ? `<span class="tag">${esc(t("lr_has_tool"))}</span>` : ""}</a>`;
+      }).join("")}</div>
+    </section>
+    <section class="card pad"><h3>${esc(t("lr_guide"))}</h3><article class="prose">${LEARN[L]}</article></section>
+  </div>`;
+}
+
+function toolHtml(kind) {
+  const f = (name, label, value, unit = "") =>
+    `<label class="dfield"><span>${esc(label)}</span><span class="tool-in"><input class="search num" name="${name}" inputmode="decimal" value="${value}">${unit ? `<span class="muted small">${esc(unit)}</span>` : ""}</span></label>`;
+  const head = `<h3>${esc(t(`tool_${kind}`))}</h3>`;
+  const out = `<div class="tool-out" aria-live="polite"></div>`;
+  if (kind === "sens")
+    return `${head}<div class="deal-fields">${f("s", t("tool_sens_value"), 110)}<label class="dfield"><span>${esc(t("tool_unit"))}</span><select class="mini-select" name="u"><option>dB/mW</option><option>dB/V</option></select></label>${f("z", t("tool_z"), 32, "Ω")}</div>${out}`;
+  if (kind === "spl")
+    return `${head}<div class="deal-fields">${f("s", t("tool_sens_v"), 110, "dB/V")}${f("z", t("tool_z"), 32, "Ω")}${f("l", t("tool_target"), 95, "dB SPL")}</div>${out}`;
+  if (kind === "zout") return `${head}<div class="deal-fields">${f("z", t("tool_z"), 16, "Ω")}${f("o", t("tool_zout"), 1, "Ω")}</div>${out}`;
+  if (kind === "hiss") return `${head}<div class="deal-fields">${f("n", t("tool_noise"), 5, "µV")}${f("s", t("tool_sens_v"), 120, "dB/V")}</div>${out}`;
+  if (kind === "dose") return `${head}<div class="deal-fields">${f("l", t("tool_level"), 85, "dB")}</div>${out}`;
+  return "";
+}
+
+function wireTool(el) {
+  if (!el) return;
+  const kind = el.dataset.tool;
+  const v = (n) => Number(el.querySelector(`[name="${n}"]`)?.value);
+  const out = el.querySelector(".tool-out");
+  const show = () => {
+    let html = "";
+    if (kind === "sens") {
+      const s = v("s");
+      const z = v("z");
+      const u = el.querySelector('[name="u"]').value;
+      if (s && z > 0) {
+        const other = u === "dB/mW" ? s + 10 * Math.log10(1000 / z) : s - 10 * Math.log10(1000 / z);
+        html = `<p class="deal-big">${fmt(other, 1)} ${u === "dB/mW" ? "dB/V" : "dB/mW"}</p><p class="muted small"><code>${u === "dB/mW" ? `${s} + 10·log10(1000/${z})` : `${s} − 10·log10(1000/${z})`}</code></p>`;
+      }
+    } else if (kind === "spl") {
+      const s = v("s");
+      const z = v("z");
+      const l = v("l");
+      if (s && z > 0 && l) {
+        const V = 10 ** ((l - s) / 20);
+        html = `<p class="deal-big">${vfmt(V)}</p><p class="muted">${esc(t("tool_spl_out", { mw: fmt((V * V * 1000) / z, V * V * 1000 / z < 1 ? 3 : 1), ma: fmt((V / z) * 1000, 1) }))}</p><p class="muted small"><code>V = 10^((${l} − ${s}) / 20)</code></p>`;
+      }
+    } else if (kind === "zout") {
+      const z = v("z");
+      const o = v("o");
+      if (z > 0 && o >= 0) {
+        const ratio = o ? z / o : Infinity;
+        const ok = ratio >= 8;
+        html = `<p class="deal-big">${ratio === Infinity ? "∞" : fmt(ratio, 1)} : 1</p><p class="${ok ? "" : "warn-text"}">${esc(t(ok ? "tool_zout_ok" : "tool_zout_warn", { max: fmt(z / 8, 2) }))}</p>`;
+      }
+    } else if (kind === "hiss") {
+      const n = v("n");
+      const s = v("s");
+      if (n > 0 && s) {
+        const spl = s + 20 * Math.log10(n * 1e-6);
+        html = `<p class="deal-big">${fmt(spl, 0)} dB SPL</p><p class="muted">${esc(t(spl < 15 ? "tool_hiss_low" : spl < 25 ? "tool_hiss_mid" : "tool_hiss_high"))}</p><p class="muted small"><code>${s} + 20·log10(${n} µV)</code></p>`;
+      }
+    } else if (kind === "dose") {
+      const l = v("l");
+      if (l) {
+        const h = 40 / 2 ** ((l - 80) / 3);
+        html = `<p class="deal-big">${h >= 1 ? `${fmt(h, 1)} ${t("tool_hours")}` : `${fmt(h * 60, 0)} ${t("tool_minutes")}`}</p><p class="muted">${esc(t("tool_dose_out"))}</p><p class="muted small"><code>40 h ÷ 2^((${l} − 80) / 3)</code></p>`;
+      }
+    }
+    out.innerHTML = html || `<p class="muted small">${esc(t("tool_fill"))}</p>`;
+  };
+  el.querySelectorAll("input, select").forEach((i) => i.addEventListener("input", show));
+  show();
 }
 
 // ---------------------------------------------------------------------------

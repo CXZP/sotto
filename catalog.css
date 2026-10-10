@@ -290,3 +290,33 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .inbox-row:hover { text-decoration: none; background: var(--surface-2); }
 .inbox-row.unread { box-shadow: inset 3px 0 0 var(--accent); }
 .inbox-body { overflow-wrap: anywhere; }
+
+/* Thread page, Reddit-like */
+.thread-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+.thread-col { display: grid; gap: 14px; min-width: 0; }
+.thread-aside { display: grid; gap: 14px; position: sticky; top: 84px; }
+.thread-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0; }
+.thread-meta .back { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--surface-2); color: var(--text); margin-right: 4px; }
+.thread-meta .back:hover { text-decoration: none; }
+.thread .thread-h1 { margin: 10px 0 0; }
+.post-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 4px; }
+.post-actions.bar { margin-top: 14px; }
+.vote.row { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 999px; background: var(--surface-2); }
+.vote.row .score { min-width: 18px; text-align: center; }
+.gallery.one { grid-template-columns: 1fr; }
+.gallery.one img { aspect-ratio: auto; max-height: 70vh; object-fit: contain; background: #000; }
+.comment { grid-template-columns: minmax(0, 1fr); }
+.comment-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.collapse { background: none; border: 0; color: var(--text-2); cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1; }
+.children { margin-left: 8px; }
+.aside-item { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 0; color: var(--text); border-top: 1px solid var(--line); }
+.aside-item:first-of-type { border-top: 0; }
+.aside-item:hover { text-decoration: none; }
+.aside-item img, .aside-item > span { width: 56px; height: 56px; border-radius: 10px; object-fit: contain; background: #fff; }
+.related-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); color: var(--text); }
+.related-row:first-child { border-top: 0; }
+.related-row:hover { text-decoration: none; }
+.related-row > div { display: grid; gap: 2px; }
+.related-row b { font-weight: 600; line-height: 1.35; }
+.related-row img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
+@media (max-width: 1000px) { .thread-layout { grid-template-columns: minmax(0, 1fr); } .thread-aside { position: static; } }

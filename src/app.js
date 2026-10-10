@@ -1,13 +1,13 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30jm8f";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30jm8f";
-import { renderChart } from "./chart.js?v=mv30jm8f";
-import { makeT } from "./i18n.js?v=mv30jm8f";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv30jm8f";
-import * as community from "./community.js?v=mv30jm8f";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30jm8f";
-import { redactImage } from "./redact.js?v=mv30jm8f";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30jm8f";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30jm8f";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30y65g";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30y65g";
+import { renderChart } from "./chart.js?v=mv30y65g";
+import { makeT } from "./i18n.js?v=mv30y65g";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv30y65g";
+import * as community from "./community.js?v=mv30y65g";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30y65g";
+import { redactImage } from "./redact.js?v=mv30y65g";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30y65g";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30y65g";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1422,7 +1422,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30jm8f" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30y65g" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1555,7 +1555,7 @@ function wirePhotos(root) {
 }
 function gallery(images, cls = "") {
   if (!images?.length) return "";
-  return `<div class="gallery ${cls}">${images.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="" loading="lazy"></a>`).join("")}</div>`;
+  return `<div class="gallery ${cls}${images.length === 1 ? " one" : ""}">${images.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="" loading="lazy"></a>`).join("")}</div>`;
 }
 
 /** Post text → safe HTML (Markdown subset, see markdown.js). */
@@ -1598,9 +1598,10 @@ function wireMd(root) {
 }
 
 function ago(iso) {
-  const s = (Date.now() - new Date(iso)) / 1000;
+  // Device clocks drift: anything under a minute, including slightly in the future, is "just now".
+  const s = Math.max(0, (Date.now() - new Date(iso)) / 1000);
   const rtf = new Intl.RelativeTimeFormat(state.lang === "th" ? "th" : "en", { numeric: "auto" });
-  if (s < 60) return rtf.format(-Math.round(s), "second");
+  if (s < 60) return t("just_now");
   if (s < 3600) return rtf.format(-Math.round(s / 60), "minute");
   if (s < 86400) return rtf.format(-Math.round(s / 3600), "hour");
   if (s < 86400 * 30) return rtf.format(-Math.round(s / 86400), "day");
@@ -1609,8 +1610,8 @@ function ago(iso) {
 
 const authorName = (r) => (r.author ? r.author_name || t("cm_user") : t("ds_deleted"));
 
-function voteBox(kind, id, score, mine, signedIn) {
-  return `<div class="vote" data-kind="${kind}" data-id="${id}">
+function voteBox(kind, id, score, mine, signedIn, row = false) {
+  return `<div class="vote${row ? " row" : ""}" data-kind="${kind}" data-id="${id}">
     <button type="button" data-v="1" aria-label="${esc(t("ds_up"))}" aria-pressed="${mine === 1}" ${signedIn ? "" : "disabled"}>▲</button>
     <span class="score">${score}</span>
     <button type="button" data-v="-1" aria-label="${esc(t("ds_down"))}" aria-pressed="${mine === -1}" ${signedIn ? "" : "disabled"}>▼</button></div>`;
@@ -1876,10 +1877,44 @@ function editComment(main, c, done) {
   });
 }
 
+// ---- thread sidebar: products in the thread, then threads about the same products
+
+function asideProducts(ids) {
+  const items = (ids ?? []).map((id) => findItem(id)).filter(Boolean);
+  if (!items.length) return "";
+  return `<section class="card pad"><h3>${esc(t("ds_in_thread"))}</h3>${items
+    .map((i) => {
+      const im = imageOf(i);
+      const pr = prices(i).cheapest;
+      return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(t(`cat_${i.category}`))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div></a>`;
+    })
+    .join("")}</section>`;
+}
+
+async function fillRelated(el, th) {
+  if (!el) return;
+  const lists = await Promise.all([
+    ...(th.item_ids ?? []).slice(0, 3).map((item) => community.listThreads({ item, sort: "top" })),
+    community.listThreads({ category: th.category, sort: "top" }),
+  ]);
+  if (!el.isConnected) return;
+  const seen = new Set([th.id]);
+  const rows = [];
+  for (const l of lists) for (const r of l.rows ?? []) if (!seen.has(r.id)) seen.add(r.id) && rows.push(r);
+  el.innerHTML = rows.length
+    ? rows
+        .slice(0, 8)
+        .map(
+          (r) => `<a class="related-row" href="#discuss/${r.id}"><div><span class="muted small">${esc(t(`dc_${r.category}`))} · ${esc(ago(r.created_at))}</span><b>${esc(r.title)}</b><span class="muted small">▲ ${r.score} · ${esc(t("ds_n_comments", { n: r.comment_count }))}</span></div>${r.images?.[0] ? `<img src="${esc(r.images[0])}" alt="" loading="lazy">` : ""}</a>`,
+        )
+        .join("")
+    : `<p class="muted small">${esc(t("ds_no_related"))}</p>`;
+}
+
 // ---- one thread
 
 function threadPage(id) {
-  return `<div class="discuss narrow"><p class="small"><a href="#discuss">← ${esc(t("nav_discuss"))}</a></p><div id="thread" data-id="${esc(id)}"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
+  return `<div class="discuss"><div id="thread" data-id="${esc(id)}"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
 }
 
 async function wireThread(main) {
@@ -1912,34 +1947,49 @@ async function wireThread(main) {
       `${canPost && kind === "comment" ? `<button type="button" class="link small" data-reply="${r.id}">${esc(t("ds_reply"))}</button>` : ""}${
         s && !own(r) ? `<button type="button" class="link small" data-dflag="${kind}:${r.id}">${esc(t("cm_flag"))}</button>` : ""
       }${own(r) ? `<button type="button" class="link small" data-dedit="${kind}:${r.id}">${esc(t("ds_edit"))}</button><button type="button" class="link small" data-ddel="${kind}:${r.id}">${esc(t("cm_delete"))}</button>` : ""}`;
+    const countKids = (id) => (kids.get(id) ?? []).reduce((n, k) => n + 1 + countKids(k.id), 0);
     const tree = (parent, depth) =>
       (kids.get(parent) ?? [])
         .sort((a, b) => b.score - a.score || new Date(a.created_at) - new Date(b.created_at))
         .map(
           (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
-          ${voteBox("comment", c.id, c.score, cv.get(c.id), !!s)}
-          <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}${c.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</div>
+          <div class="comment-main"><div class="comment-head muted small"><button type="button" class="collapse" aria-expanded="true" aria-label="${esc(t("ds_collapse"))}">⊖</button><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}${c.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}<span class="collapsed-note" hidden> · ${esc(t("ds_collapsed", { n: 1 + countKids(c.id) }))}</span></div>
+          <div class="comment-rest">
           ${c.body ? `<div class="comment-body md">${richText(c.body)}</div>` : ""}
           ${gallery(c.images, "small")}
-          <div class="post-actions">${actions("comment", c)}</div>
+          <div class="post-actions">${voteBox("comment", c.id, c.score, cv.get(c.id), !!s, true)}${actions("comment", c)}</div>
           <div class="reply-slot"></div>
-          ${kids.has(c.id) ? `<div class="children">${tree(c.id, depth + 1)}</div>` : ""}</div></div>`,
+          ${kids.has(c.id) ? `<div class="children">${tree(c.id, depth + 1)}</div>` : ""}</div></div></div>`,
         )
         .join("");
-    el.innerHTML = `<article class="thread card pad">
-        <div class="thread-head">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s)}
-        <div><p class="muted small"><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
-        <h1 class="thread-h1">${esc(th.title)}</h1></div></div>
+    el.innerHTML = `<div class="thread-layout"><div class="thread-col"><article class="thread card pad">
+        <p class="muted small thread-meta"><a class="back" href="#discuss" aria-label="${esc(t("nav_discuss"))}">←</a><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
+        <h1 class="thread-h1">${esc(th.title)}</h1>
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
-        <div class="post-actions">${bmButton("thread", th.id)}${actions("thread", th)}</div>
+        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s, true)}<a class="pill small" href="#comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
       </article>
-      <section class="card pad">
+      <section class="card pad" id="comments">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
         ${canPost ? `<form class="cm-form" data-form="comment">${mdEditor("body", 3, t("ds_comment_ph"), 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
         <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
-      </section>`;
+      </section></div>
+      <aside class="thread-aside">${asideProducts(th.item_ids)}<section class="card pad related"><h3>${esc(t("ds_related"))}</h3><div class="related-list"><p class="muted small">${esc(t("cm_loading"))}</p></div></section></aside></div>`;
+    fillRelated(el.querySelector(".related-list"), th);
+    el.querySelectorAll(".collapse").forEach((b) =>
+      b.addEventListener("click", () => {
+        const c = b.closest(".comment");
+        const open = b.getAttribute("aria-expanded") === "true";
+        b.setAttribute("aria-expanded", String(!open));
+        b.textContent = open ? "⊕" : "⊖";
+        c.querySelector(".comment-rest").hidden = open;
+        c.querySelector(".collapsed-note").hidden = !open;
+      }),
+    );
+    el.querySelector("[data-share]")?.addEventListener("click", (ev) => {
+      navigator.clipboard?.writeText(location.href).then(() => (ev.target.textContent = t("copied")));
+    });
     wireAuth(el, location.hash, load);
     wireVotes(el, load);
     wireBookmarks(el);

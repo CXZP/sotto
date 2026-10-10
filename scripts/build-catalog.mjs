@@ -65,6 +65,7 @@ for (const file of files) {
       available,
       condition: condition(p.title),
       seenAt: snap.fetchedAt,
+      image: p.image ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
     groups.set(key, g);

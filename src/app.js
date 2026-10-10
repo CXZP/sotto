@@ -170,7 +170,9 @@ function slotRow(label, control, hint = "") {
 function pickedOrButton(slot, item) {
   if (!item) return `<button class="pill" data-pick="${slot}">+ ${esc(t("slot_pick"))}</button>${slot === "amp" ? ` <span class="muted small">${esc(t("slot_none"))}</span>` : ""}`;
   const pr = prices(item).cheapest;
+  const im = imageOf(item);
   return `<div class="picked">
+    ${im ? `<img class="picked-img" src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
     <a href="#item/${encodeURIComponent(item.id)}" class="picked-name">${esc(displayName(item))}</a>
     <div class="picked-meta">${esc(specLine(item))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div>
     <div class="picked-actions"><button class="link" data-pick="${slot}">${esc(t("slot_change"))}</button><button class="link" data-clear="${slot}">${esc(t("slot_remove"))}</button></div>
@@ -369,7 +371,8 @@ function openPicker(slot) {
     list.innerHTML = res
       .map((i) => {
         const p = prices(i).cheapest;
-        return `<li><button data-id="${esc(i.id)}"><span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(t(`cat_${i.category}`))} · ${esc(specLine(i) || "—")}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
+        const im = imageOf(i);
+        return `<li><button data-id="${esc(i.id)}">${im ? `<img class="pt-img" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="pt-img"></span>`}<span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(t(`cat_${i.category}`))} · ${esc(specLine(i) || "—")}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
       })
       .join("");
   };
@@ -409,12 +412,29 @@ function catalogPage() {
       (!specsOnly || hpModel(i) || sourceOutputs(i).length) &&
       (!stockOnly || i.offers.some((o) => o.available)),
   );
-  res.sort((a, b) => Number(!!b.curated) - Number(!!a.curated) || b.offers.length - a.offers.length || a.id.localeCompare(b.id));
+  const sort = p.get("sort") ?? "popular";
+  const view = p.get("view") ?? "grid";
+  const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
+  if (sort === "price") res.sort((a, b) => priceOf(a) - priceOf(b));
+  else if (sort === "price-desc") res.sort((a, b) => (priceOf(b) === Infinity ? -1 : priceOf(b)) - (priceOf(a) === Infinity ? -1 : priceOf(a)));
+  else res.sort((a, b) => Number(!!b.curated) - Number(!!a.curated) || b.offers.length - a.offers.length || a.id.localeCompare(b.id));
   const link = (over) => {
     const n = new URLSearchParams(p);
     for (const [k, v] of Object.entries(over)) v === null ? n.delete(k) : n.set(k, v);
     return `#catalog?${n}`;
   };
+  const shown = res.slice(0, limit);
+  const grid = `<div class="grid">${shown
+    .map((i) => {
+      const pr = prices(i).cheapest;
+      const im = imageOf(i);
+      return `<a class="tile card" href="#item/${encodeURIComponent(i.id)}">
+        <div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
+        <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div>
+        <div class="muted small">${esc(t(`cat_${i.category}`))}${specLine(i) ? ` · ${esc(specLine(i))}` : ""}</div>
+        <div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
+    })
+    .join("")}</div>`;
   return `<div class="catalog">
     <div class="filters">
       <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
@@ -423,22 +443,25 @@ function catalogPage() {
         <a class="chip${specsOnly ? " on" : ""}" href="${link({ specs: specsOnly ? null : "1", n: null })}">${esc(t("only_specs"))}</a>
         <a class="chip${stockOnly ? " on" : ""}" href="${link({ stock: stockOnly ? null : "1", n: null })}">${esc(t("only_stock"))}</a>
       </div>
+      <div class="chips">${["popular", "price", "price-desc"].map((s) => `<a class="chip${s === sort ? " on" : ""}" href="${link({ sort: s, n: null })}">${esc(t(`sort_${s}`))}</a>`).join("")}</div>
+      <div class="chips">${["grid", "table"].map((v) => `<a class="chip${v === view ? " on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
+      <a class="chip ext-chip" href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a>
       <span class="muted small">${esc(t("n_results", { n: fmt(res.length, 0) }))}</span>
     </div>
-    <div class="table-wrap card"><table class="cat-table">
+    ${view === "grid" ? grid : `<div class="table-wrap card"><table class="cat-table">
       <thead><tr><th>${esc(t("col_product"))}</th><th>${esc(t("col_imp"))}</th><th>${esc(t("col_sens"))} / ${esc(t("col_power"))}</th><th>${esc(t("col_price"))}</th><th>${esc(t("col_stores"))}</th></tr></thead>
-      <tbody>${res
-        .slice(0, limit)
+      <tbody>${shown
         .map((i) => {
           const pr = prices(i);
           const stores = new Set(i.offers.map((o) => o.store)).size;
-          return `<tr><td><a href="#item/${encodeURIComponent(i.id)}" class="strong">${esc(displayName(i))}</a><div class="muted small">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}</div></td>
+          const im = imageOf(i);
+          return `<tr><td class="with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="thumb"></span>`}<div><a href="#item/${encodeURIComponent(i.id)}" class="strong">${esc(displayName(i))}</a><div class="muted small">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}</div></div></td>
           <td>${i.specs?.impedance ? `${fmt(i.specs.impedance[0].value, 1)} Ω` : "—"}</td>
           <td>${sensOrPower(i)}</td>
           <td>${pr.cheapest ? money(pr.cheapest.price, pr.cheapest.currency) : "—"}</td>
           <td>${stores || "—"}</td></tr>`;
         })
-        .join("")}</tbody></table></div>
+        .join("")}</tbody></table></div>`}
     ${res.length > limit ? `<div class="more"><a class="pill" href="${link({ n: limit + 120 })}">${esc(t("more"))}</a></div>` : ""}
   </div>`;
 }
@@ -477,12 +500,22 @@ function itemPage(id) {
         .join("")}</ul></div>`
     : "";
   const notes = (i.notes ?? []).map((n) => `<li>${esc(n[state.lang])} ${n.source ? srcLink(n.source) : ""}</li>`).join("");
+  const im = imageOf(i);
+  const name = displayName(i);
+  const issueQuery = `"${name}" (issue OR problem OR broken OR dead OR defect OR short)`;
+  const issueLinks = [
+    ["Reddit", `https://www.reddit.com/search/?q=${encodeURIComponent(issueQuery)}`],
+    ["Head-Fi", `https://www.google.com/search?q=${encodeURIComponent(`site:head-fi.org ${issueQuery}`)}`],
+    ["ASR", `https://www.google.com/search?q=${encodeURIComponent(`site:audiosciencereview.com ${issueQuery}`)}`],
+  ];
   return `<article class="item">
-    <header class="item-head">
-      <div><p class="muted">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
+    <header class="item-head${im ? " has-img" : ""}">
+      ${im ? `<a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a>` : ""}
+      <div class="item-title"><p class="muted">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
-      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}</div>
+      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
       <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}<a class="pill" href="https://shopee.co.th/search?keyword=${encodeURIComponent(displayName(i))}" target="_blank" rel="noopener">${esc(t("it_shopee"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
       <section class="card pad"><h3>${esc(t("it_specs"))}</h3>${specRows || powerRows ? specRows + powerRows : `<p class="muted">${esc(t("it_no_specs"))}</p>`}${notes ? `<ul class="notes">${notes}</ul>` : ""}</section>
@@ -754,6 +787,15 @@ function seg(name, items, value) {
   return `<div class="seg" role="group" style="--n:${items.length};--i:${i}">${items
     .map(([v, l]) => `<button type="button" data-name="${name}" data-value="${esc(v)}" aria-pressed="${v === value}">${esc(l)}</button>`)
     .join("")}</div>`;
+}
+/** First store photo for an item: { src, url, store }. Loaded from the store CDN, never copied. */
+function imageOf(i) {
+  const o = (i.offers ?? []).find((x) => x.image && !x.suspect);
+  return o ? { src: o.image, url: o.url, store: o.store } : null;
+}
+/** Shopify CDN resizes on request; other hosts ignore the parameter. */
+function sized(src, w) {
+  return /cdn\.shopify\.com|\/cdn\/shop\//.test(src) ? `${src}${src.includes("?") ? "&" : "?"}width=${w}` : src;
 }
 function specLine(i) {
   const z = i.specs?.impedance?.[0];

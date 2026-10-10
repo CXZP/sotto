@@ -56,6 +56,9 @@ function slim(p) {
     updatedAt: p.updated_at,
     // Keep every variant: "Case only" or "Cable only" options must not set the price.
     variants: p.variants.map((v) => ({ title: v.title, price: Number(v.price), available: v.available })),
+    // Only the URL of the store's first product photo. The page loads it from
+    // the store's CDN and links back; images are never copied into the repo.
+    image: p.images?.[0]?.src ?? null,
     body: p.body_html ?? "",
   };
 }

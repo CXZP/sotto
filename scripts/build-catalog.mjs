@@ -19,6 +19,23 @@ const files = (await readdir(new URL("cache/raw/", root))).filter((f) => f.endsW
 const groups = new Map();
 const stats = { products: 0, kept: 0, byCategory: {}, withSpecs: {}, rejected: 0, stores: {} };
 
+// Stores list their own name as the vendor for products they resell
+// ("The Hangout by Crinacle" for "CrinEar Project Monolith"). For those, take
+// the real brand from the start of the title when it is a brand seen elsewhere.
+const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com)$/i;
+const knownBrands = new Set();
+for (const file of files) {
+  const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
+  for (const p of snap.products) if (p.vendor && !STORE_VENDOR.test(p.vendor.trim())) knownBrands.add(p.vendor.trim());
+}
+const brandsLongestFirst = [...knownBrands].sort((a, b) => b.length - a.length);
+function realVendor(p) {
+  const v = (p.vendor ?? "").trim();
+  if (!STORE_VENDOR.test(v)) return v;
+  const title = p.title.toLowerCase();
+  return brandsLongestFirst.find((b) => title.startsWith(`${b.toLowerCase()} `)) ?? v;
+}
+
 for (const file of files) {
   const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
   stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
@@ -49,11 +66,12 @@ for (const file of files) {
       }
     }
 
-    const { key, model } = modelKey(p.vendor, p.title);
+    const vendor = realVendor(p);
+    const { key, model } = modelKey(vendor, p.title);
     const gk = groupKey(key);
     const g =
       groups.get(gk) ??
-      { id: key, brand: p.vendor || null, model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
+      { id: key, brand: vendor || null, model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
     // A model listed as "headphone" at one store and "iem" at another keeps the first;
     // the conflict is recorded so a person can look.
     if (g.category !== category) g.categoryConflict = [...new Set([...(g.categoryConflict ?? [g.category]), category])];

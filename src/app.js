@@ -1,12 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2znx50";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2znx50";
-import { renderChart } from "./chart.js?v=mv2znx50";
-import { makeT } from "./i18n.js?v=mv2znx50";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2znx50";
-import * as community from "./community.js?v=mv2znx50";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2znx50";
-import { redactImage } from "./redact.js?v=mv2znx50";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2znx50";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2zt2o3";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2zt2o3";
+import { renderChart } from "./chart.js?v=mv2zt2o3";
+import { makeT } from "./i18n.js?v=mv2zt2o3";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2zt2o3";
+import * as community from "./community.js?v=mv2zt2o3";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2zt2o3";
+import { redactImage } from "./redact.js?v=mv2zt2o3";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2zt2o3";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -487,7 +487,7 @@ function openPicker(slot) {
   const draw = () => {
     const q = input.value.trim().toLowerCase();
     const res = pool
-      .filter((i) => (!only.checked || usable.has(i.id)) && (!q || `${i.brand} ${i.model}`.toLowerCase().includes(q)))
+      .filter((i) => (!only.checked || usable.has(i.id)) && (!q || matches(i, q)))
       .sort((a, b) => Number(usable.has(b.id)) - Number(usable.has(a.id)) || Number(!!b.curated) - Number(!!a.curated) || b.offers.length - a.offers.length)
       .slice(0, 80);
     list.innerHTML = res
@@ -532,7 +532,7 @@ function catalogPage() {
     (i) =>
       (cat === "all" || i.category === cat) &&
       (!brand || i.brand === brand) &&
-      (!q || `${i.brand} ${i.model}`.toLowerCase().includes(q)) &&
+      (!q || matches(i, q)) &&
       (!specsOnly || hpModel(i) || sourceOutputs(i).length) &&
       (!stockOnly || i.offers.some((o) => o.available)),
   );
@@ -643,6 +643,42 @@ function sensOrPower(i) {
 
 // ---------------------------------------------------------------------------
 // Item page
+
+// ---------------------------------------------------------------------------
+// Search: every word typed must appear somewhere in brand + model, in any
+// order, ignoring spaces, hyphens and case; roman numerals match digits.
+// "reference crinear", "chu2", "chu ii" and "dx5ii" all work.
+
+const ROMAN = { ii: "2", iii: "3", iv: "4" };
+const normWords = (s) =>
+  s
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9ก-๙]+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => ROMAN[w] ?? w);
+const searchText = new WeakMap();
+function haystack(i) {
+  let h = searchText.get(i);
+  if (!h) {
+    const words = normWords(`${i.brand ?? ""} ${i.model}`);
+    h = `${words.join(" ")} ${words.join("")}`;
+    searchText.set(i, h);
+  }
+  return h;
+}
+function matches(i, q) {
+  const h = haystack(i);
+  return normWords(q).every((w) => h.includes(w));
+}
+/** Lower is better: name starts with the query, then shorter names. */
+function searchRank(i, q) {
+  const h = haystack(i);
+  const first = normWords(q).join(" ");
+  return (h.startsWith(first) || normWords(i.model).join(" ").startsWith(first) ? 0 : 1000) + h.length;
+}
 
 /** Old links keep working after catalog ids change: match on brand + hyphen-free model, roman numerals as digits. */
 function findItem(id) {
@@ -1373,7 +1409,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2znx50" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2zt2o3" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1646,7 +1682,7 @@ async function wireNewThread(main) {
   const sug = el.querySelector("#suggest");
   qIn.addEventListener("input", () => {
     const q = qIn.value.trim().toLowerCase();
-    const hits = q.length < 2 ? [] : db.items.filter((i) => displayName(i).toLowerCase().includes(q)).slice(0, 8);
+    const hits = q.length < 2 ? [] : db.items.filter((i) => matches(i, q)).sort((a, b) => searchRank(a, q) - searchRank(b, q)).slice(0, 8);
     sug.innerHTML = hits.map((i) => `<button type="button" data-pick-item="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(t(`cat_${i.category}`))}</span></button>`).join("");
     sug.querySelectorAll("[data-pick-item]").forEach((b) =>
       b.addEventListener("click", () => {

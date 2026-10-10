@@ -19,7 +19,9 @@ for (const f of files) {
     // <link href="x.css">, <script src="src/app.js">
     .replace(/((?:href|src)=")((?!https?:|data:|#)[^"?]+\.(?:css|js))(?:\?v=\w+)?"/g, `$1$2?v=${v}"`)
     // import ... from "./x.js"  and  import("./x.js")
-    .replace(/((?:from\s+|import\()\s*")(\.\/[^"?]+\.js)(?:\?v=\w+)?"/g, `$1$2?v=${v}"`);
+    .replace(/((?:from\s+|import\()\s*")(\.\/[^"?]+\.js)(?:\?v=\w+)?"/g, `$1$2?v=${v}"`)
+    // fetch("data/catalog.json"): the catalog changes with every crawl
+    .replace(/(fetch\(")(data\/[^"?]+\.json)(?:\?v=\w+)?"/g, `$1$2?v=${v}"`);
   if (after !== before) await writeFile(url, after);
 }
 console.log(`stamped ?v=${v}`);

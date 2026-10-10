@@ -1,6 +1,6 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv2xoyhh";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv2yhtoy";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "desktop", "dap"]);

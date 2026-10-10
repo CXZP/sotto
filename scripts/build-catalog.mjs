@@ -7,7 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact } from "./lib/classify.js";
+import { classify, condition, modelKey, compact, groupKey } from "./lib/classify.js";
 import { extractSpecs, verify } from "./lib/specs.js";
 
 const root = new URL("..", import.meta.url);
@@ -50,8 +50,9 @@ for (const file of files) {
     }
 
     const { key, model } = modelKey(p.vendor, p.title);
+    const gk = groupKey(key);
     const g =
-      groups.get(key) ??
+      groups.get(gk) ??
       { id: key, brand: p.vendor || null, model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
     // A model listed as "headphone" at one store and "iem" at another keeps the first;
     // the conflict is recorded so a person can look.
@@ -71,7 +72,7 @@ for (const file of files) {
       image: p.image ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
-    groups.set(key, g);
+    groups.set(gk, g);
   }
 }
 
@@ -134,7 +135,7 @@ let curatedMatched = 0;
 // store's model name starts with the curated one once hyphens are ignored.
 // Among candidates prefer the shortest name (fewest extra words), then most offers.
 function findGroup(key) {
-  if (groups.has(key)) return key;
+  if (groups.has(groupKey(key))) return groupKey(key);
   const [brand, model] = key.split("--");
   const want = compact(model);
   const candidates = [...groups.values()].filter((g) => {
@@ -142,7 +143,7 @@ function findGroup(key) {
     return b === brand && compact(m).startsWith(want) && !/(?:^|-)(x|bt|wireless|m)(?:-|$)/.test(m.slice(model.length));
   });
   candidates.sort((a, b) => a.id.length - b.id.length || b.offers.length - a.offers.length);
-  return candidates[0]?.id ?? key;
+  return candidates[0] ? groupKey(candidates[0].id) : groupKey(key);
 }
 
 function attach(entry, category, extra) {
@@ -150,7 +151,7 @@ function attach(entry, category, extra) {
   const key = findGroup(rawKey);
   const existing = groups.get(key);
   if (existing) curatedMatched++;
-  const g = existing ?? { id: key, brand: entry.brand, model: entry.model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
+  const g = existing ?? { id: rawKey, brand: entry.brand, model: entry.model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
   g.curated = true;
   g.curatedId = entry.id;
   Object.assign(g, extra(g));

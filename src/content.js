@@ -146,8 +146,8 @@ export function aboutPage(lang, sites, stores) {
 <h1>${th ? "ข้อมูลมาจากไหน" : "Where the data comes from"}</h1>
 <p class="lead">${
     th
-      ? "ราคา สต็อก และสเปกดึงจากฟีดสินค้าสาธารณะของร้าน (Shopify /products.json) เก็บเฉพาะตัวเลขกับลิงก์ และข้อความสเปกบรรทัดที่ตัวเลขมาจาก ไม่คัดลอกคำบรรยายหรือรูป ทุกค่าต้องผ่านการตรวจว่าข้อความนั้นมีอยู่จริงในหน้าร้านและมีตัวเลขเดียวกัน Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากร้านหรือแบรนด์ใด"
-      : "Prices, stock and specs come from stores' public product feeds (Shopify /products.json). Only numbers, links and the single spec line each number came from are kept — no descriptions or images. Every value must be found verbatim in the store text with the same number. Sotto is not affiliated with or endorsed by any store or brand."
+      ? "ราคา สต็อก และสเปกดึงจากฟีดสินค้าสาธารณะของร้าน (Shopify /products.json) เก็บเฉพาะตัวเลขกับลิงก์ และข้อความสเปกบรรทัดที่ตัวเลขมาจาก ไม่คัดลอกคำบรรยาย รูปสินค้าโหลดตรงจากเซิร์ฟเวอร์ของร้านพร้อมลิงก์กลับ ไม่ได้เก็บไว้ที่ Sotto ทุกค่าต้องผ่านการตรวจว่าข้อความนั้นมีอยู่จริงในหน้าร้านและมีตัวเลขเดียวกัน Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากร้านหรือแบรนด์ใด"
+      : "Prices, stock and specs come from stores' public product feeds (Shopify /products.json). Only numbers, links and the single spec line each number came from are kept — no descriptions. Product photos load directly from the store's server with a link back; Sotto never stores them. Every value must be found verbatim in the store text with the same number. Sotto is not affiliated with or endorsed by any store or brand."
   }</p>
 
 <h3 class="group">${th ? "ร้านค้า" : "Stores"}</h3>
@@ -155,6 +155,14 @@ export function aboutPage(lang, sites, stores) {
 
 <h3 class="group">${th ? "แหล่งของค่าสเปก (จำนวนค่า)" : "Spec sources (values cited)"}</h3>
 <div class="card">${siteRows}</div>
+
+<h3 class="group">${th ? "ความเป็นส่วนตัว: เบราว์เซอร์ของคุณติดต่อใครบ้าง" : "Privacy: who your browser talks to"}</h3>
+<div class="card">
+  <div class="row"><div><div class="row-title">${th ? "ไม่มี analytics ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม" : "No analytics, no ads, no tracking cookies"}</div><div class="row-sub">${th ? "Sotto ไม่นับยอดเข้าชมและไม่เก็บว่าคุณดูอะไร" : "Sotto doesn't count visits or record what you look at."}</div></div></div>
+  <div class="row"><div><div class="row-title">${th ? "แต่บริการเหล่านี้เห็น IP ของคุณ เพราะเบราว์เซอร์ต้องโหลดไฟล์จากเขา" : "These services do see your IP, because your browser loads files from them"}</div><div class="row-sub">
+    GitHub Pages (${th ? "ตัวเว็บ" : "the site"}) · Google Fonts (${th ? "ฟอนต์" : "fonts"}) · ${th ? "เซิร์ฟเวอร์รูปของร้านค้า" : "store image servers"} · jsDelivr + Supabase (${th ? "เฉพาะส่วน community" : "community features only"})</div></div></div>
+  <div class="row"><div><div class="row-sub">${th ? "ถ้าคุณเข้าสู่ระบบ เราเก็บอีเมลไว้ส่งลิงก์ และชื่อที่แสดงกับโพสต์ของคุณ ลบบัญชีได้โดยติดต่อผ่าน GitHub" : "If you sign in we keep your email (to send the link) and the display name on your posts. Ask via GitHub to delete your account."}</div></div></div>
+</div>
 
 <h3 class="group">License</h3>
 <div class="card">

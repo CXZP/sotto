@@ -197,3 +197,12 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .brand-pics { display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; aspect-ratio: 3 / 1; }
 .brand-pics img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
 .brand-body { padding: 10px 12px; display: grid; gap: 2px; }
+
+/* Chart: header link, picked card, full page */
+.chart-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.chart-pick { margin-top: 10px; }
+.pick-card { padding: 12px; border-radius: 14px; background: var(--surface-2); flex-wrap: wrap; }
+.pick-card .thumb { width: 56px; height: 56px; }
+.pick-card .badge { display: inline-grid; width: 16px; height: 16px; vertical-align: -3px; }
+.chart-page { display: grid; gap: 14px; }
+.chart-page #chart-src { max-width: 320px; }

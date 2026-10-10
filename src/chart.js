@@ -5,10 +5,10 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mv2xoyhh";
+import { availableVrms } from "./calc.js?v=mv2yhtoy";
 
-const W = 760;
-const H = 440;
+let W = 760;
+let H = 440;
 const PAD = { l: 58, r: 92, t: 18, b: 46 };
 const X = [8, 1000];
 const Y = [0.003, 40];
@@ -31,7 +31,9 @@ const SHAPE = {
  * @param o.labels { x, y, ok, tight, insufficient, ambiguous }
  * @param o.onPick (id) => void
  */
-export function renderChart(el, { curves, points, labels, onPick, fmt, peak = 95, crest = 15, overkillSpl = 130 }) {
+export function renderChart(el, { curves, points, labels, onPick, fmt, peak = 95, crest = 15, overkillSpl = 130, size }) {
+  W = size?.w ?? 760;
+  H = size?.h ?? 440;
   // Shaded zones that match the verdict rules exactly, so the picture explains
   // itself: a dot's zone is its status. Boundaries follow the best output.
   const env = (z) => Math.max(0, ...curves.map((c) => availableVrms(c.output, z).vrms ?? 0));
@@ -109,7 +111,7 @@ export function renderChart(el, { curves, points, labels, onPick, fmt, peak = 95
       <div class="tip" hidden></div>
     </div>`;
 
-  const svg = el.querySelector("svg");
+  const svg = el.querySelector(".chart-box svg");
   const tip = el.querySelector(".tip");
   const coords = sorted.map((p) => ({ p, x: lx(Math.min(Math.max(p.z, X[0]), X[1])), y: ly(clampY(p.v)) }));
 

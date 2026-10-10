@@ -1,12 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2xoyhh";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2xoyhh";
-import { renderChart } from "./chart.js?v=mv2xoyhh";
-import { makeT } from "./i18n.js?v=mv2xoyhh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2xoyhh";
-import * as community from "./community.js?v=mv2xoyhh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2xoyhh";
-import { redactImage } from "./redact.js?v=mv2xoyhh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2xoyhh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2yhtoy";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2yhtoy";
+import { renderChart } from "./chart.js?v=mv2yhtoy";
+import { makeT } from "./i18n.js?v=mv2yhtoy";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2yhtoy";
+import * as community from "./community.js?v=mv2yhtoy";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2yhtoy";
+import { redactImage } from "./redact.js?v=mv2yhtoy";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2yhtoy";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -131,6 +131,7 @@ function render() {
   else if (r.name === "item") main.innerHTML = itemPage(r.id);
   else if (r.name === "deal") main.innerHTML = dealPage();
   else if (r.name === "brands") main.innerHTML = brandsPage();
+  else if (r.name === "chart") main.innerHTML = chartPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
@@ -143,14 +144,14 @@ function render() {
 
 function currentSource() {
   const device = db.devices.find((d) => d.id === state.device) ?? db.devices[0];
-  const amp = state.amp ? db.byId.get(state.amp) : null;
+  const amp = state.amp ? findItem(state.amp) : null;
   const outputs = amp ? sourceOutputs(amp) : device.outputs;
   return { device, amp, outputs, label: amp ? displayName(amp) : device.name[state.lang] };
 }
 
 function buildPage() {
   const { device, amp } = currentSource();
-  const hp = state.hp ? db.byId.get(state.hp) : null;
+  const hp = state.hp ? findItem(state.hp) : null;
   const lv = LEVELS[state.level] ?? LEVELS.normal;
   return `<div class="builder">
     <section class="slots card">
@@ -328,12 +329,19 @@ function mergeCurves(outputs, srcLabel) {
 const rankStatus = (s) => ({ ok: 0, overkill: 1, tight: 2, ambiguous: 3, insufficient: 4 })[s] ?? 5;
 const statusKey = (s) => (s === "overkill" ? "ok" : s);
 
-function drawChart(el, outputs, srcLabel, highlightId) {
-  const level = LEVELS[state.level] ?? LEVELS.normal;
+/**
+ * Voltage chart for one source. Clicking a dot opens a card under the chart
+ * (it never navigates away). `opts.big` is the full-page version with filters.
+ */
+function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
+  if (!el) return;
+  const level = LEVELS[opts.level ?? state.level] ?? LEVELS.normal;
   const peak = level + CREST;
   const counts = { ok: 0, overkill: 0, tight: 0, insufficient: 0 };
   const points = [];
+  const keep = opts.filter ?? (() => true);
   for (const h of headphones) {
+    if (!keep(h)) continue;
     const m = hpModel(h);
     if (!m.unitKnown) continue; // position would be a guess; listed, not plotted
     const { ohms, dbPerV } = headphoneSpecs(m);
@@ -342,23 +350,109 @@ function drawChart(el, outputs, srcLabel, highlightId) {
     if (counts[st] !== undefined) counts[st]++;
     points.push({ id: h.id, label: displayName(h), z: ohms, v: required(peak, dbPerV, ohms).vrms, status: st, highlight: h.id === highlightId });
   }
-  el.innerHTML = `<h3>${esc(t("chart_title"))}</h3>
+  const bigLink = opts.big || !opts.srcParam ? "" : `<a class="pill small" href="#chart?${opts.srcParam}&level=${state.level}">${esc(t("chart_big"))} ↗</a>`;
+  el.innerHTML = `<div class="chart-head"><h3>${esc(t("chart_title"))}</h3>${bigLink}</div>
     <details class="howto"${state.mode === "simple" ? " open" : ""}><summary>${esc(t("chart_howto"))}</summary><ol class="small">
       <li>${esc(t("chart_h1"))}</li><li>${esc(t("chart_h2"))}</li><li>${esc(t("chart_h3", { src: srcLabel }))}</li><li>${esc(t("chart_h4"))}</li></ol></details>
-    <div class="chart-host"></div>
-    <p class="hint">${esc(t("chart_count", { n: points.length, ok: counts.ok, over: counts.overkill, tight: counts.tight, bad: counts.insufficient }))}</p>`;
-  renderChart(el.querySelector(".chart-host"), {
-    curves: mergeCurves(outputs, srcLabel),
-    points,
-    peak,
-    crest: CREST,
-    labels: { harder: t("chart_harder"), easier: t("chart_easier"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
-    fmt: { z: (z) => `${fmt(z, 1)} Ω`, v: vfmt },
-    onPick: (id) => {
+    <div class="chart-host${opts.big ? " big" : ""}"></div>
+    <p class="hint">${esc(t("chart_count", { n: points.length, ok: counts.ok, over: counts.overkill, tight: counts.tight, bad: counts.insufficient }))}</p>
+    <div class="chart-pick" aria-live="polite">${highlightId ? "" : `<p class="muted small">${esc(t("chart_pick_hint"))}</p>`}</div>`;
+  const pickBox = el.querySelector(".chart-pick");
+  const draw = (hl) =>
+    renderChart(el.querySelector(".chart-host"), {
+      curves: mergeCurves(outputs, srcLabel),
+      points: points.map((p) => ({ ...p, highlight: p.id === hl })),
+      peak,
+      crest: CREST,
+      size: opts.big ? { w: 1100, h: 640 } : undefined,
+      labels: { harder: t("chart_harder"), easier: t("chart_easier"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
+      fmt: { z: (z) => `${fmt(z, 1)} Ω`, v: vfmt },
+      onPick: (id) => {
+        draw(id);
+        showPick(id);
+      },
+    });
+  const showPick = (id) => {
+    const h = db.byId.get(id);
+    const p = points.find((x) => x.id === id);
+    if (!h || !p) return;
+    const im = imageOf(h);
+    const pr = prices(h).cheapest;
+    const tone = { ok: "good", overkill: "warn", tight: "warn", insufficient: "bad" }[p.status] ?? "muted";
+    pickBox.innerHTML = `<div class="pick-card with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 120))}" alt="" referrerpolicy="no-referrer">` : ""}
+      <div class="grow"><b>${esc(displayName(h))}</b>
+      <div class="small"><span class="badge ${tone}" aria-hidden="true"></span> ${esc(t(`st_${p.status}`))} · ${esc(t("chart_need"))} ${esc(vfmt(p.v))} @ ${esc(fmt(p.z, 1))} Ω${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div>
+      <div class="row-inline"><a class="pill" href="#item/${encodeURIComponent(id)}">${esc(t("chart_open"))}</a>${opts.onUse ? `<button type="button" class="pill primary" data-pick-use>${esc(t("it_add_build"))}</button>` : ""}</div></div>`;
+    pickBox.querySelector("[data-pick-use]")?.addEventListener("click", () => opts.onUse(id));
+  };
+  draw(highlightId);
+  if (highlightId) showPick(highlightId);
+}
+
+/** #chart?src=<item id>|dev=<device id>&level=&cat=&max=  Full-page chart with filters. */
+function chartPage() {
+  const p = query();
+  const src = p.get("src") ? db.byId.get(p.get("src")) : null;
+  const dev = db.devices.find((d) => d.id === p.get("dev")) ?? (src ? null : db.devices[0]);
+  const label = src ? displayName(src) : dev.name[state.lang];
+  const cat = p.get("cat") ?? "all";
+  const level = p.get("level") ?? state.level;
+  const link = (over) => {
+    const n = new URLSearchParams(p);
+    for (const [k, v] of Object.entries(over)) v === null ? n.delete(k) : n.set(k, v);
+    return `#chart?${n}`;
+  };
+  const options = [
+    ...db.devices.map((d) => `<option value="dev:${esc(d.id)}"${!src && d.id === dev?.id ? " selected" : ""}>${esc(d.name[state.lang])}</option>`),
+    ...[...sources].sort((a, b) => displayName(a).localeCompare(displayName(b))).map((s) => `<option value="src:${esc(s.id)}"${src?.id === s.id ? " selected" : ""}>${esc(displayName(s))}</option>`),
+  ].join("");
+  return `<div class="chart-page">
+    <header class="deal-head"><h1>${esc(t("chart_page_title", { src: label }))}</h1></header>
+    <div class="filters">
+      <select class="mini-select" id="chart-src" aria-label="${esc(t("slot_amp"))}">${options}</select>
+      <div class="chips">${["quiet", "normal", "loud"].map((l) => `<a class="chip${l === level ? " on" : ""}" href="${link({ level: l })}">${esc(t(`level_${l}`))}</a>`).join("")}</div>
+      <div class="chips">${["all", "iem", "headphone"].map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
+      <label class="check">${esc(t("chart_max"))} <input class="search num" id="chart-max" inputmode="decimal" style="max-width:110px" value="${esc(p.get("max") ?? "")}" placeholder="USD"></label>
+    </div>
+    <div class="card chart-card" id="chart"></div>
+  </div>`;
+}
+
+function wireChartPage(main) {
+  const p = query();
+  const src = p.get("src") ? db.byId.get(p.get("src")) : null;
+  const dev = db.devices.find((d) => d.id === p.get("dev")) ?? db.devices[0];
+  const outputs = src ? sourceOutputs(src) : dev.outputs;
+  const cat = p.get("cat") ?? "all";
+  const max = Number(p.get("max")) || Infinity;
+  drawChart(main.querySelector("#chart"), outputs, src ? displayName(src) : dev.name[state.lang], null, {
+    big: true,
+    level: p.get("level") ?? state.level,
+    filter: (h) => (cat === "all" || h.category === cat) && (max === Infinity || (prices(h).cheapest?.price ?? Infinity) <= max),
+    onUse: (id) => {
       state.hp = id;
       state.plug = "";
+      if (src) state.amp = src.id;
+      else {
+        state.amp = "";
+        state.device = dev.id;
+      }
       go(buildUrl());
     },
+  });
+  main.querySelector("#chart-src").addEventListener("change", (e) => {
+    const [kind, id] = e.target.value.split(/:(.*)/);
+    const n = query();
+    n.delete("src");
+    n.delete("dev");
+    n.set(kind, id);
+    go(`#chart?${n}`);
+  });
+  const maxIn = main.querySelector("#chart-max");
+  maxIn.addEventListener("change", () => {
+    const n = query();
+    maxIn.value ? n.set("max", maxIn.value) : n.delete("max");
+    go(`#chart?${n}`);
   });
 }
 
@@ -540,8 +634,19 @@ function sensOrPower(i) {
 // ---------------------------------------------------------------------------
 // Item page
 
+/** Old links keep working after catalog ids change: match on brand + hyphen-free model, roman numerals as digits. */
+function findItem(id) {
+  if (db.byId.has(id)) return db.byId.get(id);
+  const norm = (k) => {
+    const [b, m = ""] = k.split("--");
+    return `${b}--${m.split("-").map((w) => ({ ii: "2", iii: "3", iv: "4" })[w] ?? w).join("")}`;
+  };
+  const want = norm(id);
+  return db.items.find((x) => norm(x.id) === want) ?? null;
+}
+
 function itemPage(id) {
-  const i = db.byId.get(id);
+  const i = findItem(id);
   if (!i) return `<div class="card empty"><p>${esc(t("it_not_found"))}</p></div>`;
   const isHp = HEADPHONE_CATS.has(i.category);
   const isSrc = SOURCE_CATS.has(i.category);
@@ -613,13 +718,30 @@ function wire(main, r) {
       go(buildUrl());
     });
     const src = currentSource();
-    if (src.outputs.length) drawChart(main.querySelector("#chart"), src.outputs, src.label, state.hp);
+    if (src.outputs.length)
+      drawChart(main.querySelector("#chart"), src.outputs, src.label, state.hp, {
+        srcParam: src.amp ? `src=${encodeURIComponent(src.amp.id)}` : `dev=${encodeURIComponent(src.device.id)}`,
+        onUse: (id) => {
+          state.hp = id;
+          state.plug = "";
+          go(buildUrl());
+        },
+      });
     else main.querySelector("#chart").remove();
     warnBanner(main.querySelector("#warn-banner"), [state.amp, state.hp].filter(Boolean));
   }
   if (r.name === "item") {
-    const i = db.byId.get(r.id);
-    if (i && SOURCE_CATS.has(i.category) && sourceOutputs(i).length) drawChart(main.querySelector("#chart"), sourceOutputs(i), displayName(i), null);
+    const i = findItem(r.id);
+    if (i && SOURCE_CATS.has(i.category) && sourceOutputs(i).length)
+      drawChart(main.querySelector("#chart"), sourceOutputs(i), displayName(i), null, {
+        srcParam: `src=${encodeURIComponent(i.id)}`,
+        onUse: (id) => {
+          state.amp = i.id;
+          state.hp = id;
+          state.plug = "";
+          go(buildUrl());
+        },
+      });
     const rev = main.querySelector("#item-rev");
     if (rev) rev.outerHTML = reverseCard(i, LEVELS.normal);
     if (i) renderCommunity(main.querySelector("#community"), i);
@@ -627,6 +749,7 @@ function wire(main, r) {
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
   if (r.name === "deal") wireDeal(main);
+  if (r.name === "chart") wireChartPage(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
     a.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1055,8 +1178,13 @@ function channelsCard(i) {
     ["Shopee", `https://shopee.co.th/search?keyword=${q(name)}`],
     ["Lazada", `https://www.lazada.co.th/catalog/?q=${q(name)}`],
   ];
+  // Only Taobao has been tried by a person so far; the others are marked untested.
+  const flagship = zh ? `${zh}官方旗舰店` : null;
   const cn = [
     ["Taobao 淘宝", `https://s.taobao.com/search?q=${q(cnQuery)}`],
+    ...(flagship ? [[`Taobao: ${flagship}`, `https://s.taobao.com/search?q=${q(flagship)}`]] : []),
+  ];
+  const cnUntested = [
     ["Tmall 天猫", `https://list.tmall.com/search_product.htm?q=${q(cnQuery)}`],
     ["JD 京东", `https://search.jd.com/Search?keyword=${q(cnQuery)}`],
     ["闲鱼 Xianyu", `https://www.goofish.com/search?q=${q(cnQuery)}`],
@@ -1068,7 +1196,10 @@ function channelsCard(i) {
         <div class="row-inline">${links(th)}<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a></div></div>
       <div><h4>${esc(t("ch_cn"))}</h4><p class="muted small">${esc(t("ch_cn_note"))}</p>
         <p class="small">${esc(t("ch_cn_query"))} <code>${esc(cnQuery)}</code> <button type="button" class="link small" data-copy="${esc(cnQuery)}">${esc(t("copy"))}</button>${zh ? "" : ` <span class="muted">· ${esc(t("ch_cn_no_zh"))}</span>`}</p>
+        <p class="small warn-text">${esc(t("ch_cn_login"))}</p>
         <div class="row-inline">${links(cn)}</div>
+        <p class="small muted">${esc(t("ch_cn_untested"))}</p>
+        <div class="row-inline untested">${links(cnUntested)}</div>
         <ul class="small muted ch-tips"><li>${esc(t("ch_cn_tip1"))}</li><li>${esc(t("ch_cn_tip2"))}</li><li>${esc(t("ch_cn_tip3"))}</li></ul></div>
     </div>
     <p class="muted small">${esc(t("aff_note"))}</p></section>`;
@@ -1228,7 +1359,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2xoyhh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2yhtoy" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

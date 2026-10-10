@@ -42,11 +42,33 @@ const NOISE = [
   /\b(in[- ]ear monitors?|iems?|earphones?|earbuds?|headphones?|wired|universal|over[- ]ear|on[- ]ear|open[- ]back|planar magnetic|planar|dynamic drivers?|dynamic|drivers?|hybrid|portable|desktop|usb|dac\/amp|dac amp|headphone amp(lifier)?|amplifier|amp|dac|dongle|balanced|monitors?)\b/gi,
   // Marketing words stores append that don't change the product.
   /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi,
+  // Product-type phrases that don't name the model ("JM21 Music Player" == "JM21 Digital Audio Player").
+  /\b\d+(?:\.\d+)?\s?mm\b|\b(?:type[- ]?c|usb[- ]?c)\b(?! to)/gi,
+  /\b(high[- ]performance|entry[- ]level|composite diaphragm|\d+\s?w power|audio|armature|standard package|package|tribrid|quadbrid|(?:transportable )?digital player|\d{4} revision)\b/gi,
+  /\b(in[- ]ears?|(?:digital |hi-?res )?(?:audio|music|mp3) players?|android \d+|jade ?audio|lossless|bluetooth(?: \d(?:\.\d)?)?|headphone|portable usb)\b/gi,
   // DAC/amp chip names and driver counts.
   /\b(dual|quad)?\s*(es\d{4}\w*|cs\d{5}\w*|ak\d{4}\w*|pcm\d{4}\w*|tpa\d{4}\w*|ricore\w*|rt\d{4}\w*)\b/gi,
   /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
   /[|–—:,/+&]+/g,
 ];
+
+/**
+ * Grouping key: brand + hyphen-free model, with a model repeated by the store
+ * collapsed ("blessing3-blessing-3" -> "blessing3"). "dawn-pro-2" and
+ * "dawn-pro2" match; "dawn-pro" and "dawn-pro-2" stay apart.
+ */
+export function groupKey(key) {
+  const [brand, model = ""] = key.split("--");
+  // Roman numerals as separate words mean the same as digits ("chu-ii" == "chu-2").
+  const roman = { ii: "2", iii: "3", iv: "4", mkii: "mk2", mkiii: "mk3" };
+  let m = model
+    .split("-")
+    // also glued on: "chuii" == "chu2"
+    .map((w) => roman[w] ?? w.replace(/^([a-z]{2,}?)(iii|ii)$/, (_, a, r) => a + (r === "ii" ? "2" : "3")))
+    .join("");
+  if (m.length % 2 === 0 && m.slice(0, m.length / 2) === m.slice(m.length / 2)) m = m.slice(0, m.length / 2);
+  return `${brand}--${m}`;
+}
 
 /** Hyphen-free form for loose matching ("dc04pro" == "dc04-pro"). */
 export function compact(key) {

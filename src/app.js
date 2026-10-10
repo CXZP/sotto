@@ -1,13 +1,13 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30bwme";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30bwme";
-import { renderChart } from "./chart.js?v=mv30bwme";
-import { makeT } from "./i18n.js?v=mv30bwme";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv30bwme";
-import * as community from "./community.js?v=mv30bwme";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30bwme";
-import { redactImage } from "./redact.js?v=mv30bwme";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30bwme";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30bwme";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30hj1h";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30hj1h";
+import { renderChart } from "./chart.js?v=mv30hj1h";
+import { makeT } from "./i18n.js?v=mv30hj1h";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv30hj1h";
+import * as community from "./community.js?v=mv30hj1h";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30hj1h";
+import { redactImage } from "./redact.js?v=mv30hj1h";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30hj1h";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30hj1h";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1410,7 +1410,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30bwme" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30hj1h" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1550,12 +1550,12 @@ function gallery(images, cls = "") {
 const richText = (text) => renderMd(text);
 
 /** Textarea with a formatting toolbar and a preview toggle. */
-function mdEditor(name, rows, placeholder, max) {
+function mdEditor(name, rows, placeholder, max, value = "") {
   return `<div class="md-editor">
     <div class="md-bar" role="toolbar">${Object.entries(MD_ACTIONS)
       .map(([k, a]) => `<button type="button" data-md="${k}" title="${esc(t(`md_${k}`))}" aria-label="${esc(t(`md_${k}`))}">${esc(a.label)}</button>`)
       .join("")}<span class="grow"></span><button type="button" data-md-preview>${esc(t("md_preview"))}</button></div>
-    <textarea class="search" name="${name}" rows="${rows}" maxlength="${max}" placeholder="${esc(placeholder)}"></textarea>
+    <textarea class="search" name="${name}" rows="${rows}" maxlength="${max}" placeholder="${esc(placeholder)}">${esc(value)}</textarea>
     <div class="md md-preview" hidden></div>
     <p class="muted small md-help">${esc(t("md_help"))}</p></div>`;
 }
@@ -1792,6 +1792,78 @@ async function wireNewThread(main) {
   });
 }
 
+// ---- editing (own posts only; RLS enforces it server-side too)
+
+function editThread(article, th, done) {
+  const kept = [...(th.images ?? [])];
+  article.innerHTML = `<form class="cm-form" data-form="edit-thread">
+    <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}"${c === th.category ? " selected" : ""}>${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
+    <input class="search" name="title" required minlength="5" maxlength="160" value="${esc(th.title)}">
+    ${mdEditor("body", 8, t("ds_body_ph"), 10000, th.body)}
+    <div class="photo-list kept"></div>
+    ${photoPickerHtml(8)}
+    <div class="row-inline"><button class="pill primary">${esc(t("cm_save"))}</button><button type="button" class="pill" data-cancel>${esc(t("rd_cancel"))}</button></div>
+    <p class="small status" role="status"></p></form>`;
+  const keptEl = article.querySelector(".kept");
+  const drawKept = () => {
+    keptEl.innerHTML = kept.map((u, n) => `<figure class="ph"><img src="${esc(u)}" alt=""><button type="button" data-unkeep="${n}" aria-label="${esc(t("cm_delete"))}">✕</button></figure>`).join("");
+    keptEl.querySelectorAll("[data-unkeep]").forEach((x) =>
+      x.addEventListener("click", () => {
+        kept.splice(Number(x.dataset.unkeep), 1);
+        drawKept();
+      }),
+    );
+  };
+  drawKept();
+  const photos = wirePhotos(article);
+  wireMd(article);
+  const form = article.querySelector("form");
+  form.querySelector("[data-cancel]").addEventListener("click", done);
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const st = form.querySelector(".status");
+    if (kept.length + photos.blobs.length > 8) {
+      st.textContent = t("ph_too_many", { max: 8 });
+      return;
+    }
+    try {
+      const added = await photos.upload(st);
+      await community.updateThread(th.id, { category: form.category.value, title: form.title.value.trim(), body: form.body.value.trim(), images: [...kept, ...added] });
+      done();
+    } catch (e) {
+      st.textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
+}
+
+function editComment(main, c, done) {
+  if (!main || !c) return;
+  const bodyEl = main.querySelector(".comment-body");
+  const box = document.createElement("form");
+  box.className = "cm-form";
+  box.innerHTML = `${mdEditor("body", 3, "", 5000, c.body)}<div class="row-inline"><button class="pill primary small">${esc(t("cm_save"))}</button><button type="button" class="pill small" data-cancel>${esc(t("rd_cancel"))}</button></div><p class="small status"></p>`;
+  (bodyEl ?? main.querySelector(".post-actions")).before(box);
+  bodyEl?.remove();
+  main.querySelector(".post-actions").hidden = true;
+  wireMd(box);
+  box.querySelector("textarea").focus();
+  box.querySelector("[data-cancel]").addEventListener("click", done);
+  box.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const body = box.body.value.trim();
+    if (!body && !c.images?.length) {
+      box.querySelector(".status").textContent = t("ph_need_text");
+      return;
+    }
+    try {
+      await community.updateComment(c.id, body);
+      done();
+    } catch (e) {
+      box.querySelector(".status").textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
+}
+
 // ---- one thread
 
 function threadPage(id) {
@@ -1827,14 +1899,14 @@ async function wireThread(main) {
     const actions = (kind, r) =>
       `${canPost && kind === "comment" ? `<button type="button" class="link small" data-reply="${r.id}">${esc(t("ds_reply"))}</button>` : ""}${
         s && !own(r) ? `<button type="button" class="link small" data-dflag="${kind}:${r.id}">${esc(t("cm_flag"))}</button>` : ""
-      }${own(r) ? `<button type="button" class="link small" data-ddel="${kind}:${r.id}">${esc(t("cm_delete"))}</button>` : ""}`;
+      }${own(r) ? `<button type="button" class="link small" data-dedit="${kind}:${r.id}">${esc(t("ds_edit"))}</button><button type="button" class="link small" data-ddel="${kind}:${r.id}">${esc(t("cm_delete"))}</button>` : ""}`;
     const tree = (parent, depth) =>
       (kids.get(parent) ?? [])
         .sort((a, b) => b.score - a.score || new Date(a.created_at) - new Date(b.created_at))
         .map(
           (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
           ${voteBox("comment", c.id, c.score, cv.get(c.id), !!s)}
-          <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}</div>
+          <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}${c.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</div>
           ${c.body ? `<div class="comment-body md">${richText(c.body)}</div>` : ""}
           ${gallery(c.images, "small")}
           <div class="post-actions">${actions("comment", c)}</div>
@@ -1906,6 +1978,13 @@ async function wireThread(main) {
         } catch (e) {
           alert(`${t("cm_error")} ${e.message}`);
         }
+      }),
+    );
+    el.querySelectorAll("[data-dedit]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const [kind, tid] = b.dataset.dedit.split(":");
+        if (kind === "thread") editThread(el.querySelector("article.thread"), th, load);
+        else editComment(b.closest(".comment-main"), res.comments.find((c) => c.id === Number(tid)), load);
       }),
     );
     el.querySelectorAll("[data-ddel]").forEach((b) =>

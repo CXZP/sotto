@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv30bwme";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv30hj1h";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -213,6 +213,12 @@ export async function deleteThread(id) {
 export async function addComment(row) {
   const sb = await client();
   const { error } = await sb.from("comments").insert(row);
+  if (error) throw error;
+}
+
+export async function updateComment(id, body) {
+  const sb = await client();
+  const { error } = await sb.from("comments").update({ body, edited_at: new Date().toISOString() }).eq("id", id);
   if (error) throw error;
 }
 

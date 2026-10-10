@@ -1,14 +1,14 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv31f28z";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv31f28z";
-import { renderChart } from "./chart.js?v=mv31f28z";
-import { makeT } from "./i18n.js?v=mv31f28z";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv31f28z";
-import { LEGAL } from "./legal.js?v=mv31f28z";
-import * as community from "./community.js?v=mv31f28z";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv31f28z";
-import { redactImage } from "./redact.js?v=mv31f28z";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv31f28z";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv31f28z";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv31tlg4";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv31tlg4";
+import { renderChart } from "./chart.js?v=mv31tlg4";
+import { makeT } from "./i18n.js?v=mv31tlg4";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv31tlg4";
+import { LEGAL } from "./legal.js?v=mv31tlg4";
+import * as community from "./community.js?v=mv31tlg4";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv31tlg4";
+import { redactImage } from "./redact.js?v=mv31tlg4";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv31tlg4";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv31tlg4";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1424,7 +1424,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv31f28z" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv31tlg4" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

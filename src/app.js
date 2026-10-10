@@ -4,6 +4,8 @@ import { renderChart } from "./chart.js";
 import { makeT } from "./i18n.js";
 import { LEARN, aboutPage, REPO } from "./content.js";
 import * as community from "./community.js";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js";
+import { redactImage } from "./redact.js";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -125,6 +127,7 @@ function render() {
   main.className = `page-${r.name}`;
   if (r.name === "catalog") main.innerHTML = catalogPage();
   else if (r.name === "item") main.innerHTML = itemPage(r.id);
+  else if (r.name === "deal") main.innerHTML = dealPage();
   else if (r.name === "learn") main.innerHTML = `<article class="prose">${LEARN[state.lang]}</article>`;
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
@@ -514,13 +517,15 @@ function itemPage(id) {
       <div class="item-title"><p class="muted">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}<a class="pill" href="https://shopee.co.th/search?keyword=${encodeURIComponent(displayName(i))}" target="_blank" rel="noopener">${esc(t("it_shopee"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
       <section class="card pad"><h3>${esc(t("it_specs"))}</h3>${specRows || powerRows ? specRows + powerRows : `<p class="muted">${esc(t("it_no_specs"))}</p>`}${notes ? `<ul class="notes">${notes}</ul>` : ""}</section>
-      <section class="card pad"><h3>${esc(t("it_offers"))}</h3>${offersTable(pr.offers)}</section>
+      <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
     </div>
+    <section class="card pad paid" id="paid"></section>
+    ${channelsCard(i)}
     <section class="card pad community" id="community"></section>
     ${isHp && hpModel(i) ? `<div id="item-rev"></div>` : ""}
     ${isSrc && outs.length ? `<div class="card chart-card" id="chart"></div>` : ""}
@@ -532,7 +537,7 @@ function offersTable(offers) {
   return `<ul class="offers">${offers
     .map(
       (o) => `<li><a href="${esc(o.url)}" target="_blank" rel="noopener" class="strong">${esc(db.stores[o.store]?.name ?? o.store)}</a>
-      <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}</span>
+      <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}${o.seenAt ? ` · ${esc(t("pr_seen", { date: day(o.seenAt) }))}` : ""}</span>
       <span class="price">${money(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}</span></li>`,
     )
     .join("")}</ul>`;
@@ -558,7 +563,10 @@ function wire(main, r) {
     const rev = main.querySelector("#item-rev");
     if (rev) rev.outerHTML = reverseCard(i, LEVELS.normal);
     if (i) renderCommunity(main.querySelector("#community"), i);
+    if (i) renderPaid(main.querySelector("#paid"), i);
+    main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
+  if (r.name === "deal") wireDeal(main);
   if (r.name === "catalog") {
     const input = main.querySelector("#cq");
     let timer;
@@ -754,6 +762,368 @@ async function renderCommunity(el, item) {
           evidence_url: f.evidence_url.value.trim() || null,
           purchase: f.purchase.value,
         });
+      again();
+    } catch (e) {
+      fail(e);
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Real price: code calculator (#deal), where-to-buy channels, prices people paid.
+// No marketplace is scraped. Store feeds are labelled as feeds; marketplace
+// prices come from people, with a screenshot or link, shown as ranges.
+
+const CHANNELS = ["shopee", "lazada", "tiktok", "store_th", "secondhand_th", "taobao", "tmall", "jd", "xianyu", "aliexpress", "store_intl", "other"];
+const CHANNEL_CURRENCY = { taobao: "CNY", tmall: "CNY", jd: "CNY", xianyu: "CNY", store_intl: "USD", aliexpress: "USD" };
+const CURRENCIES = ["THB", "CNY", "USD", "EUR", "JPY", "SGD", "MYR"];
+const EVIDENCE_HOST = "/storage/v1/object/public/evidence/";
+
+function day(iso) {
+  return new Date(iso).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+function baht(n) {
+  return money(n, "THB");
+}
+function codeLabel(c) {
+  return [c.pct ? `${fmt(c.pct, 2)}%` : baht(c.off), c.min ? t("dl_min", { v: baht(c.min) }) : "", c.cap != null && c.pct ? t("dl_cap", { v: baht(c.cap) }) : ""].filter(Boolean).join(" · ");
+}
+
+function dealPage() {
+  const p = query();
+  const item = p.get("item") ? db.byId.get(p.get("item")) : null;
+  const codes = (p.get("c") ?? "").split(",").map(decodeCode).filter(Boolean);
+  const num = (k) => esc(p.get(k) ?? "");
+  const im = item ? imageOf(item) : null;
+  const feed = item ? prices(item).cheapest : null;
+  const field = (id, label, k, hint = "") =>
+    `<label class="dfield"><span>${esc(label)}</span><input class="search num" id="${id}" inputmode="decimal" value="${num(k)}" placeholder="${esc(hint)}"></label>`;
+  return `<div class="deal">
+    <header class="deal-head"><h1>${esc(t("dl_title"))}</h1><p class="muted">${esc(t("dl_lead"))}</p></header>
+    ${
+      item
+        ? `<div class="card pad deal-item with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer">` : ""}
+          <div><a class="strong" href="#item/${encodeURIComponent(item.id)}">${esc(displayName(item))}</a>
+          <div class="muted small">${feed ? esc(t("dl_feed_ref", { price: money(feed.price, feed.currency), store: db.stores[feed.store]?.name ?? feed.store })) : ""}</div>
+          <div class="small" id="deal-paid"></div></div></div>`
+        : ""
+    }
+    <div class="deal-grid">
+      <section class="card pad deal-prices"><h3>${esc(t("dl_price_h"))}</h3>
+        ${field("d-p", t("dl_price"), "p", "1790")}
+        ${field("d-a", t("dl_anchor"), "a", t("optional"))}
+        ${field("d-s", t("dl_ship"), "s", "0")}
+      </section>
+      <section class="card pad"><h3>${esc(t("dl_codes_h"))}</h3><p class="muted small">${esc(t("dl_codes_help"))}</p>
+        <div id="d-codes">${codesHtml(codes)}</div>
+        <div class="row-inline paste"><input class="search" id="d-paste" placeholder="${esc(t("dl_paste_ph"))}">
+          <select id="d-kind" class="mini-select"><option value="platform">${esc(t("dl_kind_platform"))}</option><option value="shop">${esc(t("dl_kind_shop"))}</option></select>
+          <button type="button" class="pill primary" id="d-add">${esc(t("dl_add"))}</button></div>
+        <p class="small status" id="d-paste-status" role="status"></p>
+      </section>
+    </div>
+    <section class="card pad" id="d-result" aria-live="polite"></section>
+    <section class="card pad"><h3>${esc(t("dl_cn_h"))}</h3><p class="muted small">${esc(t("dl_cn_help"))}</p>
+      <div class="deal-fields">
+        ${field("d-cp", t("dl_cn_price"), "cp", "699.9")}
+        ${field("d-cs", t("dl_cn_ship"), "cs", "0")}
+        ${field("d-r", t("dl_cn_rate"), "r", t("dl_cn_rate_ph"))}
+        ${field("d-x", t("dl_cn_extra"), "x", "0")}
+      </div>
+      <div id="d-cn"></div>
+    </section>
+    <p class="muted small">${esc(t("dl_assume"))}</p>
+    <p class="muted small">${esc(t("aff_note"))}</p>
+  </div>`;
+}
+
+function codesHtml(codes) {
+  if (!codes.length) return `<p class="muted small">${esc(t("dl_no_codes"))}</p>`;
+  return `<ul class="codes">${codes
+    .map(
+      (c, n) => `<li class="code-row" data-n="${n}">
+      <select class="mini-select" data-f="kind"><option value="platform"${c.kind !== "shop" ? " selected" : ""}>${esc(t("dl_kind_platform"))}</option><option value="shop"${c.kind === "shop" ? " selected" : ""}>${esc(t("dl_kind_shop"))}</option></select>
+      <label class="code-val"><input class="search num" data-f="val" inputmode="decimal" value="${c.pct ?? c.off ?? ""}"><select class="mini-select" data-f="unit"><option value="pct"${c.pct != null ? " selected" : ""}>%</option><option value="off"${c.pct == null ? " selected" : ""}>฿</option></select></label>
+      <label><span class="small muted">${esc(t("dl_min_l"))}</span><input class="search num" data-f="min" inputmode="decimal" value="${c.min ?? ""}"></label>
+      <label><span class="small muted">${esc(t("dl_cap_l"))}</span><input class="search num" data-f="cap" inputmode="decimal" value="${c.cap ?? ""}"></label>
+      <button type="button" class="link small" data-rm="${n}">${esc(t("cm_delete"))}</button></li>`,
+    )
+    .join("")}</ul>`;
+}
+
+function wireDeal(main) {
+  const $ = (s) => main.querySelector(s);
+  const val = (el) => {
+    const v = Number(String(el?.value ?? "").replace(/[,฿¥\s]/g, ""));
+    return el?.value.trim() && Number.isFinite(v) ? v : null;
+  };
+  const readCodes = () =>
+    [...main.querySelectorAll(".code-row")]
+      .map((row) => {
+        const f = (k) => row.querySelector(`[data-f="${k}"]`);
+        const v = val(f("val"));
+        if (v == null || v <= 0) return null;
+        const c = { kind: f("kind").value, min: val(f("min")) ?? undefined, cap: val(f("cap")) ?? undefined };
+        if (f("unit").value === "pct") {
+          if (v >= 100) return null;
+          c.pct = v;
+        } else {
+          c.off = v;
+          delete c.cap;
+        }
+        return Object.fromEntries(Object.entries(c).filter(([, x]) => x !== undefined));
+      })
+      .filter(Boolean);
+
+  const update = () => {
+    const codes = readCodes();
+    const p = query();
+    const set = (k, v) => (v == null || v === "" ? p.delete(k) : p.set(k, v));
+    set("p", val($("#d-p")));
+    set("a", val($("#d-a")));
+    set("s", val($("#d-s")));
+    set("c", codes.map(encodeCode).join(","));
+    for (const k of ["cp", "cs", "r", "x"]) set(k, val($(`#d-${k}`)));
+    history.replaceState(null, "", `#deal?${p}`);
+    $("#d-result").innerHTML = dealResult(val($("#d-p")), val($("#d-a")), val($("#d-s")) ?? 0, codes);
+    const cn = landed({ price: val($("#d-cp")), shipping: val($("#d-cs")) ?? 0, rate: val($("#d-r")), extraPct: val($("#d-x")) ?? 0 });
+    $("#d-cn").innerHTML = cn
+      ? `<p class="deal-big">${baht(cn.total)}</p><p class="muted small">${esc(t("dl_cn_math", { base: baht(cn.base), extra: baht(cn.extra) }))}</p><p class="small">${esc(t("dl_cn_warn"))}</p>`
+      : `<p class="muted small">${esc(t("dl_cn_empty"))}</p>`;
+  };
+  const redraw = (codes) => {
+    $("#d-codes").innerHTML = codesHtml(codes);
+    bindRows();
+    update();
+  };
+  const bindRows = () => {
+    main.querySelectorAll(".code-row input, .code-row select").forEach((el) => el.addEventListener("input", update));
+    main.querySelectorAll("[data-rm]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const codes = readCodes();
+        codes.splice(Number(b.dataset.rm), 1);
+        redraw(codes);
+      }),
+    );
+  };
+  main.querySelectorAll(".deal-prices input, #d-cp, #d-cs, #d-r, #d-x").forEach((el) => el.addEventListener("input", update));
+  const add = () => {
+    const text = $("#d-paste").value.trim();
+    const status = $("#d-paste-status");
+    const c = text ? parseCode(text, $("#d-kind").value) : { kind: $("#d-kind").value, pct: 10 };
+    if (!c) {
+      status.textContent = t("dl_parse_fail");
+      return;
+    }
+    status.textContent = text ? t("dl_parsed", { code: codeLabel(c) }) : "";
+    $("#d-paste").value = "";
+    redraw([...readCodes(), c]);
+  };
+  $("#d-add").addEventListener("click", add);
+  $("#d-paste").addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    add();
+  });
+  bindRows();
+  update();
+
+  const id = query().get("item");
+  const slot = $("#deal-paid");
+  if (id && slot)
+    community.pricesFor(id).then(({ ok, rows }) => {
+      if (!ok || !slot.isConnected) return;
+      const th = summarize(rows.filter((r) => r.currency === "THB" && ["shopee", "lazada", "tiktok"].includes(r.channel)));
+      slot.innerHTML = th.length
+        ? th.map((g) => esc(t("dl_paid_ref", { channel: t(`ch_${g.channel}`), min: baht(g.min), max: baht(g.max), n: g.n }))).join("<br>")
+        : `<span class="muted">${esc(t("dl_paid_none"))}</span>`;
+    });
+}
+
+function dealResult(price, anchor, shipping, codes) {
+  if (!price) return `<h3>${esc(t("dl_result_h"))}</h3><p class="muted">${esc(t("dl_need_price"))}</p>`;
+  const all = combos(price, codes, { shipping });
+  const best = all[0];
+  const used = [best.shop, best.platform].filter(Boolean);
+  const rows = all.filter((c) => c.shop || c.platform);
+  const capNotes = codes
+    .filter((c) => capPoint(c))
+    .map((c) => {
+      const at = capPoint(c);
+      const real = Math.min(c.pct, (c.cap / price) * 100);
+      return `<li>${esc(codeLabel(c))}: ${esc(t("dl_cap_note", { at: baht(at), cap: baht(c.cap) }))}${price > at ? ` <span class="tag warn">${esc(t("dl_cap_hit", { pct: fmt(real, 1) }))}</span>` : ""}</li>`;
+    })
+    .join("");
+  return `<h3>${esc(t("dl_result_h"))}</h3>
+    <p class="deal-big">${baht(best.final)}</p>
+    <p>${used.length ? esc(t("dl_best_uses", { codes: used.map(codeLabel).join(" + ") })) : esc(t("dl_best_none"))}</p>
+    <p class="muted">${esc(t("dl_saved", { off: baht(best.discount), pct: fmt(best.pct, 1) }))}${shipping ? ` · ${esc(t("dl_incl_ship", { ship: baht(shipping) }))}` : ""}</p>
+    ${anchor && anchor > price ? `<p class="muted small">${esc(t("dl_anchor_note", { anchor: baht(anchor), pct: fmt(((anchor - (best.final - shipping)) / anchor) * 100, 0) }))}</p>` : ""}
+    ${
+      rows.length
+        ? `<div class="table-wrap"><table class="deal-table"><thead><tr><th>${esc(t("dl_kind_shop"))}</th><th>${esc(t("dl_kind_platform"))}</th><th>${esc(t("dl_col_off"))}</th><th>${esc(t("dl_col_final"))}</th></tr></thead><tbody>${rows
+            .map((c) => {
+              const short = c.steps.find((s) => s && !s.eligible);
+              return `<tr class="${c === best ? "best" : ""}${c.valid ? "" : " invalid"}"><td>${c.shop ? esc(codeLabel(c.shop)) : "—"}</td><td>${c.platform ? esc(codeLabel(c.platform)) : "—"}</td>
+              <td>${c.valid ? `${baht(c.discount)} <span class="muted small">(${fmt(c.pct, 1)}%)</span>` : `<span class="small">${esc(t("dl_short", { v: baht(short.shortfall) }))}</span>`}</td><td>${c.valid ? baht(c.final) : "—"}</td></tr>`;
+            })
+            .join("")}</tbody></table></div>`
+        : ""
+    }
+    ${capNotes ? `<ul class="small cap-notes">${capNotes}</ul>` : ""}`;
+}
+
+function channelsCard(i) {
+  const name = displayName(i);
+  const zh = db.zhNames?.[(i.brand ?? "").toLowerCase()];
+  const cnQuery = zh ? `${zh} ${i.model}` : name;
+  const q = encodeURIComponent;
+  const th = [
+    ["Shopee", `https://shopee.co.th/search?keyword=${q(name)}`],
+    ["Lazada", `https://www.lazada.co.th/catalog/?q=${q(name)}`],
+  ];
+  const cn = [
+    ["Taobao 淘宝", `https://s.taobao.com/search?q=${q(cnQuery)}`],
+    ["Tmall 天猫", `https://list.tmall.com/search_product.htm?q=${q(cnQuery)}`],
+    ["JD 京东", `https://search.jd.com/Search?keyword=${q(cnQuery)}`],
+    ["闲鱼 Xianyu", `https://www.goofish.com/search?q=${q(cnQuery)}`],
+  ];
+  const links = (l) => l.map(([label, url]) => `<a class="pill" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)} ↗</a>`).join("");
+  return `<section class="card pad channels"><h3>${esc(t("ch_title"))}</h3>
+    <div class="ch-grid">
+      <div><h4>${esc(t("ch_th"))}</h4><p class="muted small">${esc(t("ch_th_note"))}</p>
+        <div class="row-inline">${links(th)}<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a></div></div>
+      <div><h4>${esc(t("ch_cn"))}</h4><p class="muted small">${esc(t("ch_cn_note"))}</p>
+        <p class="small">${esc(t("ch_cn_query"))} <code>${esc(cnQuery)}</code> <button type="button" class="link small" data-copy="${esc(cnQuery)}">${esc(t("copy"))}</button>${zh ? "" : ` <span class="muted">· ${esc(t("ch_cn_no_zh"))}</span>`}</p>
+        <div class="row-inline">${links(cn)}</div>
+        <ul class="small muted ch-tips"><li>${esc(t("ch_cn_tip1"))}</li><li>${esc(t("ch_cn_tip2"))}</li><li>${esc(t("ch_cn_tip3"))}</li></ul></div>
+    </div>
+    <p class="muted small">${esc(t("aff_note"))}</p></section>`;
+}
+
+async function renderPaid(el, item) {
+  if (!el) return;
+  const head = `<h3>${esc(t("pr_title"))}</h3><p class="muted small">${esc(t("pr_disclaimer"))}</p>`;
+  el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
+  const { ok, rows } = await community.pricesFor(item.id);
+  if (!el.isConnected) return;
+  if (!ok) {
+    el.innerHTML = `${head}<p class="muted">${esc(t("cm_offline"))}</p>`;
+    return;
+  }
+  const s = await community.session();
+  const profile = s ? await community.myProfile() : null;
+  if (!el.isConnected) return;
+
+  const groups = summarize(rows);
+  const groupHtml = (g) => {
+    const span = g.max - g.min || 1;
+    return `<div class="pr-group">
+      <div class="pr-group-head"><b>${esc(t(`ch_${g.channel}`))}</b> <span class="muted small">${esc(g.currency)}${g.condition !== "new" ? ` · ${esc(t(`pr_cond_${g.condition}`))}` : ""} · ${esc(t("pr_n", { n: g.n }))} · ${esc(g.first === g.last ? day(g.first) : `${day(g.first)} – ${day(g.last)}`)}</span></div>
+      <div class="pr-range"><span>${money(g.min, g.currency)}</span><div class="strip">${g.rows
+        .map((r) => `<i style="left:${g.n > 1 ? ((r.amount - g.min) / span) * 100 : 50}%" title="${esc(`${money(r.amount, r.currency)} · ${day(r.paid_on)}${r.campaign ? ` · ${r.campaign}` : ""}`)}"></i>`)
+        .join("")}</div><span>${money(g.max, g.currency)}</span></div>
+      ${g.n > 2 ? `<p class="muted small">${esc(t("pr_median", { v: money(g.median, g.currency) }))}</p>` : ""}</div>`;
+  };
+  const rowHtml = (r) => {
+    const own = s && r.author === s.user.id;
+    const evidence = r.evidence_url.includes(EVIDENCE_HOST)
+      ? `<a class="ev-thumb" href="${esc(r.evidence_url)}" target="_blank" rel="noopener"><img src="${esc(r.evidence_url)}" alt="${esc(t("pr_evidence"))}" loading="lazy"></a>`
+      : `<span class="ev-link">${srcLink(r.evidence_url)}</span>`;
+    return `<li class="pr-row">${evidence}<div>
+      <div><b>${money(r.amount, r.currency)}</b> · ${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}
+        ${r.campaign ? `<span class="tag">${esc(r.campaign)}</span>` : ""}${r.includes_shipping ? ` <span class="tag">${esc(t("pr_ship_incl"))}</span>` : ""}${r.condition !== "new" ? ` <span class="tag">${esc(t(`pr_cond_${r.condition}`))}</span>` : ""}</div>
+      ${r.note ? `<div class="small">${esc(r.note)}</div>` : ""}
+      <div class="muted small">${esc(r.author_name || t("cm_user"))}${s && !own ? ` · <button class="link small" data-pflag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}${own ? ` · <button class="link small" data-pdel="${r.id}">${esc(t("cm_delete"))}</button>` : ""}</div>
+    </div></li>`;
+  };
+
+  let composer;
+  if (!s || !profile) composer = `<p class="small muted">${esc(t(s ? "pr_need_name" : "pr_signin"))} <button type="button" class="link small" data-goto-cm>${esc(t("pr_goto_cm"))}</button></p>`;
+  else
+    composer = `<details class="pr-compose"><summary class="pill">${esc(t("pr_add"))}</summary>
+    <form class="cm-form" data-form="price">
+      <div class="deal-fields">
+        <label class="dfield"><span>${esc(t("pr_channel"))}</span><select class="mini-select" name="channel">${CHANNELS.map((c) => `<option value="${c}">${esc(t(`ch_${c}`))}</option>`).join("")}</select></label>
+        <label class="dfield"><span>${esc(t("pr_amount"))}</span><input class="search num" name="amount" inputmode="decimal" required></label>
+        <label class="dfield"><span>${esc(t("pr_currency"))}</span><select class="mini-select" name="currency">${CURRENCIES.map((c) => `<option>${c}</option>`).join("")}</select></label>
+        <label class="dfield"><span>${esc(t("pr_date"))}</span><input class="search" type="date" name="paid_on" required value="${new Date().toISOString().slice(0, 10)}"></label>
+        <label class="dfield"><span>${esc(t("pr_condition"))}</span><select class="mini-select" name="condition">${["new", "open_box", "used"].map((c) => `<option value="${c}">${esc(t(`pr_cond_${c}`))}</option>`).join("")}</select></label>
+        <label class="check"><input type="checkbox" name="includes_shipping"> ${esc(t("pr_ship_incl"))}</label>
+      </div>
+      <input class="search" name="campaign" maxlength="60" placeholder="${esc(t("pr_campaign_ph"))}">
+      <input class="search" name="note" maxlength="300" placeholder="${esc(t("pr_note_ph"))}">
+      <p class="small"><b>${esc(t("pr_evidence"))}</b> — ${esc(t("pr_evidence_help"))}</p>
+      <div class="row-inline"><label class="pill"><input type="file" name="shot" accept="image/*" hidden>${esc(t("pr_pick_shot"))}</label><span class="muted small" data-shot-state></span></div>
+      <input class="search" name="evidence_url" type="url" pattern="https://.+" placeholder="${esc(t("pr_or_link"))}">
+      <p class="muted small">${esc(t("pr_privacy"))}</p>
+      <div class="row-inline"><button class="pill primary">${esc(t("cm_post"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div>
+    </form></details>`;
+
+  el.innerHTML = `${head}
+    ${groups.length ? `<div class="pr-groups">${groups.map(groupHtml).join("")}</div><ul class="pr-rows">${rows.slice(0, 30).map(rowHtml).join("")}</ul>` : `<p class="muted">${esc(t("pr_empty"))}</p>`}
+    <div class="composer">${composer}<p class="small status" role="status"></p></div>`;
+
+  const status = el.querySelector(".status");
+  const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
+  const again = () => renderPaid(el, item);
+  el.querySelector("[data-goto-cm]")?.addEventListener("click", () => document.getElementById("community")?.scrollIntoView({ behavior: "smooth" }));
+  el.querySelectorAll("[data-pdel]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      if (!confirm(t("cm_delete_q"))) return;
+      try {
+        await community.deletePrice(Number(b.dataset.pdel));
+        again();
+      } catch (e) {
+        fail(e);
+      }
+    }),
+  );
+  el.querySelectorAll("[data-pflag]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      const reason = prompt(t("cm_flag_reason"));
+      if (!reason) return;
+      try {
+        await community.flagPrice(Number(b.dataset.pflag), reason);
+        status.textContent = t("cm_flagged");
+      } catch (e) {
+        fail(e);
+      }
+    }),
+  );
+
+  const form = el.querySelector('[data-form="price"]');
+  if (!form) return;
+  let shot = null;
+  form.channel.addEventListener("change", () => (form.currency.value = CHANNEL_CURRENCY[form.channel.value] ?? "THB"));
+  form.shot.addEventListener("change", async () => {
+    const file = form.shot.files[0];
+    form.shot.value = "";
+    if (!file) return;
+    shot = await redactImage(file, t);
+    form.querySelector("[data-shot-state]").textContent = shot ? t("pr_shot_ready", { kb: Math.round(shot.size / 1024) }) : "";
+  });
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    status.textContent = "";
+    const amount = Number(form.amount.value.replace(/[,฿¥$\s]/g, ""));
+    if (!(amount > 0)) return fail({ message: t("pr_bad_amount") });
+    if (!shot && !form.evidence_url.value.trim()) return fail({ message: t("pr_need_evidence") });
+    try {
+      status.textContent = t("cm_loading");
+      const evidence_url = shot ? await community.uploadEvidence(shot) : form.evidence_url.value.trim();
+      await community.addPrice({
+        item_id: item.id,
+        channel: form.channel.value,
+        amount,
+        currency: form.currency.value,
+        includes_shipping: form.includes_shipping.checked,
+        condition: form.condition.value,
+        paid_on: form.paid_on.value,
+        campaign: form.campaign.value.trim(),
+        note: form.note.value.trim(),
+        evidence_url,
+      });
       again();
     } catch (e) {
       fail(e);

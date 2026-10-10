@@ -6,12 +6,13 @@ export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "desktop", "dap"]);
 
 export async function loadData() {
-  const [catalog, devices] = await Promise.all([
+  const [catalog, devices, zh] = await Promise.all([
     fetch("data/catalog.json").then((r) => r.json()),
     fetch("data/devices.json").then((r) => r.json()),
+    fetch("data/brands-zh.json").then((r) => r.json()).catch(() => ({ names: {} })),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
-  return { ...catalog, devices, byId };
+  return { ...catalog, devices, byId, zhNames: zh.names };
 }
 
 /** Headphone numbers for calc.js, or null if not computable. Handles unit-less sensitivity. */

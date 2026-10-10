@@ -123,3 +123,42 @@ export async function flag(reportId, reason) {
   const { error } = await sb.from("flags").insert({ report_id: reportId, reason });
   if (error) throw error;
 }
+
+// ---------------------------------------------------------------- prices people paid
+
+export async function pricesFor(itemId) {
+  const sb = await client();
+  if (!sb) return { ok: false, rows: [] };
+  const { data, error } = await sb.from("price_feed").select("*").eq("item_id", itemId).order("paid_on", { ascending: false }).limit(500);
+  if (error) return { ok: false, rows: [] };
+  return { ok: true, rows: data };
+}
+
+export async function addPrice(row) {
+  const sb = await client();
+  const { error } = await sb.from("price_reports").insert(row);
+  if (error) throw error;
+}
+
+export async function deletePrice(id) {
+  const sb = await client();
+  const { error } = await sb.from("price_reports").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function flagPrice(priceId, reason) {
+  const sb = await client();
+  const { error } = await sb.from("price_flags").insert({ price_id: priceId, reason });
+  if (error) throw error;
+}
+
+/** Upload an already re-encoded, redacted screenshot; returns its public https URL. */
+export async function uploadEvidence(blob) {
+  const sb = await client();
+  const s = await session();
+  if (!sb || !s) throw new Error("signin");
+  const path = `${s.user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+  const { error } = await sb.storage.from("evidence").upload(path, blob, { contentType: "image/jpeg", upsert: false });
+  if (error) throw error;
+  return sb.storage.from("evidence").getPublicUrl(path).data.publicUrl;
+}

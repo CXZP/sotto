@@ -1,0 +1,70 @@
+/* Real price: code calculator, where-to-buy, prices people paid, redactor. */
+
+.deal { display: grid; gap: 16px; }
+.deal-head h1 { margin: 0 0 6px; }
+.deal-head p { margin: 0; max-width: 70ch; }
+.deal-item img.thumb { width: 64px; height: 64px; }
+.deal-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 16px; align-items: start; }
+.deal h3 { margin-top: 0; }
+.dfield { display: grid; gap: 4px; margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
+.dfield .search, .dfield .mini-select { color: var(--text); }
+input.num { font-variant-numeric: tabular-nums; }
+.deal-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0 12px; align-items: end; }
+.deal-fields .check { margin-bottom: 14px; }
+
+.codes { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.code-row { display: grid; grid-template-columns: auto minmax(110px, 1fr) minmax(90px, 1fr) minmax(90px, 1fr) auto; gap: 8px; align-items: end; padding: 10px; border-radius: 14px; background: var(--surface-2); }
+.code-row label { display: grid; gap: 2px; min-width: 0; }
+.code-row .code-val { display: flex; gap: 4px; align-items: center; }
+.code-row .search { padding: 7px 12px; min-width: 0; }
+.code-row .link { align-self: center; }
+.paste .search { min-width: 220px; }
+
+.deal-big { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 4px 0; font-variant-numeric: tabular-nums; }
+.deal-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+.deal-table th, .deal-table td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--line); }
+.deal-table th { font-size: 12px; color: var(--text-2); font-weight: 600; }
+.deal-table td:nth-child(n + 3) { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.deal-table tr.best td { background: var(--surface-2); font-weight: 600; }
+.deal-table tr.invalid td { color: var(--text-2); }
+.cap-notes { margin: 12px 0 0; padding-left: 18px; color: var(--text-2); display: grid; gap: 4px; }
+
+/* Where to buy */
+.ch-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.ch-grid h4 { margin: 0 0 4px; }
+.ch-grid code { font-size: 14px; padding: 2px 8px; border-radius: 8px; background: var(--surface-2); }
+.ch-tips { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+.channels > .muted:last-child { margin-bottom: 0; }
+
+/* Prices people paid */
+.pr-groups { display: grid; gap: 14px; margin: 12px 0; }
+.pr-group-head { margin-bottom: 6px; }
+.pr-range { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; font-variant-numeric: tabular-nums; font-size: 14px; }
+.strip { position: relative; height: 18px; border-radius: 999px; background: var(--surface-2); margin: 0 6px; }
+.strip i { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--text); box-shadow: 0 0 0 2px var(--surface); opacity: 0.75; }
+.pr-group p { margin: 4px 0 0; }
+.pr-rows { list-style: none; margin: 0; padding: 0; }
+.pr-row { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); align-items: start; }
+.pr-row .tag { margin-left: 4px; }
+.ev-thumb img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); display: block; }
+.ev-link { font-size: 12px; overflow-wrap: anywhere; }
+.pr-compose summary { list-style: none; cursor: pointer; display: inline-block; }
+.pr-compose summary::-webkit-details-marker { display: none; }
+.pr-compose[open] summary { margin-bottom: 10px; }
+label.pill { cursor: pointer; }
+
+/* Redactor */
+dialog.redact { border: 0; padding: 0; border-radius: 20px; background: var(--surface); color: var(--text); max-width: min(960px, 96vw); width: 100%; }
+dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
+.redact-inner { padding: 18px; display: grid; gap: 10px; }
+.redact-inner p { margin: 0; }
+.redact-canvas { max-height: 70vh; overflow: auto; border-radius: 12px; background: var(--surface-2); }
+.redact-canvas canvas { display: block; width: 100%; height: auto; cursor: crosshair; touch-action: none; }
+.grow { flex: 1; }
+
+@media (max-width: 860px) {
+  .deal-grid, .ch-grid { grid-template-columns: minmax(0, 1fr); }
+  .code-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .code-row > select { grid-column: 1 / -1; }
+  .deal-big { font-size: 28px; }
+}

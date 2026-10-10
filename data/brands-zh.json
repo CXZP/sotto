@@ -1,0 +1,32 @@
+{
+  "_note": "Chinese brand names as used on Taobao/Tmall/JD/Xianyu, for search only. Keys are lower-case brand names as they appear in catalog.json. Add only names you have seen on the brand's own flagship store (官方旗舰店).",
+  "names": {
+    "moondrop": "水月雨",
+    "fiio": "飞傲",
+    "topping": "拓品",
+    "shanling": "山灵",
+    "edifier": "漫步者",
+    "ibasso": "艾巴索",
+    "cayin": "凯音",
+    "smsl": "双木三林",
+    "hidizs": "海帝思",
+    "tanchjim": "天使吉米",
+    "letshuoer": "铄耳",
+    "simgot": "兴戈",
+    "dunu": "达音科",
+    "hiby": "海贝",
+    "xduoo": "乂度",
+    "tin hifi": "天天动听",
+    "hifiman": "海菲曼",
+    "sennheiser": "森海塞尔",
+    "sony": "索尼",
+    "audio-technica": "铁三角",
+    "beyerdynamic": "拜雅",
+    "akg": "爱科技",
+    "focal": "劲浪",
+    "shure": "舒尔",
+    "astell&kern": "艾利和",
+    "bose": "博士",
+    "apple": "苹果"
+  }
+}

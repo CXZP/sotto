@@ -1,13 +1,13 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30hj1h";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30hj1h";
-import { renderChart } from "./chart.js?v=mv30hj1h";
-import { makeT } from "./i18n.js?v=mv30hj1h";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv30hj1h";
-import * as community from "./community.js?v=mv30hj1h";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30hj1h";
-import { redactImage } from "./redact.js?v=mv30hj1h";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30hj1h";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30hj1h";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30jm8f";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30jm8f";
+import { renderChart } from "./chart.js?v=mv30jm8f";
+import { makeT } from "./i18n.js?v=mv30jm8f";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv30jm8f";
+import * as community from "./community.js?v=mv30jm8f";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30jm8f";
+import { redactImage } from "./redact.js?v=mv30jm8f";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30jm8f";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30jm8f";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -117,6 +117,13 @@ function renderChrome(r) {
     acct.setAttribute("aria-label", t("ac_title"));
     acct.classList.toggle("active", r.name === "account");
   }
+  for (const [id, name, key] of [["saved-btn", "saved", "bm_title"], ["inbox-btn", "inbox", "ib_title"]]) {
+    const b = document.getElementById(id);
+    if (!b) continue;
+    b.title = t(key);
+    b.setAttribute("aria-label", t(key));
+    b.classList.toggle("active", r.name === name);
+  }
   setSeg("[data-mode]", "mode", state.mode);
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
@@ -143,6 +150,8 @@ function render() {
   else if (r.name === "chart") main.innerHTML = chartPage();
   else if (r.name === "discuss") main.innerHTML = r.sub === "new" ? newThreadPage() : r.sub === "thread" ? threadPage(r.id) : discussPage();
   else if (r.name === "account") main.innerHTML = accountPage();
+  else if (r.name === "saved") main.innerHTML = savedPage();
+  else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
@@ -729,7 +738,7 @@ function itemPage(id) {
       <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
@@ -801,6 +810,9 @@ function wire(main, r) {
   if (r.name === "chart") wireChartPage(main);
   if (r.name === "discuss") (r.sub === "new" ? wireNewThread : r.sub === "thread" ? wireThread : wireDiscuss)(main);
   if (r.name === "account") wireAccount(main);
+  if (r.name === "saved") wireSaved(main);
+  if (r.name === "inbox") wireInbox(main);
+  if (r.name === "item") wireBookmarks(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
     a.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1410,7 +1422,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30hj1h" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30jm8f" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1921,7 +1933,7 @@ async function wireThread(main) {
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
-        <div class="post-actions">${actions("thread", th)}</div>
+        <div class="post-actions">${bmButton("thread", th.id)}${actions("thread", th)}</div>
       </article>
       <section class="card pad">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
@@ -1930,6 +1942,8 @@ async function wireThread(main) {
       </section>`;
     wireAuth(el, location.hash, load);
     wireVotes(el, load);
+    wireBookmarks(el);
+    community.markSeen(th.id, res.comments.length);
     const post = async (body, parent_id, st, photos) => {
       if (!body && !photos?.blobs.length) {
         st.textContent = t("ph_need_text");
@@ -2082,6 +2096,117 @@ async function wireAccount(main) {
 }
 
 // ---------------------------------------------------------------------------
+// Bookmarks (#saved), following threads, inbox (#inbox).
+
+function bmButton(kind, target) {
+  return `<button type="button" class="pill bm" data-bm-kind="${kind}" data-bm-target="${esc(target)}" aria-pressed="false">☆ ${esc(t(kind === "thread" ? "bm_follow" : "bm_save"))}</button>`;
+}
+
+async function wireBookmarks(root) {
+  const btns = [...root.querySelectorAll("[data-bm-kind]")];
+  if (!btns.length) return;
+  const label = (b, on) => {
+    b.setAttribute("aria-pressed", String(on));
+    b.textContent = `${on ? "★" : "☆"} ${t(b.dataset.bmKind === "thread" ? (on ? "bm_following" : "bm_follow") : on ? "bm_saved" : "bm_save")}`;
+  };
+  for (const b of btns) {
+    label(b, await community.isBookmarked(b.dataset.bmKind, b.dataset.bmTarget));
+    b.addEventListener("click", async () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      label(b, on);
+      try {
+        await community.setBookmark(b.dataset.bmKind, b.dataset.bmTarget, on);
+      } catch (e) {
+        label(b, !on);
+        alert(`${t("cm_error")} ${e.message}`);
+      }
+    });
+  }
+}
+
+function savedPage() {
+  return `<div class="discuss"><header class="deal-head"><h1>${esc(t("bm_title"))}</h1><p class="muted">${esc(t("bm_lead"))}</p></header>
+    <section class="card pad"><h3>${esc(t("bm_threads"))}</h3><div id="saved-threads"><p class="muted">${esc(t("cm_loading"))}</p></div></section>
+    <section class="card pad"><div class="row-between"><h3>${esc(t("bm_items"))}</h3><span class="muted small" id="saved-total"></span></div><div id="saved-items"></div></section>
+  </div>`;
+}
+
+async function wireSaved(main) {
+  const list = await community.bookmarks();
+  if (!main.isConnected) return;
+  const s = await community.session();
+  const items = list.filter((b) => b.kind === "item").map((b) => findItem(b.target)).filter(Boolean);
+  const threadIds = list.filter((b) => b.kind === "thread").map((b) => b.target);
+  const threads = await community.threadsByIds(threadIds);
+  const tEl = main.querySelector("#saved-threads");
+  const iEl = main.querySelector("#saved-items");
+  if (!tEl) return;
+  tEl.innerHTML = threads.length
+    ? `<ul class="act">${threads
+        .map((r) => {
+          const seen = community.seenCount(r.id);
+          const fresh = seen == null ? 0 : Math.max(0, r.comment_count - seen);
+          return `<li><a href="#discuss/${r.id}">${esc(r.title)}</a> <span class="muted small">· ${esc(t("ds_n_comments", { n: r.comment_count }))}</span>${fresh ? ` <span class="tag new">${esc(t("bm_new", { n: fresh }))}</span>` : ""}</li>`;
+        })
+        .join("")}</ul>`
+    : `<p class="muted small">${esc(t("bm_none_threads"))}</p>`;
+  iEl.innerHTML = items.length
+    ? `<div class="grid">${items
+        .map((i) => {
+          const pr = prices(i).cheapest;
+          const im = imageOf(i);
+          return `<a class="tile card" href="#item/${encodeURIComponent(i.id)}"><div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
+            <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div><div class="muted small">${esc(t(`cat_${i.category}`))}</div><div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
+        })
+        .join("")}</div>`
+    : `<p class="muted small">${esc(t("bm_none_items"))}</p>`;
+  // Wishlist total, per currency (store feed prices, before shipping and tax).
+  const sums = new Map();
+  for (const i of items) {
+    const pr = prices(i).cheapest;
+    if (pr) sums.set(pr.currency, (sums.get(pr.currency) ?? 0) + pr.price);
+  }
+  main.querySelector("#saved-total").textContent = sums.size ? t("bm_total", { total: [...sums].map(([c, v]) => money(v, c)).join(" + ") }) : "";
+  if (!s && list.length) tEl.insertAdjacentHTML("beforebegin", `<p class="small warn-text">${esc(t("bm_local"))} <a href="#account">${esc(t("ac_title"))}</a></p>`);
+}
+
+function inboxPage() {
+  return `<div class="discuss narrow"><h1>${esc(t("ib_title"))}</h1><div id="inbox" class="card"><p class="muted pad">${esc(t("cm_loading"))}</p></div></div>`;
+}
+
+async function wireInbox(main) {
+  const el = main.querySelector("#inbox");
+  const res = await community.inbox();
+  if (!el.isConnected) return;
+  if (!res) {
+    el.innerHTML = `<div class="pad">${authBlock(null, null, "#inbox")}</div>`;
+    wireAuth(el, "#inbox", () => wireInbox(main));
+    return;
+  }
+  el.innerHTML = res.rows.length
+    ? res.rows
+        .map(
+          (r) => `<a class="inbox-row${r.unread ? " unread" : ""}" href="#discuss/${r.thread_id}">
+          <div class="small"><b>${esc(r.author_name || t("cm_user"))}</b> ${esc(t(r.toMyThread ? "ib_on_thread" : "ib_on_comment"))} <span class="muted">· ${esc(ago(r.created_at))}</span></div>
+          <div class="muted small">${esc(r.thread_title)}</div>
+          <div class="inbox-body">${esc(r.body.slice(0, 200))}${r.body.length > 200 ? "…" : ""}</div></a>`,
+        )
+        .join("")
+    : `<p class="muted pad">${esc(t("ib_empty"))}</p>`;
+  community.markInboxRead();
+  updateBell();
+}
+
+async function updateBell() {
+  const badge = document.querySelector("#inbox-btn .badge-n");
+  if (!badge) return;
+  const res = await community.inbox().catch(() => null);
+  const n = res?.unread ?? 0;
+  badge.textContent = n > 99 ? "99+" : String(n);
+  badge.hidden = !n;
+}
+
+// ---------------------------------------------------------------------------
 // Sources page data
 
 function sourceSites() {
@@ -2168,6 +2293,8 @@ sources = db.items.filter((i) => SOURCE_CATS.has(i.category) && sourceOutputs(i)
 readHash();
 bindChrome();
 render();
+updateBell();
+setInterval(updateBell, 3 * 60 * 1000);
 addEventListener("hashchange", () => {
   readHash();
   render();

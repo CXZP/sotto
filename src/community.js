@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv30hj1h";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv30jm8f";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -301,3 +301,128 @@ export async function signInTo(email, back) {
 }
 
 export const uploadMedia = (blob) => uploadEvidence(blob, "media");
+
+// ---------------------------------------------------------------- bookmarks
+// Signed out: kept in this browser. Signed in: kept in the account (private),
+// and anything saved while signed out moves in on the next load.
+
+const LOCAL_BM = "sotto.bookmarks";
+const readLocal = () => {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_BM) ?? "[]");
+  } catch {
+    return [];
+  }
+};
+const writeLocal = (rows) => {
+  try {
+    localStorage.setItem(LOCAL_BM, JSON.stringify(rows));
+  } catch {
+    /* storage blocked: bookmarks just don't persist */
+  }
+};
+
+let bmCache = null;
+
+/** All bookmarks as [{kind, target, created_at}], newest first. */
+export async function bookmarks() {
+  if (bmCache) return bmCache;
+  const s = await session();
+  if (!s) return (bmCache = readLocal());
+  const sb = await client();
+  const local = readLocal();
+  if (local.length) {
+    await sb.from("bookmarks").upsert(local.map(({ kind, target }) => ({ kind, target, user_id: s.user.id })), { ignoreDuplicates: true });
+    writeLocal([]);
+  }
+  const { data } = await sb.from("bookmarks").select("kind, target, created_at").order("created_at", { ascending: false });
+  return (bmCache = data ?? []);
+}
+
+export async function isBookmarked(kind, target) {
+  return (await bookmarks()).some((b) => b.kind === kind && b.target === String(target));
+}
+
+export async function setBookmark(kind, target, on) {
+  target = String(target);
+  const s = await session();
+  const list = await bookmarks();
+  if (!s) {
+    const next = list.filter((b) => !(b.kind === kind && b.target === target));
+    if (on) next.unshift({ kind, target, created_at: new Date().toISOString() });
+    writeLocal(next);
+    bmCache = next;
+    return;
+  }
+  const sb = await client();
+  const { error } = on
+    ? await sb.from("bookmarks").upsert({ kind, target, user_id: s.user.id }, { ignoreDuplicates: true })
+    : await sb.from("bookmarks").delete().eq("kind", kind).eq("target", target);
+  if (error) throw error;
+  bmCache = null;
+}
+
+/** Thread titles for saved thread ids. */
+export async function threadsByIds(ids) {
+  const sb = await client();
+  if (!sb || !ids.length) return [];
+  const { data } = await sb.from("thread_feed").select("id, title, category, score, comment_count, created_at, images").in("id", ids.map(Number));
+  return data ?? [];
+}
+
+// ---------------------------------------------------------------- follow + inbox
+// Following = a bookmarked thread. "New" is counted against the comment count
+// seen on the last visit (kept in this browser). The inbox lists replies to
+// your threads and comments; read state is a timestamp in this browser.
+
+const SEEN = "sotto.seen";
+const INBOX_READ = "sotto.inboxRead";
+const getJson = (k, d) => {
+  try {
+    return JSON.parse(localStorage.getItem(k) ?? "null") ?? d;
+  } catch {
+    return d;
+  }
+};
+const setJson = (k, v) => {
+  try {
+    localStorage.setItem(k, JSON.stringify(v));
+  } catch {
+    /* ignore */
+  }
+};
+export const seenCount = (threadId) => getJson(SEEN, {})[threadId];
+export function markSeen(threadId, count) {
+  const m = getJson(SEEN, {});
+  m[threadId] = count;
+  setJson(SEEN, m);
+}
+
+/** Replies to the signed-in person's threads and comments, newest first. */
+export async function inbox() {
+  const sb = await client();
+  const s = await session();
+  if (!sb || !s) return null;
+  const me = s.user.id;
+  const [mt, mc] = await Promise.all([
+    sb.from("threads").select("id, title").eq("author", me).limit(500),
+    sb.from("comments").select("id, thread_id").eq("author", me).limit(1000),
+  ]);
+  const threadIds = (mt.data ?? []).map((r) => r.id);
+  const commentIds = (mc.data ?? []).map((r) => r.id);
+  const ors = [];
+  if (threadIds.length) ors.push(`thread_id.in.(${threadIds.join(",")})`);
+  if (commentIds.length) ors.push(`parent_id.in.(${commentIds.join(",")})`);
+  if (!ors.length) return { rows: [], unread: 0 };
+  const { data } = await sb.from("comment_feed").select("id, thread_id, parent_id, author, author_name, body, created_at").or(ors.join(",")).neq("author", me).order("created_at", { ascending: false }).limit(100);
+  const rows = data ?? [];
+  const titles = new Map((mt.data ?? []).map((r) => [r.id, r.title]));
+  const missing = [...new Set(rows.map((r) => r.thread_id).filter((id) => !titles.has(id)))];
+  if (missing.length) for (const r of (await sb.from("thread_feed").select("id, title").in("id", missing)).data ?? []) titles.set(r.id, r.title);
+  const readAt = getJson(INBOX_READ, 0);
+  return {
+    rows: rows.map((r) => ({ ...r, thread_title: titles.get(r.thread_id) ?? "", toMyThread: threadIds.includes(r.thread_id) && !r.parent_id, unread: new Date(r.created_at).getTime() > readAt })),
+    unread: rows.filter((r) => new Date(r.created_at).getTime() > readAt).length,
+  };
+}
+export const markInboxRead = () => setJson(INBOX_READ, Date.now());

@@ -1,12 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2yhtoy";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2yhtoy";
-import { renderChart } from "./chart.js?v=mv2yhtoy";
-import { makeT } from "./i18n.js?v=mv2yhtoy";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2yhtoy";
-import * as community from "./community.js?v=mv2yhtoy";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2yhtoy";
-import { redactImage } from "./redact.js?v=mv2yhtoy";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2yhtoy";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2z2eng";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2z2eng";
+import { renderChart } from "./chart.js?v=mv2z2eng";
+import { makeT } from "./i18n.js?v=mv2z2eng";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2z2eng";
+import * as community from "./community.js?v=mv2z2eng";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2z2eng";
+import { redactImage } from "./redact.js?v=mv2z2eng";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2z2eng";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -50,6 +50,8 @@ function route() {
   const h = location.hash.slice(1).split("?")[0];
   if (h.startsWith("item/")) return { name: "item", id: decodeURIComponent(h.slice(5)) };
   if (h.startsWith("learn/")) return { name: "learn", term: decodeURIComponent(h.slice(6)) };
+  if (h === "discuss/new") return { name: "discuss", sub: "new" };
+  if (h.startsWith("discuss/")) return { name: "discuss", sub: "thread", id: h.slice(8) };
   return { name: h || "build" };
 }
 function query() {
@@ -108,6 +110,12 @@ function renderChrome(r) {
     a.classList.toggle("active", a.dataset.route === r.name || ((r.name === "item" || r.name === "brands") && a.dataset.route === "catalog"));
   });
   setSeg("[data-lang]", "lang", state.lang);
+  const acct = document.getElementById("account-btn");
+  if (acct) {
+    acct.title = t("ac_title");
+    acct.setAttribute("aria-label", t("ac_title"));
+    acct.classList.toggle("active", r.name === "account");
+  }
   setSeg("[data-mode]", "mode", state.mode);
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
@@ -132,6 +140,8 @@ function render() {
   else if (r.name === "deal") main.innerHTML = dealPage();
   else if (r.name === "brands") main.innerHTML = brandsPage();
   else if (r.name === "chart") main.innerHTML = chartPage();
+  else if (r.name === "discuss") main.innerHTML = r.sub === "new" ? newThreadPage() : r.sub === "thread" ? threadPage(r.id) : discussPage();
+  else if (r.name === "account") main.innerHTML = accountPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
@@ -692,6 +702,7 @@ function itemPage(id) {
     <section class="card pad paid" id="paid"></section>
     ${channelsCard(i)}
     <section class="card pad community" id="community"></section>
+    <section class="card pad item-threads" id="item-threads"></section>
     ${isHp && hpModel(i) ? `<div id="item-rev"></div>` : ""}
     ${isSrc && outs.length ? `<div class="card chart-card" id="chart"></div>` : ""}
   </article>`;
@@ -746,10 +757,13 @@ function wire(main, r) {
     if (rev) rev.outerHTML = reverseCard(i, LEVELS.normal);
     if (i) renderCommunity(main.querySelector("#community"), i);
     if (i) renderPaid(main.querySelector("#paid"), i);
+    if (i) renderItemThreads(main.querySelector("#item-threads"), i);
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
   if (r.name === "deal") wireDeal(main);
   if (r.name === "chart") wireChartPage(main);
+  if (r.name === "discuss") (r.sub === "new" ? wireNewThread : r.sub === "thread" ? wireThread : wireDiscuss)(main);
+  if (r.name === "account") wireAccount(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
     a.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1359,7 +1373,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2yhtoy" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2z2eng" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1438,6 +1452,420 @@ function wireTool(el) {
   };
   el.querySelectorAll("input, select").forEach((i) => i.addEventListener("input", show));
   show();
+}
+
+// ---------------------------------------------------------------------------
+// Discussions (#discuss, #discuss/new, #discuss/<id>) and account (#account).
+// Pages render a shell synchronously; data fills in after Supabase answers.
+
+const CATEGORIES = ["question", "setup", "deal", "issue", "news", "general"];
+
+/** Plain text → safe HTML: escaped, line breaks kept, https links clickable. */
+function richText(s) {
+  return esc(s)
+    .replace(/https:\/\/[^\s<]+[^\s<.,;:!?)\]'"]/g, (u) => `<a href="${u}" target="_blank" rel="noopener nofollow ugc">${u.length > 60 ? `${u.slice(0, 57)}…` : u}</a>`)
+    .replace(/\n/g, "<br>");
+}
+
+function ago(iso) {
+  const s = (Date.now() - new Date(iso)) / 1000;
+  const rtf = new Intl.RelativeTimeFormat(state.lang === "th" ? "th" : "en", { numeric: "auto" });
+  if (s < 60) return rtf.format(-Math.round(s), "second");
+  if (s < 3600) return rtf.format(-Math.round(s / 60), "minute");
+  if (s < 86400) return rtf.format(-Math.round(s / 3600), "hour");
+  if (s < 86400 * 30) return rtf.format(-Math.round(s / 86400), "day");
+  return day(iso);
+}
+
+const authorName = (r) => (r.author ? r.author_name || t("cm_user") : t("ds_deleted"));
+
+function voteBox(kind, id, score, mine, signedIn) {
+  return `<div class="vote" data-kind="${kind}" data-id="${id}">
+    <button type="button" data-v="1" aria-label="${esc(t("ds_up"))}" aria-pressed="${mine === 1}" ${signedIn ? "" : "disabled"}>▲</button>
+    <span class="score">${score}</span>
+    <button type="button" data-v="-1" aria-label="${esc(t("ds_down"))}" aria-pressed="${mine === -1}" ${signedIn ? "" : "disabled"}>▼</button></div>`;
+}
+
+function wireVotes(el, onDone) {
+  el.querySelectorAll(".vote button").forEach((b) =>
+    b.addEventListener("click", async () => {
+      const box = b.closest(".vote");
+      const v = Number(b.dataset.v);
+      const now = b.getAttribute("aria-pressed") === "true";
+      try {
+        await community.vote(box.dataset.kind, Number(box.dataset.id), now ? 0 : v);
+        onDone();
+      } catch (e) {
+        alert(`${t("cm_error")} ${e.message}`);
+      }
+    }),
+  );
+}
+
+/** Sign-in / set-name block used by account and discussion pages. */
+function authBlock(s, profile, back) {
+  if (!s)
+    return `<form class="cm-form" data-form="signin"><p class="small">${esc(t("ds_signin_why"))}</p>
+      <div class="row-inline"><input class="search" type="email" name="email" required placeholder="you@example.com"><button class="pill primary">${esc(t("cm_signin"))}</button></div>
+      <p class="small status" role="status"></p></form>`;
+  if (!profile)
+    return `<form class="cm-form" data-form="profile"><p class="small">${esc(t("cm_name_why"))}</p>
+      <div class="row-inline"><input class="search" name="name" required minlength="2" maxlength="40" placeholder="${esc(t("cm_name"))}"><button class="pill primary">${esc(t("cm_save"))}</button></div>
+      <p class="small status" role="status"></p></form>`;
+  return "";
+}
+
+function wireAuth(el, back, again) {
+  el.querySelector('[data-form="signin"]')?.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const st = ev.target.querySelector(".status");
+    try {
+      await community.signInTo(ev.target.email.value.trim(), back);
+      st.textContent = t("cm_check_email");
+    } catch (e) {
+      st.textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
+  el.querySelector('[data-form="profile"]')?.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    try {
+      await community.saveProfile(ev.target.name.value.trim());
+      again();
+    } catch (e) {
+      ev.target.querySelector(".status").textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
+}
+
+function itemChips(ids) {
+  return (ids ?? [])
+    .map((id) => findItem(id))
+    .filter(Boolean)
+    .map((i) => `<a class="chip item-chip" href="#item/${encodeURIComponent(i.id)}">${esc(displayName(i))}</a>`)
+    .join("");
+}
+
+// ---- list
+
+function discussPage() {
+  const p = query();
+  const cat = p.get("cat") ?? "";
+  const sort = p.get("sort") ?? "new";
+  const link = (over) => {
+    const n = new URLSearchParams(p);
+    for (const [k, v] of Object.entries(over)) v === null || v === "" ? n.delete(k) : n.set(k, v);
+    return `#discuss?${n}`;
+  };
+  return `<div class="discuss">
+    <header class="deal-head row-between"><div><h1>${esc(t("nav_discuss"))}</h1><p class="muted">${esc(t("ds_lead"))}</p></div>
+      <a class="pill primary" href="#discuss/new">${esc(t("ds_new"))}</a></header>
+    <div class="filters">
+      <div class="chips"><a class="chip${!cat ? " on" : ""}" href="${link({ cat: null })}">${esc(t("cat_all"))}</a>${CATEGORIES.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c })}">${esc(t(`dc_${c}`))}</a>`).join("")}</div>
+      <div class="chips">${["new", "top"].map((s) => `<a class="chip${s === sort ? " on" : ""}" href="${link({ sort: s })}">${esc(t(`ds_sort_${s}`))}</a>`).join("")}</div>
+    </div>
+    <div id="threads" class="card"><p class="muted pad">${esc(t("cm_loading"))}</p></div>
+  </div>`;
+}
+
+function threadRow(r, mine, signedIn) {
+  const items = itemChips(r.item_ids);
+  return `<article class="thread-row">
+    ${voteBox("thread", r.id, r.score, mine, signedIn)}
+    <div class="thread-main">
+      <a class="thread-title" href="#discuss/${r.id}">${esc(r.title)}</a>
+      <div class="muted small"><span class="tag">${esc(t(`dc_${r.category}`))}</span> ${esc(authorName(r))} · ${esc(ago(r.created_at))} · <a href="#discuss/${r.id}">${esc(t("ds_n_comments", { n: r.comment_count }))}</a></div>
+      ${items ? `<div class="chips small-chips">${items}</div>` : ""}
+    </div></article>`;
+}
+
+async function wireDiscuss(main) {
+  const box = main.querySelector("#threads");
+  const p = query();
+  const load = async () => {
+    const { ok, rows } = await community.listThreads({ sort: p.get("sort") ?? "new", category: p.get("cat") ?? "" });
+    if (!box.isConnected) return;
+    if (!ok) {
+      box.innerHTML = `<p class="muted pad">${esc(t("cm_offline"))}</p>`;
+      return;
+    }
+    const s = await community.session();
+    const mine = s ? await community.myVotes("thread", rows.map((r) => r.id)) : new Map();
+    box.innerHTML = rows.length ? rows.map((r) => threadRow(r, mine.get(r.id), !!s)).join("") : `<p class="muted pad">${esc(t("ds_empty"))}</p>`;
+    wireVotes(box, load);
+  };
+  load();
+}
+
+// ---- new thread
+
+function newThreadPage() {
+  const pre = query().get("item");
+  return `<div class="discuss narrow">
+    <p class="small"><a href="#discuss">← ${esc(t("nav_discuss"))}</a></p>
+    <h1>${esc(t("ds_new"))}</h1>
+    <div id="new-thread" class="card pad" data-pre="${esc(pre ?? "")}"><p class="muted">${esc(t("cm_loading"))}</p></div>
+  </div>`;
+}
+
+async function wireNewThread(main) {
+  const el = main.querySelector("#new-thread");
+  const s = await community.session();
+  const profile = s ? await community.myProfile() : null;
+  if (!el.isConnected) return;
+  if (!s || !profile) {
+    el.innerHTML = authBlock(s, profile, location.hash);
+    wireAuth(el, location.hash, () => wireNewThread(main));
+    return;
+  }
+  const picked = new Set(el.dataset.pre && findItem(el.dataset.pre) ? [findItem(el.dataset.pre).id] : []);
+  el.innerHTML = `<form class="cm-form" data-form="thread">
+    <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}">${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
+    <input class="search" name="title" required minlength="5" maxlength="160" placeholder="${esc(t("ds_title_ph"))}">
+    <textarea class="search" name="body" rows="8" maxlength="10000" placeholder="${esc(t("ds_body_ph"))}"></textarea>
+    <div><span class="small muted">${esc(t("ds_items"))}</span>
+      <div class="chips" id="picked"></div>
+      <input class="search" id="item-q" placeholder="${esc(t("ds_items_ph"))}" autocomplete="off">
+      <div class="suggest" id="suggest"></div></div>
+    <p class="muted small">${esc(t("ds_rules"))}</p>
+    <div class="row-inline"><button class="pill primary">${esc(t("cm_post"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div>
+    <p class="small status" role="status"></p></form>`;
+  const pickedEl = el.querySelector("#picked");
+  const drawPicked = () => {
+    pickedEl.innerHTML = [...picked]
+      .map((id) => `<button type="button" class="chip on" data-unpick="${esc(id)}">${esc(displayName(db.byId.get(id)))} ✕</button>`)
+      .join("");
+    pickedEl.querySelectorAll("[data-unpick]").forEach((b) =>
+      b.addEventListener("click", () => {
+        picked.delete(b.dataset.unpick);
+        drawPicked();
+      }),
+    );
+  };
+  drawPicked();
+  const qIn = el.querySelector("#item-q");
+  const sug = el.querySelector("#suggest");
+  qIn.addEventListener("input", () => {
+    const q = qIn.value.trim().toLowerCase();
+    const hits = q.length < 2 ? [] : db.items.filter((i) => displayName(i).toLowerCase().includes(q)).slice(0, 8);
+    sug.innerHTML = hits.map((i) => `<button type="button" data-pick-item="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(t(`cat_${i.category}`))}</span></button>`).join("");
+    sug.querySelectorAll("[data-pick-item]").forEach((b) =>
+      b.addEventListener("click", () => {
+        if (picked.size < 5) picked.add(b.dataset.pickItem);
+        qIn.value = "";
+        sug.innerHTML = "";
+        drawPicked();
+      }),
+    );
+  });
+  el.querySelector("form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.target;
+    const st = f.querySelector(".status");
+    try {
+      const id = await community.addThread({ category: f.category.value, title: f.title.value.trim(), body: f.body.value.trim(), item_ids: [...picked] });
+      go(`#discuss/${id}`);
+    } catch (e) {
+      st.textContent = /rate_limit/.test(e.message) ? t("cm_rate") : `${t("cm_error")} ${e.message}`;
+    }
+  });
+}
+
+// ---- one thread
+
+function threadPage(id) {
+  return `<div class="discuss narrow"><p class="small"><a href="#discuss">← ${esc(t("nav_discuss"))}</a></p><div id="thread" data-id="${esc(id)}"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
+}
+
+async function wireThread(main) {
+  const el = main.querySelector("#thread");
+  const id = Number(el.dataset.id);
+  const load = async () => {
+    const res = await community.getThread(id);
+    if (!el.isConnected) return;
+    if (!res.ok) {
+      el.innerHTML = `<p class="muted">${esc(t("cm_offline"))}</p>`;
+      return;
+    }
+    if (!res.thread) {
+      el.innerHTML = `<p class="muted">${esc(t("ds_gone"))}</p>`;
+      return;
+    }
+    const s = await community.session();
+    const profile = s ? await community.myProfile() : null;
+    const [tv, cv] = s ? await Promise.all([community.myVotes("thread", [id]), community.myVotes("comment", res.comments.map((c) => c.id))]) : [new Map(), new Map()];
+    const th = res.thread;
+    const kids = new Map();
+    for (const c of res.comments) {
+      const k = c.parent_id ?? 0;
+      if (!kids.has(k)) kids.set(k, []);
+      kids.get(k).push(c);
+    }
+    const canPost = !!(s && profile);
+    const own = (r) => s && r.author === s.user.id;
+    const actions = (kind, r) =>
+      `${canPost && kind === "comment" ? `<button type="button" class="link small" data-reply="${r.id}">${esc(t("ds_reply"))}</button>` : ""}${
+        s && !own(r) ? `<button type="button" class="link small" data-dflag="${kind}:${r.id}">${esc(t("cm_flag"))}</button>` : ""
+      }${own(r) ? `<button type="button" class="link small" data-ddel="${kind}:${r.id}">${esc(t("cm_delete"))}</button>` : ""}`;
+    const tree = (parent, depth) =>
+      (kids.get(parent) ?? [])
+        .sort((a, b) => b.score - a.score || new Date(a.created_at) - new Date(b.created_at))
+        .map(
+          (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
+          ${voteBox("comment", c.id, c.score, cv.get(c.id), !!s)}
+          <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}</div>
+          <div class="comment-body">${richText(c.body)}</div>
+          <div class="post-actions">${actions("comment", c)}</div>
+          <div class="reply-slot"></div>
+          ${kids.has(c.id) ? `<div class="children">${tree(c.id, depth + 1)}</div>` : ""}</div></div>`,
+        )
+        .join("");
+    el.innerHTML = `<article class="thread card pad">
+        <div class="thread-head">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s)}
+        <div><p class="muted small"><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
+        <h1 class="thread-h1">${esc(th.title)}</h1></div></div>
+        ${th.body ? `<div class="thread-body">${richText(th.body)}</div>` : ""}
+        ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
+        <div class="post-actions">${actions("thread", th)}</div>
+      </article>
+      <section class="card pad">
+        <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
+        ${canPost ? `<form class="cm-form" data-form="comment"><textarea class="search" name="body" rows="3" maxlength="5000" required placeholder="${esc(t("ds_comment_ph"))}"></textarea><div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
+        <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
+      </section>`;
+    wireAuth(el, location.hash, load);
+    wireVotes(el, load);
+    const post = async (body, parent_id, st) => {
+      try {
+        await community.addComment({ thread_id: id, parent_id, body });
+        load();
+      } catch (e) {
+        st.textContent = /rate_limit/.test(e.message) ? t("cm_rate") : `${t("cm_error")} ${e.message}`;
+      }
+    };
+    el.querySelector('[data-form="comment"]')?.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      post(ev.target.body.value.trim(), null, ev.target.querySelector(".status"));
+    });
+    el.querySelectorAll("[data-reply]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const slot = b.closest(".comment-main").querySelector(".reply-slot");
+        if (slot.innerHTML) {
+          slot.innerHTML = "";
+          return;
+        }
+        slot.innerHTML = `<form class="cm-form"><textarea class="search" name="body" rows="2" maxlength="5000" required></textarea><div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
+        slot.querySelector("textarea").focus();
+        slot.querySelector("form").addEventListener("submit", (ev) => {
+          ev.preventDefault();
+          post(ev.target.body.value.trim(), Number(b.dataset.reply), ev.target.querySelector(".status"));
+        });
+      }),
+    );
+    el.querySelectorAll("[data-dflag]").forEach((b) =>
+      b.addEventListener("click", async () => {
+        const [kind, tid] = b.dataset.dflag.split(":");
+        const reason = prompt(t("cm_flag_reason"));
+        if (!reason) return;
+        try {
+          await community.flagDiscuss(kind, Number(tid), reason);
+          b.textContent = t("cm_flagged");
+        } catch (e) {
+          alert(`${t("cm_error")} ${e.message}`);
+        }
+      }),
+    );
+    el.querySelectorAll("[data-ddel]").forEach((b) =>
+      b.addEventListener("click", async () => {
+        const [kind, tid] = b.dataset.ddel.split(":");
+        if (!confirm(t("cm_delete_q"))) return;
+        try {
+          if (kind === "thread") {
+            await community.deleteThread(Number(tid));
+            go("#discuss");
+          } else {
+            await community.deleteComment(Number(tid));
+            load();
+          }
+        } catch (e) {
+          alert(`${t("cm_error")} ${e.message}`);
+        }
+      }),
+    );
+  };
+  load();
+}
+
+/** Threads linked to one item, on its page. */
+async function renderItemThreads(el, item) {
+  if (!el) return;
+  const { ok, rows } = await community.listThreads({ item: item.id });
+  if (!el.isConnected) return;
+  el.innerHTML = `<div class="row-between"><h3>${esc(t("ds_item_title"))}</h3><a class="pill small" href="#discuss/new?item=${encodeURIComponent(item.id)}">${esc(t("ds_new_about"))}</a></div>
+    ${!ok ? `<p class="muted">${esc(t("cm_offline"))}</p>` : rows.length ? rows.slice(0, 8).map((r) => threadRow(r, undefined, false)).join("") : `<p class="muted">${esc(t("ds_item_empty"))}</p>`}`;
+}
+
+// ---- account
+
+function accountPage() {
+  return `<div class="discuss narrow"><h1>${esc(t("ac_title"))}</h1><div id="account"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
+}
+
+async function wireAccount(main) {
+  const el = main.querySelector("#account");
+  const s = await community.session();
+  const profile = s ? await community.myProfile() : null;
+  if (!el.isConnected) return;
+  if (!s || !profile) {
+    el.innerHTML = `<div class="card pad">${authBlock(s, profile, "#account")}</div>`;
+    wireAuth(el, "#account", () => wireAccount(main));
+    return;
+  }
+  const a = await community.myActivity();
+  if (!el.isConnected) return;
+  const list = (rows, row) => (rows.length ? `<ul class="act">${rows.map(row).join("")}</ul>` : `<p class="muted small">${esc(t("ac_none"))}</p>`);
+  const itemLink = (id) => {
+    const i = findItem(id);
+    return `<a href="#item/${encodeURIComponent(id)}">${esc(i ? displayName(i) : id)}</a>`;
+  };
+  el.innerHTML = `
+    <section class="card pad"><h3>${esc(t("ac_profile"))}</h3>
+      <form class="cm-form" data-form="rename"><label class="dfield"><span>${esc(t("cm_name"))}</span>
+        <div class="row-inline"><input class="search" name="name" required minlength="2" maxlength="40" value="${esc(profile.display_name)}"><button class="pill primary">${esc(t("cm_save"))}</button></div></label>
+        <p class="muted small">${esc(t("ac_email", { email: a.email }))} · ${esc(t("ac_since", { date: day(a.since) }))}</p><p class="small status" role="status"></p></form>
+      <div class="row-inline"><button type="button" class="pill" data-signout>${esc(t("cm_signout"))}</button></div>
+    </section>
+    <section class="card pad"><h3>${esc(t("ac_threads"))} (${a.threads.length})</h3>${list(a.threads, (r) => `<li><a href="#discuss/${r.id}">${esc(r.title)}</a> <span class="muted small">· ${esc(t(`dc_${r.category}`))} · ▲ ${r.score} · ${esc(t("ds_n_comments", { n: r.comment_count }))} · ${esc(ago(r.created_at))}</span></li>`)}</section>
+    <section class="card pad"><h3>${esc(t("ac_comments"))} (${a.comments.length})</h3>${list(a.comments, (r) => `<li><a href="#discuss/${r.thread_id}">${esc(r.body.slice(0, 120))}${r.body.length > 120 ? "…" : ""}</a> <span class="muted small">· ▲ ${r.score} · ${esc(ago(r.created_at))}</span></li>`)}</section>
+    <section class="card pad"><h3>${esc(t("ac_reports"))} (${a.reports.length})</h3>${list(a.reports, (r) => `<li>${itemLink(r.item_id)}: ${esc(r.title)} <span class="muted small">· ${esc(t(`cm_kind_${r.kind}`))} · ${esc(t("cm_metoo"))} ${r.confirms} · ${esc(ago(r.created_at))}</span></li>`)}</section>
+    <section class="card pad"><h3>${esc(t("ac_prices"))} (${a.prices.length})</h3>${list(a.prices, (r) => `<li>${itemLink(r.item_id)}: ${money(r.amount, r.currency)} <span class="muted small">· ${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}</span></li>`)}</section>
+    <section class="card pad danger-zone"><h3>${esc(t("ac_delete_h"))}</h3><p class="small">${esc(t("ac_delete_what"))}</p>
+      <div class="row-inline"><button type="button" class="pill" data-delete-account>${esc(t("ac_delete"))}</button></div><p class="small status" role="status"></p></section>`;
+  el.querySelector('[data-form="rename"]').addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const st = ev.target.querySelector(".status");
+    try {
+      await community.saveProfile(ev.target.name.value.trim());
+      st.textContent = t("ac_saved");
+    } catch (e) {
+      st.textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
+  el.querySelector("[data-signout]").addEventListener("click", async () => {
+    await community.signOut();
+    wireAccount(main);
+  });
+  el.querySelector("[data-delete-account]").addEventListener("click", async (ev) => {
+    const word = t("ac_delete_word");
+    if (prompt(t("ac_delete_confirm", { word })) !== word) return;
+    const st = ev.target.closest("section").querySelector(".status");
+    try {
+      await community.deleteAccount();
+      st.textContent = t("ac_deleted");
+      setTimeout(() => wireAccount(main), 1200);
+    } catch (e) {
+      st.textContent = `${t("cm_error")} ${e.message}`;
+    }
+  });
 }
 
 // ---------------------------------------------------------------------------

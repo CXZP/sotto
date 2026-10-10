@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sotto</title>
+  <meta name="description" content="Will it plug in? Is it loud enough? Do you need an amp? An open, sourced headphone chain checker.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="catalog.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Cpath d='M8 20v-4M13 23v-10M18 21v-6M23 18v-2' stroke='%23fff' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="brand" href="#build">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 20v-4M13 23v-10M18 21v-6M23 18v-2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <span>Sotto</span>
+      </a>
+      <nav>
+        <a href="#build" data-route="build"></a>
+        <a href="#catalog" data-route="catalog"></a>
+        <a href="#learn" data-route="learn"></a>
+        <a href="#about" data-route="about"></a>
+      </nav>
+      <div class="bar-tools">
+        <div class="seg mini mode-seg" role="group" style="--n:2">
+          <button type="button" data-mode="simple"></button>
+          <button type="button" data-mode="detail"></button>
+        </div>
+        <div class="seg mini" role="group" style="--n:2">
+          <button type="button" data-lang="th">ไทย</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button type="button" class="icon-btn" id="theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero"><p class="tagline"></p></div>
+  <main></main>
+
+  <footer><p class="foot"></p></footer>
+
+  <noscript><p style="padding:24px">Sotto needs JavaScript to calculate. The data is plain JSON in <code>data/</code>.</p></noscript>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

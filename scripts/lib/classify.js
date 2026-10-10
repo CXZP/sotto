@@ -1,0 +1,67 @@
+// Rule-based product categorisation from store title / type / tags.
+// Deterministic and boring on purpose: every decision can be traced to a rule.
+
+const has = (s, re) => re.test(s);
+
+const RULES = [
+  // Things that are not part of a headphone chain, checked first.
+  ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying)\b/i],
+  ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],
+  ["adapter", /\b(adapters?|adaptors?|converter plugs?|jack converters?)\b/i],
+  ["skip", /\b(microphones?|turntables?|phono|cd players?|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power supply|lps|power conditioner|streamers?|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
+  ["wireless", /\b(tws|true wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
+  ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
+  ["dongle", /\b(dongle|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac)\b/i],
+  ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
+  ["iem", /\b(iems?|in[- ]ear|earphones?|earbuds?|universal iem|monitors?)\b/i],
+  ["headphone", /\b(headphones?|over[- ]ear|open[- ]back|closed[- ]back|planar)\b/i],
+];
+
+export function classify(p) {
+  const title = p.title ?? "";
+  const meta = `${p.type ?? ""} ${(Array.isArray(p.tags) ? p.tags.join(" ") : p.tags) ?? ""}`;
+  // The title is the strongest signal; type/tags break ties.
+  for (const text of [title, `${title} ${meta}`]) {
+    for (const [cat, re] of RULES) if (has(text, re)) return cat;
+  }
+  return "other";
+}
+
+export function condition(title) {
+  if (/\b(open[- ]box|b[- ]stock|refurbished|certified|pre[- ]owned|used|demo|scratch|dent)\b/i.test(title)) return "open-box/used";
+  return "new";
+}
+
+const NOISE = [
+  /\((?:[^)]*)\)/g,
+  /\[(?:[^\]]*)\]/g,
+  /\b(open[- ]box|b[- ]stock|refurbished|apos certified|certified|pre[- ]owned|used|demo|clearance|new|pre[- ]?order|limited edition)\b/gi,
+  /\b(in[- ]ear monitors?|iems?|earphones?|earbuds?|headphones?|wired|universal|over[- ]ear|on[- ]ear|open[- ]back|planar magnetic|planar|dynamic drivers?|dynamic|drivers?|hybrid|portable|desktop|usb|dac\/amp|dac amp|headphone amp(lifier)?|amplifier|amp|dac|dongle|balanced|monitors?)\b/gi,
+  // Marketing words stores append that don't change the product.
+  /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi,
+  // DAC/amp chip names and driver counts.
+  /\b(dual|quad)?\s*(es\d{4}\w*|cs\d{5}\w*|ak\d{4}\w*|pcm\d{4}\w*|tpa\d{4}\w*|ricore\w*|rt\d{4}\w*)\b/gi,
+  /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
+  /[|–—:,/+&]+/g,
+];
+
+/** Hyphen-free form for loose matching ("dc04pro" == "dc04-pro"). */
+export function compact(key) {
+  return key.replace(/-/g, "");
+}
+
+/** Normalised key so the same model at different stores groups together. */
+export function modelKey(vendor, title) {
+  let t = ` ${title} `;
+  const v = (vendor ?? "").trim();
+  if (v) t = t.replace(new RegExp(`\\b${escapeRe(v)}\\b`, "gi"), " ");
+  for (const re of NOISE) t = t.replace(re, " ");
+  const model = t.replace(/\s+/g, " ").trim();
+  const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return { key: `${slug(v) || "unknown"}--${slug(model) || "unknown"}`, model };
+}
+
+function escapeRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}

@@ -1,0 +1,253 @@
+[
+  {
+    "id": "sennheiser-hd-600",
+    "brand": "Sennheiser",
+    "model": "HD 600",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 300, "kind": "claimed", "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600" }
+    ],
+    "sensitivity": [
+      { "value": 97, "unit": "dB/V", "kind": "claimed", "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "sennheiser-hd-650",
+    "brand": "Sennheiser",
+    "model": "HD 650",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 300, "kind": "claimed", "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications" }
+    ],
+    "sensitivity": [
+      { "value": 103, "unit": "dB/V", "kind": "claimed", "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "sennheiser-hd-560s",
+    "brand": "Sennheiser",
+    "model": "HD 560S",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 120, "kind": "claimed", "source": "https://headphones.com/products/sennheiser-hd-560s" }
+    ],
+    "sensitivity": [
+      { "value": 110, "unit": "dB/V", "kind": "claimed", "source": "https://headphones.com/products/sennheiser-hd-560s" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "beyerdynamic-dt-990-pro-250",
+    "brand": "beyerdynamic",
+    "model": "DT 990 PRO (250 Ω)",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 250, "kind": "claimed", "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm" }
+    ],
+    "sensitivity": [
+      { "value": 96, "unit": "dB/mW", "kind": "claimed", "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm", "note": { "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)", "en": "Nominal SPL per IEC 60268-7 (1 mW reference)" } }
+    ],
+    "cable": { "detachable": false },
+    "stockPlug": null
+  },
+  {
+    "id": "beyerdynamic-dt-770-pro-80",
+    "brand": "beyerdynamic",
+    "model": "DT 770 PRO (80 Ω)",
+    "type": "over-ear",
+    "back": "closed",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 80, "kind": "claimed", "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630" }
+    ],
+    "sensitivity": [
+      { "value": 96, "unit": "dB/mW", "kind": "claimed", "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630", "note": { "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)", "en": "Nominal SPL per IEC 60268-7 (1 mW reference)" } }
+    ],
+    "cable": { "detachable": false },
+    "stockPlug": null
+  },
+  {
+    "id": "audio-technica-ath-m50x",
+    "brand": "Audio-Technica",
+    "model": "ATH-M50x",
+    "type": "over-ear",
+    "back": "closed",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 38, "kind": "claimed", "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x" }
+    ],
+    "sensitivity": [
+      { "value": 99, "unit": "dB/mW", "kind": "claimed", "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x" },
+      { "value": 98, "unit": "dB/mW", "kind": "claimed", "source": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones", "note": { "th": "บางร้านระบุ 98 dB — สเปกไม่ตรงกันระหว่างแหล่ง", "en": "Some listings say 98 dB — sources disagree" } }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "audio-technica-ath-r70x",
+    "brand": "Audio-Technica",
+    "model": "ATH-R70x",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 470, "kind": "claimed", "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4" }
+    ],
+    "sensitivity": [
+      { "value": 99, "unit": "dB/mW", "kind": "claimed", "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "hifiman-sundara",
+    "brand": "HIFIMAN",
+    "model": "Sundara",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "planar",
+    "impedance": [
+      { "value": 37, "kind": "claimed", "source": "https://headphones.com/products/hifiman-sundara-headphones", "note": { "th": "บางร้านระบุ 20 Ω หรือ 32 Ω — มีหลายรุ่นย่อย", "en": "Some listings say 20 Ω or 32 Ω — there are several revisions" } }
+    ],
+    "sensitivity": [
+      { "value": 105.7, "unit": "dB/V", "kind": "measured", "source": "https://www.hifinews.com/content/hifiman-sundara-headphones-lab-report", "note": { "th": "HiFi News วัดเฉลี่ยสองข้างที่ 1 kHz", "en": "HiFi News lab measurement, both capsules averaged, 1 kHz" } },
+      { "value": 94, "unit": "dB/mW", "kind": "claimed", "source": "https://headphones.com/products/hifiman-sundara-headphones" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null,
+    "notes": [
+      { "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้", "en": "Open-back: leaks sound to people nearby and does not block outside noise." }
+    ]
+  },
+  {
+    "id": "hifiman-edition-xs",
+    "brand": "HIFIMAN",
+    "model": "Edition XS",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "planar",
+    "impedance": [
+      { "value": 18, "kind": "claimed", "source": "https://www.audioconcierge.co.uk/edition-xs/" }
+    ],
+    "sensitivity": [
+      { "value": 105.4, "unit": "dB/V", "kind": "measured", "source": "https://www.rtings.com/headphones/tools/compare/sennheiser-hd-800-s-hifiman-edition-xs/290/29106", "note": { "th": "RTINGS วัดที่ 1 kHz / 1 V", "en": "RTINGS measurement at 1 kHz / 1 V" } },
+      { "value": 92, "unit": "dB/mW", "kind": "claimed", "source": "https://www.audioconcierge.co.uk/edition-xs/", "note": { "th": "สเปกโรงงานไม่ระบุหน่วย สันนิษฐานว่าเป็น dB/mW", "en": "Spec sheet gives no unit; assumed dB/mW" } }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null,
+    "notes": [
+      { "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้", "en": "Open-back: leaks sound to people nearby and does not block outside noise." }
+    ]
+  },
+  {
+    "id": "moondrop-chu-ii",
+    "brand": "Moondrop",
+    "model": "Chu II",
+    "type": "iem",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 18, "kind": "claimed", "source": "https://hangout.audio/products/moondrop-chu-2" }
+    ],
+    "sensitivity": [
+      { "value": 119, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/products/moondrop-chu-2" }
+    ],
+    "cable": { "detachable": true, "connector": "2pin-0.78", "source": "https://www.ifixit.com/Device/Moondrop_Chu_II" },
+    "stockPlug": "3.5",
+    "stockPlugSource": "https://www.ifixit.com/Device/Moondrop_Chu_II"
+  },
+  {
+    "id": "moondrop-aria-2",
+    "brand": "Moondrop",
+    "model": "Aria 2",
+    "type": "iem",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 33, "kind": "claimed", "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones" }
+    ],
+    "sensitivity": [
+      { "value": 122, "unit": "dB/V", "kind": "claimed", "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "moondrop-blessing-3",
+    "brand": "Moondrop",
+    "model": "Blessing 3",
+    "type": "iem",
+    "driver": "hybrid",
+    "drivers": "2DD + 4BA",
+    "impedance": [
+      { "value": 14.8, "kind": "claimed", "source": "https://moondroplab.com/en/products/blessing3" }
+    ],
+    "sensitivity": [
+      { "value": 120, "unit": "dB/V", "kind": "claimed", "source": "https://moondroplab.com/en/products/blessing3" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "truthear-hexa",
+    "brand": "Truthear",
+    "model": "Hexa",
+    "type": "iem",
+    "driver": "hybrid",
+    "drivers": "1DD + 3BA",
+    "impedance": [
+      { "value": 20.5, "kind": "claimed", "source": "https://hangout.audio/zh/products/truthear-hexa" }
+    ],
+    "sensitivity": [
+      { "value": 120, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/zh/products/truthear-hexa" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  },
+  {
+    "id": "truthear-zero-red",
+    "brand": "Truthear × Crinacle",
+    "model": "Zero:RED",
+    "type": "iem",
+    "driver": "dynamic",
+    "drivers": "2DD",
+    "impedance": [
+      { "value": 17.5, "kind": "claimed", "source": "https://hangout.audio/products/red" }
+    ],
+    "sensitivity": [
+      { "value": 117.5, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/products/red" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null,
+    "notes": [
+      { "th": "แถมตัวต้านทาน 10 Ω มาให้เสียบเพื่อลดเบส — คือการเพิ่ม output impedance โดยตั้งใจ (ดูหัวข้อกฎ 1/8)", "en": "Ships with a 10 Ω adapter that reduces bass — deliberately raising output impedance (see the 1/8 rule).", "source": "https://hangout.audio/products/red" }
+    ]
+  },
+  {
+    "id": "simgot-ea500lm",
+    "brand": "Simgot",
+    "model": "EA500LM",
+    "type": "iem",
+    "driver": "dynamic",
+    "impedance": [
+      { "value": 21, "kind": "claimed", "source": "https://moonstarreviews.net/simgot-ea500-lm-review/" }
+    ],
+    "sensitivity": [
+      { "value": 123, "unit": "dB/V", "kind": "claimed", "source": "https://moonstarreviews.net/simgot-ea500-lm-review/", "note": { "th": "ค่าขึ้นกับหัวจุก (nozzle) ที่ใส่ 123–124 dB/V", "en": "Depends on the fitted nozzle: 123–124 dB/V" } },
+      { "value": 107, "unit": "dB/mW", "kind": "claimed", "source": "https://www.headphonesty.com/2024/02/simgot-ea500lm-review/" }
+    ],
+    "cable": { "detachable": true },
+    "stockPlug": null
+  }
+]

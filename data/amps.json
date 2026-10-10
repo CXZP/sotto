@@ -1,0 +1,759 @@
+[
+  {
+    "id": "apple-usb-c-adapter-a2155",
+    "brand": "Apple",
+    "model": "USB-C to 3.5 mm adapter (A2155)",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "measured",
+        "source": "https://reference-audio-analyzer.pro/en/report/amp/apple-usb-c.php",
+        "vmax": 0.5,
+        "zout": 0.3,
+        "note": {
+          "th": "วัดรุ่น A2155 (ขายในยุโรป/ต่างประเทศ) ได้สูงสุด 0.5 Vrms — มีคนบอกว่ารุ่น US (A2049) แรงกว่า แต่ยังไม่พบผลวัดยืนยัน",
+          "en": "Measured on A2155 (EU/international unit): 0.5 Vrms max. The US unit (A2049) is said to be louder, but no measurement found yet."
+        }
+      }
+    ]
+  },
+  {
+    "id": "moondrop-dawn-pro",
+    "brand": "Moondrop",
+    "model": "Dawn Pro",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": {
+      "usd": 59.99,
+      "source": "https://audio46.com/products/moondrop-dawn-pro-portable-usb-dac-amp"
+    },
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://headfonics.com/moondrop-dawn-pro-review/",
+        "power": [
+          {
+            "load": 32,
+            "mw": 120
+          }
+        ],
+        "vmax": 2,
+        "zout": null
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://headfonics.com/moondrop-dawn-pro-review/",
+        "power": [
+          {
+            "load": 32,
+            "mw": 120
+          }
+        ],
+        "vmax": 4,
+        "zout": null,
+        "note": {
+          "th": "ผู้ผลิตให้ตัวเลขกำลังขับที่ 32 Ω ค่าเดียว ค่าที่โหลดอื่นเป็นการประมาณ",
+          "en": "Only one power figure (32 Ω) is published; other loads are estimated."
+        }
+      }
+    ]
+  },
+  {
+    "id": "fiio-ka3",
+    "brand": "FiiO",
+    "model": "KA3",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://fiio.com/ka3_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 120
+          },
+          {
+            "load": 32,
+            "mw": 130
+          },
+          {
+            "load": 300,
+            "mw": 14
+          },
+          {
+            "load": 600,
+            "mw": 7
+          }
+        ],
+        "vmax": 2,
+        "zout": 0.5
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://fiio.com/ka3_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 120
+          },
+          {
+            "load": 32,
+            "mw": 240
+          },
+          {
+            "load": 300,
+            "mw": 56
+          },
+          {
+            "load": 600,
+            "mw": 28
+          }
+        ],
+        "vmax": 2.7,
+        "zout": 0.7
+      }
+    ]
+  },
+  {
+    "id": "fiio-k11",
+    "brand": "FiiO",
+    "model": "K11",
+    "kind": "desktop",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "6.35",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k11_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 720
+          },
+          {
+            "load": 32,
+            "mw": 520
+          },
+          {
+            "load": 300,
+            "mw": 60
+          }
+        ],
+        "vmax": 4.24,
+        "zout": 1.2,
+        "note": {
+          "th": "vmax คำนวณจาก 12 Vp-p ที่ผู้ผลิตระบุ",
+          "en": "vmax derived from the published 12 Vp-p"
+        }
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k11_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 570
+          },
+          {
+            "load": 32,
+            "mw": 1400
+          },
+          {
+            "load": 300,
+            "mw": 250
+          }
+        ],
+        "vmax": 8.66,
+        "zout": 2.4,
+        "note": {
+          "th": "vmax คำนวณจาก 24.5 Vp-p ที่ผู้ผลิตระบุ",
+          "en": "vmax derived from the published 24.5 Vp-p"
+        }
+      }
+    ]
+  },
+  {
+    "id": "topping-dx5-ii",
+    "brand": "Topping",
+    "model": "DX5 II",
+    "kind": "desktop",
+    "input": "usb",
+    "price": {
+      "usd": 299,
+      "source": "https://apos.audio/products/topping-dx5-ii-dac-amp"
+    },
+    "outputs": [
+      {
+        "jack": "6.35",
+        "kind": "claimed",
+        "source": "https://www.neowin.net/reviews/topping-dx5-ii-review---high-spec-headphones-amp-dac--pre-amplifier-for-under-300/",
+        "power": [
+          {
+            "load": 16,
+            "mw": 3300
+          },
+          {
+            "load": 32,
+            "mw": 2200
+          },
+          {
+            "load": 64,
+            "mw": 1160
+          },
+          {
+            "load": 300,
+            "mw": 250
+          },
+          {
+            "load": 600,
+            "mw": 120
+          }
+        ],
+        "zout": null
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.neowin.net/reviews/topping-dx5-ii-review---high-spec-headphones-amp-dac--pre-amplifier-for-under-300/",
+        "power": [
+          {
+            "load": 16,
+            "mw": 7600
+          },
+          {
+            "load": 32,
+            "mw": 6400
+          },
+          {
+            "load": 64,
+            "mw": 4300
+          },
+          {
+            "load": 300,
+            "mw": 990
+          },
+          {
+            "load": 600,
+            "mw": 490
+          }
+        ],
+        "zout": null
+      },
+      {
+        "jack": "xlr4",
+        "kind": "claimed",
+        "source": "https://www.neowin.net/reviews/topping-dx5-ii-review---high-spec-headphones-amp-dac--pre-amplifier-for-under-300/",
+        "power": [
+          {
+            "load": 16,
+            "mw": 7600
+          },
+          {
+            "load": 32,
+            "mw": 6400
+          },
+          {
+            "load": 64,
+            "mw": 4300
+          },
+          {
+            "load": 300,
+            "mw": 990
+          },
+          {
+            "load": 600,
+            "mw": 490
+          }
+        ],
+        "zout": null,
+        "note": {
+          "th": "แหล่งข้อมูลให้ตัวเลข balanced ชุดเดียว ไม่แยก 4.4 กับ XLR",
+          "en": "The source gives one balanced figure for both 4.4 mm and XLR"
+        }
+      }
+    ]
+  },
+  {
+    "id": "fiio-ka13",
+    "brand": "FiiO",
+    "model": "KA13",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka13_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 290
+          },
+          {
+            "load": 32,
+            "mw": 170
+          },
+          {
+            "load": 300,
+            "mw": 19.5
+          }
+        ],
+        "zout": 1.7,
+        "note": {
+          "th": "ตัวเลขในโหมด Desktop / High gain (โหมดแรงสุด)",
+          "en": "Figures for Desktop mode / high gain (the strongest mode)"
+        }
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka13_parameters",
+        "power": [
+          {
+            "load": 32,
+            "mw": 550
+          },
+          {
+            "load": 300,
+            "mw": 78
+          }
+        ],
+        "zout": 1.8,
+        "note": {
+          "th": "โหมด Desktop ON · หน้าสเปกของ FiiO จับคู่ค่า 16 Ω ไม่ชัด จึงไม่ใส่",
+          "en": "Desktop mode ON · FiiO's page pairs the 16 Ω figure ambiguously, so it's left out"
+        }
+      }
+    ]
+  },
+  {
+    "id": "fiio-ka15",
+    "brand": "FiiO",
+    "model": "KA15",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka15_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 290
+          },
+          {
+            "load": 32,
+            "mw": 180
+          },
+          {
+            "load": 300,
+            "mw": 19
+          }
+        ],
+        "zout": 0.8
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka15_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 510
+          },
+          {
+            "load": 32,
+            "mw": 560
+          },
+          {
+            "load": 300,
+            "mw": 78
+          }
+        ],
+        "zout": 1.2
+      }
+    ]
+  },
+  {
+    "id": "fiio-ka17",
+    "brand": "FiiO",
+    "model": "KA17",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka17_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 320
+          },
+          {
+            "load": 32,
+            "mw": 270
+          },
+          {
+            "load": 300,
+            "mw": 30
+          }
+        ],
+        "vmax": 3,
+        "zout": 1,
+        "note": {
+          "th": "ตัวเลขในโหมด Desktop / High gain (โหมดแรงสุด)",
+          "en": "Figures for Desktop mode / high gain (the strongest mode)"
+        }
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/ka17_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 460
+          },
+          {
+            "load": 32,
+            "mw": 650
+          },
+          {
+            "load": 300,
+            "mw": 90
+          }
+        ],
+        "vmax": 4.5,
+        "zout": 1.5,
+        "note": {
+          "th": "ตัวเลขในโหมด Desktop / High gain (โหมดแรงสุด)",
+          "en": "Figures for Desktop mode / high gain (the strongest mode)"
+        }
+      }
+    ]
+  },
+  {
+    "id": "fiio-k7",
+    "brand": "FiiO",
+    "model": "K7",
+    "kind": "desktop",
+    "input": "usb",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "6.35",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k7_parameters",
+        "power": [
+          {
+            "load": 32,
+            "mw": 1220
+          },
+          {
+            "load": 300,
+            "mw": 140
+          }
+        ],
+        "zout": 1
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k7_parameters",
+        "power": [
+          {
+            "load": 32,
+            "mw": 2000
+          },
+          {
+            "load": 300,
+            "mw": 560
+          }
+        ],
+        "zout": 1
+      }
+    ]
+  },
+  {
+    "id": "fiio-k13-r2r",
+    "brand": "FiiO",
+    "model": "K13 R2R",
+    "kind": "desktop",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "6.35",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k13r2r_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 1200
+          },
+          {
+            "load": 32,
+            "mw": 1220
+          },
+          {
+            "load": 300,
+            "mw": 150
+          }
+        ],
+        "zout": 0.4,
+        "note": {
+          "th": "High gain",
+          "en": "High gain"
+        }
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.fiio.com/k13r2r_parameters",
+        "power": [
+          {
+            "load": 16,
+            "mw": 1200
+          },
+          {
+            "load": 32,
+            "mw": 2400
+          },
+          {
+            "load": 300,
+            "mw": 600
+          }
+        ],
+        "zout": 1,
+        "note": {
+          "th": "High gain",
+          "en": "High gain"
+        }
+      }
+    ]
+  },
+  {
+    "id": "cayin-ru7",
+    "brand": "Cayin",
+    "model": "RU7",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://hifigo.com/products/cayin-ru7",
+        "power": [
+          {
+            "load": 32,
+            "mw": 160
+          }
+        ],
+        "zout": 0.5
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://hifigo.com/products/cayin-ru7",
+        "power": [
+          {
+            "load": 32,
+            "mw": 400
+          }
+        ],
+        "zout": null
+      }
+    ]
+  },
+  {
+    "id": "ibasso-dc04-pro",
+    "brand": "iBasso",
+    "model": "DC04 Pro",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/ibasso-dc04pro",
+        "voltage": [
+          {
+            "load": 32,
+            "vrms": 2
+          },
+          {
+            "load": 300,
+            "vrms": 2
+          }
+        ],
+        "zout": 0.2
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/ibasso-dc04pro",
+        "voltage": [
+          {
+            "load": 32,
+            "vrms": 3
+          },
+          {
+            "load": 300,
+            "vrms": 4
+          }
+        ],
+        "zout": 0.4
+      }
+    ]
+  },
+  {
+    "id": "shanling-ua4",
+    "brand": "Shanling",
+    "model": "UA4",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/shanling-ua4",
+        "power": [
+          {
+            "load": 32,
+            "mw": 137
+          }
+        ],
+        "zout": 0.4
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.audiophonics.fr/en/portable-dac-and-mobile/shanling-ua4-silver-p-18612.html",
+        "power": [
+          {
+            "load": 32,
+            "mw": 227
+          }
+        ],
+        "zout": 0.8
+      }
+    ]
+  },
+  {
+    "id": "qudelix-5k",
+    "brand": "Qudelix",
+    "model": "5K",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://www.headphonesty.com/2023/03/review-qudelix-5k/",
+        "power": [
+          {
+            "load": 32,
+            "mw": 80
+          }
+        ],
+        "vmax": 2,
+        "zout": 1,
+        "note": {
+          "th": "แหล่งไม่ระบุโหลดของค่ากำลังขับ สันนิษฐานว่า 32 Ω",
+          "en": "Source doesn't state the load for the power figure; 32 Ω assumed"
+        }
+      },
+      {
+        "jack": "2.5",
+        "kind": "claimed",
+        "source": "https://www.headphonesty.com/2023/03/review-qudelix-5k/",
+        "power": [
+          {
+            "load": 32,
+            "mw": 240
+          }
+        ],
+        "vmax": 4,
+        "zout": 1,
+        "note": {
+          "th": "Balanced 2.5 mm · แหล่งไม่ระบุโหลด สันนิษฐานว่า 32 Ω",
+          "en": "Balanced 2.5 mm · load not stated; 32 Ω assumed"
+        }
+      }
+    ]
+  },
+  {
+    "id": "truthear-shio",
+    "brand": "Truthear",
+    "model": "SHIO",
+    "kind": "dongle",
+    "input": "usb-c",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://www.stereoindex.com/tech/hi-fi/truthear-shio-d-a-converter-and-headphone-amplifier-sheathed-in-leather/",
+        "vmax": 2,
+        "zout": null,
+        "note": {
+          "th": "มีแค่แรงดันสูงสุด ไม่มีข้อมูลกระแส — ผลกับหูฟัง impedance ต่ำอาจดีเกินจริง",
+          "en": "Only max voltage is published, no current limit — results for low-impedance headphones may be optimistic"
+        }
+      },
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://www.stereoindex.com/tech/hi-fi/truthear-shio-d-a-converter-and-headphone-amplifier-sheathed-in-leather/",
+        "vmax": 4,
+        "zout": null,
+        "note": {
+          "th": "มีแค่แรงดันสูงสุด ไม่มีข้อมูลกระแส — ผลกับหูฟัง impedance ต่ำอาจดีเกินจริง",
+          "en": "Only max voltage is published, no current limit — results for low-impedance headphones may be optimistic"
+        }
+      }
+    ]
+  },
+  {
+    "id": "shanling-ea5-plus",
+    "brand": "Shanling",
+    "model": "EA5 Plus",
+    "kind": "desktop",
+    "input": "usb",
+    "price": null,
+    "outputs": [
+      {
+        "jack": "6.35",
+        "kind": "claimed",
+        "source": "https://hifigo.com/products/shanling-ea5-plus",
+        "power": [
+          {
+            "load": 32,
+            "mw": 570
+          }
+        ],
+        "zout": null
+      }
+    ]
+  }
+]

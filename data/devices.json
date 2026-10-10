@@ -1,0 +1,38 @@
+[
+  {
+    "id": "phone-usb-c",
+    "name": { "th": "มือถือ / แท็บเล็ต (USB-C)", "en": "Phone / tablet (USB-C)" },
+    "port": "usb-c",
+    "outputs": []
+  },
+  {
+    "id": "iphone-lightning",
+    "name": { "th": "iPhone รุ่นที่ใช้ Lightning", "en": "iPhone with Lightning" },
+    "port": "lightning",
+    "outputs": []
+  },
+  {
+    "id": "computer-usb",
+    "name": { "th": "คอมพิวเตอร์ (USB-A / USB-C)", "en": "Computer (USB-A / USB-C)" },
+    "port": "usb-a",
+    "outputs": []
+  },
+  {
+    "id": "apple-macbook-2021",
+    "name": { "th": "Mac (รุ่นปี 2021 ขึ้นไป ที่รองรับหูฟัง high-impedance)", "en": "Mac (2021 or later, high-impedance headphone support)" },
+    "port": "usb-c",
+    "outputs": [
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://support.apple.com/108351",
+        "vrules": [
+          { "maxLoad": 150, "vrms": 1.25 },
+          { "maxLoad": 1000, "vrms": 3 }
+        ],
+        "zout": null,
+        "note": { "th": "Mac ตรวจค่า impedance ของหูฟังแล้วปรับแรงดันเอง: ต่ำกว่า 150 Ω ได้สูงสุด 1.25 Vrms, 150 Ω–1 kΩ ได้ 3 Vrms", "en": "The Mac detects headphone impedance: under 150 Ω up to 1.25 Vrms, 150 Ω–1 kΩ up to 3 Vrms" }
+      }
+    ]
+  }
+]

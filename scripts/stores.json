@@ -1,0 +1,10 @@
+[
+  { "id": "audio46", "host": "audio46.com", "delay": 2 },
+  { "id": "hifigo", "host": "hifigo.com", "delay": 2 },
+  { "id": "bloomaudio", "host": "bloomaudio.com", "delay": 2 },
+  { "id": "shenzhenaudio", "host": "shenzhenaudio.com", "delay": 2 },
+  { "id": "linsoul", "host": "linsoul.com", "delay": 2 },
+  { "id": "headphones-com", "host": "headphones.com", "delay": 2 },
+  { "id": "apos", "host": "apos.audio", "delay": 10 },
+  { "id": "hangout", "host": "hangout.audio", "delay": 2 }
+]

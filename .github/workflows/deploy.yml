@@ -37,7 +37,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Pull store feeds (polite: delays from scripts/stores.json)
+      - name: Pull store feeds, politely (delays from scripts/stores.json)
         run: node scripts/crawl.mjs
       - name: Rebuild catalog
         run: node scripts/build-catalog.mjs

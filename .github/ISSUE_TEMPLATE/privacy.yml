@@ -1,0 +1,23 @@
+name: Personal data request (PDPA)
+description: Copy of your data, objection or complaint
+labels: [privacy]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not write your email or any personal data here. You can delete your account yourself on the account page. For anything else, describe the request and a maintainer will arrange a private way to verify you."
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request
+      options:
+        - Copy of my data
+        - Object to processing
+        - Correct my data
+        - Complaint
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details (no personal data)

@@ -1,0 +1,37 @@
+name: Brand or store request (correction / removal)
+description: For brands, stores or rights holders
+labels: [takedown]
+body:
+  - type: markdown
+    attributes:
+      value: Please don't include personal data here. Say if you'd like a private contact and a maintainer will reply.
+  - type: input
+    id: who
+    attributes:
+      label: Who you represent (brand, store, rights holder)
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Link to the post, product page or data
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request
+      options:
+        - A user report is factually wrong (please show why)
+        - Copyrighted material was posted without permission
+        - Product data is wrong
+        - I want to post an official brand response
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details and evidence
+    validations:
+      required: true

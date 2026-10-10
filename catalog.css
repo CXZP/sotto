@@ -320,3 +320,13 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .related-row b { font-weight: 600; line-height: 1.35; }
 .related-row img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
 @media (max-width: 1000px) { .thread-layout { grid-template-columns: minmax(0, 1fr); } .thread-aside { position: static; } }
+
+/* Legal pages, static product pages */
+.legal h2 { font-size: 18px; margin: 22px 0 6px; }
+.legal-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+.legal-table th, .legal-table td { text-align: left; padding: 8px; border-top: 1px solid var(--line); vertical-align: top; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 14px 0; }
+.contact-grid a { display: grid; gap: 4px; color: var(--text); }
+.contact-grid a:hover { text-decoration: none; border-color: var(--line-strong); }
+.static-page { max-width: 820px; margin: 0 auto; padding: 32px 16px; line-height: 1.6; }
+.static-page ul { padding-left: 20px; }

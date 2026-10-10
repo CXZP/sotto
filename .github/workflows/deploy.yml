@@ -1,0 +1,92 @@
+name: crawl and deploy
+
+# Every push to main deploys the site. Every Monday (and on demand) the bot
+# first pulls fresh store feeds, rebuilds data/catalog.json, checks it and
+# commits it; then the site deploys with a static page and share card per model.
+#
+# Requires: Settings → Pages → Build and deployment → Source: GitHub Actions.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 2 * * 1" # Monday 02:00 UTC = 09:00 in Thailand
+  workflow_dispatch:
+    inputs:
+      crawl:
+        description: Pull fresh store data before deploying
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.crawl)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Pull store feeds (polite: delays from scripts/stores.json)
+        run: node scripts/crawl.mjs
+      - name: Rebuild catalog
+        run: node scripts/build-catalog.mjs
+      - name: Check data and tests
+        run: npm run check
+      - name: Guard against a broken crawl
+        # A store that failed or changed its feed must not wipe the catalog.
+        run: |
+          node -e '
+            const c = require("./data/catalog.json");
+            const n = c.items.length;
+            if (n < 2500) { console.error(`only ${n} models, refusing to publish`); process.exit(1); }
+            console.log(`${n} models from ${Object.keys(c.stores).length} stores`);
+          '
+      - name: Version assets and commit
+        run: |
+          node scripts/stamp.mjs
+          git config user.name "sotto-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/catalog.json src index.html
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: weekly store crawl $(date -u +%F)" && git push; fi
+
+  deploy:
+    needs: crawl
+    # Runs after the crawl, or on its own when the crawl was skipped (a push).
+    if: ${{ !failure() && !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main # pick up the crawl commit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp -r index.html *.css .nojekyll src data LICENSE DATA_LICENSE.md _site/
+      - name: Product pages, share cards, sitemap
+        run: node scripts/build-pages.mjs _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: pages
+        uses: actions/deploy-pages@v4

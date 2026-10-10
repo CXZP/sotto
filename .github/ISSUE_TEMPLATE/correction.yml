@@ -1,0 +1,24 @@
+name: Wrong product data
+description: A spec, price, category or duplicate model is wrong
+labels: [data]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: Product page link or name
+      placeholder: https://cxzp.github.io/sotto/p/crinear--reference/
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What's wrong, and what's correct?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source for the correct value (maker or store page, measurement)
+      placeholder: https://
+    validations:
+      required: true

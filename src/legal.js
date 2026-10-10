@@ -1,0 +1,125 @@
+// Terms, privacy notice (PDPA) and contact / takedown page.
+// Plain language. This is a student open-source project, not legal advice;
+// a lawyer should review before any commercial launch.
+
+import { REPO } from "./content.js?v=mv31f28z";
+
+export const LEGAL_UPDATED = "2026-10-11";
+const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
+
+export const LEGAL = {
+  terms: {
+    th: `
+<h1>ข้อตกลงการใช้งาน</h1>
+<p class="muted">อัปเดต ${LEGAL_UPDATED}</p>
+<h2>Sotto คืออะไร</h2>
+<p>Sotto เป็นโปรเจกต์ open source ของนักศึกษา (วิชา GEN354 มจธ.) ช่วยเช็กว่าหูฟังกับแหล่งเสียงเข้ากันไหม แสดงสเปกพร้อมที่มา ราคาจากร้าน และพื้นที่ให้ผู้ใช้แลกเปลี่ยน ใช้ฟรี ไม่มีโฆษณา</p>
+<h2>ข้อมูลและผลคำนวณ</h2>
+<ul>
+<li>สเปกและราคามาจากฟีดสาธารณะของร้าน และข้อมูลที่ตรวจด้วยมือ ทุกค่ามีลิงก์ที่มา แต่อาจผิด ล้าสมัย หรือร้านแก้ไขภายหลัง</li>
+<li>ผลคำนวณเป็นการประมาณจากตัวเลขที่ผู้ผลิตบอก ไม่ใช่การรับประกัน ก่อนซื้อให้ตรวจกับร้านหรือผู้ผลิตอีกครั้ง</li>
+<li>เราให้บริการ "ตามสภาพ" ไม่รับผิดชอบความเสียหายจากการใช้ข้อมูล รวมถึงอุปกรณ์เสียหรือการได้ยินเสียหาย เปิดเสียงเบาก่อนเสมอ</li>
+</ul>
+<h2>สิ่งที่คุณโพสต์</h2>
+<ul>
+<li>คุณเป็นเจ้าของสิ่งที่โพสต์ และอนุญาตให้ Sotto แสดง จัดเก็บ และเผยแพร่ภายใต้ <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> เหมือนข้อมูลส่วนอื่นของเว็บ</li>
+<li>โพสต์ได้เฉพาะสิ่งที่คุณมีสิทธิ์ อย่าคัดลอกรีวิว บทความ หรือรูปของคนอื่นมาโพสต์ ให้ใส่ลิงก์แทน</li>
+<li>รายงานปัญหาของสินค้าต้องมาจากประสบการณ์จริงและมีหลักฐาน ไม่กล่าวหาเกินจริง (กฎหมายหมิ่นประมาทของไทยมีโทษทางอาญา)</li>
+<li>ห้าม: สแปม โฆษณาแฝงโดยไม่บอก ข้อมูลส่วนตัวของคนอื่น เนื้อหาผิดกฎหมาย คุกคาม หรือเกลียดชัง</li>
+<li>ถ้าได้ของฟรีหรือได้ค่าตอบแทนจากแบรนด์ ต้องบอกทุกครั้ง</li>
+</ul>
+<h2>การดูแลชุมชน</h2>
+<p>ทีมงานซ่อนหรือลบโพสต์ที่ผิดข้อตกลง และระงับบัญชีที่ทำผิดซ้ำได้ ใครก็กด "แจ้งไม่เหมาะสม" ได้ ถ้าคิดว่าเราตัดสินผิด ติดต่อผ่าน<a href="#contact">หน้าติดต่อ</a></p>
+<h2>ความเป็นอิสระ</h2>
+<p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
+<h2>การเปลี่ยนแปลง</h2>
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv31f28z" target="_blank" rel="noopener">GitHub</a></p>`,
+    en: `
+<h1>Terms of use</h1>
+<p class="muted">Updated ${LEGAL_UPDATED}</p>
+<h2>What Sotto is</h2>
+<p>Sotto is an open-source student project (GEN354, KMUTT) that checks whether headphones and sources work together, shows sourced specs and store prices, and hosts a community. It is free and has no ads.</p>
+<h2>Data and results</h2>
+<ul>
+<li>Specs and prices come from stores' public feeds and hand-checked data. Every value links to its source, but it can be wrong, outdated or changed by the store.</li>
+<li>Results are estimates from manufacturers' figures, not guarantees. Check with the store or maker before buying.</li>
+<li>The service is provided "as is". We aren't liable for damage from using it, including damaged equipment or hearing. Always start at low volume.</li>
+</ul>
+<h2>What you post</h2>
+<ul>
+<li>You own what you post and license it to Sotto to display, store and share under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, like the rest of the site's data.</li>
+<li>Only post what you have the right to. Don't copy other people's reviews, articles or photos; link to them instead.</li>
+<li>Product problem reports must come from real experience, with evidence, without overstating (defamation is a criminal offence in Thailand).</li>
+<li>Not allowed: spam, undisclosed advertising, other people's personal data, illegal content, harassment or hate.</li>
+<li>If a brand gave you the product or paid you, say so every time.</li>
+</ul>
+<h2>Moderation</h2>
+<p>Maintainers may hide or remove posts that break these terms and suspend repeat offenders. Anyone can press "Report post". If you think we got it wrong, use the <a href="#contact">contact page</a>.</p>
+<h2>Independence</h2>
+<p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
+<h2>Changes</h2>
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv31f28z" target="_blank" rel="noopener">GitHub</a>.</p>`,
+  },
+  privacy: {
+    th: `
+<h1>นโยบายความเป็นส่วนตัว</h1>
+<p class="muted">อัปเดต ${LEGAL_UPDATED} · ตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล (PDPA)</p>
+<h2>ถ้าคุณแค่เข้ามาดู</h2>
+<p>เราไม่มี analytics ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม และไม่บันทึกว่าคุณดูอะไร การตั้งค่า (ภาษา โหมด ธีม) กับ bookmark ตอนยังไม่ล็อกอิน เก็บไว้ในเบราว์เซอร์ของคุณเอง</p>
+<p>แต่บริการเหล่านี้เห็น IP และข้อมูลเบราว์เซอร์ของคุณ เพราะเบราว์เซอร์ต้องโหลดไฟล์จากเขา: GitHub Pages (ตัวเว็บ), Google Fonts (ฟอนต์), เซิร์ฟเวอร์รูปของร้านค้า, jsDelivr และ Supabase (ส่วน community)</p>
+<h2>ถ้าคุณล็อกอิน</h2>
+<table class="legal-table"><tr><th>ข้อมูล</th><th>ใช้ทำอะไร</th><th>ใครเห็น</th></tr>
+<tr><td>อีเมล</td><td>ส่งลิงก์เข้าสู่ระบบ</td><td>คุณเท่านั้น (เก็บใน Supabase)</td></tr>
+<tr><td>ชื่อที่แสดง</td><td>แสดงกับโพสต์</td><td>ทุกคน</td></tr>
+<tr><td>โพสต์ ความเห็น รูป รายงานราคา</td><td>แสดงบนเว็บ</td><td>ทุกคน</td></tr>
+<tr><td>โหวต "เจอเหมือนกัน" bookmark</td><td>นับคะแนน / ใช้งานของคุณ</td><td>bookmark เห็นคนเดียว ส่วนโหวตนับรวม</td></tr></table>
+<p>ฐานทางกฎหมาย: ความยินยอมและการให้บริการตามที่คุณขอ เราไม่ขาย ไม่ให้เช่า และไม่ใช้ข้อมูลเพื่อโฆษณา ข้อมูลเก็บในบริการของ Supabase (อาจอยู่นอกประเทศไทย)</p>
+<h2>รูปที่อัปโหลด</h2>
+<p>เว็บย่อรูปและบันทึกใหม่ก่อนอัปโหลด ข้อมูลในไฟล์ เช่น พิกัด GPS จะถูกลบ และมีเครื่องมือให้ปิดดำชื่อ ที่อยู่ เบอร์โทร รูปที่อัปโหลดแล้วทุกคนเห็นได้</p>
+<h2>สิทธิของคุณ</h2>
+<ul><li>ดูทุกอย่างที่คุณโพสต์ และแก้หรือลบทีละรายการได้ที่<a href="#account">หน้าบัญชี</a></li>
+<li>ลบบัญชีได้เองทันที: อีเมล ชื่อ โหวต รายงาน และราคาจะถูกลบ ส่วนกระทู้และความเห็นจะแสดงเป็น "บัญชีที่ลบแล้ว"</li>
+<li>ขอสำเนาข้อมูล ร้องเรียน หรือคัดค้านการประมวลผล ทำได้ผ่าน<a href="#contact">หน้าติดต่อ</a></li></ul>`,
+    en: `
+<h1>Privacy notice</h1>
+<p class="muted">Updated ${LEGAL_UPDATED} · under Thailand's Personal Data Protection Act (PDPA)</p>
+<h2>If you only browse</h2>
+<p>No analytics, no ads, no tracking cookies, and no record of what you view. Preferences (language, mode, theme) and signed-out bookmarks stay in your own browser.</p>
+<p>These services do see your IP and browser details because your browser loads files from them: GitHub Pages (the site), Google Fonts (fonts), store image servers, jsDelivr and Supabase (community features).</p>
+<h2>If you sign in</h2>
+<table class="legal-table"><tr><th>Data</th><th>Used for</th><th>Who sees it</th></tr>
+<tr><td>Email</td><td>Sending sign-in links</td><td>Only you (stored in Supabase)</td></tr>
+<tr><td>Display name</td><td>Shown with your posts</td><td>Everyone</td></tr>
+<tr><td>Posts, comments, photos, price reports</td><td>Shown on the site</td><td>Everyone</td></tr>
+<tr><td>Votes, "me too", bookmarks</td><td>Scores / your own use</td><td>Bookmarks are private; votes are counted</td></tr></table>
+<p>Legal basis: consent and providing the service you ask for. We don't sell, rent or use data for advertising. Data is stored with Supabase (possibly outside Thailand).</p>
+<h2>Uploaded photos</h2>
+<p>The page resizes and re-encodes photos before upload, which removes file metadata such as GPS, and offers a tool to black out names, addresses and phone numbers. Uploaded photos are public.</p>
+<h2>Your rights</h2>
+<ul><li>See everything you've posted, and edit or delete each item, on your <a href="#account">account page</a></li>
+<li>Delete your account yourself, instantly: email, name, votes, reports and prices are deleted; threads and comments show as "deleted account"</li>
+<li>Request a copy of your data, complain, or object to processing via the <a href="#contact">contact page</a></li></ul>`,
+  },
+  contact: {
+    th: `
+<h1>ติดต่อ แจ้งแก้ และขอลบข้อมูล</h1>
+<p>Sotto เป็นโปรเจกต์ open source ทุกคำขอทำผ่าน GitHub เพื่อให้ตรวจสอบย้อนหลังได้ ถ้าเรื่องมีข้อมูลส่วนตัว อย่าใส่ข้อมูลนั้นในคำขอ ให้บอกแค่ว่าต้องการให้ติดต่อกลับ</p>
+<div class="contact-grid">
+<a class="card pad" href="${issue("correction.yml", "Data: ")}" target="_blank" rel="noopener"><b>ข้อมูลสินค้าผิด</b><span class="muted small">สเปก ราคา หมวด รุ่นซ้ำ พร้อมลิงก์ที่มาที่ถูกต้อง</span></a>
+<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>แบรนด์หรือร้าน: ขอแก้หรือขอลบ</b><span class="muted small">โพสต์ที่คิดว่าไม่ถูกต้อง หรือข้อมูลที่ไม่ต้องการให้แสดง เรามีช่องให้แบรนด์ตอบรายงานได้ด้วย</span></a>
+<a class="card pad" href="${issue("privacy.yml", "Privacy request")}" target="_blank" rel="noopener"><b>คำขอเรื่องข้อมูลส่วนบุคคล</b><span class="muted small">ขอสำเนา คัดค้าน หรือร้องเรียน (ลบบัญชีทำเองได้ที่หน้าบัญชี)</span></a>
+<a class="card pad" href="${REPO}/issues" target="_blank" rel="noopener"><b>อื่นๆ / เสนอฟีเจอร์</b><span class="muted small">GitHub Issues</span></a>
+</div>
+<p class="muted small">โพสต์ของผู้ใช้ทุกอันมีปุ่ม "แจ้งไม่เหมาะสม" ซึ่งเร็วกว่าสำหรับเรื่องสแปมหรือคำหยาบ</p>`,
+    en: `
+<h1>Contact, corrections and takedowns</h1>
+<p>Sotto is open source, so requests go through GitHub where they can be tracked. If your request involves personal data, don't include it; just say you'd like to be contacted.</p>
+<div class="contact-grid">
+<a class="card pad" href="${issue("correction.yml", "Data: ")}" target="_blank" rel="noopener"><b>Wrong product data</b><span class="muted small">Specs, prices, category, duplicates, with the correct source link</span></a>
+<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>Brands and stores: correction or removal</b><span class="muted small">Posts you believe are wrong, or data you don't want shown. Brands can also answer reports.</span></a>
+<a class="card pad" href="${issue("privacy.yml", "Privacy request")}" target="_blank" rel="noopener"><b>Personal data request</b><span class="muted small">Copy, objection or complaint (delete your account yourself on the account page)</span></a>
+<a class="card pad" href="${REPO}/issues" target="_blank" rel="noopener"><b>Anything else / feature ideas</b><span class="muted small">GitHub Issues</span></a>
+</div>
+<p class="muted small">Every user post has a "Report post" button, which is faster for spam or abuse.</p>`,
+  },
+};

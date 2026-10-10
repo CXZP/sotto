@@ -1,13 +1,14 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30y65g";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30y65g";
-import { renderChart } from "./chart.js?v=mv30y65g";
-import { makeT } from "./i18n.js?v=mv30y65g";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv30y65g";
-import * as community from "./community.js?v=mv30y65g";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30y65g";
-import { redactImage } from "./redact.js?v=mv30y65g";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30y65g";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30y65g";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv31f28z";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv31f28z";
+import { renderChart } from "./chart.js?v=mv31f28z";
+import { makeT } from "./i18n.js?v=mv31f28z";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv31f28z";
+import { LEGAL } from "./legal.js?v=mv31f28z";
+import * as community from "./community.js?v=mv31f28z";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv31f28z";
+import { redactImage } from "./redact.js?v=mv31f28z";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv31f28z";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv31f28z";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -128,7 +129,7 @@ function renderChrome(r) {
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
 }
 
 function setSeg(selector, key, value) {
@@ -151,6 +152,7 @@ function render() {
   else if (r.name === "discuss") main.innerHTML = r.sub === "new" ? newThreadPage() : r.sub === "thread" ? threadPage(r.id) : discussPage();
   else if (r.name === "account") main.innerHTML = accountPage();
   else if (r.name === "saved") main.innerHTML = savedPage();
+  else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${LEGAL[r.name][state.lang] ?? LEGAL[r.name].en}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
@@ -738,7 +740,7 @@ function itemPage(id) {
       <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
@@ -1422,7 +1424,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30y65g" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv31f28z" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

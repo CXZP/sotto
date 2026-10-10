@@ -169,3 +169,31 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .lg.s-overkill svg { fill: none; stroke: var(--st-warn); stroke-width: 2; }
 .st.s-overkill { color: var(--st-warn); }
 .tip .s-overkill { color: var(--st-warn); }
+
+/* Chart zones: background matches each status */
+.zone { stroke: none; }
+.zone.z-ok { fill: var(--st-good); opacity: 0.07; }
+.zone.z-tight { fill: var(--st-warn); opacity: 0.08; }
+.zone.z-insufficient { fill: var(--st-bad); opacity: 0.08; }
+.zone.z-overkill { fill: #e07a1f; opacity: 0.1; }
+.zl { font-size: 13px; font-weight: 600; opacity: 0.75; pointer-events: none; }
+.zl.z-ok { fill: var(--st-good); }
+.zl.z-tight { fill: var(--st-warn); }
+.zl.z-insufficient { fill: var(--st-bad); }
+.zl.z-overkill { fill: #e07a1f; }
+.hint-y { font-size: 11px; }
+.howto { margin: 4px 0 10px; }
+.howto summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+.howto ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; color: var(--text-2); }
+
+/* Brands A–Z */
+.brands { display: grid; gap: 12px; }
+.az { display: flex; flex-wrap: wrap; gap: 6px; position: sticky; top: 72px; z-index: 2; padding: 8px 0; background: var(--bg); }
+.az a { padding: 4px 9px; border-radius: 8px; background: var(--surface-2); color: var(--text); font-weight: 600; font-size: 13px; }
+.brand-letter { margin: 18px 0 0; font-size: 22px; scroll-margin-top: 130px; }
+.brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.brand-tile { display: grid; overflow: hidden; color: var(--text); }
+.brand-tile:hover { text-decoration: none; border-color: var(--line-strong); }
+.brand-pics { display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; aspect-ratio: 3 / 1; }
+.brand-pics img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.brand-body { padding: 10px 12px; display: grid; gap: 2px; }

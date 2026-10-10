@@ -1,12 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2wr92c";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2wr92c";
-import { renderChart } from "./chart.js?v=mv2wr92c";
-import { makeT } from "./i18n.js?v=mv2wr92c";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2wr92c";
-import * as community from "./community.js?v=mv2wr92c";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2wr92c";
-import { redactImage } from "./redact.js?v=mv2wr92c";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2wr92c";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2xoyhh";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2xoyhh";
+import { renderChart } from "./chart.js?v=mv2xoyhh";
+import { makeT } from "./i18n.js?v=mv2xoyhh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2xoyhh";
+import * as community from "./community.js?v=mv2xoyhh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2xoyhh";
+import { redactImage } from "./redact.js?v=mv2xoyhh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2xoyhh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -105,7 +105,7 @@ function renderChrome(r) {
   document.querySelector(".hero").hidden = r.name !== "build";
   document.querySelectorAll("nav a").forEach((a) => {
     a.textContent = t(`nav_${a.dataset.route}`);
-    a.classList.toggle("active", a.dataset.route === r.name || (r.name === "item" && a.dataset.route === "catalog"));
+    a.classList.toggle("active", a.dataset.route === r.name || ((r.name === "item" || r.name === "brands") && a.dataset.route === "catalog"));
   });
   setSeg("[data-lang]", "lang", state.lang);
   setSeg("[data-mode]", "mode", state.mode);
@@ -130,6 +130,7 @@ function render() {
   if (r.name === "catalog") main.innerHTML = catalogPage();
   else if (r.name === "item") main.innerHTML = itemPage(r.id);
   else if (r.name === "deal") main.innerHTML = dealPage();
+  else if (r.name === "brands") main.innerHTML = brandsPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else main.innerHTML = buildPage();
@@ -341,12 +342,17 @@ function drawChart(el, outputs, srcLabel, highlightId) {
     if (counts[st] !== undefined) counts[st]++;
     points.push({ id: h.id, label: displayName(h), z: ohms, v: required(peak, dbPerV, ohms).vrms, status: st, highlight: h.id === highlightId });
   }
-  el.innerHTML = `<h3>${esc(t("chart_title"))}</h3><p class="sub">${esc(t("chart_sub", { src: srcLabel, peak }))}</p><div class="chart-host"></div>
+  el.innerHTML = `<h3>${esc(t("chart_title"))}</h3>
+    <details class="howto"${state.mode === "simple" ? " open" : ""}><summary>${esc(t("chart_howto"))}</summary><ol class="small">
+      <li>${esc(t("chart_h1"))}</li><li>${esc(t("chart_h2"))}</li><li>${esc(t("chart_h3", { src: srcLabel }))}</li><li>${esc(t("chart_h4"))}</li></ol></details>
+    <div class="chart-host"></div>
     <p class="hint">${esc(t("chart_count", { n: points.length, ok: counts.ok, over: counts.overkill, tight: counts.tight, bad: counts.insufficient }))}</p>`;
   renderChart(el.querySelector(".chart-host"), {
     curves: mergeCurves(outputs, srcLabel),
     points,
-    labels: { x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
+    peak,
+    crest: CREST,
+    labels: { harder: t("chart_harder"), easier: t("chart_easier"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
     fmt: { z: (z) => `${fmt(z, 1)} Ω`, v: vfmt },
     onPick: (id) => {
       state.hp = id;
@@ -431,7 +437,9 @@ function catalogPage() {
   const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
   if (sort === "price") res.sort((a, b) => priceOf(a) - priceOf(b));
   else if (sort === "price-desc") res.sort((a, b) => (priceOf(b) === Infinity ? -1 : priceOf(b)) - (priceOf(a) === Infinity ? -1 : priceOf(a)));
-  else res.sort((a, b) => Number(!!b.curated) - Number(!!a.curated) || b.offers.length - a.offers.length || a.id.localeCompare(b.id));
+  // "Most stocked": how many of the tracked stores carry it. We have no sales or
+  // view data, so we don't call this "popular".
+  else res.sort((a, b) => storeCount(b) - storeCount(a) || priceOf(a) - priceOf(b));
   const link = (over) => {
     const n = new URLSearchParams(p);
     for (const [k, v] of Object.entries(over)) v === null ? n.delete(k) : n.set(k, v);
@@ -460,6 +468,7 @@ function catalogPage() {
       </div>
       <div class="chips">${["popular", "price", "price-desc"].map((s) => `<a class="chip${s === sort ? " on" : ""}" href="${link({ sort: s, n: null })}">${esc(t(`sort_${s}`))}</a>`).join("")}</div>
       <div class="chips">${["grid", "table"].map((v) => `<a class="chip${v === view ? " on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
+      <a class="chip" href="#brands">${esc(t("brands_all"))}</a>
       <a class="chip ext-chip" href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a>
       <span class="muted small">${esc(t("n_results", { n: fmt(res.length, 0) }))}</span>
     </div>
@@ -481,15 +490,43 @@ function catalogPage() {
   </div>`;
 }
 
-/** Brands in the current category, most models first, with counts. */
+const storeCount = (i) => new Set(i.offers.map((o) => o.store)).size;
+
+/** Brands in the current category, A–Z, with counts. */
 function brandOptions(cat, selected) {
   const count = new Map();
   for (const i of db.items) if (i.brand && (cat === "all" || i.category === cat)) count.set(i.brand, (count.get(i.brand) ?? 0) + 1);
   if (selected && !count.has(selected)) count.set(selected, 0);
   return [...count]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .sort((a, b) => a[0].localeCompare(b[0], undefined, { sensitivity: "base" }))
     .map(([b, n]) => `<option value="${esc(b)}"${b === selected ? " selected" : ""}>${esc(b)} (${n})</option>`)
     .join("");
+}
+
+/** Every brand A–Z, each shown with photos of its most-stocked models (no logos: see i18n brands_note). */
+function brandsPage() {
+  const by = new Map();
+  for (const i of db.items) if (i.brand) (by.get(i.brand) ?? by.set(i.brand, []).get(i.brand)).push(i);
+  const brands = [...by].sort((a, b) => a[0].localeCompare(b[0], undefined, { sensitivity: "base" }));
+  const letter = (b) => (/^[a-z]/i.test(b) ? b[0].toUpperCase() : "#");
+  const letters = [...new Set(brands.map(([b]) => letter(b)))];
+  let html = "";
+  let current = "";
+  for (const [b, items] of brands) {
+    const L = letter(b);
+    if (L !== current) {
+      if (current) html += "</div>";
+      html += `<h2 class="brand-letter" id="brand-${L}">${L}</h2><div class="brand-grid">`;
+      current = L;
+    }
+    const pics = [...items].sort((x, y) => storeCount(y) - storeCount(x)).map(imageOf).filter(Boolean).slice(0, 3);
+    const cats = [...new Set(items.map((i) => t(`cat_${i.category}`)))].slice(0, 3).join(" · ");
+    html += `<a class="brand-tile card" href="#catalog?brand=${encodeURIComponent(b)}"><div class="brand-pics">${pics.map((im) => `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`).join("")}</div>
+      <div class="brand-body"><b>${esc(b)}</b><span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></div></a>`;
+  }
+  if (current) html += "</div>";
+  return `<div class="brands"><header class="deal-head"><h1>${esc(t("brands_all"))}</h1><p class="muted small">${esc(t("brands_note"))}</p></header>
+    <nav class="az">${letters.map((L) => `<a href="#brands" data-jump="brand-${L}">${L}</a>`).join("")}</nav>${html}</div>`;
 }
 
 function sensOrPower(i) {
@@ -590,6 +627,12 @@ function wire(main, r) {
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
   if (r.name === "deal") wireDeal(main);
+  main.querySelectorAll("[data-jump]").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById(a.dataset.jump)?.scrollIntoView({ behavior: "smooth" });
+    }),
+  );
   if (r.name === "learn") wireTool(main.querySelector("[data-tool]"));
   if (r.name === "catalog") {
     main.querySelector("#cbrand")?.addEventListener("change", (e) => {
@@ -1185,7 +1228,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2wr92c" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2xoyhh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

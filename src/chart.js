@@ -5,7 +5,7 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mv2wr92c";
+import { availableVrms } from "./calc.js?v=mv2xoyhh";
 
 const W = 760;
 const H = 440;
@@ -31,7 +31,25 @@ const SHAPE = {
  * @param o.labels { x, y, ok, tight, insufficient, ambiguous }
  * @param o.onPick (id) => void
  */
-export function renderChart(el, { curves, points, labels, onPick, fmt }) {
+export function renderChart(el, { curves, points, labels, onPick, fmt, peak = 95, crest = 15, overkillSpl = 130 }) {
+  // Shaded zones that match the verdict rules exactly, so the picture explains
+  // itself: a dot's zone is its status. Boundaries follow the best output.
+  const env = (z) => Math.max(0, ...curves.map((c) => availableVrms(c.output, z).vrms ?? 0));
+  const zs = [];
+  for (let i = 0; i <= 80; i++) zs.push(10 ** (Math.log10(X[0]) + (i / 80) * (Math.log10(X[1]) - Math.log10(X[0]))));
+  const band = (lo, hi, cls, label) => {
+    // lo/hi: multipliers on the envelope (null = chart edge)
+    const top = zs.map((z) => `${lx(z).toFixed(1)},${ly(hi == null ? Y[1] : clampY(env(z) * hi)).toFixed(1)}`);
+    const bottom = zs.map((z) => `${lx(z).toFixed(1)},${ly(lo == null ? Y[0] : clampY(env(z) * lo)).toFixed(1)}`).reverse();
+    const zl = 180;
+    const mid = lo == null ? env(zl) * hi / 6 : hi == null ? Math.min(env(zl) * lo * 2.5, Y[1] / 1.6) : Math.sqrt(env(zl) * lo * env(zl) * hi);
+    return `<polygon class="zone ${cls}" points="${[...top, ...bottom].join(" ")}"/><text class="zl ${cls}" x="${lx(zl)}" y="${ly(clampY(mid)) + 4}" text-anchor="middle">${esc(label)}</text>`;
+  };
+  const crestK = 10 ** (crest / 20);
+  const overK = 10 ** (-(overkillSpl - peak) / 20);
+  const zones = curves.length
+    ? [band(crestK, null, "z-insufficient", labels.insufficient), band(1, crestK, "z-tight", labels.tight), band(overK, 1, "z-ok", labels.ok), band(null, overK, "z-overkill", labels.overkill)].join("")
+    : "";
   const grid = [];
   for (const z of [10, 16, 32, 64, 100, 300, 600, 1000]) {
     grid.push(`<line class="g" x1="${lx(z)}" x2="${lx(z)}" y1="${PAD.t}" y2="${H - PAD.b}"/>`);
@@ -79,7 +97,10 @@ export function renderChart(el, { curves, points, labels, onPick, fmt }) {
     </div>
     <div class="chart-box">
       <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(labels.aria)}">
+        ${zones}
         ${grid.join("")}
+        <text class="axis hint-y" x="${PAD.l + 6}" y="${PAD.t + 12}">↑ ${esc(labels.harder)}</text>
+        <text class="axis hint-y" x="${PAD.l + 6}" y="${H - PAD.b - 6}">↓ ${esc(labels.easier)}</text>
         <text class="axis" x="${(PAD.l + W - PAD.r) / 2}" y="${H - 8}" text-anchor="middle">${esc(labels.x)}</text>
         <text class="axis" transform="translate(14 ${(PAD.t + H - PAD.b) / 2}) rotate(-90)" text-anchor="middle">${esc(labels.y)}</text>
         ${pointSvg}

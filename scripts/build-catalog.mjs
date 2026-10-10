@@ -13,7 +13,7 @@ import { extractSpecs, verify } from "./lib/specs.js";
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
-const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
+const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
 const files = (await readdir(new URL("cache/raw/", root))).filter((f) => f.endsWith(".json"));
 const groups = new Map();

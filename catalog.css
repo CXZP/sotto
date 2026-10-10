@@ -240,3 +240,16 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .danger-zone { border-color: var(--st-bad); }
 #account-btn.active { background: var(--surface-2); }
 @media (max-width: 600px) { .thread-h1 { font-size: 20px; } .children { padding-left: 6px; } }
+
+/* Photos in discussions */
+.photo-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.ph { position: relative; margin: 0; width: 88px; height: 88px; border-radius: 12px; overflow: hidden; background: var(--surface-2); }
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+.ph button { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer; font-size: 12px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin: 12px 0; }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; display: block; background: var(--surface-2); }
+.gallery.small { grid-template-columns: repeat(auto-fill, minmax(110px, 160px)); margin: 6px 0; }
+.thread-row { grid-template-columns: 44px minmax(0, 1fr) auto; }
+.row-thumb { position: relative; width: 72px; height: 72px; border-radius: 10px; overflow: hidden; align-self: center; }
+.row-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.row-thumb span { position: absolute; right: 4px; bottom: 4px; font-size: 11px; padding: 0 6px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; }

@@ -1,12 +1,12 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2zt2o3";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2zt2o3";
-import { renderChart } from "./chart.js?v=mv2zt2o3";
-import { makeT } from "./i18n.js?v=mv2zt2o3";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2zt2o3";
-import * as community from "./community.js?v=mv2zt2o3";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2zt2o3";
-import { redactImage } from "./redact.js?v=mv2zt2o3";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2zt2o3";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2zwjjh";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2zwjjh";
+import { renderChart } from "./chart.js?v=mv2zwjjh";
+import { makeT } from "./i18n.js?v=mv2zwjjh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv2zwjjh";
+import * as community from "./community.js?v=mv2zwjjh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2zwjjh";
+import { redactImage } from "./redact.js?v=mv2zwjjh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2zwjjh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1409,7 +1409,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2zt2o3" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2zwjjh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1495,6 +1495,55 @@ function wireTool(el) {
 // Pages render a shell synchronously; data fills in after Supabase answers.
 
 const CATEGORIES = ["question", "setup", "deal", "issue", "news", "general"];
+
+/** Photo picker: each image goes through the redactor (re-encode, optional black boxes). */
+function photoPickerHtml(max) {
+  return `<div class="photos" data-max="${max}"><div class="photo-list"></div>
+    <div class="row-inline"><label class="pill small"><input type="file" accept="image/*" multiple hidden>${esc(t("ph_add", { max }))}</label><span class="muted small ph-state"></span></div></div>`;
+}
+function wirePhotos(root) {
+  const box = root.querySelector(".photos");
+  const state_ = { blobs: [] };
+  if (!box) return state_;
+  const max = Number(box.dataset.max);
+  const list = box.querySelector(".photo-list");
+  const draw = () => {
+    list.innerHTML = state_.blobs
+      .map((b, n) => `<figure class="ph"><img src="${URL.createObjectURL(b)}" alt=""><button type="button" data-rm-ph="${n}" aria-label="${esc(t("cm_delete"))}">✕</button></figure>`)
+      .join("");
+    list.querySelectorAll("[data-rm-ph]").forEach((b) =>
+      b.addEventListener("click", () => {
+        state_.blobs.splice(Number(b.dataset.rmPh), 1);
+        draw();
+      }),
+    );
+  };
+  const input = box.querySelector("input[type=file]");
+  input.addEventListener("change", async () => {
+    const files = [...input.files];
+    input.value = "";
+    for (const f of files) {
+      if (state_.blobs.length >= max) break;
+      const blob = await redactImage(f, t);
+      if (blob) state_.blobs.push(blob);
+      draw();
+    }
+    box.querySelector(".ph-state").textContent = state_.blobs.length ? t("ph_ready", { n: state_.blobs.length }) : "";
+  });
+  state_.upload = async (status) => {
+    const urls = [];
+    for (const [n, b] of state_.blobs.entries()) {
+      if (status) status.textContent = t("ph_uploading", { n: n + 1, of: state_.blobs.length });
+      urls.push(await community.uploadMedia(b));
+    }
+    return urls;
+  };
+  return state_;
+}
+function gallery(images, cls = "") {
+  if (!images?.length) return "";
+  return `<div class="gallery ${cls}">${images.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="" loading="lazy"></a>`).join("")}</div>`;
+}
 
 /** Plain text → safe HTML: escaped, line breaks kept, https links clickable. */
 function richText(s) {
@@ -1611,7 +1660,7 @@ function threadRow(r, mine, signedIn) {
       <a class="thread-title" href="#discuss/${r.id}">${esc(r.title)}</a>
       <div class="muted small"><span class="tag">${esc(t(`dc_${r.category}`))}</span> ${esc(authorName(r))} · ${esc(ago(r.created_at))} · <a href="#discuss/${r.id}">${esc(t("ds_n_comments", { n: r.comment_count }))}</a></div>
       ${items ? `<div class="chips small-chips">${items}</div>` : ""}
-    </div></article>`;
+    </div>${r.images?.length ? `<a class="row-thumb" href="#discuss/${r.id}"><img src="${esc(r.images[0])}" alt="" loading="lazy">${r.images.length > 1 ? `<span>+${r.images.length - 1}</span>` : ""}</a>` : ""}</article>`;
 }
 
 async function wireDiscuss(main) {
@@ -1658,6 +1707,7 @@ async function wireNewThread(main) {
     <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}">${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
     <input class="search" name="title" required minlength="5" maxlength="160" placeholder="${esc(t("ds_title_ph"))}">
     <textarea class="search" name="body" rows="8" maxlength="10000" placeholder="${esc(t("ds_body_ph"))}"></textarea>
+    ${photoPickerHtml(8)}
     <div><span class="small muted">${esc(t("ds_items"))}</span>
       <div class="chips" id="picked"></div>
       <input class="search" id="item-q" placeholder="${esc(t("ds_items_ph"))}" autocomplete="off">
@@ -1693,12 +1743,14 @@ async function wireNewThread(main) {
       }),
     );
   });
+  const photos = wirePhotos(el);
   el.querySelector("form").addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const f = ev.target;
     const st = f.querySelector(".status");
     try {
-      const id = await community.addThread({ category: f.category.value, title: f.title.value.trim(), body: f.body.value.trim(), item_ids: [...picked] });
+      const images = await photos.upload(st);
+      const id = await community.addThread({ category: f.category.value, title: f.title.value.trim(), body: f.body.value.trim(), item_ids: [...picked], images });
       go(`#discuss/${id}`);
     } catch (e) {
       st.textContent = /rate_limit/.test(e.message) ? t("cm_rate") : `${t("cm_error")} ${e.message}`;
@@ -1749,7 +1801,8 @@ async function wireThread(main) {
           (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
           ${voteBox("comment", c.id, c.score, cv.get(c.id), !!s)}
           <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}</div>
-          <div class="comment-body">${richText(c.body)}</div>
+          ${c.body ? `<div class="comment-body">${richText(c.body)}</div>` : ""}
+          ${gallery(c.images, "small")}
           <div class="post-actions">${actions("comment", c)}</div>
           <div class="reply-slot"></div>
           ${kids.has(c.id) ? `<div class="children">${tree(c.id, depth + 1)}</div>` : ""}</div></div>`,
@@ -1760,27 +1813,35 @@ async function wireThread(main) {
         <div><p class="muted small"><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
         <h1 class="thread-h1">${esc(th.title)}</h1></div></div>
         ${th.body ? `<div class="thread-body">${richText(th.body)}</div>` : ""}
+        ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
         <div class="post-actions">${actions("thread", th)}</div>
       </article>
       <section class="card pad">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
-        ${canPost ? `<form class="cm-form" data-form="comment"><textarea class="search" name="body" rows="3" maxlength="5000" required placeholder="${esc(t("ds_comment_ph"))}"></textarea><div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
+        ${canPost ? `<form class="cm-form" data-form="comment"><textarea class="search" name="body" rows="3" maxlength="5000" placeholder="${esc(t("ds_comment_ph"))}"></textarea>${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
         <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
       </section>`;
     wireAuth(el, location.hash, load);
     wireVotes(el, load);
-    const post = async (body, parent_id, st) => {
+    const post = async (body, parent_id, st, photos) => {
+      if (!body && !photos?.blobs.length) {
+        st.textContent = t("ph_need_text");
+        return;
+      }
       try {
-        await community.addComment({ thread_id: id, parent_id, body });
+        const images = photos ? await photos.upload(st) : [];
+        await community.addComment({ thread_id: id, parent_id, body, images });
         load();
       } catch (e) {
         st.textContent = /rate_limit/.test(e.message) ? t("cm_rate") : `${t("cm_error")} ${e.message}`;
       }
     };
-    el.querySelector('[data-form="comment"]')?.addEventListener("submit", (ev) => {
+    const mainForm = el.querySelector('[data-form="comment"]');
+    const mainPhotos = mainForm ? wirePhotos(mainForm) : null;
+    mainForm?.addEventListener("submit", (ev) => {
       ev.preventDefault();
-      post(ev.target.body.value.trim(), null, ev.target.querySelector(".status"));
+      post(ev.target.body.value.trim(), null, ev.target.querySelector(".status"), mainPhotos);
     });
     el.querySelectorAll("[data-reply]").forEach((b) =>
       b.addEventListener("click", () => {
@@ -1789,11 +1850,12 @@ async function wireThread(main) {
           slot.innerHTML = "";
           return;
         }
-        slot.innerHTML = `<form class="cm-form"><textarea class="search" name="body" rows="2" maxlength="5000" required></textarea><div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
+        slot.innerHTML = `<form class="cm-form"><textarea class="search" name="body" rows="2" maxlength="5000"></textarea>${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
         slot.querySelector("textarea").focus();
+        const replyPhotos = wirePhotos(slot);
         slot.querySelector("form").addEventListener("submit", (ev) => {
           ev.preventDefault();
-          post(ev.target.body.value.trim(), Number(b.dataset.reply), ev.target.querySelector(".status"));
+          post(ev.target.body.value.trim(), Number(b.dataset.reply), ev.target.querySelector(".status"), replyPhotos);
         });
       }),
     );

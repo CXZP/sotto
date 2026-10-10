@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv2zt2o3";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv2zwjjh";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -152,15 +152,15 @@ export async function flagPrice(priceId, reason) {
   if (error) throw error;
 }
 
-/** Upload an already re-encoded, redacted screenshot; returns its public https URL. */
-export async function uploadEvidence(blob) {
+/** Upload an already re-encoded image to a public bucket ("evidence" or "media"); returns its https URL. */
+export async function uploadEvidence(blob, bucket = "evidence") {
   const sb = await client();
   const s = await session();
   if (!sb || !s) throw new Error("signin");
   const path = `${s.user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
-  const { error } = await sb.storage.from("evidence").upload(path, blob, { contentType: "image/jpeg", upsert: false });
+  const { error } = await sb.storage.from(bucket).upload(path, blob, { contentType: "image/jpeg", upsert: false });
   if (error) throw error;
-  return sb.storage.from("evidence").getPublicUrl(path).data.publicUrl;
+  return sb.storage.from(bucket).getPublicUrl(path).data.publicUrl;
 }
 
 // ---------------------------------------------------------------- discussions
@@ -293,3 +293,5 @@ export async function signInTo(email, back) {
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}${location.pathname}` } });
   if (error) throw error;
 }
+
+export const uploadMedia = (blob) => uploadEvidence(blob, "media");

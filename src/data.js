@@ -1,15 +1,15 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv2zwjjh";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv30bwme";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "desktop", "dap"]);
 
 export async function loadData() {
   const [catalog, devices, zh] = await Promise.all([
-    fetch("data/catalog.json?v=mv2zwjjh").then((r) => r.json()),
-    fetch("data/devices.json?v=mv2zwjjh").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mv2zwjjh").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/catalog.json?v=mv30bwme").then((r) => r.json()),
+    fetch("data/devices.json?v=mv30bwme").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mv30bwme").then((r) => r.json()).catch(() => ({ names: {} })),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   return { ...catalog, devices, byId, zhNames: zh.names };

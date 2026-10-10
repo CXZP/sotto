@@ -253,3 +253,28 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .row-thumb { position: relative; width: 72px; height: 72px; border-radius: 10px; overflow: hidden; align-self: center; }
 .row-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .row-thumb span { position: absolute; right: 4px; bottom: 4px; font-size: 11px; padding: 0 6px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; }
+
+/* Markdown editor and rendered posts */
+.md-editor { display: grid; gap: 6px; }
+.md-bar { display: flex; flex-wrap: wrap; gap: 2px; align-items: center; }
+.md-bar button { min-width: 32px; height: 30px; padding: 0 8px; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--text-2); font: inherit; font-size: 13px; cursor: pointer; }
+.md-bar button:hover { background: var(--surface-2); color: var(--text); }
+.md-bar [data-md="bold"] { font-weight: 700; }
+.md-bar [data-md="italic"] { font-style: italic; }
+.md-bar [data-md="strike"] { text-decoration: line-through; }
+.md-bar [data-md-preview][aria-pressed="true"] { border-color: var(--line-strong); color: var(--text); }
+.md-editor textarea.search { border-radius: 14px; resize: vertical; font: inherit; }
+.md-preview { min-height: 80px; padding: 10px 14px; border-radius: 14px; border: 1px dashed var(--line-strong); }
+.md-help { margin: 0; }
+.md p { margin: 0 0 10px; }
+.md p:last-child { margin-bottom: 0; }
+.md h3, .md h4, .md h5 { margin: 14px 0 6px; }
+.md ul, .md ol { margin: 0 0 10px; padding-left: 22px; }
+.md blockquote { margin: 0 0 10px; padding: 4px 12px; border-left: 3px solid var(--line-strong); color: var(--text-2); }
+.md code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; padding: 1px 5px; border-radius: 6px; background: var(--surface-2); }
+.md pre { margin: 0 0 10px; padding: 10px 14px; border-radius: 12px; background: var(--surface-2); overflow-x: auto; }
+.md pre code { padding: 0; background: none; }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 12px 0; }
+.md del { color: var(--text-2); }
+.spoiler { background: var(--text); color: transparent; border-radius: 4px; cursor: pointer; transition: color 0.2s, background 0.2s; }
+.spoiler:hover, .spoiler:focus { background: var(--surface-2); color: inherit; outline: none; }

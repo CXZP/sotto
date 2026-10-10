@@ -1,12 +1,13 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv2zwjjh";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv2zwjjh";
-import { renderChart } from "./chart.js?v=mv2zwjjh";
-import { makeT } from "./i18n.js?v=mv2zwjjh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv2zwjjh";
-import * as community from "./community.js?v=mv2zwjjh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv2zwjjh";
-import { redactImage } from "./redact.js?v=mv2zwjjh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv2zwjjh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv30bwme";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv30bwme";
+import { renderChart } from "./chart.js?v=mv30bwme";
+import { makeT } from "./i18n.js?v=mv30bwme";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv30bwme";
+import * as community from "./community.js?v=mv30bwme";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv30bwme";
+import { redactImage } from "./redact.js?v=mv30bwme";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv30bwme";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv30bwme";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1409,7 +1410,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv2zwjjh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv30bwme" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1545,11 +1546,43 @@ function gallery(images, cls = "") {
   return `<div class="gallery ${cls}">${images.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="" loading="lazy"></a>`).join("")}</div>`;
 }
 
-/** Plain text → safe HTML: escaped, line breaks kept, https links clickable. */
-function richText(s) {
-  return esc(s)
-    .replace(/https:\/\/[^\s<]+[^\s<.,;:!?)\]'"]/g, (u) => `<a href="${u}" target="_blank" rel="noopener nofollow ugc">${u.length > 60 ? `${u.slice(0, 57)}…` : u}</a>`)
-    .replace(/\n/g, "<br>");
+/** Post text → safe HTML (Markdown subset, see markdown.js). */
+const richText = (text) => renderMd(text);
+
+/** Textarea with a formatting toolbar and a preview toggle. */
+function mdEditor(name, rows, placeholder, max) {
+  return `<div class="md-editor">
+    <div class="md-bar" role="toolbar">${Object.entries(MD_ACTIONS)
+      .map(([k, a]) => `<button type="button" data-md="${k}" title="${esc(t(`md_${k}`))}" aria-label="${esc(t(`md_${k}`))}">${esc(a.label)}</button>`)
+      .join("")}<span class="grow"></span><button type="button" data-md-preview>${esc(t("md_preview"))}</button></div>
+    <textarea class="search" name="${name}" rows="${rows}" maxlength="${max}" placeholder="${esc(placeholder)}"></textarea>
+    <div class="md md-preview" hidden></div>
+    <p class="muted small md-help">${esc(t("md_help"))}</p></div>`;
+}
+function wireMd(root) {
+  root.querySelectorAll(".md-editor").forEach((ed) => {
+    if (ed.dataset.wired) return;
+    ed.dataset.wired = "1";
+    const ta = ed.querySelector("textarea");
+    const pv = ed.querySelector(".md-preview");
+    const pbtn = ed.querySelector("[data-md-preview]");
+    ed.querySelectorAll("[data-md]").forEach((b) => b.addEventListener("click", () => applyMd(ta, b.dataset.md)));
+    ta.addEventListener("keydown", (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      const k = { b: "bold", i: "italic", k: "link" }[e.key.toLowerCase()];
+      if (!k) return;
+      e.preventDefault();
+      applyMd(ta, k);
+    });
+    pbtn.addEventListener("click", () => {
+      const show = pv.hidden;
+      pv.hidden = !show;
+      ta.hidden = show;
+      pv.innerHTML = renderMd(ta.value) || `<p class="muted">${esc(t("md_empty"))}</p>`;
+      pbtn.textContent = t(show ? "md_edit" : "md_preview");
+      pbtn.setAttribute("aria-pressed", String(show));
+    });
+  });
 }
 
 function ago(iso) {
@@ -1706,7 +1739,7 @@ async function wireNewThread(main) {
   el.innerHTML = `<form class="cm-form" data-form="thread">
     <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}">${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
     <input class="search" name="title" required minlength="5" maxlength="160" placeholder="${esc(t("ds_title_ph"))}">
-    <textarea class="search" name="body" rows="8" maxlength="10000" placeholder="${esc(t("ds_body_ph"))}"></textarea>
+    ${mdEditor("body", 8, t("ds_body_ph"), 10000)}
     ${photoPickerHtml(8)}
     <div><span class="small muted">${esc(t("ds_items"))}</span>
       <div class="chips" id="picked"></div>
@@ -1744,6 +1777,7 @@ async function wireNewThread(main) {
     );
   });
   const photos = wirePhotos(el);
+  wireMd(el);
   el.querySelector("form").addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const f = ev.target;
@@ -1801,7 +1835,7 @@ async function wireThread(main) {
           (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
           ${voteBox("comment", c.id, c.score, cv.get(c.id), !!s)}
           <div class="comment-main"><div class="muted small"><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}</div>
-          ${c.body ? `<div class="comment-body">${richText(c.body)}</div>` : ""}
+          ${c.body ? `<div class="comment-body md">${richText(c.body)}</div>` : ""}
           ${gallery(c.images, "small")}
           <div class="post-actions">${actions("comment", c)}</div>
           <div class="reply-slot"></div>
@@ -1812,14 +1846,14 @@ async function wireThread(main) {
         <div class="thread-head">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s)}
         <div><p class="muted small"><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
         <h1 class="thread-h1">${esc(th.title)}</h1></div></div>
-        ${th.body ? `<div class="thread-body">${richText(th.body)}</div>` : ""}
+        ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
         <div class="post-actions">${actions("thread", th)}</div>
       </article>
       <section class="card pad">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
-        ${canPost ? `<form class="cm-form" data-form="comment"><textarea class="search" name="body" rows="3" maxlength="5000" placeholder="${esc(t("ds_comment_ph"))}"></textarea>${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
+        ${canPost ? `<form class="cm-form" data-form="comment">${mdEditor("body", 3, t("ds_comment_ph"), 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
         <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
       </section>`;
     wireAuth(el, location.hash, load);
@@ -1837,6 +1871,7 @@ async function wireThread(main) {
         st.textContent = /rate_limit/.test(e.message) ? t("cm_rate") : `${t("cm_error")} ${e.message}`;
       }
     };
+    wireMd(el);
     const mainForm = el.querySelector('[data-form="comment"]');
     const mainPhotos = mainForm ? wirePhotos(mainForm) : null;
     mainForm?.addEventListener("submit", (ev) => {
@@ -1850,9 +1885,10 @@ async function wireThread(main) {
           slot.innerHTML = "";
           return;
         }
-        slot.innerHTML = `<form class="cm-form"><textarea class="search" name="body" rows="2" maxlength="5000"></textarea>${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
+        slot.innerHTML = `<form class="cm-form">${mdEditor("body", 2, "", 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
         slot.querySelector("textarea").focus();
         const replyPhotos = wirePhotos(slot);
+        wireMd(slot);
         slot.querySelector("form").addEventListener("submit", (ev) => {
           ev.preventDefault();
           post(ev.target.body.value.trim(), Number(b.dataset.reply), ev.target.querySelector(".status"), replyPhotos);

@@ -66,7 +66,7 @@ export function reviewPost(b, labels = { pros: "ข้อดี", cons: "ข้�
   // Credit the person who wrote the review, always, with where it was published.
   let host = "";
   try {
-    host = b.source ? new URL(b.source).hostname.replace(/^www./, "") : "";
+    host = b.source ? new URL(b.source).hostname.replace(/^www\./, "") : "";
   } catch {}
   const credit = `${labels.by} ${b.reviewer || labels.unknown || "?"}${host ? ` (${host})` : ""}`;
   const head = [b.rating && `★ ${b.rating}`, credit, b.date].filter(Boolean).join(" · ");

@@ -63,7 +63,13 @@ const line = (p) => `- ${p.point} — “${p.quote}”`;
 
 /** The review-summary post for one block: {title, body} (body ≤ 2000 chars). */
 export function reviewPost(b, labels = { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย" }) {
-  const head = [b.rating && `★ ${b.rating}`, b.reviewer && `${labels.by} ${b.reviewer}`, b.date].filter(Boolean).join(" · ");
+  // Credit the person who wrote the review, always, with where it was published.
+  let host = "";
+  try {
+    host = b.source ? new URL(b.source).hostname.replace(/^www./, "") : "";
+  } catch {}
+  const credit = `${labels.by} ${b.reviewer || labels.unknown || "?"}${host ? ` (${host})` : ""}`;
+  const head = [b.rating && `★ ${b.rating}`, credit, b.date].filter(Boolean).join(" · ");
   const parts = [head];
   if (b.pros.length) parts.push(`${labels.pros}\n${b.pros.map(line).join("\n")}`);
   if (b.cons.length) parts.push(`${labels.cons}\n${b.cons.map(line).join("\n")}`);

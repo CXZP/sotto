@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3t8ksd";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3t8ksd";
-import { renderChart } from "./chart.js?v=mv3t8ksd";
-import { makeT } from "./i18n.js?v=mv3t8ksd";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3t8ksd";
-import { LEGAL } from "./legal.js?v=mv3t8ksd";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3t8ksd";
-import * as community from "./community.js?v=mv3t8ksd";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3t8ksd";
-import { redactImage } from "./redact.js?v=mv3t8ksd";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3t8ksd";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3t8ksd";
-import { chainLinks } from "./chain.js?v=mv3t8ksd";
-import { fits } from "./dcfit.js?v=mv3t8ksd";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3t8ksd";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3t8ksd";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3t8ksd";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3tf4oq";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3tf4oq";
+import { renderChart } from "./chart.js?v=mv3tf4oq";
+import { makeT } from "./i18n.js?v=mv3tf4oq";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3tf4oq";
+import { LEGAL } from "./legal.js?v=mv3tf4oq";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3tf4oq";
+import * as community from "./community.js?v=mv3tf4oq";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3tf4oq";
+import { redactImage } from "./redact.js?v=mv3tf4oq";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3tf4oq";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3tf4oq";
+import { chainLinks } from "./chain.js?v=mv3tf4oq";
+import { fits } from "./dcfit.js?v=mv3tf4oq";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3tf4oq";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3tf4oq";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3tf4oq";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1149,7 +1149,7 @@ async function renderCommunity(el, item) {
   const post = (r) => `<article class="post k-${r.kind}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${r.purchase === "free_sample" ? `<span class="tag">${esc(t("cm_free_sample"))}</span>` : r.purchase === "bought" ? `<span class="tag">${esc(t("cm_bought"))}</span>` : ""}
-      <span class="muted small">${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
+      <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
     <p class="post-title">${esc(r.title)}</p>
     ${r.body ? `<p class="post-body">${esc(r.body)}</p>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
@@ -1207,7 +1207,7 @@ async function renderCommunity(el, item) {
         const b = d.block;
         const asReview = b.pros.length || b.cons.length;
         setKind(asReview ? "review" : "issue");
-        const post = asReview ? reviewPost(b, { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by") }) : { title: b.problems[0]?.point ?? b.summary, body: b.problems.map((p) => `- ${p.point} — “${p.quote}”`).join("\n") };
+        const post = asReview ? reviewPost(b, { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by"), unknown: t("rv_unknown") }) : { title: b.problems[0]?.point ?? b.summary, body: b.problems.map((p) => `- ${p.point} — “${p.quote}”`).join("\n") };
         postForm.title.value = post.title;
         postForm.body.value = post.body;
         postForm.evidence_url.value = b.source || link;
@@ -1569,7 +1569,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3t8ksd" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3tf4oq" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1987,7 +1987,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3t8ksd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3tf4oq" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

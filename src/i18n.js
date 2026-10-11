@@ -2,6 +2,8 @@
 
 export const STRINGS = {
   th: {
+    rv_unknown: "ไม่ทราบชื่อ",
+    rv_summarised_by: "สรุปโดย",
     tl_title: "เครื่องมือช่วยเพิ่มข้อมูล",
     tl_lead: "สำหรับคนที่อ่าน Head-Fi, Reddit หรือเว็บแบรนด์อยู่แล้ว และอยากส่งสิ่งที่เจอเข้า Sotto โดยไม่ต้องพิมพ์ใหม่",
     tl_bm_h: "ปุ่ม \"ส่งเข้า Sotto\" (bookmarklet)",
@@ -660,6 +662,8 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    rv_unknown: "unknown",
+    rv_summarised_by: "Summarised by",
     tl_title: "Contributor tools",
     tl_lead: "For people already reading Head-Fi, Reddit or brand pages who want to send what they found to Sotto without retyping it.",
     tl_bm_h: "\"Send to Sotto\" button (bookmarklet)",

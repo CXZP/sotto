@@ -1,18 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3pymvg";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3pymvg";
-import { renderChart } from "./chart.js?v=mv3pymvg";
-import { makeT } from "./i18n.js?v=mv3pymvg";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3pymvg";
-import { LEGAL } from "./legal.js?v=mv3pymvg";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3pymvg";
-import * as community from "./community.js?v=mv3pymvg";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3pymvg";
-import { redactImage } from "./redact.js?v=mv3pymvg";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3pymvg";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3pymvg";
-import { chainLinks } from "./chain.js?v=mv3pymvg";
-import { fits } from "./dcfit.js?v=mv3pymvg";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3pymvg";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3q04gd";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3q04gd";
+import { renderChart } from "./chart.js?v=mv3q04gd";
+import { makeT } from "./i18n.js?v=mv3q04gd";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3q04gd";
+import { LEGAL } from "./legal.js?v=mv3q04gd";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3q04gd";
+import * as community from "./community.js?v=mv3q04gd";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3q04gd";
+import { redactImage } from "./redact.js?v=mv3q04gd";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3q04gd";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3q04gd";
+import { chainLinks } from "./chain.js?v=mv3q04gd";
+import { fits } from "./dcfit.js?v=mv3q04gd";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3q04gd";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -99,13 +99,11 @@ function go(hash) {
 // Chrome
 
 function bindChrome() {
-  document.querySelectorAll("[data-lang]").forEach((b) =>
-    b.addEventListener("click", () => {
-      state.lang = b.dataset.lang;
-      save("lang", state.lang);
-      render();
-    }),
-  );
+  document.querySelector("#lang-sel")?.addEventListener("change", (e) => {
+    state.lang = e.target.value;
+    save("lang", state.lang);
+    render();
+  });
   document.querySelectorAll("[data-mode]").forEach((b) =>
     b.addEventListener("click", () => {
       state.mode = b.dataset.mode;
@@ -131,7 +129,8 @@ function renderChrome(r) {
     a.textContent = t(`nav_${a.dataset.route}`);
     a.classList.toggle("active", a.dataset.route === r.name || ((r.name === "item" || r.name === "brands") && a.dataset.route === "catalog"));
   });
-  setSeg("[data-lang]", "lang", state.lang);
+  const langSel = document.querySelector("#lang-sel");
+  if (langSel) langSel.value = state.lang;
   const acct = document.getElementById("account-btn");
   if (acct) {
     acct.title = t("ac_title");
@@ -686,20 +685,20 @@ function catalogPage() {
     .join("")}</div>`;
   return `<div class="catalog">
     <div class="filters">
-      <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
-      <select class="mini-select" id="cbrand" aria-label="${esc(t("brand"))}"><option value="">${esc(t("brand_all"))}</option>${brandOptions(cat, brand)}</select>
-      <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
-      ${cat === "desktop" ? `<div class="chips">${["", "dacamp", "dac", "amp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}</div><p class="muted small">${esc(t("role_help"))}</p>` : ""}
-      <div class="chips">
-        <a class="chip${specsOnly ? " on" : ""}" href="${link({ specs: specsOnly ? null : "1", n: null })}">${esc(t("only_specs"))}</a>
-        <a class="chip${stockOnly ? " on" : ""}" href="${link({ stock: stockOnly ? null : "1", n: null })}">${esc(t("only_stock"))}</a>
+      <div class="filter-top">
+        <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
+        <select class="mini-select" id="cbrand" aria-label="${esc(t("brand"))}"><option value="">${esc(t("brand_all"))}</option>${brandOptions(cat, brand)}</select>
+        <select class="mini-select" data-param="sort" aria-label="${esc(t("sort_label"))}">${["popular", "price", "price-desc"].map((v) => `<option value="${v}"${v === sort ? " selected" : ""}>${esc(t(`sort_${v}`))}</option>`).join("")}</select>
+        <div class="seg-links">${["grid", "table"].map((v) => `<a class="${v === view ? "on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
       </div>
-      <div class="chips">${["popular", "price", "price-desc"].map((s) => `<a class="chip${s === sort ? " on" : ""}" href="${link({ sort: s, n: null })}">${esc(t(`sort_${s}`))}</a>`).join("")}</div>
-      <div class="chips">${["grid", "table"].map((v) => `<a class="chip${v === view ? " on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
-      <div class="chips"><span class="muted small">${esc(t("mat_label"))}</span>${["", "resin", "wood", "metal", "ceramic", "carbon", "glass", "clear"].map((m) => `<a class="chip${m === mat ? " on" : ""}" href="${link({ mat: m || null, n: null })}">${esc(t(m ? `mat_${m}` : "cat_all"))}</a>`).join("")}</div>
-      <a class="chip" href="#brands">${esc(t("brands_all"))}</a>
-      <a class="chip ext-chip" href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a>
-      <span class="muted small">${esc(t("n_results", { n: fmt(res.length, 0) }))}</span>
+      <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
+      ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
+      <div class="filter-more">
+        <label class="check small"><input type="checkbox" data-toggle="specs"${specsOnly ? " checked" : ""}> ${esc(t("only_specs"))}</label>
+        <label class="check small"><input type="checkbox" data-toggle="stock"${stockOnly ? " checked" : ""}> ${esc(t("only_stock"))}</label>
+        <select class="mini-select" data-param="mat" aria-label="${esc(t("mat_label"))}"><option value="">${esc(t("mat_label"))} ${esc(t("cat_all"))}</option>${["resin", "wood", "metal", "ceramic", "carbon", "glass", "clear"].map((m) => `<option value="${m}"${m === mat ? " selected" : ""}>${esc(t(`mat_${m}`))}</option>`).join("")}</select>
+        <span class="muted small filter-count">${esc(t("n_results", { n: fmt(res.length, 0) }))} · <a href="#brands">${esc(t("brands_all"))}</a> · <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a></span>
+      </div>
     </div>
     ${view === "grid" ? grid : `<div class="table-wrap card"><table class="cat-table">
       <thead><tr><th>${esc(t("col_product"))}</th><th>${esc(t("col_imp"))}</th><th>${esc(t("col_sens"))} / ${esc(t("col_power"))}</th><th>${esc(t("col_price"))}</th><th>${esc(t("col_stores"))}</th></tr></thead>
@@ -961,6 +960,23 @@ function wire(main, r) {
   );
   if (r.name === "learn") wireTool(main.querySelector("[data-tool]"));
   if (r.name === "catalog") {
+    // Dropdowns and checkboxes rewrite one query param each.
+    main.querySelectorAll("select[data-param]").forEach((el) =>
+      el.addEventListener("change", () => {
+        const p = query();
+        el.value ? p.set(el.dataset.param, el.value) : p.delete(el.dataset.param);
+        p.delete("n");
+        go(`#catalog?${p}`);
+      }),
+    );
+    main.querySelectorAll("input[data-toggle]").forEach((el) =>
+      el.addEventListener("change", () => {
+        const p = query();
+        el.checked ? p.set(el.dataset.toggle, "1") : p.delete(el.dataset.toggle);
+        p.delete("n");
+        go(`#catalog?${p}`);
+      }),
+    );
     main.querySelector("#cbrand")?.addEventListener("change", (e) => {
       const p = query();
       e.target.value ? p.set("brand", e.target.value) : p.delete("brand");
@@ -1681,7 +1697,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3pymvg" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3q04gd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

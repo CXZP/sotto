@@ -372,3 +372,10 @@ select { text-overflow: ellipsis; }
 [hidden] { display: none !important; }
 .prose.wide main, .prose.wide { padding-top: 12px; }
 td:nth-child(2) { white-space: nowrap; }
+
+/* Language: one compact dropdown instead of four buttons, so the nav fits */
+.lang-pick { display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 10px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); cursor: pointer; }
+.lang-pick svg { width: 16px; height: 16px; flex: none; }
+.lang-pick select { appearance: none; border: 0; background: transparent; color: var(--text); font: inherit; font-size: 13px; cursor: pointer; padding: 0 2px; }
+.lang-pick select:focus-visible { outline: 2px solid var(--accent, #4c8dff); outline-offset: 2px; border-radius: 6px; }
+nav a { white-space: nowrap; }

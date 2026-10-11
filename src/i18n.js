@@ -2,6 +2,7 @@
 
 export const STRINGS = {
   th: {
+    sort_label: "เรียงตาม",
     src_pick: "หรือเลือกเครื่องเล่นพกพา / เครื่องเล่น CD / สตรีมเมอร์",
     picker_title_src: "เลือกแหล่งเสียง",
     slot_dac_opt: "ไม่บังคับ ใส่เมื่อใช้ DAC แยกตัว",
@@ -559,6 +560,7 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    sort_label: "Sort by",
     src_pick: "or pick a music player / CD player / streamer",
     picker_title_src: "Choose a source",
     slot_dac_opt: "Optional, for a separate DAC",

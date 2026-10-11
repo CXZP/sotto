@@ -382,3 +382,18 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .learn-guide > section { margin: 0; }
 
 .region-pick select { width: auto; display: inline-block; margin-left: 6px; }
+
+/* Catalog filters: search row, category row, then small extras */
+.filters { display: grid; gap: 12px; }
+.filter-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filter-top .search { flex: 1 1 260px; max-width: none; }
+.filter-top .mini-select { flex: 0 1 200px; }
+.seg-links { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 3px; }
+.seg-links a { padding: 6px 12px; border-radius: 999px; color: var(--text-2); font-size: 13px; }
+.seg-links a.on { background: var(--surface); color: var(--text); }
+.seg-links a:hover { text-decoration: none; color: var(--text); }
+.sub-chips { padding-left: 12px; border-left: 2px solid var(--surface-2); }
+.sub-chips .chip { font-size: 13px; padding: 4px 12px; }
+.filter-more { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.filter-more .mini-select { width: auto; }
+.filter-count { margin-left: auto; }

@@ -1,15 +1,16 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3okmtu";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3okmtu";
-import { renderChart } from "./chart.js?v=mv3okmtu";
-import { makeT } from "./i18n.js?v=mv3okmtu";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3okmtu";
-import { LEGAL } from "./legal.js?v=mv3okmtu";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3okmtu";
-import * as community from "./community.js?v=mv3okmtu";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3okmtu";
-import { redactImage } from "./redact.js?v=mv3okmtu";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3okmtu";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3okmtu";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3p1xqd";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3p1xqd";
+import { renderChart } from "./chart.js?v=mv3p1xqd";
+import { makeT } from "./i18n.js?v=mv3p1xqd";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3p1xqd";
+import { LEGAL } from "./legal.js?v=mv3p1xqd";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3p1xqd";
+import * as community from "./community.js?v=mv3p1xqd";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3p1xqd";
+import { redactImage } from "./redact.js?v=mv3p1xqd";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3p1xqd";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3p1xqd";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3p1xqd";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -17,8 +18,12 @@ const JACK_LABEL = { "3.5": "3.5 mm", "6.35": "6.35 mm", "4.4": "4.4 mm", "2.5":
 const PLUGS = ["3.5", "6.35", "4.4", "xlr4"];
 const PLUG_SHORT = { "3.5": "3.5", "6.35": "6.35", "4.4": "4.4", xlr4: "XLR" };
 
+const LANGS = ["th", "en", "ja", "zh"];
+const LOCALE = { th: "th-TH", en: "en-GB", ja: "ja-JP", zh: "zh-CN" };
+const browserLang = LANGS.find((l) => (navigator.language ?? "").toLowerCase().startsWith(l)) ?? "en";
 const state = {
-  lang: load("lang", navigator.language?.startsWith("th") ? "th" : "en"),
+  lang: load("lang", browserLang),
+  region: "",
   mode: load("mode", "simple"),
   device: "phone-usb-c",
   amp: "",
@@ -26,7 +31,16 @@ const state = {
   plug: "",
   level: "normal",
 };
+if (!LANGS.includes(state.lang)) state.lang = "en";
+state.region = load("region", guessRegion(state.lang));
+if (!REGIONS[state.region]) state.region = "other";
 let t = makeT(state.lang);
+/** Locale for dates and numbers in the current UI language. */
+const loc = () => LOCALE[state.lang] ?? "en-GB";
+/** Pick the current language from a {th, en, ...} object, falling back to English. */
+const L = (o) => o?.[state.lang] ?? o?.en ?? o?.th ?? "";
+/** Currency of the reader's region (code calculator, price reports). */
+const cur = () => REGIONS[state.region]?.currency ?? "USD";
 let db;
 let headphones = []; // catalog items we can calculate for
 let sources = []; // catalog items with output data
@@ -64,7 +78,7 @@ function query() {
 function readHash() {
   const p = query();
   if (route().name === "build") for (const k of ["device", "amp", "hp", "plug", "level"]) if (p.has(k)) state[k] = p.get(k);
-  if (["th", "en"].includes(p.get("lang"))) state.lang = p.get("lang");
+  if (LANGS.includes(p.get("lang"))) state.lang = p.get("lang");
   if (["simple", "detail"].includes(p.get("mode"))) state.mode = p.get("mode");
 }
 function buildUrl() {
@@ -130,9 +144,24 @@ function renderChrome(r) {
   setSeg("[data-mode]", "mode", state.mode);
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
-  const date = new Date(db.builtAt).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
+  const date = new Date(db.builtAt).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
+    <br><label class="region-pick">${esc(t("rg_label"))} ${regionSelect()}</label>`;
 }
+
+function regionSelect() {
+  return `<select class="mini-select" data-region>${Object.entries(REGIONS)
+    .map(([id, r]) => `<option value="${id}"${id === state.region ? " selected" : ""}>${esc(L(r))} · ${r.currency}</option>`)
+    .join("")}</select>`;
+}
+// One listener for every region picker on the page (footer, where-to-buy, code calculator).
+document.addEventListener("change", (e) => {
+  const el = e.target.closest?.("select[data-region]");
+  if (!el || !REGIONS[el.value]) return;
+  state.region = el.value;
+  save("region", state.region);
+  render();
+});
 
 function setSeg(selector, key, value) {
   const buttons = [...document.querySelectorAll(selector)];
@@ -157,7 +186,7 @@ function render() {
   else if (r.name === "stats") main.innerHTML = statsPage();
   else if (r.name === "compare") main.innerHTML = comparePage();
   else if (r.name === "gallery") main.innerHTML = galleryPage();
-  else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${LEGAL[r.name][state.lang] ?? LEGAL[r.name].en}</article>`;
+  else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${L(LEGAL[r.name])}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
@@ -178,7 +207,7 @@ function currentSource() {
   const device = db.devices.find((d) => d.id === state.device) ?? db.devices[0];
   const amp = state.amp ? findItem(state.amp) : null;
   const outputs = amp ? sourceOutputs(amp) : device.outputs;
-  return { device, amp, outputs, label: amp ? displayName(amp) : device.name[state.lang] };
+  return { device, amp, outputs, label: amp ? displayName(amp) : L(device.name) };
 }
 
 function buildPage() {
@@ -188,7 +217,7 @@ function buildPage() {
   return `<div class="builder">
     <section class="slots card">
       ${slotRow(t("slot_device"), `<div class="select"><select id="device">${db.devices
-        .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(d.name[state.lang])}</option>`)
+        .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(L(d.name))}</option>`)
         .join("")}</select></div>`)}
       ${slotRow(t("slot_amp"), pickedOrButton("amp", amp))}
       ${slotRow(t("slot_hp"), pickedOrButton("hp", hp))}
@@ -290,7 +319,7 @@ function verdictCard(ev, hp, detail, chain = {}) {
   if (ev.status === "ok" && chain.amp) key = "v_ok_amp";
   let sub = subKey ? t(subKey) : "";
   if (chain.amp && chain.alone && ["ok", "overkill", "tight"].includes(ev.status))
-    sub = [sub, t(["ok", "overkill"].includes(chain.alone) ? "v_alone_ok" : "v_alone_no", { device: chain.device.name[state.lang], amp: displayName(chain.amp) })].filter(Boolean).join(" · ");
+    sub = [sub, t(["ok", "overkill"].includes(chain.alone) ? "v_alone_ok" : "v_alone_no", { device: chain.L(device.name), amp: displayName(chain.amp) })].filter(Boolean).join(" · ");
   if (ev.status === "ambiguous") sub = t("v_ambiguous_sub", { a: t(VERDICT[ev.r.status][1]), b: t(VERDICT[ev.alt.r.status][1]) });
   else if (ev.unitAmbiguous) sub = t("v_unit_note");
   let body = `<div class="verdict"><span class="badge ${tone}" aria-hidden="true"></span><div><p class="big">${esc(t(key))}</p>${sub ? `<p class="sub">${esc(sub)}</p>` : ""}</div></div>`;
@@ -427,7 +456,7 @@ function chartPage() {
   const p = query();
   const src = p.get("src") ? db.byId.get(p.get("src")) : null;
   const dev = db.devices.find((d) => d.id === p.get("dev")) ?? (src ? null : db.devices[0]);
-  const label = src ? displayName(src) : dev.name[state.lang];
+  const label = src ? displayName(src) : L(dev.name);
   const cat = p.get("cat") ?? "all";
   const level = p.get("level") ?? state.level;
   const link = (over) => {
@@ -436,7 +465,7 @@ function chartPage() {
     return `#chart?${n}`;
   };
   const options = [
-    ...db.devices.map((d) => `<option value="dev:${esc(d.id)}"${!src && d.id === dev?.id ? " selected" : ""}>${esc(d.name[state.lang])}</option>`),
+    ...db.devices.map((d) => `<option value="dev:${esc(d.id)}"${!src && d.id === dev?.id ? " selected" : ""}>${esc(L(d.name))}</option>`),
     ...[...sources].sort((a, b) => displayName(a).localeCompare(displayName(b))).map((s) => `<option value="src:${esc(s.id)}"${src?.id === s.id ? " selected" : ""}>${esc(displayName(s))}</option>`),
   ].join("");
   return `<div class="chart-page">
@@ -458,7 +487,7 @@ function wireChartPage(main) {
   const outputs = src ? sourceOutputs(src) : dev.outputs;
   const cat = p.get("cat") ?? "all";
   const max = Number(p.get("max")) || Infinity;
-  drawChart(main.querySelector("#chart"), outputs, src ? displayName(src) : dev.name[state.lang], null, {
+  drawChart(main.querySelector("#chart"), outputs, src ? displayName(src) : L(dev.name), null, {
     big: true,
     level: p.get("level") ?? state.level,
     filter: (h) => (cat === "all" || h.category === cat) && (max === Infinity || (prices(h).cheapest?.price ?? Infinity) <= max),
@@ -748,7 +777,7 @@ function itemPage(id) {
         .map((o) => `<li><b>${o.jack ? JACK_LABEL[o.jack] : "—"}</b> ${(o.power ?? []).map((p) => `${fmt(p.mw, 0)} mW @ ${p.load} Ω`).join(" · ")}${(o.voltage ?? []).map((p) => `${p.vrms} V @ ${p.load} Ω`).join(" · ")}${o.vmax ? ` · max ${o.vmax} Vrms` : ""}${o.vrules ? o.vrules.map((r) => ` · ${r.vrms} V (<${r.maxLoad} Ω)`).join("") : ""} ${srcLink(o.source)}</li>`)
         .join("")}</ul></div>`
     : "";
-  const notes = (i.notes ?? []).map((n) => `<li>${esc(n[state.lang])} ${n.source ? srcLink(n.source) : ""}</li>`).join("");
+  const notes = (i.notes ?? []).map((n) => `<li>${esc(L(n))} ${n.source ? srcLink(n.source) : ""}</li>`).join("");
   const im = imageOf(i);
   const name = displayName(i);
   const issueQuery = `"${name}" (issue OR problem OR broken OR dead OR defect OR short)`;
@@ -944,7 +973,7 @@ async function renderCommunity(el, item) {
   const post = (r) => `<article class="post k-${r.kind}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${r.purchase === "free_sample" ? `<span class="tag">${esc(t("cm_free_sample"))}</span>` : r.purchase === "bought" ? `<span class="tag">${esc(t("cm_bought"))}</span>` : ""}
-      <span class="muted small">${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB")}</span></div>
+      <span class="muted small">${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
     <p class="post-title">${esc(r.title)}</p>
     ${r.body ? `<p class="post-body">${esc(r.body)}</p>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
@@ -1102,16 +1131,16 @@ async function renderCommunity(el, item) {
 // No marketplace is scraped. Store feeds are labelled as feeds; marketplace
 // prices come from people, with a screenshot or link, shown as ranges.
 
-const CHANNELS = ["shopee", "lazada", "tiktok", "store_th", "secondhand_th", "taobao", "tmall", "jd", "xianyu", "aliexpress", "store_intl", "other"];
+const CHANNELS = ["shopee", "lazada", "tiktok", "amazon", "ebay", "store_th", "secondhand_th", "taobao", "tmall", "jd", "xianyu", "aliexpress", "store_intl", "other"];
 const CHANNEL_CURRENCY = { taobao: "CNY", tmall: "CNY", jd: "CNY", xianyu: "CNY", store_intl: "USD", aliexpress: "USD" };
-const CURRENCIES = ["THB", "CNY", "USD", "EUR", "JPY", "SGD", "MYR"];
+const CURRENCIES = ["THB", "CNY", "USD", "EUR", "GBP", "JPY", "KRW", "SGD", "MYR", "PHP", "IDR", "VND", "AUD", "CAD", "TWD", "HKD"];
 const EVIDENCE_HOST = "/storage/v1/object/public/evidence/";
 
 function day(iso) {
-  return new Date(iso).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return new Date(iso).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
 }
 function baht(n) {
-  return money(n, "THB");
+  return money(n, cur());
 }
 function codeLabel(c) {
   return [c.pct ? `${fmt(c.pct, 2)}%` : baht(c.off), c.min ? t("dl_min", { v: baht(c.min) }) : "", c.cap != null && c.pct ? t("dl_cap", { v: baht(c.cap) }) : ""].filter(Boolean).join(" · ");
@@ -1155,7 +1184,7 @@ function dealPage() {
       <div class="deal-fields">
         ${field("d-cp", t("dl_cn_price"), "cp", "699.9")}
         ${field("d-cs", t("dl_cn_ship"), "cs", "0")}
-        ${field("d-r", t("dl_cn_rate"), "r", t("dl_cn_rate_ph"))}
+        ${field("d-r", t("dl_cn_rate", { cur: cur() }), "r", t("dl_cn_rate_ph"))}
         ${field("d-x", t("dl_cn_extra"), "x", "0")}
       </div>
       <div id="d-cn"></div>
@@ -1172,8 +1201,8 @@ function codesHtml(codes) {
       (c, n) => `<li class="code-row" data-n="${n}">
       <select class="mini-select" data-f="kind"><option value="platform"${c.kind !== "shop" ? " selected" : ""}>${esc(t("dl_kind_platform"))}</option><option value="shop"${c.kind === "shop" ? " selected" : ""}>${esc(t("dl_kind_shop"))}</option></select>
       <label class="code-val"><input class="search num" data-f="val" inputmode="decimal" value="${c.pct ?? c.off ?? ""}"><select class="mini-select" data-f="unit"><option value="pct"${c.pct != null ? " selected" : ""}>%</option><option value="off"${c.pct == null ? " selected" : ""}>฿</option></select></label>
-      <label><span class="small muted">${esc(t("dl_min_l"))}</span><input class="search num" data-f="min" inputmode="decimal" value="${c.min ?? ""}"></label>
-      <label><span class="small muted">${esc(t("dl_cap_l"))}</span><input class="search num" data-f="cap" inputmode="decimal" value="${c.cap ?? ""}"></label>
+      <label><span class="small muted">${esc(t("dl_min_l", { cur: cur() }))}</span><input class="search num" data-f="min" inputmode="decimal" value="${c.min ?? ""}"></label>
+      <label><span class="small muted">${esc(t("dl_cap_l", { cur: cur() }))}</span><input class="search num" data-f="cap" inputmode="decimal" value="${c.cap ?? ""}"></label>
       <button type="button" class="link small" data-rm="${n}">${esc(t("cm_delete"))}</button></li>`,
     )
     .join("")}</ul>`;
@@ -1217,7 +1246,7 @@ function wireDeal(main) {
     const cn = landed({ price: val($("#d-cp")), shipping: val($("#d-cs")) ?? 0, rate: val($("#d-r")), extraPct: val($("#d-x")) ?? 0 });
     $("#d-cn").innerHTML = cn
       ? `<p class="deal-big">${baht(cn.total)}</p><p class="muted small">${esc(t("dl_cn_math", { base: baht(cn.base), extra: baht(cn.extra) }))}</p><p class="small">${esc(t("dl_cn_warn"))}</p>`
-      : `<p class="muted small">${esc(t("dl_cn_empty"))}</p>`;
+      : `<p class="muted small">${esc(t("dl_cn_empty", { cur: cur() }))}</p>`;
   };
   const redraw = (codes) => {
     $("#d-codes").innerHTML = codesHtml(codes);
@@ -1261,7 +1290,7 @@ function wireDeal(main) {
   if (id && slot)
     community.pricesFor(id).then(({ ok, rows }) => {
       if (!ok || !slot.isConnected) return;
-      const th = summarize(rows.filter((r) => r.currency === "THB" && ["shopee", "lazada", "tiktok"].includes(r.channel)));
+      const th = summarize(rows.filter((r) => r.currency === cur() && !CHANNEL_CURRENCY[r.channel]));
       slot.innerHTML = th.length
         ? th.map((g) => esc(t("dl_paid_ref", { channel: t(`ch_${g.channel}`), min: baht(g.min), max: baht(g.max), n: g.n }))).join("<br>")
         : `<span class="muted">${esc(t("dl_paid_none"))}</span>`;
@@ -1306,10 +1335,8 @@ function channelsCard(i) {
   const zh = db.zhNames?.[(i.brand ?? "").toLowerCase()];
   const cnQuery = zh ? `${zh} ${i.model}` : name;
   const q = encodeURIComponent;
-  const th = [
-    ["Shopee", `https://shopee.co.th/search?keyword=${q(name)}`],
-    ["Lazada", `https://www.lazada.co.th/catalog/?q=${q(name)}`],
-  ];
+  const reg = REGIONS[state.region] ?? REGIONS.other;
+  const th = storeLinks(state.region, name);
   // Only Taobao has been tried by a person so far; the others are marked untested.
   const flagship = zh ? `${zh}官方旗舰店` : null;
   const cn = [
@@ -1324,8 +1351,8 @@ function channelsCard(i) {
   const links = (l) => l.map(([label, url]) => `<a class="pill" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)} ↗</a>`).join("");
   return `<section class="card pad channels"><h3>${esc(t("ch_title"))}</h3>
     <div class="ch-grid">
-      <div><h4>${esc(t("ch_th"))}</h4><p class="muted small">${esc(t("ch_th_note"))}</p>
-        <div class="row-inline">${links(th)}<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a></div></div>
+      <div><h4>${esc(t("ch_th", { region: L(reg) }))}</h4><p class="small"><label>${esc(t("rg_label"))} ${regionSelect()}</label></p><p class="muted small">${esc(t(reg.codes ? "ch_th_note" : "ch_local_note"))}</p>
+        <div class="row-inline">${links(th)}${reg.codes ? `<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a>` : ""}</div></div>
       <div><h4>${esc(t("ch_cn"))}</h4><p class="muted small">${esc(t("ch_cn_note"))}</p>
         <p class="small">${esc(t("ch_cn_query"))} <code>${esc(cnQuery)}</code> <button type="button" class="link small" data-copy="${esc(cnQuery)}">${esc(t("copy"))}</button>${zh ? "" : ` <span class="muted">· ${esc(t("ch_cn_no_zh"))}</span>`}</p>
         <p class="small warn-text">${esc(t("ch_cn_login"))}</p>
@@ -1431,7 +1458,7 @@ async function renderPaid(el, item) {
   const form = el.querySelector('[data-form="price"]');
   if (!form) return;
   let shot = null;
-  form.channel.addEventListener("change", () => (form.currency.value = CHANNEL_CURRENCY[form.channel.value] ?? "THB"));
+  form.channel.addEventListener("change", () => (form.currency.value = CHANNEL_CURRENCY[form.channel.value] ?? cur()));
   form.shot.addEventListener("change", async () => {
     const file = form.shot.files[0];
     form.shot.value = "";
@@ -1471,11 +1498,10 @@ async function renderPaid(el, item) {
 // Learn: glossary index, one page per term, small calculators.
 
 function learnPage(termId) {
-  const L = state.lang;
   if (termId) {
     const term = TERM.get(termId);
     if (!term) return `<div class="card empty"><p>${esc(t("it_not_found"))}</p></div>`;
-    const c = term[L] ?? term.en;
+    const c = L(term);
     return `<article class="term">
       <p class="small"><a href="#learn">← ${esc(t("lr_back"))}</a></p>
       <h1>${esc(c.title)}</h1>
@@ -1486,23 +1512,23 @@ function learnPage(termId) {
         term.related.length
           ? `<section class="card pad"><h3>${esc(t("lr_related"))}</h3><div class="row-inline">${term.related
               .filter((id) => TERM.has(id))
-              .map((id) => `<a class="pill" href="#learn/${id}">${esc((TERM.get(id)[L] ?? TERM.get(id).en).title)}</a>`)
+              .map((id) => `<a class="pill" href="#learn/${id}">${esc(L(TERM.get(id)).title)}</a>`)
               .join("")}</div></section>`
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3okmtu" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3p1xqd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
     <header class="deal-head"><h1>${esc(t("nav_learn"))}</h1><p class="muted">${esc(t("lr_lead"))}</p></header>
     <section class="card pad"><h3>${esc(t("lr_glossary"))}</h3>
       <div class="gloss-grid">${TERMS.map((term) => {
-        const c = term[L] ?? term.en;
+        const c = L(term);
         return `<a class="gloss" href="#learn/${term.id}"><b>${esc(c.title)}</b><span class="muted small">${esc(c.short)}</span>${term.tool ? `<span class="tag">${esc(t("lr_has_tool"))}</span>` : ""}</a>`;
       }).join("")}</div>
     </section>
-    <section class="card pad"><h3>${esc(t("lr_guide"))}</h3><article class="prose">${LEARN[L]}</article></section>
+    <section class="card pad"><h3>${esc(t("lr_guide"))}</h3><article class="prose">${L(LEARN)}</article></section>
   </div>`;
 }
 
@@ -1669,7 +1695,7 @@ function wireMd(root) {
 function ago(iso) {
   // Device clocks drift: anything under a minute, including slightly in the future, is "just now".
   const s = Math.max(0, (Date.now() - new Date(iso)) / 1000);
-  const rtf = new Intl.RelativeTimeFormat(state.lang === "th" ? "th" : "en", { numeric: "auto" });
+  const rtf = new Intl.RelativeTimeFormat(state.lang, { numeric: "auto" });
   if (s < 60) return t("just_now");
   if (s < 3600) return rtf.format(-Math.round(s / 60), "minute");
   if (s < 86400) return rtf.format(-Math.round(s / 3600), "hour");
@@ -2423,8 +2449,11 @@ function searchLinks(i) {
     [t("sq_still_good", { year }), g(`is "${n}" still good ${year}`)],
     [t("sq_review"), g(`"${n}" review`)],
     ["YouTube", `https://www.youtube.com/results?search_query=${encodeURIComponent(`${n} review`)}`],
-    [t("sq_good_th"), g(`${n} ดีไหม`)],
-    ["Pantip", g(`${n} site:pantip.com`)],
+    ...(REGIONS[state.region]?.local ?? []).map(([label, pattern]) => [label, g(pattern.replace("{n}", n))]),
+    ...(state.region !== "th" && state.lang === "th" ? [["ดีไหม", g(`${n} ดีไหม`)], ["Pantip", g(`${n} site:pantip.com`)]] : []),
+    ...(state.lang === "zh" ? [["怎么样", g(`${n} 怎么样`)], ["什么值得买", g(`${n} site:smzdm.com`)]] : []),
+    ["Reddit", g(`${n} site:reddit.com`)],
+    ["Head-Fi", g(`${n} site:head-fi.org`)],
     [isSource ? t("sq_rear") : t("sq_photos"), g(isSource ? `${n} rear panel ports` : `${n} real photos`, "&tbm=isch")],
   ];
 }
@@ -2667,13 +2696,13 @@ function srcLink(url) {
 function money(n, currency) {
   if (n == null) return "";
   try {
-    return new Intl.NumberFormat(state.lang === "th" ? "th-TH" : "en-US", { style: "currency", currency: currency || "USD", maximumFractionDigits: 0 }).format(n);
+    return new Intl.NumberFormat(loc(), { style: "currency", currency: currency || "USD", maximumFractionDigits: 0 }).format(n);
   } catch {
     return `${fmt(n, 0)} ${currency ?? ""}`;
   }
 }
 function fmt(n, d) {
-  return Number(n).toLocaleString(state.lang === "th" ? "th-TH" : "en-US", { maximumFractionDigits: d });
+  return Number(n).toLocaleString(loc(), { maximumFractionDigits: d });
 }
 function vfmt(v) {
   return v < 1 ? `${fmt(v * 1000, 1)} mV` : `${fmt(v, 2)} V`;

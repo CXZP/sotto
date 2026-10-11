@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3ueu6t";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3ueu6t";
-import { renderChart } from "./chart.js?v=mv3ueu6t";
-import { makeT } from "./i18n.js?v=mv3ueu6t";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3ueu6t";
-import { LEGAL } from "./legal.js?v=mv3ueu6t";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3ueu6t";
-import * as community from "./community.js?v=mv3ueu6t";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3ueu6t";
-import { redactImage } from "./redact.js?v=mv3ueu6t";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3ueu6t";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3ueu6t";
-import { chainLinks } from "./chain.js?v=mv3ueu6t";
-import { fits } from "./dcfit.js?v=mv3ueu6t";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3ueu6t";
-import { parseBlocks, reviewPost, reviewPostI18n } from "./blocks.js?v=mv3ueu6t";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3ueu6t";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3vzysv";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3vzysv";
+import { renderChart } from "./chart.js?v=mv3vzysv";
+import { makeT } from "./i18n.js?v=mv3vzysv";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3vzysv";
+import { LEGAL } from "./legal.js?v=mv3vzysv";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3vzysv";
+import * as community from "./community.js?v=mv3vzysv";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3vzysv";
+import { redactImage } from "./redact.js?v=mv3vzysv";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3vzysv";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3vzysv";
+import { chainLinks } from "./chain.js?v=mv3vzysv";
+import { fits } from "./dcfit.js?v=mv3vzysv";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3vzysv";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost } from "./blocks.js?v=mv3vzysv";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3vzysv";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1127,6 +1127,49 @@ async function warnBanner(el, ids) {
   </div></div>`;
 }
 
+const POSTS_PAGE = 10;
+
+/** Kind/source chips, order and "show more" for the posts list. Moves and hides the articles, so their buttons keep working. */
+function wirePostFilters(el) {
+  const list = el.querySelector("[data-posts]");
+  if (!list) return;
+  const more = list.querySelector("[data-more]");
+  const arts = [...list.querySelectorAll("article.post")];
+  const f = { kind: "", src: "", sort: "top", n: POSTS_PAGE };
+  const draw = () => {
+    const key = f.sort === "new" ? (a) => -a.dataset.t : (a) => Number(a.dataset.o);
+    arts.sort((a, b) => key(a) - key(b)).forEach((a) => list.insertBefore(a, more));
+    let match = 0;
+    for (const a of arts) {
+      const ok = (!f.kind || a.dataset.kind === f.kind) && (!f.src || a.dataset.src === f.src);
+      if (ok) match++;
+      a.hidden = !ok || match > f.n;
+    }
+    more.hidden = match <= f.n;
+    more.textContent = t("cm_more_posts", { n: match - f.n });
+  };
+  el.querySelectorAll("[data-f]").forEach((b) =>
+    b.addEventListener("click", () => {
+      f[b.dataset.f] = b.dataset.v;
+      f.n = POSTS_PAGE;
+      el.querySelectorAll(`[data-f="${b.dataset.f}"]`).forEach((x) => {
+        x.classList.toggle("on", x === b);
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      draw();
+    }),
+  );
+  el.querySelector("[data-sort]")?.addEventListener("change", (e) => {
+    f.sort = e.target.value;
+    draw();
+  });
+  more.addEventListener("click", () => {
+    f.n += POSTS_PAGE;
+    draw();
+  });
+  draw();
+}
+
 async function renderCommunity(el, item) {
   if (!el) return;
   el.innerHTML = `<h3>${esc(t("cm_title"))}</h3><p class="muted small">${esc(t("cm_loading"))}</p>`;
@@ -1150,17 +1193,24 @@ async function renderCommunity(el, item) {
   const shown = (r) => r.i18n?.[state.lang] ?? r;
   // The text as the writer posted it stays one click away.
   const translated = (r) => shown(r) !== r && (shown(r).title !== r.title || shown(r).body !== r.body);
-  const post = (r) => `<article class="post k-${r.kind}">
+  // Review summaries show their first line (rating · reviewer · date); pros and cons open on click.
+  const bodyHtml = (r, body) => {
+    if (!body) return "";
+    const [head, ...rest] = body.split("\n\n");
+    if (r.kind !== "review" || !rest.length) return `<p class="post-body">${esc(body)}</p>`;
+    return `<p class="post-body">${esc(head)}</p><details class="post-more"><summary class="small">${esc(t("cm_details"))}</summary><p class="post-body">${esc(rest.join("\n\n"))}</p></details>`;
+  };
+  const post = (r, n) => `<article class="post k-${r.kind}" data-kind="${r.kind}" data-src="${esc(sourceHost(r.evidence_url))}" data-t="${Date.parse(r.created_at) || 0}" data-o="${n}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${r.purchase === "free_sample" ? `<span class="tag">${esc(t("cm_free_sample"))}</span>` : r.purchase === "bought" ? `<span class="tag">${esc(t("cm_bought"))}</span>` : ""}
       <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
     <div class="post-text">
       <p class="post-title">${esc(shown(r).title)}</p>
-      ${shown(r).body ? `<p class="post-body">${esc(shown(r).body)}</p>` : ""}
+      ${bodyHtml(r, shown(r).body)}
     </div>
     ${translated(r) ? `<div class="post-text" hidden>
       <p class="post-title">${esc(r.title)}</p>
-      ${r.body ? `<p class="post-body">${esc(r.body)}</p>` : ""}
+      ${bodyHtml(r, r.body)}
     </div>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
     <div class="post-actions">
@@ -1203,15 +1253,31 @@ async function renderCommunity(el, item) {
     </form>`;
   }
 
+  // Filters appear once there is enough to filter: by kind, by source site, and the order.
+  const count = (f) => rows.filter(f).length;
+  const kinds = ["issue", "review", "owner", "correction"].filter((k) => count((r) => r.kind === k));
+  const hosts = [...new Set(rows.map((r) => sourceHost(r.evidence_url)).filter(Boolean))].sort((a, b) => count((r) => sourceHost(r.evidence_url) === b) - count((r) => sourceHost(r.evidence_url) === a));
+  const chip = (f, v, label) => `<button type="button" class="pill small${v ? "" : " on"}" data-f="${f}" data-v="${esc(v)}" aria-pressed="${!v}">${esc(label)}</button>`;
+  const filters =
+    rows.length > POSTS_PAGE / 2
+      ? `<div class="post-filters">
+      <div class="row-inline">${chip("kind", "", t("cm_f_all"))}${kinds.map((k) => chip("kind", k, `${t(`cm_kind_${k}`)} · ${count((r) => r.kind === k)}`)).join("")}</div>
+      ${hosts.length > 1 ? `<div class="row-inline">${chip("src", "", t("cm_f_all_sources"))}${hosts.map((h) => chip("src", h, `${h} · ${count((r) => sourceHost(r.evidence_url) === h)}`)).join("")}</div>` : ""}
+      <label class="small muted">${esc(t("cm_sort"))} <select class="mini-select" data-sort><option value="top">${esc(t("cm_sort_top"))}</option><option value="new">${esc(t("cm_sort_new"))}</option></select></label>
+    </div>`
+      : "";
   el.innerHTML = `<h3>${esc(t("cm_title"))}</h3><p class="muted small">${esc(t("cm_disclaimer"))}</p>
-    ${rows.length ? rows.map(post).join("") : `<p class="muted">${esc(t("cm_empty"))}</p>`}
+    ${filters}
+    ${rows.length ? `<div data-posts>${rows.map(post).join("")}<button type="button" class="pill small" data-more hidden></button></div>` : `<p class="muted">${esc(t("cm_empty"))}</p>`}
     <div class="composer">${composer}<p class="small status" role="status"></p></div>`;
 
   const status = el.querySelector(".status");
   const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
   const again = () => renderCommunity(el, item);
+  wirePostFilters(el);
   const postForm = el.querySelector('[data-form="post"]');
   let postI18n = null;
+  let postKey = null;
   const setKind = (k) => el.querySelector(`[data-kind-seg] [data-kind="${k}"]`)?.click();
   if (postForm)
     wireBot(postForm, item, (d, link) => {
@@ -1224,6 +1290,7 @@ async function renderCommunity(el, item) {
         postForm.body.value = post.body;
         // Other languages go with the post only while the text is left as drafted.
         postI18n = asReview ? reviewPostI18n(b) : null;
+        postKey = asReview ? reviewKey(b.source || link, b.reviewer) : null;
         if (postI18n) postI18n[state.lang] = post;
         postForm.evidence_url.value = b.source || link;
         return;
@@ -1336,7 +1403,7 @@ async function renderCommunity(el, item) {
         const body = f.body.value.trim();
         const drafted = postI18n?.[state.lang];
         const unedited = drafted && f.kind.value === "review" && drafted.title.trim() === title && drafted.body.trim() === body;
-        await community.addReport({
+        const res = await community.addReport({
           item_id: item.id,
           kind: f.kind.value,
           title,
@@ -1344,7 +1411,9 @@ async function renderCommunity(el, item) {
           evidence_url: f.evidence_url.value.trim() || null,
           purchase: f.purchase.value,
           ...(unedited ? { i18n: postI18n } : {}),
+          ...(postKey && f.kind.value === "review" ? { dedupe_key: postKey } : {}),
         });
+        if (res?.duplicate) return (status.textContent = t("cm_dup"));
       }
       again();
     } catch (e) {
@@ -1601,7 +1670,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3ueu6t" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3vzysv" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1634,7 +1703,7 @@ function showManyReviews(box, item, blocks, link) {
     const post = reviewPost(b, labels);
     const i18n = reviewPostI18n(b);
     if (i18n) i18n[state.lang] = post;
-    return { ...post, i18n, problems: b.problems };
+    return { ...post, i18n, key: reviewKey(b.source || link, b.reviewer), problems: b.problems };
   });
   list.innerHTML = `${posts
     .map(
@@ -1650,11 +1719,18 @@ function showManyReviews(box, item, blocks, link) {
     if (!chosen.length) return;
     ev.target.disabled = true;
     let done = 0;
+    let dup = 0;
     try {
       for (const p of chosen) {
-        await community.addReport({ item_id: item.id, kind: "review", title: p.title, body: p.body, evidence_url: link || null, purchase: "unknown", ...(p.i18n ? { i18n: p.i18n } : {}) });
-        done++;
-        st.textContent = t("bot_posted_n", { n: done, of: chosen.length });
+        const res = await community.addReport({ item_id: item.id, kind: "review", title: p.title, body: p.body, evidence_url: link || null, purchase: "unknown", ...(p.i18n ? { i18n: p.i18n } : {}), ...(p.key ? { dedupe_key: p.key } : {}) });
+        if (res?.duplicate) dup++;
+        else done++;
+        st.textContent = t("bot_posted_n", { n: done + dup, of: chosen.length });
+      }
+      // Say how many were already there before reloading.
+      if (dup) {
+        st.textContent = t("bot_posted_dup", { n: done, d: dup });
+        await new Promise((r) => setTimeout(r, 2500));
       }
       location.reload();
     } catch (e) {
@@ -2080,7 +2156,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3ueu6t" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3vzysv" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

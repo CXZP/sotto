@@ -55,6 +55,8 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
   - Keeps only facts whose quote is found in the pasted text.
   - 20 drafts per user per day.
   - Review summaries come in th/en/ja/zh at once; quotes stay in the original language. Posts keep them in `reports.i18n` (run `supabase/i18n.sql`), and each viewer sees their own language. Posts the writer edited before posting stay in one language.
+  - One review summary per reviewer per page per model: `reports.dedupe_key` with a unique index (run `supabase/dedupe.sql`). Repeats are skipped and counted, not errors.
+- Posts list: chips by kind and source site, order (most confirmed / newest), 10 at a time; review summaries show the rating line and open pros/cons on click.
 - Gemini app skill "sotto-review-extractor" (docs/gemini-skill.md):
   - Turns one review page into JSON "Sotto blocks": one per reviewer, pros/cons/problems/ports, each with a verbatim quote.
   - Pasting a block into the site fills the form ("review summary" post type) without any API call.

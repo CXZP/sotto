@@ -59,6 +59,24 @@ function clean(o) {
   };
 }
 
+/** "head-fi.org", "reddit.com" … for a link; old./www./m. are the same site. "" if not a link. */
+export function sourceHost(url) {
+  try {
+    return new URL(url).hostname.toLowerCase().replace(/^(www|old|m)\./, "");
+  } catch {
+    return "";
+  }
+}
+
+/** Same reviewer on the same page → same key, so one review can't be posted twice. null without a name. */
+export function reviewKey(url, reviewer) {
+  const who = String(reviewer ?? "").trim().toLowerCase();
+  const host = sourceHost(url);
+  if (!who || !host) return null;
+  const path = new URL(url).pathname.replace(/\/+$/, "");
+  return `${host}${path}|${who}`.slice(0, 600);
+}
+
 /** Labels inside a review post, per site language. */
 export const REVIEW_LABELS = {
   th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ" },
@@ -73,10 +91,7 @@ export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
   const line = (p) => `- ${(lang && p.point_i18n?.[lang]) || p.point} — “${p.quote}”`;
   const summary = (lang && b.summary_i18n?.[lang]) || b.summary;
   // Credit the person who wrote the review, always, with where it was published.
-  let host = "";
-  try {
-    host = b.source ? new URL(b.source).hostname.replace(/^www\./, "") : "";
-  } catch {}
+  const host = sourceHost(b.source);
   const credit = `${labels.by} ${b.reviewer || labels.unknown || "?"}${host ? ` (${host})` : ""}`;
   const head = [b.rating && `★ ${b.rating}`, credit, b.date].filter(Boolean).join(" · ");
   const parts = [head];

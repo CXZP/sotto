@@ -116,7 +116,15 @@ ${text}
   }
 
   // Keep only facts whose quote really is in the pasted text.
-  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
+  // Curly and straight quotes, dashes and spacing count as the same.
+  const norm = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[‘’ʼ]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/[–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
   const hay = norm(text);
   const inText = (q: unknown) => typeof q === "string" && q.length >= 3 && hay.includes(norm(q));
   if (mode === "issue") {

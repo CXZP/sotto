@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv3rxgcz";
+import { REPO } from "./content.js?v=mv3sjhwc";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -30,10 +30,17 @@ export const LEGAL = {
 </ul>
 <h2>การดูแลชุมชน</h2>
 <p>ทีมงานซ่อนหรือลบโพสต์ที่ผิดข้อตกลง และระงับบัญชีที่ทำผิดซ้ำได้ ใครก็กด "แจ้งไม่เหมาะสม" ได้ ถ้าคิดว่าเราตัดสินผิด ติดต่อผ่าน<a href="#contact">หน้าติดต่อ</a></p>
+<h2>การแจ้งให้ลบ (notice and takedown)</h2>
+<ol>
+<li>ใครก็แจ้งได้ 2 ทาง: กด "แจ้งไม่เหมาะสม" ที่โพสต์ หรือยื่นคำขอใน<a href="#contact">หน้าติดต่อ</a> (แบรนด์หรือร้าน: ขอแก้หรือขอลบ) บอกลิงก์โพสต์และเหตุผล ถ้ามีหลักฐานว่าข้อมูลผิด แนบมาด้วย</li>
+<li>โพสต์ที่ถูกแจ้งจาก 3 บัญชีขึ้นไปจะถูกซ่อนอัตโนมัติระหว่างที่ทีมงานตรวจ</li>
+<li>ทีมงานตรวจภายใน 7 วัน ถ้าไม่มีหลักฐานรองรับ หรือเกินกว่าหลักฐาน จะลบหรือแก้ ถ้ามีหลักฐานรองรับ จะเปิดกลับพร้อมบันทึกเหตุผล และแบรนด์ตอบใต้โพสต์ได้ด้วยบัญชีที่ยืนยันแล้ว</li>
+<li>เจ้าของโพสต์ได้รับแจ้งและชี้แจงได้ เราไม่เปิดเผยตัวตนผู้แจ้งโดยไม่มีเหตุตามกฎหมาย</li>
+</ol>
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv3rxgcz" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv3sjhwc" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -55,10 +62,17 @@ export const LEGAL = {
 </ul>
 <h2>Moderation</h2>
 <p>Maintainers may hide or remove posts that break these terms and suspend repeat offenders. Anyone can press "Report post". If you think we got it wrong, use the <a href="#contact">contact page</a>.</p>
+<h2>Notice and takedown</h2>
+<ol>
+<li>Anyone can notify us two ways: press "Report post" on the post, or file a request on the <a href="#contact">contact page</a> (brands and stores: correction or removal) with the post's link and the reason, plus any evidence the post is wrong.</li>
+<li>A post reported by 3 or more accounts is hidden automatically while we review it.</li>
+<li>We review within 7 days. Posts without supporting evidence, or that go beyond it, are removed or corrected. Posts the evidence supports come back with a note, and the brand can answer under it with a verified account.</li>
+<li>The author is told and can respond. We don't reveal who reported unless the law requires it.</li>
+</ol>
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv3rxgcz" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv3sjhwc" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `

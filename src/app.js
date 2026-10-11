@@ -1,19 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3rxgcz";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3rxgcz";
-import { renderChart } from "./chart.js?v=mv3rxgcz";
-import { makeT } from "./i18n.js?v=mv3rxgcz";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3rxgcz";
-import { LEGAL } from "./legal.js?v=mv3rxgcz";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3rxgcz";
-import * as community from "./community.js?v=mv3rxgcz";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3rxgcz";
-import { redactImage } from "./redact.js?v=mv3rxgcz";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3rxgcz";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3rxgcz";
-import { chainLinks } from "./chain.js?v=mv3rxgcz";
-import { fits } from "./dcfit.js?v=mv3rxgcz";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3rxgcz";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3rxgcz";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3sjhwc";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3sjhwc";
+import { renderChart } from "./chart.js?v=mv3sjhwc";
+import { makeT } from "./i18n.js?v=mv3sjhwc";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3sjhwc";
+import { LEGAL } from "./legal.js?v=mv3sjhwc";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3sjhwc";
+import * as community from "./community.js?v=mv3sjhwc";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3sjhwc";
+import { redactImage } from "./redact.js?v=mv3sjhwc";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3sjhwc";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3sjhwc";
+import { chainLinks } from "./chain.js?v=mv3sjhwc";
+import { fits } from "./dcfit.js?v=mv3sjhwc";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3sjhwc";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3sjhwc";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3sjhwc";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -149,7 +150,7 @@ function renderChrome(r) {
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="#tools">${esc(t("tl_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
     <br><label class="region-pick">${esc(t("rg_label"))} ${regionSelect()}</label>`;
 }
 
@@ -183,6 +184,22 @@ function brandMark(brand, size = 40) {
 }
 
 /** "DAC", "Headphone amp" or "DAC + amp" for desktop units; the category otherwise. */
+/** Small asks where this model's data is missing: back-panel photo, specs from the brand. */
+function missingAsks(i) {
+  const asks = [];
+  const isSource = SOURCE_CATS.has(i.category) || i.category === "speaker";
+  if (isSource && !Object.keys(i.ports?.in ?? {}).length && !Object.keys(i.ports?.out ?? {}).length)
+    asks.push(`<button type="button" class="pill" data-scroll="ports">📷 ${esc(t("ask_ports"))}</button>`);
+  const noPower = isSource && i.category !== "speaker" && !sourceOutputs(i).length;
+  const noHp = HEADPHONE_CATS.has(i.category) && !hpModel(i);
+  if (noPower || noHp) {
+    const what = noPower ? "output power (mW at 16/32/300 Ω), output impedance" : "sensitivity (dB/mW or dB/V, which one) and impedance";
+    const msg = `@${i.brand ?? ""} Could you publish the ${what} for the ${displayName(i)}? People are checking whether it suits their setup: ${location.origin}${location.pathname}#item/${i.id}`;
+    asks.push(`<a class="pill" href="https://x.com/intent/post?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">✉ ${esc(t("ask_spec"))}</a>`);
+  }
+  return asks.length ? `<section class="card pad asks"><p class="small">${esc(t("ask_lead"))}</p><div class="row-inline">${asks.join("")}</div></section>` : "";
+}
+
 /** DC power: which supplies suit this box, or which boxes this supply suits. */
 function powerLine(i) {
   const spec = i.dcIn ?? i.dcOut;
@@ -232,6 +249,7 @@ function render() {
   else if (r.name === "stats") main.innerHTML = statsPage();
   else if (r.name === "compare") main.innerHTML = comparePage();
   else if (r.name === "gallery") main.innerHTML = galleryPage();
+  else if (r.name === "tools") main.innerHTML = toolsPage();
   else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${L(LEGAL[r.name])}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
@@ -923,6 +941,7 @@ function itemPage(id) {
       <section class="card pad"><h3>${esc(t("it_specs"))}</h3>${specRows || powerRows ? specRows + powerRows : `<p class="muted">${esc(t("it_no_specs"))}</p>`}${notes ? `<ul class="notes">${notes}</ul>` : ""}</section>
       <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
     </div>
+    ${missingAsks(i)}
     ${isSrc ? `<section class="card pad ports" id="ports"></section>` : ""}
     ${i.category !== "power" ? `<section class="card pad owners" id="owners"></section>` : ""}
     <section class="card pad paid" id="paid"></section>
@@ -991,6 +1010,13 @@ function wire(main, r) {
     if (i) renderCommunity(main.querySelector("#community"), i);
     if (i) renderPaid(main.querySelector("#paid"), i);
     if (i) renderPorts(main.querySelector("#ports"), i);
+    // "Photo the back panel": jump to the ports card and open its form.
+    main.querySelector("[data-scroll=ports]")?.addEventListener("click", () => {
+      const el = main.querySelector("#ports");
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const d = el?.querySelector(".port-add");
+      if (d) d.open = true;
+    });
     if (i) renderOwners(main.querySelector("#owners"), i);
     if (i) renderItemThreads(main.querySelector("#item-threads"), i);
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
@@ -1534,6 +1560,23 @@ function channelsCard(i) {
 }
 
 // ---------------------------------------------------------------------------
+// Contributor tools (#tools): the "Send to Sotto" bookmarklet and the Gemini skill.
+
+function toolsPage() {
+  return `<div class="discuss narrow"><header class="deal-head"><h1>${esc(t("tl_title"))}</h1><p class="muted">${esc(t("tl_lead"))}</p></header>
+    <section class="card pad"><h3>${esc(t("tl_bm_h"))}</h3>
+      <p>${esc(t("tl_bm_what"))}</p>
+      <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
+      <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
+      <p class="muted small">${esc(t("tl_bm_rules"))}</p>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3sjhwc" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+    <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
+      <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
+      <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
+  </div>`;
+}
+
+// ---------------------------------------------------------------------------
 // Summariser box: paste text from a forum post or product page, get a draft
 // for the form. The person checks and edits it; nothing posts by itself.
 
@@ -1552,7 +1595,9 @@ function wireBot(root, item, apply) {
   const st = box.querySelector("[data-bot-status]");
   box.querySelector("[data-bot-run]").addEventListener("click", async () => {
     const text = box.querySelector('[name="bot_text"]').value.trim();
-    const link = box.querySelector('[name="bot_link"]').value.trim();
+    const linkEl = box.querySelector('[name="bot_link"]');
+    if (!linkEl.value.trim()) linkEl.value = text.match(/^SOURCE: (https:\/\/\S+)/m)?.[1] ?? "";
+    const link = linkEl.value.trim();
     // A block from the Gemini skill (docs/gemini-skill.md) fills the form directly.
     const blocks = parseBlocks(text);
     if (blocks.length) {
@@ -1928,7 +1973,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3rxgcz" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3sjhwc" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

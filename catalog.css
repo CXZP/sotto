@@ -467,3 +467,7 @@ select option { background: var(--surface); color: var(--text); }
 .bot-box > summary { cursor: pointer; font-size: 14px; color: var(--accent); }
 .bot-box[open] { border-style: solid; }
 .bot-quotes ul { margin: 4px 0 0; padding-left: 18px; color: var(--text-2); }
+
+.asks { padding: 10px 16px; }
+.asks p { margin: 0 0 6px; }
+.bookmarklet { cursor: grab; }

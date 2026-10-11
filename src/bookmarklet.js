@@ -1,0 +1,54 @@
+// "Send to Sotto" bookmarklet. Runs only when the reader clicks it, on the
+// page they are already reading (so logins and bot checks were passed by a
+// person, not by us). It copies the visible posts, with author, date and
+// permalink, as plain text; the reader pastes that into Sotto's form, where
+// the summariser keeps only facts quoted from it. Nothing is sent anywhere
+// by the bookmarklet itself.
+//
+// Must stay self-contained: it is serialised with Function#toString.
+
+export function sendToSotto() {
+  const MAX = 38000;
+  const clean = (s) => (s || "").replace(/ /g, " ").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  const out = [`SOURCE: ${location.href}`, `TITLE: ${document.title}`, ""];
+  const add = (author, date, link, text) => {
+    text = clean(text);
+    if (text.length < 20) return;
+    out.push(`--- ${author || "?"} · ${date || "?"}${link ? ` · ${link}` : ""}`, text, "");
+  };
+  const sel = String(window.getSelection ? window.getSelection() : "").trim();
+  if (sel.length > 40) add("selection", "", location.href, sel);
+  else {
+    // XenForo forums (Head-Fi threads, ASR) and XenForo showcase reviews.
+    document.querySelectorAll("article.message, .message--post, .message--review").forEach((m) => {
+      const body = m.querySelector(".bbWrapper, .message-body, .message-content");
+      const time = m.querySelector("time");
+      const perm = m.querySelector('a[href*="/post-"], a[href*="/review/"], .message-attribution-main a');
+      add(m.getAttribute("data-author") || m.querySelector(".username")?.textContent, time?.getAttribute("datetime") || time?.textContent, perm?.href, body?.innerText);
+    });
+    // Reddit (new design).
+    document.querySelectorAll("shreddit-post, shreddit-comment").forEach((m) => {
+      const body = m.querySelector('[slot="text-body"], [slot="comment"]');
+      add(m.getAttribute("author"), m.getAttribute("created-timestamp"), m.getAttribute("permalink") ? `https://www.reddit.com${m.getAttribute("permalink")}` : "", body?.innerText);
+    });
+    // Anything else: the main article text.
+    if (out.length <= 3) add(document.querySelector('meta[name="author"]')?.content, "", location.href, (document.querySelector("main, article, [role=main]") || document.body).innerText);
+  }
+  let text = out.join("\n");
+  if (text.length > MAX) text = text.slice(0, MAX) + "\n…";
+  const done = () => alert(`Copied ${out.filter((l) => l.startsWith("--- ")).length} post(s) for Sotto.\nOpen the model on Sotto → From users → ✨ → paste.\nคัดลอกแล้ว ไปที่หน้ารุ่นใน Sotto → จากผู้ใช้ → ✨ → วาง`);
+  const fallback = () => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    done();
+  };
+  if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+  else fallback();
+}
+
+/** javascript: URL for the bookmark. */
+export const BOOKMARKLET = `javascript:${encodeURIComponent(`(${sendToSotto.toString()})()`)}`;

@@ -47,7 +47,7 @@ const SCHEMAS: Record<string, string> = {
   issue: `{"title": string (max 140 chars, a neutral one-line summary of the problem), "body": string (max 600 chars, what owners report, in plain words, no exaggeration, say how many people if the text says), "quotes": string[] (1-4 short verbatim sentences from the text that support it)}`,
   ports: `{"in": [{"port": one of ${JSON.stringify(PORTS)}, "quote": verbatim text}], "out": [same], "features": [{"feature": one of ${JSON.stringify(FEATURES)}, "quote": verbatim text}]}`,
   review: `{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": string (max 140 chars, one neutral line in the requested language), "pros": [{"point": short, requested language, "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}. If the text holds several reviews, use only the first complete one; never merge reviewers.`,
-  model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}`,
+  model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}. Facts are specifications only (impedance, sensitivity with its unit, output power with load, output impedance, drivers, connectors, ports, power supply), not marketing claims.`,
 };
 
 const SYSTEM = `You turn text that a user pasted from an audio forum or product page into a draft for a community database.

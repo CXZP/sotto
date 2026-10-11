@@ -17,6 +17,13 @@ select * from (values
     'Owners on Head-Fi report crackling and distortion. One traced it to a USB port and fixed it by switching ports; another unit was repaired by the factory with a firmware/MCU reflash.',
     'https://www.head-fi.org/threads/topping-dx5-ii-distortion-issue.978524/page-2',
     'unknown', null::uuid
+  ),
+  (
+    'apple--c-to-adapter', 'issue',
+    'EU version (A2155) measured at about 0.5 V maximum',
+    'Reference Audio Analyzer measured the EU-market adapter (model A2155) at about 0.5 Vrms maximum, in both line-out and headphone tests. Several sites say the US model (A2049) reaches about 1 Vrms, but we found no measurement of a US unit. Check the model number printed on the cable; with hard-to-drive headphones the EU version may run out of volume sooner.',
+    'https://reference-audio-analyzer.pro/en/report/amp/apple-usb-c.php',
+    'unknown', null::uuid
   )
 ) as v(item_id, kind, title, body, evidence_url, purchase, author)
 where not exists (select 1 from public.reports r where r.item_id = v.item_id and r.title = v.title);

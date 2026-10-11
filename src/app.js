@@ -1,18 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3r171k";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3r171k";
-import { renderChart } from "./chart.js?v=mv3r171k";
-import { makeT } from "./i18n.js?v=mv3r171k";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3r171k";
-import { LEGAL } from "./legal.js?v=mv3r171k";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3r171k";
-import * as community from "./community.js?v=mv3r171k";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3r171k";
-import { redactImage } from "./redact.js?v=mv3r171k";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3r171k";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3r171k";
-import { chainLinks } from "./chain.js?v=mv3r171k";
-import { fits } from "./dcfit.js?v=mv3r171k";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3r171k";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3r4yaw";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3r4yaw";
+import { renderChart } from "./chart.js?v=mv3r4yaw";
+import { makeT } from "./i18n.js?v=mv3r4yaw";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3r4yaw";
+import { LEGAL } from "./legal.js?v=mv3r4yaw";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3r4yaw";
+import * as community from "./community.js?v=mv3r4yaw";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3r4yaw";
+import { redactImage } from "./redact.js?v=mv3r4yaw";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3r4yaw";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3r4yaw";
+import { chainLinks } from "./chain.js?v=mv3r4yaw";
+import { fits } from "./dcfit.js?v=mv3r4yaw";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3r4yaw";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1153,6 +1153,7 @@ async function renderCommunity(el, item) {
         ${["issue", "owner", "correction"].map((k, n) => `<button type="button" data-kind="${k}" aria-pressed="${n === 0}">${esc(t(`cm_kind_${k}`))}</button>`).join("")}
       </div>
       <input type="hidden" name="kind" value="issue">
+      ${botBox("issue")}
       <input class="search" name="title" required minlength="5" maxlength="140" placeholder="${esc(t("cm_ph_title"))}">
       <textarea class="search" name="body" maxlength="2000" rows="3" placeholder="${esc(t("cm_ph_body"))}"></textarea>
       <input class="search" name="evidence_url" type="url" pattern="https://.+" placeholder="${esc(t("cm_ph_evidence"))}" required>
@@ -1171,6 +1172,13 @@ async function renderCommunity(el, item) {
   const status = el.querySelector(".status");
   const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
   const again = () => renderCommunity(el, item);
+  const postForm = el.querySelector('[data-form="post"]');
+  if (postForm)
+    wireBot(postForm, item, (d, link) => {
+      if (d.title) postForm.title.value = d.title;
+      if (d.body) postForm.body.value = d.body;
+      if (link) postForm.evidence_url.value = link;
+    });
   el.querySelectorAll("[data-respond]").forEach((b) =>
     b.addEventListener("click", () => {
       const slot = b.closest("article").querySelector(".respond-slot");
@@ -1514,6 +1522,43 @@ function channelsCard(i) {
 }
 
 // ---------------------------------------------------------------------------
+// Summariser box: paste text from a forum post or product page, get a draft
+// for the form. The person checks and edits it; nothing posts by itself.
+
+function botBox(mode) {
+  return `<details class="bot-box" data-bot="${mode}"><summary>${esc(t("bot_open"))}</summary>
+    <p class="small muted">${esc(t("bot_help"))}</p>
+    <input class="search" name="bot_link" type="url" placeholder="${esc(t("bot_link_ph"))}">
+    <textarea class="search" name="bot_text" rows="5" maxlength="12000" placeholder="${esc(t("bot_text_ph"))}"></textarea>
+    <div class="row-inline"><button type="button" class="pill" data-bot-run>${esc(t("bot_run"))}</button><span class="small status" data-bot-status></span></div>
+    <div class="bot-quotes small" hidden></div></details>`;
+}
+
+function wireBot(root, item, apply) {
+  const box = root.querySelector("[data-bot]");
+  if (!box) return;
+  const st = box.querySelector("[data-bot-status]");
+  box.querySelector("[data-bot-run]").addEventListener("click", async () => {
+    const text = box.querySelector('[name="bot_text"]').value.trim();
+    const link = box.querySelector('[name="bot_link"]').value.trim();
+    if (text.length < 40) return (st.textContent = t("bot_err_too_short"));
+    st.textContent = t("bot_working");
+    try {
+      const { draft } = await community.summarize({ mode: box.dataset.bot, text, link, lang: state.lang, item: item ? displayName(item) : undefined });
+      const quotes = draft.quotes ?? [...(draft.in ?? []), ...(draft.out ?? []), ...(draft.features ?? []), ...(draft.facts ?? [])].map((x) => x.quote);
+      const qEl = box.querySelector(".bot-quotes");
+      qEl.hidden = !quotes.length;
+      qEl.innerHTML = `<b>${esc(t("bot_quotes"))}</b><ul>${quotes.map((q) => `<li>“${esc(q)}”</li>`).join("")}</ul>`;
+      apply(draft, link);
+      st.textContent = t("bot_done");
+    } catch (e) {
+      const code = e.message;
+      st.textContent = t(`bot_err_${code}`) === `bot_err_${code}` ? `${t("bot_err_unavailable")} (${code})` : t(`bot_err_${code}`);
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Ports (item page): what plugs in and out, from store lines and from users
 // who checked the back panel with a photo. Not listed ≠ not there.
 
@@ -1560,8 +1605,10 @@ async function renderPorts(el, item) {
       : `<details class="port-add"><summary class="pill">${esc(t("po_add"))}</summary>
         <form data-form="ports" class="port-form">
           <p class="small muted">${esc(t("po_add_help"))} <a href="${esc(rearSearch(item))}" target="_blank" rel="noopener">${esc(t("sq_rear"))} ↗</a></p>
+          ${botBox("ports")}
           ${box("po_in", PORT_KEYS, "in")}${box("po_out", PORT_KEYS.filter((k) => k !== "bt"), "out")}${box("po_switches", FEATURE_KEYS, "f")}
           <div class="row-inline"><label class="pill"><input type="file" name="shot" accept="image/*" hidden>${esc(t("po_pick"))}</label><span class="muted small" data-shot-state></span></div>
+          <input class="search" name="ev_link" type="url" pattern="https://.+" placeholder="${esc(t("po_or_link"))}">
           <input class="search" name="note" maxlength="300" placeholder="${esc(t("po_note_ph"))}">
           <button class="pill primary">${esc(t("ds_send"))}</button><p class="small status" role="status"></p>
         </form></details>`;
@@ -1572,6 +1619,14 @@ async function renderPorts(el, item) {
   if (!f) return;
   const status = f.querySelector(".status");
   let shot = null;
+  let botLink = "";
+  wireBot(f, item, (d, link) => {
+    const tick = (name, list, field) => list?.forEach((x) => { const cb = f.querySelector(`input[name="${name}"][value="${x[field]}"]`); if (cb) cb.checked = true; });
+    tick("in", d.in, "port");
+    tick("out", d.out, "port");
+    tick("f", d.features, "feature");
+    botLink = link;
+  });
   f.shot.addEventListener("change", async () => {
     const file = f.shot.files[0];
     f.shot.value = "";
@@ -1584,10 +1639,11 @@ async function renderPorts(el, item) {
     const vals = (n) => [...f.querySelectorAll(`input[name="${n}"]:checked`)].map((x) => x.value);
     const row = { item_id: item.id, ports_in: vals("in"), ports_out: vals("out"), features: vals("f"), note: f.note.value.trim() };
     if (!row.ports_in.length && !row.ports_out.length && !row.features.length) return (status.textContent = t("po_need_one"));
-    if (!shot) return (status.textContent = t("po_need_photo"));
+    const linkEvidence = (botLink || f.ev_link?.value || "").trim();
+    if (!shot && !/^https:\/\/\S+$/.test(linkEvidence)) return (status.textContent = t("po_need_photo"));
     try {
       status.textContent = t("cm_loading");
-      row.evidence_url = await community.uploadEvidence(shot);
+      row.evidence_url = shot ? await community.uploadEvidence(shot) : linkEvidence;
       await community.addPorts(row);
       renderPorts(el, item);
     } catch (e) {
@@ -1848,7 +1904,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3r171k" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3r4yaw" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3r171k";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3r4yaw";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -150,6 +150,21 @@ export async function portsFor(itemIds) {
   const out = {};
   for (const r of data) (out[r.item_id] ??= []).push({ ...r, in: r.ports_in, out: r.ports_out });
   return out;
+}
+
+/** Ask the summariser (Edge Function) for a draft from pasted text. Throws Error(code). */
+export async function summarize(payload) {
+  const sb = await client();
+  if (!sb) throw new Error("offline");
+  const { data, error } = await sb.functions.invoke("summarize", { body: payload });
+  if (error) {
+    let code = "unavailable";
+    try {
+      code = (await error.context?.json())?.error ?? code;
+    } catch {}
+    throw new Error(code);
+  }
+  return data;
 }
 
 /** Owner reports for one model, and my own if signed in. */

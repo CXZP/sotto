@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv3r171k";
+import { REPO } from "./content.js?v=mv3r4yaw";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -33,7 +33,7 @@ export const LEGAL = {
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv3r171k" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv3r4yaw" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -58,7 +58,7 @@ export const LEGAL = {
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv3r171k" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv3r4yaw" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `
@@ -74,6 +74,7 @@ export const LEGAL = {
 <tr><td>ชื่อที่แสดง</td><td>แสดงกับโพสต์</td><td>ทุกคน</td></tr>
 <tr><td>โพสต์ ความเห็น รูป รายงานราคา</td><td>แสดงบนเว็บ</td><td>ทุกคน</td></tr>
 <tr><td>โหวต "เจอเหมือนกัน" bookmark</td><td>นับคะแนน / ใช้งานของคุณ</td><td>bookmark เห็นคนเดียว ส่วนโหวตนับรวม</td></tr></table>
+<p>บอทสรุป: เมื่อคุณกด "ร่างให้" ข้อความที่คุณวางจะถูกส่งไปที่ Anthropic (Claude API) เพื่อร่างข้อความ เราไม่เก็บข้อความนั้น เก็บแค่จำนวนครั้งที่ใช้ต่อวัน (ลบเองภายใน 2 วัน) อย่าวางข้อมูลส่วนตัวลงไป</p>
 <p>ฐานทางกฎหมาย: ความยินยอมและการให้บริการตามที่คุณขอ เราไม่ขาย ไม่ให้เช่า และไม่ใช้ข้อมูลเพื่อโฆษณา ข้อมูลเก็บในบริการของ Supabase (อาจอยู่นอกประเทศไทย)</p>
 <h2>รูปที่อัปโหลด</h2>
 <p>เว็บย่อรูปและบันทึกใหม่ก่อนอัปโหลด ข้อมูลในไฟล์ เช่น พิกัด GPS จะถูกลบ และมีเครื่องมือให้ปิดดำชื่อ ที่อยู่ เบอร์โทร รูปที่อัปโหลดแล้วทุกคนเห็นได้</p>
@@ -94,6 +95,7 @@ export const LEGAL = {
 <tr><td>Display name</td><td>Shown with your posts</td><td>Everyone</td></tr>
 <tr><td>Posts, comments, photos, price reports</td><td>Shown on the site</td><td>Everyone</td></tr>
 <tr><td>Votes, "me too", bookmarks</td><td>Scores / your own use</td><td>Bookmarks are private; votes are counted</td></tr></table>
+<p>Summariser: when you press "Draft it", the text you pasted is sent to Anthropic (Claude API) to write the draft. We don't keep that text, only a count of uses per day (deleted within 2 days). Don't paste personal data into it.</p>
 <p>Legal basis: consent and providing the service you ask for. We don't sell, rent or use data for advertising. Data is stored with Supabase (possibly outside Thailand).</p>
 <h2>Uploaded photos</h2>
 <p>The page resizes and re-encodes photos before upload, which removes file metadata such as GPS, and offers a tool to black out names, addresses and phone numbers. Uploaded photos are public.</p>

@@ -461,3 +461,9 @@ select option { background: var(--surface); color: var(--text); }
 .ow-form .num.mini { width: 80px; display: inline-block; }
 .ow-add > summary { list-style: none; display: inline-block; margin: 8px 0; }
 .ow-add > summary::-webkit-details-marker { display: none; }
+
+/* Summariser box */
+.bot-box { border: 1px dashed var(--surface-2); border-radius: 12px; padding: 8px 12px; margin: 8px 0; display: grid; gap: 8px; }
+.bot-box > summary { cursor: pointer; font-size: 14px; color: var(--accent); }
+.bot-box[open] { border-style: solid; }
+.bot-quotes ul { margin: 4px 0 0; padding-left: 18px; color: var(--text-2); }

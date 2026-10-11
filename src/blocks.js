@@ -59,10 +59,19 @@ function clean(o) {
   };
 }
 
-const line = (p) => `- ${p.point} — “${p.quote}”`;
+/** Labels inside a review post, per site language. */
+export const REVIEW_LABELS = {
+  th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ" },
+  en: { pros: "Pros", cons: "Cons", by: "Review by", unknown: "unknown" },
+  ja: { pros: "良い点", cons: "気になる点", by: "レビュー:", unknown: "不明" },
+  zh: { pros: "优点", cons: "缺点", by: "评测者", unknown: "未知" },
+};
 
-/** The review-summary post for one block: {title, body} (body ≤ 2000 chars). */
-export function reviewPost(b, labels = { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย" }) {
+/** The review-summary post for one block: {title, body} (body ≤ 2000 chars).
+ * With `lang`, points and summary use their translation in that language when the block has one. */
+export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
+  const line = (p) => `- ${(lang && p.point_i18n?.[lang]) || p.point} — “${p.quote}”`;
+  const summary = (lang && b.summary_i18n?.[lang]) || b.summary;
   // Credit the person who wrote the review, always, with where it was published.
   let host = "";
   try {
@@ -75,8 +84,15 @@ export function reviewPost(b, labels = { pros: "ข้อดี", cons: "ข้�
   if (b.cons.length) parts.push(`${labels.cons}\n${b.cons.map(line).join("\n")}`);
   let body = parts.filter(Boolean).join("\n\n");
   if (body.length > 2000) body = body.slice(0, 1990).replace(/\n[^\n]*$/, "") + "\n…";
-  const title = (b.summary || `${labels.by} ${b.reviewer || "?"}`).slice(0, 140).padEnd(5, ".");
+  const title = (summary || `${labels.by} ${b.reviewer || "?"}`).slice(0, 140).padEnd(5, ".");
   return { title, body };
+}
+
+/** The post in every language the block was translated into: {th: {title, body}, ...}, or null if none. */
+export function reviewPostI18n(b) {
+  const langs = Object.keys(REVIEW_LABELS).filter((l) => b.summary_i18n?.[l]);
+  if (!langs.length) return null;
+  return Object.fromEntries(langs.map((l) => [l, reviewPost(b, REVIEW_LABELS[l], l)]));
 }
 
 /** One issue post per problem the review describes. */

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseBlocks, reviewPost, problemPosts } from "../src/blocks.js";
+import { parseBlocks, reviewPost, reviewPostI18n, problemPosts } from "../src/blocks.js";
 
 const sample = `Here you go:
 \`\`\`json
@@ -26,4 +26,18 @@ test("review post keeps the rating and the quotes", () => {
   assert.match(body, /2\.5\/5/);
   assert.match(body, /“Midrange often comes across thin and underfed”/);
   assert.equal(problemPosts(parseBlocks(sample)[0]).length, 0);
+});
+
+test("review post in every translated language, quotes kept as written", () => {
+  const b = {
+    ...parseBlocks(sample)[0],
+    summary_i18n: { th: "เบสฟุ้ง", en: "Boomy bass", ja: "低音がこもる", zh: "低音浑浊" },
+    pros: [{ point: "บิลด์แน่น", point_i18n: { en: "Solid build", ja: "作りが良い", zh: "做工扎实" }, quote: "Overall build feels solid and well put together" }],
+  };
+  const all = reviewPostI18n(b);
+  assert.deepEqual(Object.keys(all), ["th", "en", "ja", "zh"]);
+  assert.match(all.zh.title, /^低音浑浊/);
+  assert.match(all.zh.body, /优点\n- 做工扎实 — “Overall build feels solid/);
+  assert.match(all.th.body, /- บิลด์แน่น —/);
+  assert.equal(reviewPostI18n(parseBlocks(sample)[0]), null);
 });

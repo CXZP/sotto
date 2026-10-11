@@ -101,7 +101,9 @@ export async function myConfirms(reportIds) {
 
 export async function addReport(row) {
   const sb = await client();
-  const { error } = await sb.from("reports").insert(row);
+  let { error } = await sb.from("reports").insert(row);
+  // Database without supabase/i18n.sql yet: post in the writer's language only.
+  if (error && row.i18n && /i18n/.test(error.message ?? "")) ({ error } = await sb.from("reports").insert({ ...row, i18n: undefined }));
   if (error) throw error;
 }
 

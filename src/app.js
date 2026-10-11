@@ -13,7 +13,7 @@ import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3ueu6t";
 import { chainLinks } from "./chain.js?v=mv3ueu6t";
 import { fits } from "./dcfit.js?v=mv3ueu6t";
 import { BOOKMARKLET } from "./bookmarklet.js?v=mv3ueu6t";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3ueu6t";
+import { parseBlocks, reviewPost, reviewPostI18n } from "./blocks.js?v=mv3ueu6t";
 import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3ueu6t";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
@@ -1146,12 +1146,14 @@ async function renderCommunity(el, item) {
   const order = { issue: 0, review: 1, owner: 2, correction: 3 };
   rows.sort((a, b) => order[a.kind] - order[b.kind] || b.confirms - a.confirms);
 
+  // A post written in several languages shows the viewer's one.
+  const shown = (r) => r.i18n?.[state.lang] ?? r;
   const post = (r) => `<article class="post k-${r.kind}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${r.purchase === "free_sample" ? `<span class="tag">${esc(t("cm_free_sample"))}</span>` : r.purchase === "bought" ? `<span class="tag">${esc(t("cm_bought"))}</span>` : ""}
       <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
-    <p class="post-title">${esc(r.title)}</p>
-    ${r.body ? `<p class="post-body">${esc(r.body)}</p>` : ""}
+    <p class="post-title">${esc(shown(r).title)}</p>
+    ${shown(r).body ? `<p class="post-body">${esc(shown(r).body)}</p>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
     <div class="post-actions">
       <button class="pill small${mine.has(r.id) ? " on" : ""}" data-confirm="${r.id}" ${s ? "" : "disabled"} aria-pressed="${mine.has(r.id)}">${esc(t("cm_metoo"))} · ${r.confirms}</button>
@@ -1200,6 +1202,7 @@ async function renderCommunity(el, item) {
   const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
   const again = () => renderCommunity(el, item);
   const postForm = el.querySelector('[data-form="post"]');
+  let postI18n = null;
   const setKind = (k) => el.querySelector(`[data-kind-seg] [data-kind="${k}"]`)?.click();
   if (postForm)
     wireBot(postForm, item, (d, link) => {
@@ -1210,6 +1213,9 @@ async function renderCommunity(el, item) {
         const post = asReview ? reviewPost(b, { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by"), unknown: t("rv_unknown") }) : { title: b.problems[0]?.point ?? b.summary, body: b.problems.map((p) => `- ${p.point} — “${p.quote}”`).join("\n") };
         postForm.title.value = post.title;
         postForm.body.value = post.body;
+        // Other languages go with the post only while the text is left as drafted.
+        postI18n = asReview ? reviewPostI18n(b) : null;
+        if (postI18n) postI18n[state.lang] = post;
         postForm.evidence_url.value = b.source || link;
         return;
       }
@@ -1306,15 +1312,21 @@ async function renderCommunity(el, item) {
         return;
       }
       if (f.dataset.form === "profile") await community.saveProfile(f.name.value.trim());
-      if (f.dataset.form === "post")
+      if (f.dataset.form === "post") {
+        const title = f.title.value.trim();
+        const body = f.body.value.trim();
+        const drafted = postI18n?.[state.lang];
+        const unedited = drafted && f.kind.value === "review" && drafted.title.trim() === title && drafted.body.trim() === body;
         await community.addReport({
           item_id: item.id,
           kind: f.kind.value,
-          title: f.title.value.trim(),
-          body: f.body.value.trim(),
+          title,
+          body,
           evidence_url: f.evidence_url.value.trim() || null,
           purchase: f.purchase.value,
+          ...(unedited ? { i18n: postI18n } : {}),
         });
+      }
       again();
     } catch (e) {
       fail(e);
@@ -1599,7 +1611,12 @@ function showManyReviews(box, item, blocks, link) {
     box.append(list);
   }
   const labels = { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by"), unknown: t("rv_unknown") };
-  const posts = blocks.map((b) => ({ ...reviewPost(b, labels), problems: b.problems }));
+  const posts = blocks.map((b) => {
+    const post = reviewPost(b, labels);
+    const i18n = reviewPostI18n(b);
+    if (i18n) i18n[state.lang] = post;
+    return { ...post, i18n, problems: b.problems };
+  });
   list.innerHTML = `${posts
     .map(
       (p, n) => `<label class="bot-draft"><input type="checkbox" data-n="${n}" checked>
@@ -1616,7 +1633,7 @@ function showManyReviews(box, item, blocks, link) {
     let done = 0;
     try {
       for (const p of chosen) {
-        await community.addReport({ item_id: item.id, kind: "review", title: p.title, body: p.body, evidence_url: link || null, purchase: "unknown" });
+        await community.addReport({ item_id: item.id, kind: "review", title: p.title, body: p.body, evidence_url: link || null, purchase: "unknown", ...(p.i18n ? { i18n: p.i18n } : {}) });
         done++;
         st.textContent = t("bot_posted_n", { n: done, of: chosen.length });
       }
@@ -1670,7 +1687,7 @@ function wireBot(root, item, apply) {
         return;
       }
       if (mode === "review") {
-        const blocks = (draft.reviews ?? []).map((r) => ({ product: item ? displayName(item) : "", source: link, reviewer: r.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : "", rating: r.rating, summary: r.summary, pros: r.pros, cons: r.cons, problems: r.problems, ports_in: [], ports_out: [], features: [] }));
+        const blocks = (draft.reviews ?? []).map((r) => ({ product: item ? displayName(item) : "", source: link, reviewer: r.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : "", rating: r.rating, summary: r.summary, summary_i18n: r.summary_i18n, pros: r.pros, cons: r.cons, problems: r.problems, ports_in: [], ports_out: [], features: [] }));
         if (blocks.length === 1) {
           const quotes = [...blocks[0].pros, ...blocks[0].cons, ...blocks[0].problems].map((p) => p.quote);
           const qEl = box.querySelector(".bot-quotes");

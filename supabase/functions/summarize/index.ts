@@ -43,10 +43,14 @@ async function upstreamError(who: string, res: Response) {
 const PORTS = ["usb", "coax", "optical", "aes", "bt", "rca", "xlr", "line"];
 const FEATURES = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
 
+const LANGS = ["th", "en", "ja", "zh"];
+const I18N = `{"th": Thai, "en": English, "ja": Japanese, "zh": Simplified Chinese}`;
+
 const SCHEMAS: Record<string, string> = {
   issue: `{"title": string (max 140 chars, a neutral one-line summary of the problem), "body": string (max 600 chars, what owners report, in plain words, no exaggeration, say how many people if the text says), "quotes": string[] (1-4 short verbatim sentences from the text that support it)}`,
   ports: `{"in": [{"port": one of ${JSON.stringify(PORTS)}, "quote": verbatim text}], "out": [same], "features": [{"feature": one of ${JSON.stringify(FEATURES)}, "quote": verbatim text}]}`,
-  review: `{"reviews": [{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": string (max 140 chars, one neutral line in the requested language), "pros": [{"point": short, requested language, "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}]}. One entry per reviewer, in page order, at most 20. Never merge reviewers. Skip the maker's own description and spec lists.`,
+  // Review posts are read in every site language, so summary and points come in all of them.
+  review: `{"reviews": [{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": ${I18N} (each max 140 chars, one neutral line), "pros": [{"point": ${I18N} (short), "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}]}. One entry per reviewer, in page order, at most 20. Never merge reviewers. Skip the maker's own description and spec lists. Quotes stay in the original language; only summary and point are translated.`,
   model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}. Facts are specifications only (impedance, sensitivity with its unit, output power with load, output impedance, drivers, connectors, ports, power supply), not marketing claims.`,
 };
 
@@ -54,7 +58,8 @@ const SYSTEM = `You turn text that a user pasted from an audio forum or product 
 Only use facts stated in the pasted text. Never add knowledge of your own, never guess specs, never judge sound quality.
 Every quote must be copied exactly from the pasted text (same words, same order).
 If the text doesn't support a field, leave it out or use an empty list.
-Write title and body in the requested language. Reply with JSON only, no prose.`;
+Write title and body in the requested language. Where a field asks for {"th", "en", "ja", "zh"}, write the same meaning in each of those four languages.
+Reply with JSON only, no prose.`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
@@ -108,8 +113,9 @@ ${text}
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        // Newer models spend output tokens on thinking first; leave room for the JSON.
-        generationConfig: { responseMimeType: "application/json", maxOutputTokens: 8192, temperature: 0.2 },
+        // Newer models spend output tokens on thinking first; leave room for the JSON
+        // (reviews come in four languages, so it can be long).
+        generationConfig: { responseMimeType: "application/json", maxOutputTokens: 32768, temperature: 0.2 },
       }),
     });
     if (!res.ok) return upstreamError("gemini", res);
@@ -121,7 +127,7 @@ ${text}
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "x-api-key": claudeKey!, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 4096, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
+      body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 16000, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
     });
     if (!res.ok) return upstreamError("claude", res);
     const out = await res.json();
@@ -149,12 +155,30 @@ ${text}
   const hay = norm(text);
   const inText = (q: unknown) => typeof q === "string" && q.length >= 3 && hay.includes(norm(q));
   if (mode === "review") {
+    // {th, en, ja, zh} → only those keys, as short strings. A plain string (older
+    // prompt, or a model that ignored the shape) counts as the requested language.
+    const multi = (v: unknown, max: number) => {
+      const o: Record<string, string> = {};
+      if (typeof v === "string") o[body.lang && LANGS.includes(body.lang) ? body.lang : "en"] = v;
+      else if (v && typeof v === "object") for (const l of LANGS) if (typeof (v as Record<string, unknown>)[l] === "string") o[l] = (v as Record<string, string>)[l];
+      for (const l of Object.keys(o)) o[l] = o[l].trim().slice(0, max);
+      return o;
+    };
+    // The requested language first, then English, then whatever there is.
+    const one = (o: Record<string, string>) => o[body.lang ?? ""] || o.en || Object.values(o).find(Boolean) || "";
     const pts = (list: unknown) =>
-      (Array.isArray(list) ? list : []).filter((p) => p && typeof p.point === "string" && inText(p.quote)).map((p) => ({ point: String(p.point).slice(0, 200), quote: String(p.quote).slice(0, 400) }));
+      (Array.isArray(list) ? list : [])
+        .filter((p) => p && inText(p.quote))
+        .map((p) => ({ i18n: multi(p.point, 200), quote: String(p.quote).slice(0, 400) }))
+        .filter((p) => one(p.i18n))
+        .map((p) => ({ point: one(p.i18n), point_i18n: p.i18n, quote: p.quote }));
     const list = Array.isArray(draft.reviews) ? draft.reviews : [draft];
     const reviews = list
       .slice(0, 20)
-      .map((r: Record<string, unknown>) => ({ reviewer: String(r?.reviewer ?? "").slice(0, 80), date: String(r?.date ?? ""), rating: String(r?.rating ?? "").slice(0, 20), summary: String(r?.summary ?? "").slice(0, 140), pros: pts(r?.pros), cons: pts(r?.cons), problems: pts(r?.problems) }))
+      .map((r: Record<string, unknown>) => {
+        const summary = multi(r?.summary, 140);
+        return { reviewer: String(r?.reviewer ?? "").slice(0, 80), date: String(r?.date ?? ""), rating: String(r?.rating ?? "").slice(0, 20), summary: one(summary), summary_i18n: summary, pros: pts(r?.pros), cons: pts(r?.cons), problems: pts(r?.problems) };
+      })
       .filter((r) => r.pros.length || r.cons.length || r.problems.length);
     if (!reviews.length) return json({ error: "no_support" }, 422);
     draft = { reviews };

@@ -40,8 +40,13 @@ for (const title of ACCESSORIES)
     assert.deepEqual(byTitle(new RegExp(`^${esc(title)}$`)).map((i) => `${i.id} (${i.category})`), []);
   });
 
-test("not part of a listening chain: FiiO RR13 radio", { todo }, () => {
-  assert.deepEqual(byTitle(/FiiO RR13/).map((i) => `${i.id} (${i.category})`), []);
+// A radio is a source (tuner + headphone/line out), like a portable player.
+test("FiiO RR13 radio is a source from FiiO, not a headphone or dongle", { todo }, () => {
+  const found = byTitle(/FiiO RR13/);
+  assert.ok(found.length, "listing missing");
+  assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
+  assert.equal(found[0].brand, "FiiO");
+  assert.equal(found[0].category, "dap");
 });
 
 // ---------------------------------------------------------------- 2. store names are not brands

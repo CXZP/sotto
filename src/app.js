@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv42fkyn";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv42fkyn";
-import { renderChart } from "./chart.js?v=mv42fkyn";
-import { makeT } from "./i18n.js?v=mv42fkyn";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv42fkyn";
-import { LEGAL } from "./legal.js?v=mv42fkyn";
-import { track, stats, trackingOff } from "./analytics.js?v=mv42fkyn";
-import * as community from "./community.js?v=mv42fkyn";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv42fkyn";
-import { redactImage } from "./redact.js?v=mv42fkyn";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv42fkyn";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv42fkyn";
-import { chainLinks } from "./chain.js?v=mv42fkyn";
-import { fits } from "./dcfit.js?v=mv42fkyn";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv42fkyn";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv42fkyn";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv42fkyn";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv44px94";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv44px94";
+import { renderChart } from "./chart.js?v=mv44px94";
+import { makeT } from "./i18n.js?v=mv44px94";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv44px94";
+import { LEGAL } from "./legal.js?v=mv44px94";
+import { track, stats, trackingOff } from "./analytics.js?v=mv44px94";
+import * as community from "./community.js?v=mv44px94";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv44px94";
+import { redactImage } from "./redact.js?v=mv44px94";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv44px94";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv44px94";
+import { chainLinks } from "./chain.js?v=mv44px94";
+import { fits } from "./dcfit.js?v=mv44px94";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv44px94";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv44px94";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv44px94";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -271,27 +271,39 @@ function render() {
 // Home: what Sotto answers, shown with real results computed on the page.
 
 // The setup most people start with: a phone and Apple's USB-C dongle.
-const HOME_EXAMPLES = [
-  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "moondrop--blessing-3" },
-  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "sennheiser--hd-600" },
-  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "moondrop--cosmo" },
-];
+const HOME_DONGLE = "apple--c-to-adapter";
+const HOME_EXAMPLES = ["moondrop--blessing-3", "sennheiser--hd-600", "hifiman--sundara", "moondrop--cosmo"].map((hp) => ({ device: "phone-usb-c", amp: HOME_DONGLE, hp }));
 const exUrl = (e) => `#build?device=${e.device}&amp=${encodeURIComponent(e.amp)}&hp=${encodeURIComponent(findItem(e.hp).id)}`;
 
 /** The builder's verdict and connection cards for one setup, without touching the page state. */
 function homeExample({ device, amp, hp: hpId }) {
   const hp = findItem(hpId);
-  if (!hp) return "";
+  if (!hp) return { verdict: "", conn: "" };
   const keep = { device: state.device, src: state.src, dac: state.dac, amp: state.amp, hp: state.hp, plug: state.plug, level: state.level };
   Object.assign(state, { device, src: "", dac: "", amp: amp ?? "", hp: hp.id, plug: "", level: "normal" });
   try {
     const src = currentSource();
     const conn = connectionCard(src, hp);
     const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level: LEVELS.normal, crest: CREST }) : { status: "no-output" };
-    return verdictCard(ev, hp, false, { amp: src.amp, device: src.device }) + conn.html;
+    return { verdict: verdictCard(ev, hp, false, { amp: src.amp, device: src.device }), conn: conn.html };
   } finally {
     Object.assign(state, keep);
   }
+}
+
+/** Every headphone whose sensitivity unit is known, checked against the dongle: { n, ok, tight, overkill, insufficient }. */
+let dongleTally = null;
+function homeDongleTally() {
+  if (dongleTally) return dongleTally;
+  const d = findItem(HOME_DONGLE);
+  const outs = d ? sourceOutputs(d) : [];
+  const tally = { n: 0, ok: 0, tight: 0, overkill: 0, insufficient: 0 };
+  for (const i of db.items) {
+    if (!HEADPHONE_CATS.has(i.category) || !hpModel(i)?.unitKnown) continue;
+    const s = evaluate(i, outs, { level: LEVELS.normal, crest: CREST }).status;
+    if (s in tally) (tally.n++, tally[s]++);
+  }
+  return (dongleTally = tally);
 }
 
 function homeWaves() {
@@ -307,6 +319,52 @@ function homeWaves() {
     .join("")}</div>`;
 }
 
+/** The selected headphone on the hero stage: its photo, brand behind it, [ name ], spec chips, and the live result. */
+function homeStage(e) {
+  const hp = findItem(e.hp);
+  const im = imageOf(hp);
+  const z = hp.specs?.impedance?.[0];
+  const s = hp.specs?.sensitivity?.[0];
+  const p = prices(hp).cheapest;
+  const chips = [z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim(), p && `${t("price_from")} ${money(p.price, p.currency)}`, t("stores", { n: storeCount(hp) })].filter(Boolean);
+  const r = homeExample(e);
+  return `<div class="stage-brand" aria-hidden="true">${esc(hp.brand)}</div>
+    <div class="stage-top">
+      ${im ? `<img class="stage-img" src="${esc(sized(im.src, 600))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">` : ""}
+      <div class="stage-id">
+        <p class="stage-name"><span class="br">[</span> ${esc(hp.model)} <span class="br">]</span></p>
+        <p class="small muted">${esc(hp.brand)} · ${esc(catLabel(hp))}</p>
+        <div class="stage-chips">${chips.map((c) => `<span class="tag">${esc(c)}</span>`).join("")}</div>
+      </div>
+    </div>
+    ${r.verdict}
+    <a class="link small" href="${exUrl(e)}">${esc(t("home_open"))}</a>`;
+}
+
+/** Right-hand panel of the "what Sotto checks" explorer, built from the same data as the site. */
+function homeFeature(key) {
+  const e = HOME_EXAMPLES[1];
+  if (key === "plug") return homeExample(e).conn;
+  if (key === "loud") return homeExample(e).verdict;
+  if (key === "amp") {
+    const c = homeDongleTally();
+    // "Not enough" stays visible at 0: that zero is the point.
+    const bar = (k) => (c[k] || k === "insufficient" ? `<div class="tally-row"><span class="st s-${k}">${esc(t(`st_${k}`))}</span><div class="tally-bar"><i class="s-${k}" style="width:${(c[k] / c.n) * 100}%"></i></div><b>${fmt(c[k], 0)}</b></div>` : "");
+    return `<div class="card result"><p class="big">${esc(t("home_f_amp_big", { n: fmt(c.n, 0), ok: fmt(c.ok + c.tight + c.overkill, 0) }))}</p>${["ok", "tight", "overkill", "insufficient"].map(bar).join("")}<p class="small muted">${esc(t("home_f_amp_note"))}</p></div>`;
+  }
+  if (key === "price") {
+    const hp = findItem(e.hp);
+    const offers = prices(hp).offers.filter((o) => o.condition === "new" && !o.suspect && o.currency === prices(hp).cheapest?.currency);
+    const max = Math.max(...offers.map((o) => o.price));
+    return `<div class="card result"><h3>${esc(displayName(hp))}</h3>${offers
+      .map((o) => `<a class="price-row" href="${esc(o.url)}" target="_blank" rel="noopener"><span>${esc(db.stores[o.store]?.name ?? o.store)}</span><div class="tally-bar"><i style="width:${(o.price / max) * 100}%"></i></div><b>${money(o.price, o.currency)}</b></a>`)
+      .join("")}<p class="small muted">${esc(t("home_f_price_note"))}</p></div>`;
+  }
+  return `<div class="card result" data-feature-reviews><p class="muted">${esc(t("cm_loading"))}</p></div>`;
+}
+
+const HOME_FEATURES = ["plug", "loud", "amp", "price", "reviews"];
+
 function homePage() {
   const brands = new Set(db.items.map((i) => i.brand)).size;
   const sourced = db.items.reduce((n, i) => n + Object.values(i.specs ?? {}).reduce((m, v) => m + (Array.isArray(v) ? v.length : 0), 0), 0);
@@ -321,6 +379,7 @@ function homePage() {
     .sort((a, b) => storeCount(b) - storeCount(a))
     .slice(0, 4);
   const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
+  const dongle = findItem(HOME_DONGLE);
   return `<div class="home">
     <section class="home-hero">${homeWaves()}
       <div class="home-hero-text">
@@ -330,16 +389,32 @@ function homePage() {
         <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
       </div>
       <div class="home-demo card">
-        <p class="small muted">${esc(t("home_try"))} · ${esc(t("home_ex_chain", { amp: findItem(HOME_EXAMPLES[0].amp) ? displayName(findItem(HOME_EXAMPLES[0].amp)) : "dongle" }))}</p>
-        <div class="home-ex" role="tablist">${ex
-          .map((e, n) => `<button type="button" class="pill small${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-ex="${n}">${esc(displayName(findItem(e.hp)))}</button>`)
-          .join("")}</div>
-        <div class="home-ex-out" data-ex-out>${ex.length ? homeExample(ex[0]) : ""}</div>
-        <a class="link small" data-ex-open href="${ex.length ? exUrl(ex[0]) : "#build"}">${esc(t("home_open"))}</a>
+        <p class="small muted home-demo-cap">${esc(t("home_try"))} · ${esc(t("home_ex_chain", { amp: dongle ? displayName(dongle) : "dongle" }))}</p>
+        <div class="home-select">
+          <div class="home-rail" role="tablist" aria-label="${esc(t("home_try"))}">${ex
+            .map((e, n) => {
+              const hp = findItem(e.hp);
+              const im = imageOf(hp);
+              return `<button type="button" class="rail-btn${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-ex="${n}" title="${esc(displayName(hp))}">${im ? `<img src="${esc(sized(im.src, 120))}" alt="" referrerpolicy="no-referrer">` : esc(hp.model.slice(0, 2))}</button>`;
+            })
+            .join("")}</div>
+          <div class="home-stage" data-stage>${ex.length ? homeStage(ex[0]) : ""}</div>
+        </div>
       </div>
     </section>
     <section class="home-stats">${stats.map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</section>
     <section class="home-band">
+      <p class="home-slash">// ${esc(t("home_f_kicker"))}</p>
+      <h2>${esc(t("home_f_h"))}</h2>
+      <div class="home-explore">
+        <div class="explore-list">${HOME_FEATURES.map(
+          (k, n) => `<button type="button" class="explore-item${n ? "" : " on"}" data-feature="${k}" aria-expanded="${!n}"><b>${esc(t(`home_f_${k}`))}</b><span class="small">${esc(t(`home_f_${k}_sub`))}</span></button>`,
+        ).join("")}</div>
+        <div class="explore-view" data-feature-view>${homeFeature(HOME_FEATURES[0])}</div>
+      </div>
+    </section>
+    <section class="home-band">
+      <p class="home-slash">// ${esc(t("home_s2_kicker"))}</p>
       <h2>${esc(t("home_s2_h"))}</h2><p class="home-sub">${esc(t("home_s2_sub"))}</p>
       <div class="home-cta"><a class="pill primary" href="#catalog">${esc(t("home_cta_catalog"))}</a><a class="pill" href="#deal">${esc(t("home_cta_deal"))}</a></div>
       <div class="home-products">${popular
@@ -351,10 +426,12 @@ function homePage() {
         .join("")}</div>
     </section>
     <section class="home-band" data-home-reviews>
+      <p class="home-slash">// ${esc(t("home_s3_kicker"))}</p>
       <h2>${esc(t("home_s3_h"))}</h2><p class="home-sub">${esc(t("home_s3_sub"))}</p>
       <div class="home-reviews" data-reviews></div>
     </section>
     <section class="home-band home-not">
+      <p class="home-slash">// ${esc(t("home_s4_kicker"))}</p>
       <h2>${esc(t("home_s4_h"))}</h2>
       <div class="home-not-grid">${[1, 2, 3].map((n) => `<div class="card pad"><b>${esc(t(`home_not${n}`))}</b><p class="muted small">${esc(t(`home_not${n}_sub`))}</p></div>`).join("")}</div>
       <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#about">${esc(t("nav_about"))}</a></div>
@@ -362,34 +439,81 @@ function homePage() {
   </div>`;
 }
 
+function reviewCard(r) {
+  const item = db.byId.get(r.item_id);
+  const shown = r.i18n?.[state.lang] ?? r;
+  const head = (shown.body ?? "").split("\n\n")[0];
+  return `<a class="card pad home-review" href="#item/${encodeURIComponent(r.item_id)}">${item ? `<span class="small muted">${esc(displayName(item))}</span>` : ""}<b>${esc(shown.title)}</b><p class="small">${esc(head)}</p></a>`;
+}
+
 function wireHome(main) {
-  const out = main.querySelector("[data-ex-out]");
-  const open = main.querySelector("[data-ex-open]");
+  // Hero: picking a headphone on the rail swaps the stage like Endfield's operator change: the old
+  // photo is washed in the accent and fades, then the new one arrives washed and clears to colour.
+  const stage = main.querySelector("[data-stage]");
   const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let timer = 0;
+  const enter = () => {
+    stage.classList.remove("leaving", "entering");
+    void stage.offsetWidth;
+    stage.classList.add("entering");
+  };
+  enter();
   main.querySelectorAll("[data-ex]").forEach((b) =>
     b.addEventListener("click", () => {
-      const e = ex[Number(b.dataset.ex)];
-      out.innerHTML = homeExample(e);
-      open.href = exUrl(e);
+      if (b.classList.contains("on")) return;
       main.querySelectorAll("[data-ex]").forEach((x) => {
         x.classList.toggle("on", x === b);
         x.setAttribute("aria-selected", String(x === b));
       });
+      clearTimeout(timer);
+      const swap = () => {
+        stage.innerHTML = homeStage(ex[Number(b.dataset.ex)]);
+        enter();
+      };
+      if (calm) return swap();
+      stage.classList.remove("entering");
+      stage.classList.add("leaving");
+      timer = setTimeout(swap, 150);
     }),
   );
+  // Explorer: one open item at a time; the panel on the right shows that check on real data.
+  const view = main.querySelector("[data-feature-view]");
+  let reviews = null;
+  const fillReviews = () => {
+    const el = view.querySelector("[data-feature-reviews]");
+    if (!el || !reviews) return;
+    el.outerHTML = reviews.length ? `<div class="explore-reviews">${reviews.slice(0, 2).map(reviewCard).join("")}</div>` : `<div class="card result"><p class="muted">${esc(t("home_s3_empty"))}</p></div>`;
+  };
+  main.querySelectorAll("[data-feature]").forEach((b) =>
+    b.addEventListener("click", () => {
+      main.querySelectorAll("[data-feature]").forEach((x) => {
+        x.classList.toggle("on", x === b);
+        x.setAttribute("aria-expanded", String(x === b));
+      });
+      view.innerHTML = homeFeature(b.dataset.feature);
+      fillReviews();
+      view.classList.remove("fade");
+      void view.offsetWidth;
+      view.classList.add("fade");
+    }),
+  );
+  // Bands brighten and settle into place as they scroll in (once each).
+  const bands = main.querySelectorAll(".home-band");
+  if (!calm && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),
+      { rootMargin: "0px 0px -15% 0px" },
+    );
+    bands.forEach((b) => (b.classList.add("reveal"), io.observe(b)));
+  }
   // Newest review summaries from the community, with the reviewer line and verdict.
   const box = main.querySelector("[data-reviews]");
   community.latestReviews(3).then((rows) => {
+    reviews = rows;
+    fillReviews();
     if (!box.isConnected) return;
-    const cards = rows
-      .map((r) => {
-        const item = db.byId.get(r.item_id);
-        const shown = r.i18n?.[state.lang] ?? r;
-        const head = (shown.body ?? "").split("\n\n")[0];
-        return `<a class="card pad home-review" href="#item/${encodeURIComponent(r.item_id)}">${item ? `<span class="small muted">${esc(displayName(item))}</span>` : ""}<b>${esc(shown.title)}</b><p class="small">${esc(head)}</p></a>`;
-      })
-      .join("");
-    box.innerHTML = cards || `<p class="muted">${esc(t("home_s3_empty"))} <a href="#build">${esc(t("home_cta_build"))}</a></p>`;
+    box.innerHTML = rows.map(reviewCard).join("") || `<p class="muted">${esc(t("home_s3_empty"))} <a href="#build">${esc(t("home_cta_build"))}</a></p>`;
   });
 }
 
@@ -1817,7 +1941,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv42fkyn" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv44px94" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2303,7 +2427,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv42fkyn" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv44px94" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

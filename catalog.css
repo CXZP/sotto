@@ -1,10 +1,11 @@
 /* Catalog-driven pages: build slots, picker, chart, catalog table, item page. */
 
-:root { --st-good: #0ca30c; --st-warn: #e8a10f; --st-bad: #d03b3b; --st-amb: #7a7a80; }
+:root { --st-good: #0ca30c; --st-warn: #d4ac00; --st-bad: #d03b3b; --st-amb: #7a7a80; }
 .small { font-size: 13px; }
 .strong { font-weight: 600; }
-.pill.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
-.pill.primary:hover { background: var(--text); opacity: 0.88; }
+/* The VU-meter glow of a tube DAC: the one accent colour, used for the main action and "selected". */
+.pill.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.pill.primary:hover { background: var(--accent); opacity: 0.88; }
 button.link { background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; font: inherit; }
 button.link:hover { text-decoration: underline; }
 a.pill { display: inline-block; color: var(--text); }
@@ -155,7 +156,7 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .post-body { margin: 6px 0; white-space: pre-wrap; color: var(--text); line-height: 1.55; }
 .post-actions { display: flex; gap: 14px; align-items: center; margin-top: 8px; }
 .pill.small { padding: 4px 12px; font-size: 13px; }
-.pill.on { background: var(--warn-bg); border-color: var(--warn); }
+.pill.on { background: var(--accent-bg); border-color: var(--accent); }
 .pill:disabled { opacity: 0.55; cursor: default; }
 .composer { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
 .cm-form { display: grid; gap: 10px; }
@@ -177,12 +178,12 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .zone.z-ok { fill: var(--st-good); opacity: 0.07; }
 .zone.z-tight { fill: var(--st-warn); opacity: 0.08; }
 .zone.z-insufficient { fill: var(--st-bad); opacity: 0.08; }
-.zone.z-overkill { fill: #e07a1f; opacity: 0.1; }
+.zone.z-overkill { fill: var(--warn); opacity: 0.1; }
 .zl { font-size: 13px; font-weight: 600; opacity: 0.75; pointer-events: none; }
 .zl.z-ok { fill: var(--st-good); }
 .zl.z-tight { fill: var(--st-warn); }
 .zl.z-insufficient { fill: var(--st-bad); }
-.zl.z-overkill { fill: #e07a1f; }
+.zl.z-overkill { fill: var(--warn); }
 .hint-y { font-size: 11px; }
 .howto { margin: 4px 0 10px; }
 .howto summary { cursor: pointer; color: var(--accent); font-size: 14px; }

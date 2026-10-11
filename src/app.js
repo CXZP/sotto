@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4csi7z";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4csi7z";
-import { renderChart } from "./chart.js?v=mv4csi7z";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4csi7z";
-import { makeT } from "./i18n.js?v=mv4csi7z";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4csi7z";
-import { LEGAL } from "./legal.js?v=mv4csi7z";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4csi7z";
-import * as community from "./community.js?v=mv4csi7z";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4csi7z";
-import { redactImage } from "./redact.js?v=mv4csi7z";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4csi7z";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4csi7z";
-import { chainLinks } from "./chain.js?v=mv4csi7z";
-import { fits } from "./dcfit.js?v=mv4csi7z";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4csi7z";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4csi7z";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4csi7z";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4d3o3p";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4d3o3p";
+import { renderChart } from "./chart.js?v=mv4d3o3p";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4d3o3p";
+import { makeT } from "./i18n.js?v=mv4d3o3p";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4d3o3p";
+import { LEGAL } from "./legal.js?v=mv4d3o3p";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4d3o3p";
+import * as community from "./community.js?v=mv4d3o3p";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4d3o3p";
+import { redactImage } from "./redact.js?v=mv4d3o3p";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4d3o3p";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4d3o3p";
+import { chainLinks } from "./chain.js?v=mv4d3o3p";
+import { fits } from "./dcfit.js?v=mv4d3o3p";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4d3o3p";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4d3o3p";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4d3o3p";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1243,7 +1243,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4csi7z").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv4d3o3p").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2222,6 +2222,14 @@ function channelsCard(i) {
 // browser; nothing is uploaded, and Sotto keeps no one's measurements.
 const FR_COLORS = ["#E8862E", "#3B82F6", "#10B981", "#A855F7", "#EF4444", "#14B8A6"];
 const FR_KEY = "sotto.fr";
+// Reference curves: links to where they are published, never copies. Each
+// opens on a squig.link graph with tilt/bass/treble at 0, ready for its ⬇ button.
+const FR_TARGETS = [
+  ["fr_tg_df", ["Δ 5128 DF", "Δ ISO 11904-1 DF", "Δ JM-1 DF", "Δ Headphones.com (IEM) DF"]],
+  ["fr_tg_comp", ["711 to 5128", "711 to 5128 (DD Bass)", "IEF Comp"]],
+  ["fr_tg_pref", ["Harman IE 2019", "Harman IE 2017", "IEF Neutral 2023"]],
+];
+const squigTarget = (name) => `https://squig.link/lab/aquaphobic/?share=${encodeURIComponent(`${name.trim()} Target`.replace(/ /g, "_")).replace(/%2C/g, ",").replace(/%28/g, "(").replace(/%29/g, ")")}&bass=0&tilt=0&treble=0&ear=0`;
 function frLoad() {
   try {
     return JSON.parse(localStorage.getItem(FR_KEY) ?? "[]");
@@ -2257,6 +2265,9 @@ function frPage() {
       <ul class="fr-legend" id="fr-legend"></ul>
     </section>
     <p class="muted small">${esc(t("fr_private"))}</p>
+    <section class="card pad fr-targets"><h3>${esc(t("fr_tg_h"))}</h3><p class="small">${esc(t("fr_tg_how"))}</p>
+      ${FR_TARGETS.map(([k, names]) => `<p class="small"><b>${esc(t(k))}</b></p><div class="chips">${names.map((n) => `<a class="chip" href="${esc(squigTarget(n))}" target="_blank" rel="noopener">${esc(n)} ↗</a>`).join("")}</div>`).join("")}
+      <p class="muted small">${esc(t("fr_tg_note"))}</p></section>
     <section class="card pad"><h3>${esc(t("fr_where_h"))}</h3><ul class="small">
       <li>${esc(t("fr_where_rew"))} <a href="https://www.roomeqwizard.com/" target="_blank" rel="noopener">REW ↗</a></li>
       <li>${esc(t("fr_where_autoeq"))} <a href="https://github.com/jaakkopasanen/AutoEq" target="_blank" rel="noopener">AutoEq ↗</a></li>
@@ -2273,19 +2284,23 @@ function wireFr(main) {
   const msg = main.querySelector("#fr-msg");
   const draw = () => {
     const frac = Number(main.querySelector("#fr-smooth").value);
-    const delta = main.querySelector("#fr-delta").checked && list.filter((x) => !x.off).length > 1;
     const shown = list.filter((x) => !x.off);
-    const base = delta ? smooth(normalize(shown[0].points), frac) : null;
+    // The reference (★) is drawn dashed; "difference" subtracts it from every line.
+    const ref = shown.find((x) => x.ref) ?? null;
+    const delta = main.querySelector("#fr-delta").checked && shown.length > 1;
+    const baseItem = ref ?? shown[0];
+    const base = delta ? smooth(normalize(baseItem.points), frac) : null;
     const traces = shown.map((x) => {
       let pts = smooth(normalize(x.points), frac);
       if (base) pts = pts.map((p, i) => ({ f: p.f, db: p.db - base[i].db }));
-      return { label: x.label, color: x.color, points: pts, dashed: base && x === shown[0] };
+      return { label: x.label, color: x.ref ? "#9CA3AF" : x.color, points: pts, dashed: x === baseItem && (delta || !!x.ref) };
     });
     const g = frSvg(traces, { delta: !!base });
     host.innerHTML = list.length ? g.svg : `<p class="muted fr-empty">${esc(t("fr_empty"))}</p>`;
     legend.innerHTML = list
       .map(
         (x, i) => `<li${x.off ? ' class="off"' : ""}><button type="button" class="fr-swatch" data-toggle="${i}" style="--c:${x.color}" aria-pressed="${!x.off}" aria-label="${esc(t("fr_toggle"))}"></button>
+        <button type="button" class="fr-ref${x.ref ? " on" : ""}" data-ref="${i}" aria-pressed="${!!x.ref}" title="${esc(t("fr_ref"))}">★</button>
         <input class="fr-name" data-name="${i}" value="${esc(x.label)}" aria-label="${esc(t("fr_name"))}"><span class="muted small">${esc(x.file)}</span>
         <button type="button" class="link small" data-del="${i}">${esc(t("fr_remove"))}</button></li>`,
       )
@@ -2323,7 +2338,9 @@ function wireFr(main) {
       }
       const used = new Set(list.map((x) => x.color));
       const label = list.length === 0 && item ? displayName(item) : file.name.replace(/\.(txt|csv|frd)$/i, "").replace(/[_]+/g, " ");
-      list.push({ label, file: file.name, color: FR_COLORS.find((c) => !used.has(c)) ?? FR_COLORS[list.length % FR_COLORS.length], points });
+      // A file named like a target becomes the reference when there is none yet.
+      const isTarget = /target|\bdf\b|11904|5128|harman|neutral|comp/i.test(file.name) && !list.some((x) => x.ref);
+      list.push({ label, file: file.name, color: FR_COLORS.find((c) => !used.has(c)) ?? FR_COLORS[list.length % FR_COLORS.length], points, ...(isTarget ? { ref: true } : {}) });
       notes.push(t("fr_added", { file: file.name, n: points.length }));
     }
     list = list.slice(-FR_COLORS.length);
@@ -2355,7 +2372,13 @@ function wireFr(main) {
   legend.addEventListener("click", (e) => {
     const tog = e.target.closest("[data-toggle]");
     const del = e.target.closest("[data-del]");
-    if (tog) list[tog.dataset.toggle].off = !list[tog.dataset.toggle].off;
+    const ref = e.target.closest("[data-ref]");
+    if (ref) {
+      const k = Number(ref.dataset.ref);
+      const was = !!list[k].ref;
+      list.forEach((x) => delete x.ref);
+      if (!was) list[k].ref = true;
+    } else if (tog) list[tog.dataset.toggle].off = !list[tog.dataset.toggle].off;
     else if (del) list.splice(Number(del.dataset.del), 1);
     else return;
     frSave(list);
@@ -2378,7 +2401,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4csi7z" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4d3o3p" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2865,7 +2888,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4csi7z" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4d3o3p" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

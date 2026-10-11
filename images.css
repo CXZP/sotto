@@ -83,3 +83,6 @@ a.img-credit:hover { background: rgba(0, 0, 0, 0.75); }
 .fr-name:focus { outline: none; border-bottom-color: var(--accent); }
 .fr-site-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .fr-site-list li { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
+.fr-ref { padding: 0 4px; border: 0; background: none; color: var(--text-2); cursor: pointer; font-size: 15px; line-height: 1; opacity: 0.5; }
+.fr-ref.on { color: var(--accent); opacity: 1; }
+.fr-targets .chips { margin-bottom: 6px; }

@@ -53,8 +53,9 @@ test("FiiO RR13 radio is a source from FiiO, not a headphone or dongle", { todo 
 
 // A store's own name is only a brand when the store makes the thing and says so
 // in the title ("Linsoul Avant", "Apos x Salad Dynatone", "Kiwi Ears Aether").
-// Moon Audio's Dragon line and Kitsune's KTE phono stage are house brands
-// that don't repeat the store name.
+// House brands that don't repeat the store name (checked on the stores' pages):
+// Moon Audio's Dragon line (cables, Dragon Inspire amps) and Kitsune HiFi's
+// KTE = "Kitsune Tuned Edition" (e.g. KTE SU-2, a tuned Singxer SU2).
 const norm = (s) => (s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 const STORE_NAMES = new Set([
   ...Object.values(db.stores).flatMap((s) => [norm(s.name), norm(s.host.split(".")[0])]),

@@ -8,7 +8,7 @@
 // Must stay self-contained: it is serialised with Function#toString.
 
 export function sendToSotto() {
-  const MAX = 38000;
+  const MAX = 118000;
   let noPosts = false;
   const clean = (s) => (s || "").replace(/ /g, " ").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   const out = [`SOURCE: ${location.href}`, `TITLE: ${document.title}`, ""];
@@ -27,6 +27,17 @@ export function sendToSotto() {
       const perm = m.querySelector('a[href*="/post-"], a[href*="/review/"], .message-attribution-main a');
       add(m.getAttribute("data-author") || m.querySelector(".username")?.textContent, time?.getAttribute("datetime") || time?.textContent, perm?.href, body?.innerText);
     });
+    // Other review layouts (e.g. Head-Fi showcase "Latest reviews"): any block
+    // whose class mentions "review" and that shows a username and a date.
+    const taken = new Set();
+    document.querySelectorAll('[class*="review" i]').forEach((m) => {
+      if ([...taken].some((t) => t.contains(m))) return;
+      const user = m.querySelector(".username, [itemprop=author], a[href*='/members/']");
+      const time = m.querySelector("time");
+      if (!user || !time || m.innerText.length < 200 || m.closest("article.message, .message--post")) return;
+      taken.add(m);
+      add(user.textContent.trim(), time.getAttribute("datetime") || time.textContent, m.querySelector('a[href*="/review/"]')?.href || location.href, m.innerText);
+    });
     // Reddit (new design).
     document.querySelectorAll("shreddit-post, shreddit-comment").forEach((m) => {
       const body = m.querySelector('[slot="text-body"], [slot="comment"]');
@@ -43,13 +54,13 @@ export function sendToSotto() {
   }
   let text = out.join("\n");
   if (text.length > MAX) text = text.slice(0, MAX) + "\n…";
-  const showcase = /head-fi\.org\/showcase\/[^/]+\/?$/.test(location.href);
+  // Report what was actually copied; the bot splits reviewers itself, so a
+  // whole-page copy is fine as long as the reviews were on screen.
+  const named = out.filter((l) => l.startsWith("--- ") && !/^--- (\?|page|selection) /.test(l)).length;
   const done = () =>
-    noPosts
-      ? alert(
-          `No forum posts or reviews on this page, so the whole page was copied (fine for specs, not for problems).${showcase ? "\nOn Head-Fi, open the Reviews tab and click again." : ""}\nไม่เจอโพสต์หรือรีวิวในหน้านี้ เลยคัดลอกทั้งหน้า (ใช้กับสเปกได้ แต่ไม่ใช่ปัญหาจากผู้ใช้)${showcase ? "\nบน Head-Fi ให้เปิดแท็บ Reviews แล้วกดอีกครั้ง" : ""}`,
-        )
-      : alert(`Copied ${out.filter((l) => l.startsWith("--- ")).length} post(s) for Sotto.\nOpen the model on Sotto → From users → ✨ → paste.\nคัดลอกแล้ว ไปที่หน้ารุ่นใน Sotto → จากผู้ใช้ → ✨ → วาง`);
+    alert(
+      `Copied ${text.length.toLocaleString()} characters${named ? ` (${named} post(s) with author)` : " (whole page)"} for Sotto.\nOn Sotto: open the model → From users → ✨ → paste → Draft it.\nคัดลอกแล้ว ${text.length.toLocaleString()} ตัวอักษร${named ? ` (${named} โพสต์ พร้อมชื่อคนเขียน)` : " (ทั้งหน้า)"}\nไปที่หน้ารุ่นใน Sotto → จากผู้ใช้ → ✨ → วาง → ร่างให้${noPosts && !named ? "\n(If reviews are missing, scroll so they load, then click again / ถ้ารีวิวไม่มา เลื่อนให้รีวิวโหลดแล้วกดอีกครั้ง)" : ""}`,
+    );
   const fallback = () => {
     const ta = document.createElement("textarea");
     ta.value = text;

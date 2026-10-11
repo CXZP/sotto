@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4a143p";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4a143p";
-import { renderChart } from "./chart.js?v=mv4a143p";
-import { makeT } from "./i18n.js?v=mv4a143p";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4a143p";
-import { LEGAL } from "./legal.js?v=mv4a143p";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4a143p";
-import * as community from "./community.js?v=mv4a143p";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4a143p";
-import { redactImage } from "./redact.js?v=mv4a143p";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4a143p";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4a143p";
-import { chainLinks } from "./chain.js?v=mv4a143p";
-import { fits } from "./dcfit.js?v=mv4a143p";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4a143p";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4a143p";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4a143p";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4a6yq9";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4a6yq9";
+import { renderChart } from "./chart.js?v=mv4a6yq9";
+import { makeT } from "./i18n.js?v=mv4a6yq9";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4a6yq9";
+import { LEGAL } from "./legal.js?v=mv4a6yq9";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4a6yq9";
+import * as community from "./community.js?v=mv4a6yq9";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4a6yq9";
+import { redactImage } from "./redact.js?v=mv4a6yq9";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4a6yq9";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4a6yq9";
+import { chainLinks } from "./chain.js?v=mv4a6yq9";
+import { fits } from "./dcfit.js?v=mv4a6yq9";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4a6yq9";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4a6yq9";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4a6yq9";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1201,7 +1201,7 @@ function itemPage(id) {
   ];
   return `<article class="item">
     <header class="item-head${im ? " has-img" : ""}">
-      ${im ? `<div class="item-media"><a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a><div class="item-thumbs" id="item-thumbs"></div></div>` : ""}
+      ${im ? `<div class="item-media"><div class="item-img"><button type="button" class="img-open" aria-label="${esc(t("img_zoom"))}"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"></button><a class="img-credit" href="${esc(im.url)}" target="_blank" rel="noopener">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</a></div><div class="item-thumbs" id="item-thumbs"></div></div>` : ""}
       <div class="item-title"><p class="muted item-kicker">${i.brand ? `${brandMark(i.brand, 24)} <a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
@@ -1237,10 +1237,19 @@ function itemPage(id) {
 // on the store's CDN; the credit and link point at the store page they came from.
 async function wireThumbs(main, i) {
   const box = main.querySelector("#item-thumbs");
+  const big = main.querySelector(".item-img");
+  if (!big) return;
+  const img = big.querySelector("img");
+  const first = imageOf(i);
+  // The main photo opens a lightbox; the credit pill is the link to the store.
+  let gallery = { src: [first.src], url: first.url, store: first.store };
+  big.querySelector(".img-open").addEventListener("click", () => {
+    const at = Math.max(0, gallery.src.findIndex((s) => img.src.startsWith(s)));
+    openLightbox(gallery, at, displayName(i));
+  });
   const set = (await loadPhotos())[i.id];
   if (!box || !box.isConnected || !set || set.src.length < 2) return;
-  const big = main.querySelector(".item-img");
-  const img = big.querySelector("img");
+  gallery = set;
   box.innerHTML = set.src
     .map((src, n) => `<button type="button" data-src="${esc(src)}" aria-label="${n + 1} / ${set.src.length}"><img src="${esc(sized(src, 120))}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>`)
     .join("");
@@ -1256,13 +1265,116 @@ async function wireThumbs(main, i) {
       img.classList.remove("swap");
     };
     next.decode().then(done, done);
-    big.href = set.url;
-    big.querySelector(".img-credit").textContent = t("img_from", { store });
+    const credit = big.querySelector(".img-credit");
+    credit.href = set.url;
+    credit.textContent = t("img_from", { store });
   };
   box.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-src]");
     if (btn) show(btn);
   });
+}
+
+/**
+ * Full-size photo viewer. Click or double-tap toggles 2.5× zoom at that point,
+ * dragging pans, arrows / swipe change photo, Esc or the backdrop closes.
+ * Photos stay on the store's CDN; the credit links back to the store page.
+ */
+function openLightbox(set, start, name) {
+  let n = start;
+  let zoom = 1, x = 0, y = 0;
+  const store = db.stores[set.store]?.name ?? set.store;
+  const many = set.src.length > 1;
+  const dlg = document.createElement("div");
+  dlg.className = "lightbox";
+  dlg.setAttribute("role", "dialog");
+  dlg.setAttribute("aria-modal", "true");
+  dlg.setAttribute("aria-label", name);
+  dlg.innerHTML = `<div class="lb-stage"><img alt="${esc(name)}" referrerpolicy="no-referrer" draggable="false"></div>
+    <button type="button" class="lb-close icon-btn" aria-label="${esc(t("close"))}">✕</button>
+    ${many ? `<button type="button" class="lb-nav prev icon-btn" aria-label="←">‹</button><button type="button" class="lb-nav next icon-btn" aria-label="→">›</button>` : ""}
+    <div class="lb-bar"><span class="lb-count"></span><span class="muted small">${esc(t("img_zoom_hint"))}</span><a href="${esc(set.url)}" target="_blank" rel="noopener">${esc(t("img_from", { store }))}</a></div>`;
+  const pic = dlg.querySelector("img");
+  const stage = dlg.querySelector(".lb-stage");
+  const apply = () => {
+    pic.style.transform = `translate(${x}px, ${y}px) scale(${zoom})`;
+    dlg.classList.toggle("zoomed", zoom > 1);
+  };
+  const show = (k) => {
+    n = (k + set.src.length) % set.src.length;
+    zoom = 1; x = 0; y = 0;
+    apply();
+    pic.classList.add("swap");
+    const next = new Image();
+    next.referrerPolicy = "no-referrer";
+    next.src = sized(set.src[n], 1600);
+    const done = () => {
+      pic.src = next.src;
+      pic.classList.remove("swap");
+    };
+    next.decode().then(done, done);
+    dlg.querySelector(".lb-count").textContent = many ? `${n + 1} / ${set.src.length}` : "";
+  };
+  const close = () => {
+    document.removeEventListener("keydown", onKey);
+    dlg.classList.add("closing");
+    setTimeout(() => dlg.remove(), matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 220);
+  };
+  const onKey = (e) => {
+    if (e.key === "Escape") close();
+    if (many && e.key === "ArrowRight") show(n + 1);
+    if (many && e.key === "ArrowLeft") show(n - 1);
+  };
+  document.addEventListener("keydown", onKey);
+  dlg.querySelector(".lb-close").addEventListener("click", close);
+  dlg.querySelector(".prev")?.addEventListener("click", () => show(n - 1));
+  dlg.querySelector(".next")?.addEventListener("click", () => show(n + 1));
+  stage.addEventListener("click", (e) => {
+    if (e.target !== pic) return close();
+  });
+  // Pointer: a tap toggles zoom at the tapped point; a drag pans when zoomed,
+  // or swipes to the next photo when not.
+  let down = null;
+  pic.addEventListener("pointerdown", (e) => {
+    down = { px: e.clientX, py: e.clientY, x, y, moved: false };
+    pic.setPointerCapture(e.pointerId);
+  });
+  pic.addEventListener("pointermove", (e) => {
+    if (!down) return;
+    const dx = e.clientX - down.px, dy = e.clientY - down.py;
+    if (Math.abs(dx) + Math.abs(dy) > 6) down.moved = true;
+    if (zoom > 1) {
+      x = down.x + dx;
+      y = down.y + dy;
+      apply();
+    }
+  });
+  pic.addEventListener("pointerup", (e) => {
+    if (!down) return;
+    const dx = e.clientX - down.px;
+    if (!down.moved) {
+      if (zoom > 1) {
+        zoom = 1; x = 0; y = 0;
+      } else {
+        // Zoom towards the tapped point.
+        const r = pic.getBoundingClientRect();
+        zoom = 2.5;
+        x = (r.left + r.width / 2 - e.clientX) * (zoom - 1);
+        y = (r.top + r.height / 2 - e.clientY) * (zoom - 1);
+      }
+      apply();
+    } else if (zoom === 1 && many && Math.abs(dx) > 60) show(dx < 0 ? n + 1 : n - 1);
+    down = null;
+  });
+  stage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    zoom = Math.min(5, Math.max(1, zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
+    if (zoom === 1) x = y = 0;
+    apply();
+  }, { passive: false });
+  document.body.append(dlg);
+  show(start);
+  dlg.querySelector(".lb-close").focus();
 }
 
 // Release calendar. Pre-orders are bars from when the store opened the page to
@@ -2092,7 +2204,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4a143p" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4a6yq9" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2578,7 +2690,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4a143p" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4a6yq9" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

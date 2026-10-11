@@ -1148,15 +1148,24 @@ async function renderCommunity(el, item) {
 
   // A post written in several languages shows the viewer's one.
   const shown = (r) => r.i18n?.[state.lang] ?? r;
+  // The text as the writer posted it stays one click away.
+  const translated = (r) => shown(r) !== r && (shown(r).title !== r.title || shown(r).body !== r.body);
   const post = (r) => `<article class="post k-${r.kind}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${r.purchase === "free_sample" ? `<span class="tag">${esc(t("cm_free_sample"))}</span>` : r.purchase === "bought" ? `<span class="tag">${esc(t("cm_bought"))}</span>` : ""}
       <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
-    <p class="post-title">${esc(shown(r).title)}</p>
-    ${shown(r).body ? `<p class="post-body">${esc(shown(r).body)}</p>` : ""}
+    <div class="post-text">
+      <p class="post-title">${esc(shown(r).title)}</p>
+      ${shown(r).body ? `<p class="post-body">${esc(shown(r).body)}</p>` : ""}
+    </div>
+    ${translated(r) ? `<div class="post-text" hidden>
+      <p class="post-title">${esc(r.title)}</p>
+      ${r.body ? `<p class="post-body">${esc(r.body)}</p>` : ""}
+    </div>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
     <div class="post-actions">
       <button class="pill small${mine.has(r.id) ? " on" : ""}" data-confirm="${r.id}" ${s ? "" : "disabled"} aria-pressed="${mine.has(r.id)}">${esc(t("cm_metoo"))} · ${r.confirms}</button>
+      ${translated(r) ? `<button class="link small" data-orig aria-pressed="false">${esc(t("cm_original"))}</button>` : ""}
       ${s && r.author !== s.user.id ? `<button class="link small" data-flag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}
       ${s && r.author === s.user.id ? `<button class="link small" data-del="${r.id}">${esc(t("cm_delete"))}</button>` : ""}
       ${canRespond && r.kind === "issue" ? `<button class="link small" data-respond="${r.id}">${esc(t("br_respond"))}</button>` : ""}
@@ -1260,6 +1269,16 @@ async function renderCommunity(el, item) {
       } catch (e) {
         fail(e);
       }
+    }),
+  );
+  el.querySelectorAll("[data-orig]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      const [tr, orig] = b.closest("article").querySelectorAll(".post-text");
+      tr.hidden = on;
+      orig.hidden = !on;
+      b.setAttribute("aria-pressed", String(on));
+      b.textContent = t(on ? "cm_translated" : "cm_original");
     }),
   );
   el.querySelectorAll("[data-flag]").forEach((b) =>

@@ -35,6 +35,9 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
   - Then optional DAC → amp or DAC/amp → headphones
   - Checks every connection (digital or analog ports) and loudness using voltage/current maths
   - Zoomable voltage-vs-impedance chart
+- Release calendar (`#calendar`): pre-orders as bars running to the date the store wrote (quote kept, e.g. "PRE-ORDER TILL OCT. 10TH."), and models by the first day any store published them (Shopify `published_at`). Parsing in `scripts/lib/dates.js`. Fills from the next crawl; until then the page says no dates yet.
+- Extra store photos (ports, box, accessories): up to 12 links per model in `data/photos.json`, loaded only on item pages; still hotlinked from store CDNs, never copied.
+- Spec sheet from labelled store lines ("Frequency Response: 12Hz-44kHz"): drivers, frequency response, THD, SNR, dynamic range, crosstalk, DAC/amp chip, PCM, DSD, Bluetooth, codecs, battery, connector, plug, cable, weight (`extractSheet` in `scripts/lib/specs.js`; first store per field wins). Display only; the drive maths still uses impedance/sensitivity/power.
 - Catalog with filters; per-model pages; static SEO pages with OG images; compare page; glossary/learn pages (incl. UAC, NOS, WASAPI/ASIO, streaming protocols); brand A–Z.
 - Regions (14): store search links, currency, local forum searches. Languages: th, en; ja/zh selectable but not translated yet.
 - "Real price": code-stacking calculator for Shopee/Lazada vouchers; community "price I paid" reports with a redacted screenshot as evidence; China-market search links (Taobao etc.).
@@ -69,11 +72,12 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
 
 1. **Data is thin.** Few problem reports, owner reports, prices or port reports so far. This is the biggest issue.
 2. **Specs missing for many models.** Many have no output power at a stated load, so they can't be calculated (e.g. FiiO K17, Gigas 1, whose maker states power with no load).
-3. Japanese and Chinese UI translation (~600 strings each; long pages like glossary and legal too).
-4. Some remaining duplicate listings and misclassifications.
-5. Speakers have no matching maths yet (we link to BuildHifi).
-6. No email notifications (needs an Edge Function plus an email provider).
-7. Moderation tooling beyond "report post" and RLS.
+3. **Specs drawn as images.** Many Chinese brands put the spec table in a description image (made for Taobao etc.). Tested OCR (tesseract.js, free, no key) on a Moondrop Starfield III page: it reads the table only after inverting dark images and upscaling, and it misreads units: "7.7Ω±15%" came out as "7.701 15%", "Vrms" as "Nrms". Plan: OCR in CI only for models still missing specs, each image URL read once and cached, numbers plus image link stored (never the image). OCR values are labelled "read from image, unconfirmed" and never enter the drive maths until a second source agrees or a person confirms against the cropped image. Gemini vision is the more accurate later option (key in GitHub Secrets only).
+4. Japanese and Chinese UI translation (~600 strings each; long pages like glossary and legal too).
+5. Some remaining duplicate listings and misclassifications.
+6. Speakers have no matching maths yet (we link to BuildHifi).
+7. No email notifications (needs an Edge Function plus an email provider).
+8. Moderation tooling beyond "report post" and RLS.
 
 ## What our tooling can't reach (where Gemini might help)
 

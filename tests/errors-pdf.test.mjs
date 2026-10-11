@@ -127,11 +127,13 @@ test("no speaker power amp anywhere is filed as a headphone amp", { todo }, () =
 // Integrated and streaming amps drive speakers; some also have a headphone jack.
 // They are their own role, "integrated": not a headphone amp, and their watts
 // (into 4-8 Ω speakers) never enter the headphone maths.
-const INTEGRATED = /\b(streaming amp(lifier)?|integrated amp(lifier)?|stereophonic amp(lifier)?|all-in-one amp(lifier)?|all-in-one integrated)\b/i;
+const INTEGRATED = /\b(streaming amp(lifier)?|streaming dac amp(lifier)?|integrated amp(lifier)?|stereophonic amp(lifier)?|all-in-one amp(lifier)?|all-in-one integrated|air amp|amp ultra)\b/i;
 for (const re of [
   /Bluesound POWERNODE EDGE/, /Cambridge Audio Evo 150 SE/, /Cambridge Audio EVO 300/, /EverSolo Play Streaming/, /FiiO R7 All-In-One Streaming/,
   /Hegel H150/, /Marantz Model M1/, /C 3030 Stereophonic/, /NAD C 3050 Stereophonic/, /NAD C 700 V2/, /NAD M10 V3/,
   /Naim Uniti Nova PE/, /Naim Uniti Star/, /Primare I15 MM Integrated/, /Pro-Ject Wireless Box E/, /Roksan Caspian 4G/, /WiiM Amp Pro/,
+  // Streaming integrated amps: streamer + amp with speaker terminals (e.g. FiiO AIR AMP).
+  /M33 BluOS Streaming DAC Amplifier/, /NAD M33 V2 BluOS/, /WiiM - Amp Ultra/,
 ])
   test(`integrated / streaming amp: ${re.source}`, { todo }, () => {
     const found = byTitle(re);
@@ -140,6 +142,24 @@ for (const re of [
   });
 test("every integrated or streaming amp in the catalog has the integrated role", { todo }, () => {
   const bad = db.items.filter((i) => i.offers.some((o) => INTEGRATED.test(o.title)) && i.role !== "integrated").map((i) => `${i.id} (${i.category}/${i.role ?? ""})`);
+  assert.deepEqual(bad, []);
+});
+
+// A streamer plays from the network and hands the music on (digital out, or line
+// out through its own DAC). No amp: role "streamer", a source in the chain
+// (e.g. FiiO SR11, WiiM Pro, iFi NEO Stream). "Streaming DAC" stays a DAC.
+const STREAMER = /\b(streamer|wi-?fi (audio )?transport|network (player|transport|streamer)|music server)\b/i;
+for (const re of [/iFi NEO Stream High-resolution Wi-Fi Audio Transport/, /iFi NEO Stream 3 High-resolution Wi-Fi Audio Transport/, /Weiss MAN301R/])
+  test(`streamer, a source without an amp: ${re.source}`, { todo }, () => {
+    const found = byTitle(re);
+    assert.ok(found.length, "listing missing");
+    for (const i of found) assert.equal(i.role, "streamer", `${i.id} is ${i.category}/${i.role ?? ""}`);
+  });
+test("every streamer in the catalog (not a CD player, portable or amp) has the streamer role", { todo }, () => {
+  const bad = db.items
+    .filter((i) => !["cd", "dap", "speaker"].includes(i.category) && i.offers.some((o) => STREAMER.test(o.title) && !/amp(lifier)?\b|cd|sacd/i.test(o.title)))
+    .filter((i) => i.role !== "streamer")
+    .map((i) => `${i.id} (${i.category}/${i.role ?? ""})`);
   assert.deepEqual(bad, []);
 });
 

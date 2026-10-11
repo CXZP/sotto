@@ -49,7 +49,8 @@ a.img-credit:hover { background: rgba(0, 0, 0, 0.75); }
 .lightbox.zoomed .lb-stage img { cursor: grab; transition: opacity 0.2s; }
 .lb-stage img.swap { opacity: 0.3; }
 .lb-close { position: absolute; top: 12px; right: 12px; }
-.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 28px; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; padding: 0; }
+.lb-nav svg { display: block; }
 .lb-nav.prev { left: 12px; }
 .lb-nav.next { right: 12px; }
 .lightbox .icon-btn { background: rgba(255, 255, 255, 0.12); color: #fff; }

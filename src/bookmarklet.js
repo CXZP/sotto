@@ -33,8 +33,13 @@ export function sendToSotto() {
       add(m.getAttribute("author"), m.getAttribute("created-timestamp"), m.getAttribute("permalink") ? `https://www.reddit.com${m.getAttribute("permalink")}` : "", body?.innerText);
     });
     // Anything else: the main article text (a product page, a blog review).
+    // Also when the posts found cover little of the page: a Head-Fi showcase
+    // overview has its spec box styled as a post and its reviews styled
+    // differently, so the reviews would otherwise be missed.
+    const page = clean((document.querySelector("main, [role=main], .p-body-main") || document.body).innerText);
+    const found = out.slice(3).join("\n").length;
     if (out.length <= 3) noPosts = true;
-    if (out.length <= 3) add(document.querySelector('meta[name="author"]')?.content, "", location.href, (document.querySelector("main, [role=main]") || document.body).innerText);
+    if (out.length <= 3 || found < page.length * 0.6) add(document.querySelector('meta[name="author"]')?.content || "page", "", location.href, page);
   }
   let text = out.join("\n");
   if (text.length > MAX) text = text.slice(0, MAX) + "\n…";

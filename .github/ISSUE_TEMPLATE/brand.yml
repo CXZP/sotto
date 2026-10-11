@@ -1,0 +1,40 @@
+name: Verified brand account (official responses)
+description: For brands that want to answer user reports about their products on Sotto
+labels: [brand-account]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A verified brand account can post an official response under user reports about its own products, and gets a ✓ brand badge in discussions.
+        Please don't include personal data (email, phone) here. We verify through the brand's own public channel instead.
+  - type: input
+    id: brand
+    attributes:
+      label: Brand name (as shown on Sotto)
+    validations:
+      required: true
+  - type: input
+    id: site
+    attributes:
+      label: Brand's official website
+    validations:
+      required: true
+  - type: input
+    id: account
+    attributes:
+      label: Display name of the Sotto account to verify
+      description: Sign in on Sotto first and set a display name on the account page.
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title to show next to the badge (optional)
+      placeholder: Customer support
+  - type: input
+    id: proof
+    attributes:
+      label: Proof link
+      description: 'A public post or page on the brand''s official website or social account containing the text "Sotto verify: <display name>". You can delete it after we confirm.'
+    validations:
+      required: true

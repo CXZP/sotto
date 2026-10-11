@@ -25,7 +25,6 @@ body:
         - A user report is factually wrong (please show why)
         - Copyrighted material was posted without permission
         - Product data is wrong
-        - I want to post an official brand response
         - Other
     validations:
       required: true

@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv32s2ut";
+import { REPO } from "./content.js?v=mv3o3940";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -33,7 +33,7 @@ export const LEGAL = {
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv32s2ut" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv3o3940" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -58,7 +58,7 @@ export const LEGAL = {
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv32s2ut" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv3o3940" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `
@@ -108,7 +108,8 @@ export const LEGAL = {
 <p>Sotto เป็นโปรเจกต์ open source ทุกคำขอทำผ่าน GitHub เพื่อให้ตรวจสอบย้อนหลังได้ ถ้าเรื่องมีข้อมูลส่วนตัว อย่าใส่ข้อมูลนั้นในคำขอ ให้บอกแค่ว่าต้องการให้ติดต่อกลับ</p>
 <div class="contact-grid">
 <a class="card pad" href="${issue("correction.yml", "Data: ")}" target="_blank" rel="noopener"><b>ข้อมูลสินค้าผิด</b><span class="muted small">สเปก ราคา หมวด รุ่นซ้ำ พร้อมลิงก์ที่มาที่ถูกต้อง</span></a>
-<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>แบรนด์หรือร้าน: ขอแก้หรือขอลบ</b><span class="muted small">โพสต์ที่คิดว่าไม่ถูกต้อง หรือข้อมูลที่ไม่ต้องการให้แสดง เรามีช่องให้แบรนด์ตอบรายงานได้ด้วย</span></a>
+<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>แบรนด์หรือร้าน: ขอแก้หรือขอลบ</b><span class="muted small">โพสต์ที่คิดว่าไม่ถูกต้อง หรือข้อมูลที่ไม่ต้องการให้แสดง</span></a>
+<a class="card pad" href="${issue("brand.yml", "Brand account: ")}" target="_blank" rel="noopener"><b>แบรนด์: ขอบัญชียืนยันเพื่อตอบรายงาน</b><span class="muted small">ตอบรายงานปัญหาของสินค้าตัวเองในนามแบรนด์ พร้อมป้าย ✓ ยืนยันผ่านช่องทางทางการของแบรนด์</span></a>
 <a class="card pad" href="${issue("privacy.yml", "Privacy request")}" target="_blank" rel="noopener"><b>คำขอเรื่องข้อมูลส่วนบุคคล</b><span class="muted small">ขอสำเนา คัดค้าน หรือร้องเรียน (ลบบัญชีทำเองได้ที่หน้าบัญชี)</span></a>
 <a class="card pad" href="${REPO}/issues" target="_blank" rel="noopener"><b>อื่นๆ / เสนอฟีเจอร์</b><span class="muted small">GitHub Issues</span></a>
 </div>
@@ -118,7 +119,8 @@ export const LEGAL = {
 <p>Sotto is open source, so requests go through GitHub where they can be tracked. If your request involves personal data, don't include it; just say you'd like to be contacted.</p>
 <div class="contact-grid">
 <a class="card pad" href="${issue("correction.yml", "Data: ")}" target="_blank" rel="noopener"><b>Wrong product data</b><span class="muted small">Specs, prices, category, duplicates, with the correct source link</span></a>
-<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>Brands and stores: correction or removal</b><span class="muted small">Posts you believe are wrong, or data you don't want shown. Brands can also answer reports.</span></a>
+<a class="card pad" href="${issue("takedown.yml", "Takedown: ")}" target="_blank" rel="noopener"><b>Brands and stores: correction or removal</b><span class="muted small">Posts you believe are wrong, or data you don't want shown.</span></a>
+<a class="card pad" href="${issue("brand.yml", "Brand account: ")}" target="_blank" rel="noopener"><b>Brands: get a verified account to answer reports</b><span class="muted small">Answer user reports about your products as the brand, with a ✓ badge. Verified through the brand's official channel.</span></a>
 <a class="card pad" href="${issue("privacy.yml", "Privacy request")}" target="_blank" rel="noopener"><b>Personal data request</b><span class="muted small">Copy, objection or complaint (delete your account yourself on the account page)</span></a>
 <a class="card pad" href="${REPO}/issues" target="_blank" rel="noopener"><b>Anything else / feature ideas</b><span class="muted small">GitHub Issues</span></a>
 </div>

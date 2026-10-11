@@ -54,3 +54,14 @@ test("verdict line under the credit, and the review's own language kept for 'vie
   assert.match(all.en.body, /^★ 2\.5\/5 · Review by monkonomics.*\nVerdict: Grade B-, not at retail — “Will I buy it at retail\? Absolutely not\.”/);
   assert.match(all.th.body, /\nสรุปของผู้รีวิว: เกรด B- — /);
 });
+
+test("one-word points show their quote once; a verdict can carry several quotes", () => {
+  const b = {
+    ...parseBlocks(sample)[0],
+    pros: [{ point: "Detailed", quote: "Detailed" }],
+    verdict: { point: "B-, not at retail", quote: "I grade the Blessing 3 a B-.", quotes: ["I grade the Blessing 3 a B-.", "Will I buy it at retail? Absolutely not."] },
+  };
+  const { body } = reviewPost(b, { pros: "Pros", cons: "Cons", by: "Review by", verdict: "Verdict" });
+  assert.match(body, /\n- “Detailed”\n/);
+  assert.match(body, /Verdict: B-, not at retail — “I grade the Blessing 3 a B-\.” “Will I buy it at retail\? Absolutely not\.”/);
+});

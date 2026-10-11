@@ -88,7 +88,13 @@ export const REVIEW_LABELS = {
 /** The review-summary post for one block: {title, body} (body ≤ 2000 chars).
  * With `lang`, points and summary use their translation in that language when the block has one. */
 export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
-  const line = (p) => `- ${(lang && p.point_i18n?.[lang]) || p.point} — “${p.quote}”`;
+  const line = (p) => {
+    const point = (lang && p.point_i18n?.[lang]) || p.point;
+    const quotes = (p.quotes?.length ? p.quotes : [p.quote]).map((q) => `“${q}”`).join(" ");
+    // A point that only repeats its quote ("Detailed — “Detailed”") shows the quote alone.
+    const same = point.trim().toLowerCase().replace(/[.!]$/, "") === String(p.quote).trim().toLowerCase().replace(/[.!]$/, "");
+    return same ? `- ${quotes}` : `- ${point} — ${quotes}`;
+  };
   const summary = (lang && b.summary_i18n?.[lang]) || b.summary;
   // Credit the person who wrote the review, always, with where it was published.
   const host = sourceHost(b.source);

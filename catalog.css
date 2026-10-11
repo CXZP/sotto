@@ -147,10 +147,10 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 
 /* Community */
 .community { margin-bottom: 14px; }
-.post { padding: 14px 0; border-top: 1px solid var(--line); }
+.post { padding: 18px 0; border-top: 1px solid var(--line); }
 .post-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .post-title { margin: 6px 0 2px; font-weight: 600; font-size: 16px; }
-.post-body { margin: 4px 0; white-space: pre-wrap; color: var(--text); }
+.post-body { margin: 6px 0; white-space: pre-wrap; color: var(--text); line-height: 1.55; }
 .post-actions { display: flex; gap: 14px; align-items: center; margin-top: 8px; }
 .pill.small { padding: 4px 12px; font-size: 13px; }
 .pill.on { background: var(--warn-bg); border-color: var(--warn); }
@@ -478,7 +478,14 @@ select option { background: var(--surface); color: var(--text); }
 .bot-many { display: grid; gap: 8px; }
 .bot-draft { display: grid; grid-template-columns: auto 1fr; gap: 10px; padding: 10px; border-radius: 12px; background: var(--surface-2); cursor: pointer; }
 .bot-draft pre { white-space: pre-wrap; margin: 4px 0 0; font-family: inherit; color: var(--text-2); max-height: 160px; overflow: auto; }
-.post-filters { display: grid; gap: 6px; margin: 8px 0 12px; }
+.post-filters { display: grid; gap: 8px; margin: 10px 0 14px; }
+.post-filters .row-inline > .muted { align-self: center; }
 .post-filters .row-inline { flex-wrap: wrap; gap: 6px; }
-.post-more > summary { cursor: pointer; color: var(--text-2); margin: 2px 0; }
+.post-more > summary { cursor: pointer; color: var(--text-2); margin: 6px 0; }
+.post-sec { margin: 12px 0 4px; }
+.post-sec ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 10px; }
+.post-sec li { line-height: 1.5; }
+.post-quote { display: block; margin-top: 2px; color: var(--text-2); font-size: 14px; }
 [data-posts] > [data-more] { margin-top: 8px; }
+.post-filters label { display: flex; align-items: center; gap: 8px; }
+.post-filters select { width: auto; }

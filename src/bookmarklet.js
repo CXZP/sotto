@@ -14,7 +14,8 @@ export function sendToSotto() {
   const out = [`SOURCE: ${location.href}`, `TITLE: ${document.title}`, ""];
   const add = (author, date, link, text) => {
     text = clean(text);
-    if (text.length < 20) return;
+    // Short is fine on forums ("There's zero bass"); only drop near-empty lines.
+    if (text.length < 12) return;
     out.push(`--- ${author || "?"} · ${date || "?"}${link ? ` · ${link}` : ""}`, text, "");
   };
   const sel = String(window.getSelection ? window.getSelection() : "").trim();

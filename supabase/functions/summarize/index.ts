@@ -12,12 +12,12 @@
 // Deploy: Supabase dashboard → Edge Functions → New function "summarize",
 // paste this file; then Secrets → GEMINI_API_KEY (Google AI Studio) or
 // ANTHROPIC_API_KEY. Gemini is used when its key is set. Optional:
-// GEMINI_MODEL (default below). Run supabase/bot.sql first.
+// GEMINI_MODEL (default below; Google retires names, so the error message names the current one). Run supabase/bot.sql first.
 
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 
 const CLAUDE_MODEL = "claude-haiku-5-5";
-const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.5-flash";
+const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-3.8-flash";
 const DAILY = 20;
 const cors = {
   "Access-Control-Allow-Origin": "*",

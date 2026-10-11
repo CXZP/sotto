@@ -34,17 +34,30 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history, so the pull and rebase below always find a common base
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Remember product pages already read (spec boxes)
-        uses: actions/cache@v4
+      - name: Restore product pages already read (spec boxes)
+        uses: actions/cache/restore@v4
         with:
           path: cache/pages
           key: spec-pages-${{ github.run_id }}
           restore-keys: spec-pages-
       - name: Pull store feeds, politely (delays from scripts/stores.json)
         run: node scripts/crawl.mjs
+      # Saved straight away, so pages read are kept even if a later step fails.
+      - name: Save product pages read
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: cache/pages
+          key: spec-pages-${{ github.run_id }}
+      # The crawl takes a while and main may have moved on meanwhile: build
+      # the catalog with the newest code, from the feeds just pulled.
+      - name: Catch up with main
+        run: git pull --ff-only origin main
       - run: npm ci
       - name: Rebuild catalog
         run: node scripts/build-catalog.mjs
@@ -67,7 +80,14 @@ jobs:
           git config user.name "sotto-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/catalog.json data/photos.json data/prices.json data/logos.json src index.html
-          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: weekly store crawl $(date -u +%F)" && git push; fi
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "data: weekly store crawl $(date -u +%F)"
+          # Someone pushed in the last minute: replay on top, the fresh data wins.
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase -X theirs origin main
+          done
+          exit 1
 
   deploy:
     needs: crawl

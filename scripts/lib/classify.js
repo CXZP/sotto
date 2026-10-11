@@ -6,7 +6,7 @@ const has = (s, re) => re.test(s);
 const RULES = [
   // Things that are not part of a headphone chain, checked first.
   ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
-  ["accessory", /\b(ear ?tips?|eartip|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   ["skip", /\b(beanie|t-?shirts?|hoodies?|merch|toys?|bricks|keychains?|mouse ?pads?|posters?)\b/i],
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
   ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],

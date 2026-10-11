@@ -1,15 +1,15 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv321icg";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv321icg";
-import { renderChart } from "./chart.js?v=mv321icg";
-import { makeT } from "./i18n.js?v=mv321icg";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv321icg";
-import { LEGAL } from "./legal.js?v=mv321icg";
-import { track, stats, trackingOff } from "./analytics.js?v=mv321icg";
-import * as community from "./community.js?v=mv321icg";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv321icg";
-import { redactImage } from "./redact.js?v=mv321icg";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv321icg";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv321icg";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv32pgtj";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv32pgtj";
+import { renderChart } from "./chart.js?v=mv32pgtj";
+import { makeT } from "./i18n.js?v=mv32pgtj";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv32pgtj";
+import { LEGAL } from "./legal.js?v=mv32pgtj";
+import { track, stats, trackingOff } from "./analytics.js?v=mv32pgtj";
+import * as community from "./community.js?v=mv32pgtj";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv32pgtj";
+import { redactImage } from "./redact.js?v=mv32pgtj";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv32pgtj";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv32pgtj";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -155,6 +155,7 @@ function render() {
   else if (r.name === "account") main.innerHTML = accountPage();
   else if (r.name === "saved") main.innerHTML = savedPage();
   else if (r.name === "stats") main.innerHTML = statsPage();
+  else if (r.name === "compare") main.innerHTML = comparePage();
   else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${LEGAL[r.name][state.lang] ?? LEGAL[r.name].en}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
@@ -547,11 +548,13 @@ function catalogPage() {
   const stockOnly = p.get("stock") === "1";
   const limit = Number(p.get("n") ?? 60);
   const brand = p.get("brand") ?? "";
+  const mat = p.get("mat") ?? "";
   const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
       (!brand || i.brand === brand) &&
+      (!mat || i.materials?.[mat] || i.styles?.[mat]) &&
       (!q || matches(i, q)) &&
       (!specsOnly || hpModel(i) || sourceOutputs(i).length) &&
       (!stockOnly || i.offers.some((o) => o.available)),
@@ -592,6 +595,7 @@ function catalogPage() {
       </div>
       <div class="chips">${["popular", "price", "price-desc"].map((s) => `<a class="chip${s === sort ? " on" : ""}" href="${link({ sort: s, n: null })}">${esc(t(`sort_${s}`))}</a>`).join("")}</div>
       <div class="chips">${["grid", "table"].map((v) => `<a class="chip${v === view ? " on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
+      <div class="chips"><span class="muted small">${esc(t("mat_label"))}</span>${["", "resin", "wood", "metal", "ceramic", "carbon", "glass", "clear"].map((m) => `<a class="chip${m === mat ? " on" : ""}" href="${link({ mat: m || null, n: null })}">${esc(t(m ? `mat_${m}` : "cat_all"))}</a>`).join("")}</div>
       <a class="chip" href="#brands">${esc(t("brands_all"))}</a>
       <a class="chip ext-chip" href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a>
       <span class="muted small">${esc(t("n_results", { n: fmt(res.length, 0) }))}</span>
@@ -651,6 +655,15 @@ function brandsPage() {
   if (current) html += "</div>";
   return `<div class="brands"><header class="deal-head"><h1>${esc(t("brands_all"))}</h1><p class="muted small">${esc(t("brands_note"))}</p></header>
     <nav class="az">${letters.map((L) => `<a href="#brands" data-jump="brand-${L}">${L}</a>`).join("")}</nav>${html}</div>`;
+}
+
+/** Material / look tags, each with the store sentence it came from. */
+function looksLine(i) {
+  const tags = [...Object.entries(i.materials ?? {}), ...Object.entries(i.styles ?? {})];
+  if (!tags.length) return "";
+  return `<p class="looks">${tags
+    .map(([k, e]) => `<a class="chip small-chip" href="#catalog?mat=${k}" title="${esc(`${t("mat_from")}: “${e.quote}”`)}">${esc(t(`mat_${k}`))}</a>`)
+    .join("")} <span class="muted small">${esc(t("mat_note"))}</span></p>`;
 }
 
 function sensOrPower(i) {
@@ -747,8 +760,10 @@ function itemPage(id) {
       ${im ? `<a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a>` : ""}
       <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
+      ${looksLine(i)}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
@@ -822,6 +837,7 @@ function wire(main, r) {
   if (r.name === "account") wireAccount(main);
   if (r.name === "saved") wireSaved(main);
   if (r.name === "stats") wireStats(main);
+  if (r.name === "compare") wireCompare(main);
   if (r.name === "inbox") wireInbox(main);
   if (r.name === "item") wireBookmarks(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
@@ -1433,7 +1449,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv321icg" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv32pgtj" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -2323,6 +2339,149 @@ document.addEventListener("click", (e) => {
 });
 addEventListener("error", (e) => track("error", { path: route().name, message: `${e.message} @ ${(e.filename ?? "").split("/").pop()}:${e.lineno}` }));
 addEventListener("unhandledrejection", (e) => track("error", { path: route().name, message: `promise: ${e.reason?.message ?? e.reason}` }));
+
+// ---------------------------------------------------------------------------
+// "Search like people search" links, and the X vs Y compare page (#compare).
+
+function searchLinks(i) {
+  const n = displayName(i);
+  const g = (q, extra = "") => `https://www.google.com/search?q=${encodeURIComponent(q)}${extra}`;
+  const isSource = SOURCE_CATS.has(i.category);
+  const year = new Date().getFullYear();
+  return [
+    [`"${n}" vs …`, g(`"${n}" vs`)],
+    [t("sq_still_good", { year }), g(`is "${n}" still good ${year}`)],
+    [t("sq_review"), g(`"${n}" review`)],
+    ["YouTube", `https://www.youtube.com/results?search_query=${encodeURIComponent(`${n} review`)}`],
+    [t("sq_good_th"), g(`${n} ดีไหม`)],
+    ["Pantip", g(`${n} site:pantip.com`)],
+    [isSource ? t("sq_rear") : t("sq_photos"), g(isSource ? `${n} rear panel ports` : `${n} real photos`, "&tbm=isch")],
+  ];
+}
+
+function comparePage() {
+  return `<div class="discuss"><header class="deal-head"><h1>${esc(t("cmp_title"))}</h1><p class="muted">${esc(t("cmp_lead"))}</p></header>
+    <div class="card pad"><input class="search" id="cmp-q" placeholder="${esc(t("cmp_add"))}" autocomplete="off"><div class="suggest" id="cmp-suggest"></div></div>
+    <div id="cmp"></div></div>`;
+}
+
+function compareIds() {
+  return (query().get("ids") ?? "").split(",").filter(Boolean).map(findItem).filter(Boolean).slice(0, 4);
+}
+
+async function wireCompare(main) {
+  const items = compareIds();
+  const setIds = (ids) => go(`#compare?ids=${ids.map(encodeURIComponent).join(",")}`);
+  const qIn = main.querySelector("#cmp-q");
+  const sug = main.querySelector("#cmp-suggest");
+  qIn.addEventListener("input", () => {
+    const q = qIn.value.trim();
+    const hits = q.length < 2 ? [] : db.items.filter((i) => matches(i, q) && !items.includes(i)).sort((a, b) => searchRank(a, q) - searchRank(b, q)).slice(0, 8);
+    sug.innerHTML = hits.map((i) => `<button type="button" data-add="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(t(`cat_${i.category}`))}</span></button>`).join("");
+    sug.querySelectorAll("[data-add]").forEach((b) => b.addEventListener("click", () => setIds([...items.map((i) => i.id), b.dataset.add].slice(-4))));
+  });
+  const el = main.querySelector("#cmp");
+  if (!items.length) {
+    el.innerHTML = `<p class="muted">${esc(t("cmp_empty"))}</p>`;
+    return;
+  }
+
+  // Facts per item, computed here from the same data and maths as the rest of the site.
+  // "On a phone" = Apple's USB-C adapter: hand-checked, cheap, and what most people already have.
+  const appleDongle = findItem("apple--c-to-adapter");
+  const phoneOutputs = appleDongle ? sourceOutputs(appleDongle) : [];
+  const peak = LEVELS.normal + CREST;
+  const row = (label, f) => `<tr><th>${esc(label)}</th>${items.map((i) => `<td>${f(i) ?? "—"}</td>`).join("")}</tr>`;
+  const spec = (i, k, unit) => {
+    const e = i.specs?.[k]?.[0];
+    return e ? `${fmt(e.value, 1)} ${unit ?? e.unit ?? `dB <span class="tag">${esc(t("unit_unknown"))}</span>`}` : null;
+  };
+  const anyHp = items.some((i) => HEADPHONE_CATS.has(i.category));
+  const anySrc = items.some((i) => SOURCE_CATS.has(i.category));
+  const cheapest = Math.min(...items.map((i) => prices(i).cheapest?.price ?? Infinity));
+  const rows = [
+    row(t("cmp_type"), (i) => esc(t(`cat_${i.category}`))),
+    row(t("col_price"), (i) => {
+      const p = prices(i).cheapest;
+      return p ? `<b class="${p.price === cheapest ? "best" : ""}">${money(p.price, p.currency)}</b> <span class="muted small">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span>` : null;
+    }),
+    row(t("mat_label"), (i) => [...Object.keys(i.materials ?? {}), ...Object.keys(i.styles ?? {})].map((k) => esc(t(`mat_${k}`))).join(", ") || null),
+  ];
+  if (anyHp) {
+    rows.push(row(t("col_imp"), (i) => spec(i, "impedance", "Ω")));
+    rows.push(row(t("col_sens"), (i) => spec(i, "sensitivity")));
+    rows.push(
+      row(t("cmp_need", { peak }), (i) => {
+        const m = hpModel(i);
+        if (!m || !m.unitKnown) return null;
+        const { ohms, dbPerV } = headphoneSpecs(m);
+        return esc(vfmt(required(peak, dbPerV, ohms).vrms));
+      }),
+    );
+    rows.push(
+      row(t("cmp_phone"), (i) => {
+        if (!HEADPHONE_CATS.has(i.category)) return null;
+        if (!phoneOutputs.length) return null;
+        const ev = evaluate(i, phoneOutputs, { level: LEVELS.normal, crest: CREST });
+        const [tone, key] = VERDICT[ev.status] ?? VERDICT.unknown;
+        return ev.status === "unknown" ? null : `<span class="st-dot ${tone}"></span>${esc(t(key))}`;
+      }),
+    );
+  }
+  if (anySrc) {
+    rows.push(
+      row(t("cmp_power"), (i) => {
+        const o = sourceOutputs(i);
+        const p = o.flatMap((x) => x.power ?? []).find((x) => x.load === 32);
+        return p ? `${fmt(p.mw, 0)} mW @ 32 Ω` : o[0]?.vmax ? `${o[0].vmax} Vrms` : null;
+      }),
+    );
+    rows.push(row(t("cmp_zout"), (i) => spec(i, "zout", "Ω") ?? (sourceOutputs(i)[0]?.zout != null ? `${sourceOutputs(i)[0].zout} Ω` : null)));
+    rows.push(
+      row(t("cmp_drives"), (i) => {
+        const outs = sourceOutputs(i);
+        if (!outs.length) return null;
+        const ok = headphones.filter((h) => ["ok", "overkill"].includes(evaluate(h, outs, { level: LEVELS.normal, crest: CREST }).status)).length;
+        return esc(t("cmp_drives_n", { n: fmt(ok, 0), of: fmt(headphones.length, 0) }));
+      }),
+    );
+  }
+  rows.push(`<tr><th>${esc(t("cmp_reports"))}</th>${items.map((i) => `<td data-reports="${esc(i.id)}">…</td>`).join("")}</tr>`);
+  rows.push(`<tr><th>${esc(t("nav_discuss"))}</th>${items.map((i) => `<td data-threads="${esc(i.id)}">…</td>`).join("")}</tr>`);
+
+  const vsQuery = items.map((i) => `"${displayName(i)}"`).join(" vs ");
+  el.innerHTML = `<div class="table-wrap card"><table class="cmp-table">
+      <thead><tr><th></th>${items
+        .map((i) => {
+          const im = imageOf(i);
+          return `<th><div class="cmp-head">${im ? `<img src="${esc(sized(im.src, 240))}" alt="" referrerpolicy="no-referrer">` : ""}<a href="#item/${encodeURIComponent(i.id)}">${esc(displayName(i))}</a>
+          <button type="button" class="link small" data-remove="${esc(i.id)}">${esc(t("cmp_remove"))}</button></div></th>`;
+        })
+        .join("")}</tr></thead>
+      <tbody>${rows.join("")}</tbody></table></div>
+    ${
+      items.length > 1
+        ? `<p class="row-inline"><a class="pill" href="https://www.google.com/search?q=${encodeURIComponent(vsQuery)}" target="_blank" rel="noopener">Google: ${esc(items.map(displayName).join(" vs "))} ↗</a><a class="pill" href="https://www.reddit.com/search/?q=${encodeURIComponent(items.map(displayName).join(" vs "))}" target="_blank" rel="noopener">Reddit ↗</a><a class="pill primary" href="#discuss/new?item=${encodeURIComponent(items[0].id)}">${esc(t("cmp_ask"))}</a></p>`
+        : `<p class="muted">${esc(t("cmp_add_more"))}</p>`
+    }
+    <p class="muted small">${esc(t("cmp_note"))}</p>`;
+  el.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => setIds(items.map((i) => i.id).filter((id) => id !== b.dataset.remove))));
+
+  // Community columns load after the table.
+  const { ok, rows: reports } = await community.reportsFor(items.map((i) => i.id));
+  for (const i of items) {
+    const cell = el.querySelector(`[data-reports="${CSS.escape(i.id)}"]`);
+    if (!cell) continue;
+    const n = ok ? reports.filter((r) => r.item_id === i.id && r.kind === "issue").length : null;
+    cell.innerHTML = n == null ? "—" : n ? `<a href="#item/${encodeURIComponent(i.id)}" class="warn-text">${esc(t("cm_banner_n", { n }))}</a>` : `<span class="muted">0</span>`;
+  }
+  for (const i of items) {
+    const cell = el.querySelector(`[data-threads="${CSS.escape(i.id)}"]`);
+    if (!cell) continue;
+    const res = await community.listThreads({ item: i.id });
+    cell.innerHTML = res.ok ? `<a href="#item/${encodeURIComponent(i.id)}">${esc(t("ds_n_threads", { n: res.rows.length }))}</a>` : "—";
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Sources page data

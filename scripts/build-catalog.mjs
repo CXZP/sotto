@@ -9,6 +9,7 @@
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { classify, condition, modelKey, compact, groupKey } from "./lib/classify.js";
 import { extractSpecs, verify } from "./lib/specs.js";
+import { detectLooks } from "./lib/materials.js";
 
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap"]);
@@ -90,6 +91,15 @@ for (const file of files) {
       image: p.image ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
+    // Materials / looks with the store sentence they came from (first store wins).
+    if (category === "iem" || category === "headphone" || category === "dongle" || category === "desktop" || category === "dap") {
+      const looks = detectLooks({ title: p.title, tags: p.tags, body: p.body });
+      for (const kind of ["materials", "styles"])
+        for (const [k, quote] of Object.entries(looks[kind])) {
+          g[kind] ??= {};
+          g[kind][k] ??= { quote, url };
+        }
+    }
     groups.set(gk, g);
   }
 }

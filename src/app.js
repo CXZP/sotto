@@ -1,18 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3qxbno";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3qxbno";
-import { renderChart } from "./chart.js?v=mv3qxbno";
-import { makeT } from "./i18n.js?v=mv3qxbno";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3qxbno";
-import { LEGAL } from "./legal.js?v=mv3qxbno";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3qxbno";
-import * as community from "./community.js?v=mv3qxbno";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3qxbno";
-import { redactImage } from "./redact.js?v=mv3qxbno";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3qxbno";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3qxbno";
-import { chainLinks } from "./chain.js?v=mv3qxbno";
-import { fits } from "./dcfit.js?v=mv3qxbno";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3qxbno";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3r171k";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3r171k";
+import { renderChart } from "./chart.js?v=mv3r171k";
+import { makeT } from "./i18n.js?v=mv3r171k";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3r171k";
+import { LEGAL } from "./legal.js?v=mv3r171k";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3r171k";
+import * as community from "./community.js?v=mv3r171k";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3r171k";
+import { redactImage } from "./redact.js?v=mv3r171k";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3r171k";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3r171k";
+import { chainLinks } from "./chain.js?v=mv3r171k";
+import { fits } from "./dcfit.js?v=mv3r171k";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3r171k";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -187,6 +187,8 @@ function powerLine(i) {
   const spec = i.dcIn ?? i.dcOut;
   if (!spec) return "";
   const vtxt = (x) => (x.range ? `${x.range[0]}–${x.range[1]} V` : (x.needs ?? x.outputs).map((p) => `${p.v} V${p.a ? ` ${fmt(p.a, 2)} A` : ""}`).join(" · "));
+  // Powered over USB: a barrel-plug supply doesn't apply.
+  if (i.dcIn?.usb) return `<p class="small power-line"><b>${esc(t("pw_needs"))}</b> ${esc(vtxt(spec))} · ${esc(t("pw_usb"))} <a href="${esc(spec.url)}" target="_blank" rel="noopener" title="${esc(spec.quote)}">${esc(t("pw_source"))} ↗</a></p>`;
   const others = i.dcIn ? db.items.filter((x) => x.dcOut) : db.items.filter((x) => x.dcIn);
   const matches = others
     .map((x) => ({ x, f: i.dcIn ? fits(x.dcOut, i.dcIn) : fits(i.dcOut, x.dcIn) }))
@@ -626,7 +628,7 @@ function openPicker(slot) {
     <div class="pick-tools"><div class="chips pick-kinds">${kinds.map(([k, label], n) => `<button type="button" class="chip${n ? "" : " on"}" data-kind="${k}">${esc(label)}</button>`).join("")}</div>
       <select class="mini-select" data-sort aria-label="${esc(t("sort_label"))}">${["popular", "price", "price-desc"].map((v) => `<option value="${v}">${esc(t(`sort_${v}`))}</option>`).join("")}</select>
       <label class="check small"><input type="checkbox" checked> ${esc(t("picker_only_specs"))}</label></div>
-    <ul class="pick-list"></ul></div>`;
+    <ul class="pick-list"></ul><p class="small muted">${esc(t("add_model_hint"))} <a href="${REPO}/issues/new?template=add-model.yml" target="_blank" rel="noopener">${esc(t("add_model"))} ↗</a></p></div>`;
   document.body.append(dlg);
   const input = dlg.querySelector("input.search");
   const only = dlg.querySelector(".check input");
@@ -743,7 +745,7 @@ function catalogPage() {
         <label class="check small"><input type="checkbox" data-toggle="specs"${specsOnly ? " checked" : ""}> ${esc(t("only_specs"))}</label>
         <label class="check small"><input type="checkbox" data-toggle="stock"${stockOnly ? " checked" : ""}> ${esc(t("only_stock"))}</label>
         <select class="mini-select" data-param="mat" aria-label="${esc(t("mat_label"))}"><option value="">${esc(t("mat_label"))} ${esc(t("cat_all"))}</option>${["resin", "wood", "metal", "ceramic", "carbon", "glass", "clear"].map((m) => `<option value="${m}"${m === mat ? " selected" : ""}>${esc(t(`mat_${m}`))}</option>`).join("")}</select>
-        <span class="muted small filter-count">${esc(t("n_results", { n: fmt(res.length, 0) }))} · <a href="#brands">${esc(t("brands_all"))}</a> · <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a></span>
+        <span class="muted small filter-count">${esc(t("n_results", { n: fmt(res.length, 0) }))} · <a href="${REPO}/issues/new?template=add-model.yml" target="_blank" rel="noopener">${esc(t("add_model"))}</a> · <a href="#brands">${esc(t("brands_all"))}</a> · <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">${esc(t("speakers"))}</a></span>
       </div>
     </div>
     ${view === "grid" ? grid : `<div class="table-wrap card"><table class="cat-table">
@@ -907,6 +909,7 @@ function itemPage(id) {
       <div class="item-title"><p class="muted item-kicker">${i.brand ? `${brandMark(i.brand, 24)} <a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
+      ${i.addedFrom ? `<p class="small muted">${esc(t("added_from"))} <a href="${esc(i.addedFrom)}" target="_blank" rel="noopener">${esc(new URL(i.addedFrom).hostname)} ↗</a></p>` : ""}
       ${powerLine(i)}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
@@ -920,6 +923,7 @@ function itemPage(id) {
       <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
     </div>
     ${isSrc ? `<section class="card pad ports" id="ports"></section>` : ""}
+    ${i.category !== "power" ? `<section class="card pad owners" id="owners"></section>` : ""}
     <section class="card pad paid" id="paid"></section>
     ${channelsCard(i)}
     <section class="card pad community" id="community"></section>
@@ -986,6 +990,7 @@ function wire(main, r) {
     if (i) renderCommunity(main.querySelector("#community"), i);
     if (i) renderPaid(main.querySelector("#paid"), i);
     if (i) renderPorts(main.querySelector("#ports"), i);
+    if (i) renderOwners(main.querySelector("#owners"), i);
     if (i) renderItemThreads(main.querySelector("#item-threads"), i);
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
@@ -1591,6 +1596,105 @@ async function renderPorts(el, item) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// "I own this" (item page): short owner reports, shown as counts with n.
+
+const ANNOYANCES = ["heat", "app", "buttons", "gain", "cable", "driver", "connection", "battery", "noise", "size"];
+
+async function renderOwners(el, item) {
+  if (!el) return;
+  const head = `<h3>${esc(t("ow_title"))}</h3><p class="muted small">${esc(t("ow_lead"))}</p>`;
+  el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
+  const { ok, rows, summary } = await community.ownersFor(item.id);
+  const s = await community.session();
+  const profile = s ? await community.myProfile() : null;
+  if (!el.isConnected) return;
+  if (!ok) {
+    el.innerHTML = `${head}<p class="muted">${esc(t("cm_offline"))}</p>`;
+    return;
+  }
+  const mine = s ? rows.find((r) => r.author === s.user.id) : null;
+  const n = summary?.n ?? 0;
+  const bar = (k, v, tone) => `<div class="ow-stat"><span>${esc(t(k))}</span><b class="${tone}">${v} / ${n}</b></div>`;
+  const counts = {};
+  for (const r of rows) for (const a of r.annoyances ?? []) counts[a] = (counts[a] ?? 0) + 1;
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  const sumHtml = n
+    ? `<div class="ow-sum">
+        ${n < 5 ? `<p class="small warn-text">${esc(t("ow_few", { n }))}</p>` : ""}
+        <div class="ow-stats">
+          ${bar("ow_qc_ok", summary.qc_ok, "good")}${bar("ow_qc_faulty", summary.qc_faulty, summary.qc_faulty ? "bad" : "")}
+          ${bar("ow_failed", summary.failed, summary.failed ? "bad" : "")}${bar("ow_again_yes", summary.again_yes, "good")}
+          <div class="ow-stat"><span>${esc(t("ow_ease"))}</span><b>${summary.ease_avg} / 5</b></div>
+          <div class="ow-stat"><span>${esc(t("ow_months"))}</span><b>${summary.months_avg}</b></div>
+        </div>
+        ${top.length ? `<p class="small">${esc(t("ow_top_annoy"))} ${top.map(([k, c]) => `<span class="tag">${esc(t(`ow_a_${k}`))} · ${c}</span>`).join(" ")}</p>` : ""}
+      </div>`
+    : `<p class="muted">${esc(t("ow_none"))}</p>`;
+  const notes = rows.filter((r) => r.note || r.failure).slice(0, 20);
+  const notesHtml = notes.length
+    ? `<details class="ow-notes"><summary class="small">${esc(t("ow_read_notes", { n: notes.length }))}</summary><ul>${notes
+        .map(
+          (r) => `<li><span class="muted small">${esc(r.author_name || t("cm_user"))} · ${esc(t("ow_owned_for", { m: r.months_owned }))} · ${esc(t(`ow_again_${r.buy_again}`))}</span>
+            ${r.failed ? `<p class="small bad">${esc(t("ow_failed_after", { m: r.failed_after ?? "?" }))}${r.failure ? `: ${esc(r.failure)}` : ""}</p>` : ""}
+            ${r.note ? `<p>${esc(r.note)}</p>` : ""}</li>`,
+        )
+        .join("")}</ul></details>`
+    : "";
+  const radio = (name, vals, cur) => vals.map((v) => `<label class="check small"><input type="radio" name="${name}" value="${v}"${cur === v ? " checked" : ""} required> ${esc(t(`ow_${name}_${v}`))}</label>`).join("");
+  const form = !s
+    ? `<p class="small muted">${esc(t("ow_signin"))}</p>`
+    : !profile?.display_name
+      ? `<p class="small muted">${esc(t("pr_need_name"))}</p>`
+      : `<details class="ow-add"${mine ? "" : ""}><summary class="pill">${esc(t(mine ? "ow_edit" : "ow_add"))}</summary>
+        <form data-form="owner" class="ow-form">
+          <label class="dfield"><span>${esc(t("ow_q_months"))}</span><input class="search num" name="months" type="number" min="0" max="240" required value="${mine?.months_owned ?? ""}"></label>
+          <fieldset><legend class="small">${esc(t("ow_q_qc"))}</legend>${radio("qc", ["ok", "cosmetic", "faulty"], mine?.qc)}</fieldset>
+          <fieldset><legend class="small">${esc(t("ow_q_failed"))}</legend>
+            <label class="check small"><input type="checkbox" name="failed"${mine?.failed ? " checked" : ""}> ${esc(t("ow_q_failed_yes"))}</label>
+            <label class="small">${esc(t("ow_q_failed_after"))} <input class="search num mini" name="failed_after" type="number" min="0" max="240" value="${mine?.failed_after ?? ""}"></label>
+            <input class="search" name="failure" maxlength="200" placeholder="${esc(t("ow_q_failure_ph"))}" value="${esc(mine?.failure ?? "")}"></fieldset>
+          <fieldset><legend class="small">${esc(t("ow_q_ease"))}</legend>${[1, 2, 3, 4, 5].map((v) => `<label class="check small"><input type="radio" name="ease" value="${v}"${mine?.ease === v ? " checked" : ""} required> ${v}</label>`).join("")}<span class="muted small">${esc(t("ow_ease_scale"))}</span></fieldset>
+          <fieldset><legend class="small">${esc(t("ow_q_annoy"))}</legend>${ANNOYANCES.map((a) => `<label class="check small"><input type="checkbox" name="annoy" value="${a}"${mine?.annoyances?.includes(a) ? " checked" : ""}> ${esc(t(`ow_a_${a}`))}</label>`).join("")}</fieldset>
+          <fieldset><legend class="small">${esc(t("ow_q_again"))}</legend>${radio("again", ["yes", "maybe", "no"], mine?.buy_again)}</fieldset>
+          <textarea class="search" name="note" rows="3" maxlength="500" placeholder="${esc(t("ow_note_ph"))}">${esc(mine?.note ?? "")}</textarea>
+          <div class="row-inline"><button class="pill primary">${esc(t(mine ? "cm_save" : "ds_send"))}</button>${mine ? `<button type="button" class="link small" data-ow-del="${mine.id}">${esc(t("cm_delete"))}</button>` : ""}</div>
+          <p class="small status" role="status"></p>
+        </form></details>`;
+  el.innerHTML = `${head}${sumHtml}${notesHtml}${form}`;
+
+  const f = el.querySelector('[data-form="owner"]');
+  if (!f) return;
+  const status = f.querySelector(".status");
+  f.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const fd = new FormData(f);
+    try {
+      status.textContent = t("cm_loading");
+      await community.saveOwner({
+        item_id: item.id,
+        months_owned: Number(fd.get("months")),
+        qc: fd.get("qc"),
+        failed: !!fd.get("failed"),
+        failed_after: fd.get("failed_after") === "" || !fd.get("failed") ? null : Number(fd.get("failed_after")),
+        failure: fd.get("failed") ? String(fd.get("failure") ?? "").trim() : "",
+        ease: Number(fd.get("ease")),
+        annoyances: fd.getAll("annoy"),
+        buy_again: fd.get("again"),
+        note: String(fd.get("note") ?? "").trim(),
+      });
+      renderOwners(el, item);
+    } catch (e) {
+      status.textContent = `${t("cm_error")} ${e.message ?? e}`;
+    }
+  });
+  f.querySelector("[data-ow-del]")?.addEventListener("click", async (ev) => {
+    if (!confirm(t("ow_del_confirm"))) return;
+    await community.deleteOwner(Number(ev.target.dataset.owDel));
+    renderOwners(el, item);
+  });
+}
+
 async function renderPaid(el, item) {
   if (!el) return;
   const head = `<h3>${esc(t("pr_title"))}</h3><p class="muted small">${esc(t("pr_disclaimer"))}</p>`;
@@ -1744,7 +1848,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3qxbno" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3r171k" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

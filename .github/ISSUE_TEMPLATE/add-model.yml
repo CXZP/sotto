@@ -1,0 +1,53 @@
+name: Add a model Sotto doesn't have
+description: A headphone, DAC, amp, player or speaker none of our stores sell yet
+labels: [add-model]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We add models by hand from a source anyone can check: the maker's own page first, then a store page or a Head-Fi/forum post by the maker.
+        Facts only (ports, power with the load in Ω, impedance, sensitivity with its unit). Please don't paste whole reviews.
+  - type: input
+    id: name
+    attributes:
+      label: Brand and model
+      placeholder: FiiO JadeAudio Gigas 1
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is it
+      options:
+        - IEM
+        - Over-ear headphones
+        - USB dongle / portable DAC-amp
+        - Desktop DAC only
+        - Desktop headphone amp only
+        - Desktop DAC + amp
+        - Music player (DAP)
+        - CD player / transport
+        - Speakers
+        - Power supply
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official page (or the best source you have)
+      placeholder: https://www.fiio.com/...
+    validations:
+      required: true
+  - type: textarea
+    id: facts
+    attributes:
+      label: Facts from that page (copy the spec lines)
+      placeholder: |
+        Inputs: 3.5mm, RCA
+        Outputs: 3.5mm SE, 4.4mm balanced
+        Output power: ... mW @ 32Ω
+  - type: input
+    id: other
+    attributes:
+      label: Other links (Head-Fi thread, review, measurements)

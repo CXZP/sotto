@@ -309,6 +309,20 @@ for (const g of catalog) {
   if (g.specs.zout) w.zout++;
 }
 
+// Models no tracked store sells yet, added by hand from the maker's own page
+// (data/extra-items.json, every value quoted with its source). A store listing
+// for the same model later takes over the prices; the hand-added facts stay.
+{
+  const extra = JSON.parse(await readFile(new URL("data/extra-items.json", root), "utf8"));
+  for (const e of extra) {
+    const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id));
+    if (hit) {
+      for (const k of ["role", "ports", "dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
+    } else catalog.push({ offers: [], specs: {}, ...e });
+  }
+  catalog.sort((a, b) => a.id.localeCompare(b.id));
+}
+
 // Stores spell brands differently (MoonDrop / Moondrop / MOONDROP). Use one
 // spelling per brand: the most common, preferring mixed case on ties.
 {

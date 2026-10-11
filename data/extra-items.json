@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fiio--gigas-1",
+    "brand": "FiiO",
+    "model": "Gigas 1",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://www.fiio.com/newsinfo/1135697.html",
+    "ports": {
+      "in": {
+        "rca": { "quote": "Equipped with both 3.5mm and RCA inputs", "url": "https://www.fiio.com/newsinfo/1135697.html" },
+        "line": { "quote": "Equipped with both 3.5mm and RCA inputs", "url": "https://www.fiio.com/newsinfo/1135697.html" }
+      },
+      "out": {}
+    },
+    "dcIn": {
+      "needs": [{ "v": 5 }, { "v": 12 }],
+      "usb": true,
+      "quote": "High and low gain settings, 5V and 12V PD power supply",
+      "url": "https://www.fiio.com/newsinfo/1135697.html"
+    },
+    "notes": [
+      {
+        "th": "JadeAudio (แบรนด์ย่อยของ FiiO) แอมป์หูฟังตั้งโต๊ะอย่างเดียว ไม่มี DAC ในตัว ช่องหูฟัง 3.5 มม. และ 4.4 มม. บาลานซ์ FiiO ระบุกำลังขับ \"สูงสุด 4600mW+4600mW\" แบบบาลานซ์ แต่ไม่บอกที่โหลดกี่โอห์ม จึงยังใช้คำนวณความดังไม่ได้",
+        "en": "JadeAudio (a FiiO sub-brand) desktop headphone amp only, no built-in DAC. 3.5 mm and 4.4 mm balanced headphone outputs. FiiO states \"up to 4600mW+4600mW\" balanced but not at which load, so it can't be used for the loudness calculation yet.",
+        "source": "https://www.fiio.com/newsinfo/1135697.html"
+      }
+    ]
+  }
+]

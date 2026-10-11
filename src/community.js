@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3qxbno";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3r171k";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -150,6 +150,31 @@ export async function portsFor(itemIds) {
   const out = {};
   for (const r of data) (out[r.item_id] ??= []).push({ ...r, in: r.ports_in, out: r.ports_out });
   return out;
+}
+
+/** Owner reports for one model, and my own if signed in. */
+export async function ownersFor(itemId) {
+  const sb = await client();
+  if (!sb) return { ok: false, rows: [], summary: null };
+  const [feed, sum] = await Promise.all([
+    sb.from("owner_feed").select("*").eq("item_id", itemId).order("created_at", { ascending: false }).limit(200),
+    sb.from("owner_summary").select("*").eq("item_id", itemId).maybeSingle(),
+  ]);
+  if (feed.error) return { ok: false, rows: [], summary: null };
+  return { ok: true, rows: feed.data, summary: sum.data };
+}
+
+/** Insert or replace my report for this model (one per person per model). */
+export async function saveOwner(row) {
+  const sb = await client();
+  const { error } = await sb.from("owner_reports").upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "item_id,author" });
+  if (error) throw error;
+}
+
+export async function deleteOwner(id) {
+  const sb = await client();
+  const { error } = await sb.from("owner_reports").delete().eq("id", id);
+  if (error) throw error;
 }
 
 export async function addPorts(row) {

@@ -448,3 +448,16 @@ select option { background: var(--surface); color: var(--text); }
 .item-kicker .brand-mark { border-radius: 6px; }
 
 .brand-body > :not(.brand-mark) { min-width: 0; overflow-wrap: anywhere; }
+
+/* Owners card */
+.ow-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.ow-stat { background: var(--surface-2); border-radius: 12px; padding: 8px 12px; display: grid; gap: 2px; }
+.ow-stat span { font-size: 12px; color: var(--text-2); }
+.ow-stat b.good { color: var(--good, #34c759); }
+.ow-stat b.bad, .ow-notes .bad { color: var(--bad, #ff453a); }
+.ow-notes ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+.ow-form { display: grid; gap: 8px; }
+.ow-form fieldset { border: 1px solid var(--surface-2); border-radius: 12px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.ow-form .num.mini { width: 80px; display: inline-block; }
+.ow-add > summary { list-style: none; display: inline-block; margin: 8px 0; }
+.ow-add > summary::-webkit-details-marker { display: none; }

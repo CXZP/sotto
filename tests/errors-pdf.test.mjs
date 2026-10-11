@@ -201,26 +201,51 @@ for (const re of [/Anthem AVM 70/, /Anthem AVM 90/])
 
 // ---------------------------------------------------------------- 6. one model, right form factor
 
-test("Astell&Kern PA10 is one model, a portable amp (not a dongle)", { todo }, () => {
+// astellnkern.com: "The First Class-A Portable AMP" — analog in (3.5/4.4 mm), battery, no DAC.
+test("Astell&Kern PA10 is one model, a portable amp (not a dongle, not desktop)", { todo }, () => {
   const found = byTitle(/PA10/).filter((i) => /astell/i.test(i.brand ?? ""));
   assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
-  assert.notEqual(found[0].category, "dongle");
+  assert.ok(!["dongle", "desktop"].includes(found[0].category), `${found[0].id} is ${found[0].category}`);
+  assert.equal(found[0].role ?? "amp", "amp");
 });
+// aloaudio.com: USB-C dongle, ESS 9281AC Pro DAC, 3.5 + 4.4 mm out.
 test("ALO Audio Pilot II is one model, a USB dongle DAC", { todo }, () => {
   const found = byTitle(/ALO Audio Pilot II/);
   assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
   assert.equal(found[0].category, "dongle");
 });
+// acoustune.jp/as2002: USB-C dongle with an AK4493S DAC.
 test("Acoustune AS2000 and AS2002 are portable DACs, not desktop units", { todo }, () => {
   const found = byTitle(/Acoustune AS200[02]/);
   assert.ok(found.length);
   for (const i of found) assert.equal(i.category, "dongle", i.id);
 });
 
+// Whole catalog: the same brand and model name once colours, "wireless",
+// "edition", "class-a", spacing and the like are ignored is one model.
+const SAME_NOISE = /\b(portable|desktop|headphones?|amplifier|amp|usb|dac|class[- ]?a|balanced|jack|4\.4mm|3\.5mm|with|and|the|for|in-?ear|iems?|earphones?|monitors?|universal|wireless|bluetooth|hifi|hi-fi|edition|version|new|black|silver|white|grey|gray|blue|red|open box|demo unit)\b/gi;
+const sameKey = (i) => `${(i.brand ?? "").toLowerCase()}|${(i.model ?? i.id.split("--")[1] ?? "").toLowerCase().replace(/[-_]/g, " ").replace(SAME_NOISE, " ").replace(/[^a-z0-9]+/g, "")}`;
+// Pairs the rule above joins that really are different products.
+const DIFFERENT = new Set(["ifi--zen-3|ifi--zen-blue-3", "ifi--zen-3|ifi--zen-blue-3-wireless"]);
+test("no model is split across several entries (whole catalog)", { todo }, () => {
+  const groups = new Map();
+  for (const i of db.items) {
+    const k = sameKey(i);
+    if (k.split("|")[1].length < 2) continue;
+    groups.set(k, [...(groups.get(k) ?? []), i.id]);
+  }
+  const split = [...groups.values()].filter((ids) => ids.length > 1 && !ids.slice(1).every((id) => DIFFERENT.has(`${ids[0]}|${id}`)));
+  assert.deepEqual(split.map((ids) => ids.join(" = ")), []);
+});
+
 // ---------------------------------------------------------------- 7. pre-owned is used stock of the same model
 
 test("PREOWNED (one word) is used stock, not a new model", { todo }, () => {
   const bad = db.items.filter((i) => /preowned/.test(i.id)).map((i) => i.id);
+  assert.deepEqual(bad, []);
+});
+test("no model id carries a stock-condition word (pre-owned, open box, demo, discontinued...)", { todo }, () => {
+  const bad = db.items.filter((i) => /(^|-)(pre-?owned|preowned|pre-?sale|pre-?order|open-box|b-stock|refurbished|demo|clearance|used|discontinued)(-|$)/.test(i.id)).map((i) => i.id);
   assert.deepEqual(bad, []);
 });
 test("'Pre Sale' is not part of a model name", { todo }, () => {
@@ -230,6 +255,9 @@ test("'Pre Sale' is not part of a model name", { todo }, () => {
 
 // ---------------------------------------------------------------- 8. the home-page dongle has a picture
 
+test("every model has a photo (whole catalog)", { todo }, () => {
+  assert.deepEqual(db.items.filter((i) => !i.image && !i.offers.some((o) => o.image)).map((i) => `${i.id} (${i.category})`), []);
+});
 test("Apple USB-C to 3.5 mm adapter has an image", { todo }, () => {
   const i = db.items.find((x) => x.id === "apple--c-to-adapter");
   assert.ok(i, "missing");

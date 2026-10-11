@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv32pgtj";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv32s2ut";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -168,12 +168,14 @@ export async function uploadEvidence(blob, bucket = "evidence") {
 const PAGE = 30;
 
 /** Threads, newest activity or top score first; optionally only those linked to an item. */
-export async function listThreads({ sort = "new", category = "", item = "", page = 0 } = {}) {
+export async function listThreads({ sort = "new", category = "", item = "", page = 0, withImages = false } = {}) {
   const sb = await client();
   if (!sb) return { ok: false, rows: [] };
   let q = sb.from("thread_feed").select("*");
-  if (category) q = q.eq("category", category);
+  if (Array.isArray(category)) q = q.in("category", category);
+  else if (category) q = q.eq("category", category);
   if (item) q = q.contains("item_ids", [item]);
+  if (withImages) q = q.neq("images", "{}");
   q = sort === "top" ? q.order("score", { ascending: false }).order("created_at", { ascending: false }) : q.order("last_activity", { ascending: false });
   const { data, error } = await q.range(page * PAGE, page * PAGE + PAGE - 1);
   if (error) return { ok: false, rows: [] };
@@ -426,3 +428,35 @@ export async function inbox() {
   };
 }
 export const markInboxRead = () => setJson(INBOX_READ, Date.now());
+
+// ---------------------------------------------------------------- brands
+
+let myBrandCache;
+/** The verified brand of the signed-in person, or null. */
+export async function myBrand() {
+  if (myBrandCache !== undefined) return myBrandCache;
+  const sb = await client();
+  const s = await session();
+  if (!sb || !s) return (myBrandCache = null);
+  const { data } = await sb.from("brand_reps").select("brand, title").eq("user_id", s.user.id).maybeSingle();
+  return (myBrandCache = data ?? null);
+}
+
+export async function responsesFor(reportIds) {
+  const sb = await client();
+  if (!sb || !reportIds.length) return [];
+  const { data } = await sb.from("response_feed").select("*").in("report_id", reportIds).order("created_at");
+  return data ?? [];
+}
+
+export async function addResponse(row) {
+  const sb = await client();
+  const { error } = await sb.from("report_responses").insert(row);
+  if (error) throw error;
+}
+
+export async function deleteResponse(id) {
+  const sb = await client();
+  const { error } = await sb.from("report_responses").delete().eq("id", id);
+  if (error) throw error;
+}

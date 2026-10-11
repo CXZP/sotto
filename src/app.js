@@ -1,15 +1,15 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv32pgtj";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv32pgtj";
-import { renderChart } from "./chart.js?v=mv32pgtj";
-import { makeT } from "./i18n.js?v=mv32pgtj";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv32pgtj";
-import { LEGAL } from "./legal.js?v=mv32pgtj";
-import { track, stats, trackingOff } from "./analytics.js?v=mv32pgtj";
-import * as community from "./community.js?v=mv32pgtj";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv32pgtj";
-import { redactImage } from "./redact.js?v=mv32pgtj";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv32pgtj";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv32pgtj";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv32s2ut";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv32s2ut";
+import { renderChart } from "./chart.js?v=mv32s2ut";
+import { makeT } from "./i18n.js?v=mv32s2ut";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv32s2ut";
+import { LEGAL } from "./legal.js?v=mv32s2ut";
+import { track, stats, trackingOff } from "./analytics.js?v=mv32s2ut";
+import * as community from "./community.js?v=mv32s2ut";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv32s2ut";
+import { redactImage } from "./redact.js?v=mv32s2ut";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv32s2ut";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv32s2ut";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -131,7 +131,7 @@ function renderChrome(r) {
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>`;
 }
 
 function setSeg(selector, key, value) {
@@ -156,6 +156,7 @@ function render() {
   else if (r.name === "saved") main.innerHTML = savedPage();
   else if (r.name === "stats") main.innerHTML = statsPage();
   else if (r.name === "compare") main.innerHTML = comparePage();
+  else if (r.name === "gallery") main.innerHTML = galleryPage();
   else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${LEGAL[r.name][state.lang] ?? LEGAL[r.name].en}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
@@ -194,6 +195,7 @@ function buildPage() {
       ${hp ? slotRow(t("plug"), seg("plug", PLUGS.map((j) => [j, PLUG_SHORT[j]]), plugOf(hp)), !state.plug && !hp.stockPlug ? t("plug_guess") : "") : ""}
       ${slotRow(t("level"), seg("level", [["quiet", t("level_quiet")], ["normal", t("level_normal")], ["loud", t("level_loud")]], state.level), t("level_hint", { avg: lv, peak: lv + CREST }))}
       ${buildTotal(amp, hp)}
+      ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
     <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
       <div class="card chart-card" id="chart"></div>
@@ -838,6 +840,7 @@ function wire(main, r) {
   if (r.name === "saved") wireSaved(main);
   if (r.name === "stats") wireStats(main);
   if (r.name === "compare") wireCompare(main);
+  if (r.name === "gallery") wireGallery(main);
   if (r.name === "inbox") wireInbox(main);
   if (r.name === "item") wireBookmarks(main);
   main.querySelectorAll("[data-jump]").forEach((a) =>
@@ -932,6 +935,9 @@ async function renderCommunity(el, item) {
   if (!el.isConnected) return;
   const profile = s ? await community.myProfile() : null;
   const mine = s ? await community.myConfirms(rows.map((r) => r.id)) : new Set();
+  const responses = await community.responsesFor(rows.filter((r) => r.kind === "issue").map((r) => r.id));
+  const rep = s ? await community.myBrand() : null;
+  const canRespond = rep && item.brand && rep.brand.toLowerCase() === item.brand.toLowerCase();
   const order = { issue: 0, owner: 1, correction: 2 };
   rows.sort((a, b) => order[a.kind] - order[b.kind] || b.confirms - a.confirms);
 
@@ -946,7 +952,15 @@ async function renderCommunity(el, item) {
       <button class="pill small${mine.has(r.id) ? " on" : ""}" data-confirm="${r.id}" ${s ? "" : "disabled"} aria-pressed="${mine.has(r.id)}">${esc(t("cm_metoo"))} · ${r.confirms}</button>
       ${s && r.author !== s.user.id ? `<button class="link small" data-flag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}
       ${s && r.author === s.user.id ? `<button class="link small" data-del="${r.id}">${esc(t("cm_delete"))}</button>` : ""}
-    </div></article>`;
+      ${canRespond && r.kind === "issue" ? `<button class="link small" data-respond="${r.id}">${esc(t("br_respond"))}</button>` : ""}
+    </div>
+    ${responses
+      .filter((x) => x.report_id === r.id)
+      .map(
+        (x) => `<div class="brand-response"><div class="small"><span class="brand-badge">✓ ${esc(x.brand)}</span> <b>${esc(x.author_name || x.brand)}</b>${x.author_title ? ` · ${esc(x.author_title)}` : ""} · ${esc(ago(x.created_at))}</div><div class="md">${renderMd(x.body)}</div>${s && x.author === s.user.id ? `<button class="link small" data-del-resp="${x.id}">${esc(t("cm_delete"))}</button>` : ""}</div>`,
+      )
+      .join("")}
+    <div class="respond-slot"></div></article>`;
 
   let composer;
   if (!s) {
@@ -979,6 +993,34 @@ async function renderCommunity(el, item) {
   const status = el.querySelector(".status");
   const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
   const again = () => renderCommunity(el, item);
+  el.querySelectorAll("[data-respond]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const slot = b.closest("article").querySelector(".respond-slot");
+      if (slot.innerHTML) return (slot.innerHTML = "");
+      slot.innerHTML = `<form class="cm-form"><p class="small">${esc(t("br_respond_hint", { brand: rep.brand }))}</p>${mdEditor("body", 3, "", 5000)}<div class="row-inline"><button class="pill primary small">${esc(t("ds_send"))}</button></div><p class="small status"></p></form>`;
+      wireMd(slot);
+      slot.querySelector("form").addEventListener("submit", async (ev) => {
+        ev.preventDefault();
+        try {
+          await community.addResponse({ report_id: Number(b.dataset.respond), brand: rep.brand, body: ev.target.body.value.trim() });
+          again();
+        } catch (e) {
+          ev.target.querySelector(".status").textContent = `${t("cm_error")} ${e.message}`;
+        }
+      });
+    }),
+  );
+  el.querySelectorAll("[data-del-resp]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      if (!confirm(t("cm_delete_q"))) return;
+      try {
+        await community.deleteResponse(Number(b.dataset.delResp));
+        again();
+      } catch (e) {
+        fail(e);
+      }
+    }),
+  );
 
   el.querySelectorAll("[data-confirm]").forEach((b) =>
     b.addEventListener("click", async () => {
@@ -1449,7 +1491,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv32pgtj" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv32s2ut" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1534,7 +1576,7 @@ function wireTool(el) {
 // Discussions (#discuss, #discuss/new, #discuss/<id>) and account (#account).
 // Pages render a shell synchronously; data fills in after Supabase answers.
 
-const CATEGORIES = ["question", "setup", "deal", "issue", "news", "general"];
+const CATEGORIES = ["question", "setup", "dream", "deal", "issue", "news", "general"];
 
 /** Photo picker: each image goes through the redactor (re-encode, optional black boxes). */
 function photoPickerHtml(max) {
@@ -1636,6 +1678,8 @@ function ago(iso) {
 }
 
 const authorName = (r) => (r.author ? r.author_name || t("cm_user") : t("ds_deleted"));
+/** Name plus a verified-brand badge when the author is a brand representative. */
+const authorHtml = (r) => `${esc(authorName(r))}${r.author_brand ? ` <span class="brand-badge" title="${esc(t("br_verified_hint"))}">✓ ${esc(r.author_brand)}</span>` : ""}`;
 
 function voteBox(kind, id, score, mine, signedIn, row = false) {
   return `<div class="vote${row ? " row" : ""}" data-kind="${kind}" data-id="${id}">
@@ -1731,7 +1775,7 @@ function threadRow(r, mine, signedIn) {
     ${voteBox("thread", r.id, r.score, mine, signedIn)}
     <div class="thread-main">
       <a class="thread-title" href="#discuss/${r.id}">${esc(r.title)}</a>
-      <div class="muted small"><span class="tag">${esc(t(`dc_${r.category}`))}</span> ${esc(authorName(r))} · ${esc(ago(r.created_at))} · <a href="#discuss/${r.id}">${esc(t("ds_n_comments", { n: r.comment_count }))}</a></div>
+      <div class="muted small"><span class="tag">${esc(t(`dc_${r.category}`))}</span> ${authorHtml(r)} · ${esc(ago(r.created_at))} · <a href="#discuss/${r.id}">${esc(t("ds_n_comments", { n: r.comment_count }))}</a></div>
       ${items ? `<div class="chips small-chips">${items}</div>` : ""}
     </div>${r.images?.length ? `<a class="row-thumb" href="#discuss/${r.id}"><img src="${esc(r.images[0])}" alt="" loading="lazy">${r.images.length > 1 ? `<span>+${r.images.length - 1}</span>` : ""}</a>` : ""}</article>`;
 }
@@ -1775,9 +1819,12 @@ async function wireNewThread(main) {
     wireAuth(el, location.hash, () => wireNewThread(main));
     return;
   }
-  const picked = new Set(el.dataset.pre && findItem(el.dataset.pre) ? [findItem(el.dataset.pre).id] : []);
+  const qp = query();
+  const preIds = [el.dataset.pre, ...(qp.get("items") ?? "").split(",")].filter(Boolean).map(findItem).filter(Boolean).map((i) => i.id);
+  const picked = new Set(preIds.slice(0, 5));
+  const preCat = CATEGORIES.includes(qp.get("cat")) ? qp.get("cat") : "";
   el.innerHTML = `<form class="cm-form" data-form="thread">
-    <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}">${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
+    <label class="dfield"><span>${esc(t("ds_category"))}</span><select class="mini-select" name="category">${CATEGORIES.map((c) => `<option value="${c}"${c === preCat ? " selected" : ""}>${esc(t(`dc_${c}`))}</option>`).join("")}</select></label>
     <input class="search" name="title" required minlength="5" maxlength="160" placeholder="${esc(t("ds_title_ph"))}">
     ${mdEditor("body", 8, t("ds_body_ph"), 10000)}
     ${photoPickerHtml(8)}
@@ -1906,16 +1953,38 @@ function editComment(main, c, done) {
 
 // ---- thread sidebar: products in the thread, then threads about the same products
 
-function asideProducts(ids) {
+function asideProducts(ids, category) {
   const items = (ids ?? []).map((id) => findItem(id)).filter(Boolean);
   if (!items.length) return "";
+  const extra = category === "setup" || category === "dream" ? setupSummary(items) : "";
   return `<section class="card pad"><h3>${esc(t("ds_in_thread"))}</h3>${items
     .map((i) => {
       const im = imageOf(i);
       const pr = prices(i).cheapest;
       return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(t(`cat_${i.category}`))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div></a>`;
     })
-    .join("")}</section>`;
+    .join("")}${extra}</section>`;
+}
+
+/** Total price per currency, and whether the setup's source drives each headphone. */
+function setupSummary(items) {
+  const sums = new Map();
+  for (const i of items) {
+    const p = prices(i).cheapest;
+    if (p) sums.set(p.currency, (sums.get(p.currency) ?? 0) + p.price);
+  }
+  const src = items.find((i) => SOURCE_CATS.has(i.category) && sourceOutputs(i).length);
+  const hps = items.filter((i) => HEADPHONE_CATS.has(i.category) && hpModel(i));
+  const checks = src
+    ? hps.map((h) => {
+        const ev = evaluate(h, sourceOutputs(src), { level: LEVELS.normal, crest: CREST });
+        const [tone, key] = VERDICT[ev.status] ?? VERDICT.unknown;
+        return `<li><span class="st-dot ${tone}"></span>${esc(displayName(src))} → ${esc(displayName(h))}: ${esc(t(key))}</li>`;
+      })
+    : [];
+  const build = src && hps[0] ? `#build?amp=${encodeURIComponent(src.id)}&hp=${encodeURIComponent(hps[0].id)}` : null;
+  return `<div class="setup-sum">${sums.size ? `<p><b>${esc(t("su_total"))}</b> ${[...sums].map(([c, v]) => money(v, c)).join(" + ")} <span class="muted small">${esc(t("su_total_note"))}</span></p>` : ""}
+    ${checks.length ? `<ul class="setup-checks small">${checks.join("")}</ul>` : ""}${build ? `<a class="pill small" href="${build}">${esc(t("su_open_build"))}</a>` : ""}</div>`;
 }
 
 async function fillRelated(el, th) {
@@ -1980,7 +2049,7 @@ async function wireThread(main) {
         .sort((a, b) => b.score - a.score || new Date(a.created_at) - new Date(b.created_at))
         .map(
           (c) => `<div class="comment${depth >= 5 ? " flat" : ""}" id="c${c.id}">
-          <div class="comment-main"><div class="comment-head muted small"><button type="button" class="collapse" aria-expanded="true" aria-label="${esc(t("ds_collapse"))}">⊖</button><b class="${c.author === th.author && c.author ? "op" : ""}">${esc(authorName(c))}</b> · ${esc(ago(c.created_at))}${c.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}<span class="collapsed-note" hidden> · ${esc(t("ds_collapsed", { n: 1 + countKids(c.id) }))}</span></div>
+          <div class="comment-main"><div class="comment-head muted small"><button type="button" class="collapse" aria-expanded="true" aria-label="${esc(t("ds_collapse"))}">⊖</button><b class="${c.author === th.author && c.author ? "op" : ""}">${authorHtml(c)}</b> · ${esc(ago(c.created_at))}${c.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}<span class="collapsed-note" hidden> · ${esc(t("ds_collapsed", { n: 1 + countKids(c.id) }))}</span></div>
           <div class="comment-rest">
           ${c.body ? `<div class="comment-body md">${richText(c.body)}</div>` : ""}
           ${gallery(c.images, "small")}
@@ -1990,7 +2059,7 @@ async function wireThread(main) {
         )
         .join("");
     el.innerHTML = `<div class="thread-layout"><div class="thread-col"><article class="thread card pad">
-        <p class="muted small thread-meta"><a class="back" href="#discuss" aria-label="${esc(t("nav_discuss"))}">←</a><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${esc(authorName(th))} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
+        <p class="muted small thread-meta"><a class="back" href="#discuss" aria-label="${esc(t("nav_discuss"))}">←</a><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${authorHtml(th)} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
         <h1 class="thread-h1">${esc(th.title)}</h1>
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
@@ -2002,7 +2071,7 @@ async function wireThread(main) {
         ${canPost ? `<form class="cm-form" data-form="comment">${mdEditor("body", 3, t("ds_comment_ph"), 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
         <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
       </section></div>
-      <aside class="thread-aside">${asideProducts(th.item_ids)}<section class="card pad related"><h3>${esc(t("ds_related"))}</h3><div class="related-list"><p class="muted small">${esc(t("cm_loading"))}</p></div></section></aside></div>`;
+      <aside class="thread-aside">${asideProducts(th.item_ids, th.category)}<section class="card pad related"><h3>${esc(t("ds_related"))}</h3><div class="related-list"><p class="muted small">${esc(t("cm_loading"))}</p></div></section></aside></div>`;
     fillRelated(el.querySelector(".related-list"), th);
     el.querySelectorAll(".collapse").forEach((b) =>
       b.addEventListener("click", () => {
@@ -2244,6 +2313,7 @@ async function wireSaved(main) {
     if (pr) sums.set(pr.currency, (sums.get(pr.currency) ?? 0) + pr.price);
   }
   main.querySelector("#saved-total").textContent = sums.size ? t("bm_total", { total: [...sums].map(([c, v]) => money(v, c)).join(" + ") }) : "";
+  if (items.length) iEl.insertAdjacentHTML("afterend", `<p class="row-inline"><a class="pill" href="#discuss/new?cat=dream&items=${items.slice(0, 5).map((i) => encodeURIComponent(i.id)).join(",")}">${esc(t("su_from_wishlist"))}</a></p>`);
   if (!s && list.length) tEl.insertAdjacentHTML("beforebegin", `<p class="small warn-text">${esc(t("bm_local"))} <a href="#account">${esc(t("ac_title"))}</a></p>`);
 }
 
@@ -2481,6 +2551,58 @@ async function wireCompare(main) {
     const res = await community.listThreads({ item: i.id });
     cell.innerHTML = res.ok ? `<a href="#item/${encodeURIComponent(i.id)}">${esc(t("ds_n_threads", { n: res.rows.length }))}</a>` : "—";
   }
+}
+
+// ---------------------------------------------------------------------------
+// Gallery (#gallery): setups and dream setups with photos, as a grid.
+
+function galleryPage() {
+  const p = query();
+  const cat = p.get("cat") ?? "";
+  const sort = p.get("sort") ?? "new";
+  const link = (over) => {
+    const n = new URLSearchParams(p);
+    for (const [k, v] of Object.entries(over)) v ? n.set(k, v) : n.delete(k);
+    return `#gallery?${n}`;
+  };
+  return `<div class="discuss"><header class="deal-head row-between"><div><h1>${esc(t("ga_title"))}</h1><p class="muted">${esc(t("ga_lead"))}</p></div>
+      <div class="row-inline"><a class="pill" href="#discuss/new?cat=dream">${esc(t("su_new_dream"))}</a><a class="pill primary" href="#discuss/new?cat=setup">${esc(t("su_new_setup"))}</a></div></header>
+    <div class="filters"><div class="chips">${[["", t("cat_all")], ["setup", t("dc_setup")], ["dream", t("dc_dream")]].map(([c, l]) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c })}">${esc(l)}</a>`).join("")}</div>
+      <div class="chips">${["new", "top"].map((x) => `<a class="chip${x === sort ? " on" : ""}" href="${link({ sort: x })}">${esc(t(`ds_sort_${x}`))}</a>`).join("")}</div></div>
+    <div id="gallery" class="gallery-grid"><p class="muted">${esc(t("cm_loading"))}</p></div></div>`;
+}
+
+async function wireGallery(main) {
+  const p = query();
+  const el = main.querySelector("#gallery");
+  const cat = p.get("cat");
+  const { ok, rows } = await community.listThreads({ category: cat ? cat : ["setup", "dream"], sort: p.get("sort") ?? "new" });
+  if (!el.isConnected) return;
+  if (!ok) {
+    el.innerHTML = `<p class="muted">${esc(t("cm_offline"))}</p>`;
+    return;
+  }
+  el.innerHTML = rows.length
+    ? rows
+        .map((r) => {
+          const items = (r.item_ids ?? []).map(findItem).filter(Boolean);
+          const sums = new Map();
+          for (const i of items) {
+            const pr = prices(i).cheapest;
+            if (pr) sums.set(pr.currency, (sums.get(pr.currency) ?? 0) + pr.price);
+          }
+          // Photo: the poster's own, or the first product's store photo for dream setups without one.
+          const own = r.images?.[0];
+          const im = own ? null : items.map(imageOf).find(Boolean);
+          return `<a class="ga-card card" href="#discuss/${r.id}">
+            <div class="ga-img${own ? "" : " product"}">${own ? `<img src="${esc(own)}" alt="" loading="lazy">` : im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}<span class="tag">${esc(t(`dc_${r.category}`))}</span></div>
+            <div class="ga-body"><b>${esc(r.title)}</b>
+            <span class="muted small">${authorHtml(r)} · ▲ ${r.score} · 💬 ${r.comment_count}</span>
+            ${items.length ? `<span class="small">${items.slice(0, 3).map((i) => esc(displayName(i))).join(" + ")}${items.length > 3 ? " …" : ""}</span>` : ""}
+            ${sums.size ? `<span class="small strong">${[...sums].map(([c, v]) => money(v, c)).join(" + ")}</span>` : ""}</div></a>`;
+        })
+        .join("")
+    : `<p class="muted">${esc(t("ga_empty"))}</p>`;
 }
 
 // ---------------------------------------------------------------------------

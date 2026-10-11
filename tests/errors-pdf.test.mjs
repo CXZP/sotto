@@ -90,11 +90,51 @@ for (const [re, brand] of [
 
 // ---------------------------------------------------------------- 3. speaker amps are not headphone amps
 
-for (const re of [/Audio Research Reference 75 SE Amplifier/, /Audio Research Reference 150 SE Amplifier/, /Audio Research Reference 250 SE Amplifier/, /SABAJ A30A FDA Amplifier/])
+// Power amps for passive speakers: no headphone output, rated in watts into 4-8 Ω.
+// They must never be offered as a headphone amp or enter the loudness maths.
+const SPEAKER_AMPS = [
+  /Audio Research Reference 75 SE Amplifier/,
+  /Audio Research Reference 150 SE Amplifier/,
+  /Audio Research Reference 250 SE Amplifier/,
+  /SABAJ A30A FDA Amplifier/,
+  /McIntosh MC152 150 Watt Stereo Amplifier/i,
+  /Mcintosh MC901 Dual Mono Amplifier/i,
+  /Mark Levinson ML-50 .*Monaural Amplifier/,
+  /^X250\.8 Stereo Amplifier/,
+  /^Ultima 6 Amplifier/,
+  /^ETUDE Amplifier/,
+  /DALI PHANTOM CI AMP-/,
+  /Primare A35\.8 Eight Channel Home Cinema Amplifier/,
+];
+for (const re of SPEAKER_AMPS)
   test(`speaker power amp, kept out of headphone maths: ${re.source}`, { todo }, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.ok(!hpAmp(i), `${i.id} is desktop/${i.role}`);
+  });
+
+// The same over the whole catalog: a title that says power / stereo / mono amp,
+// watts, home cinema or custom install, and never says headphone.
+const SPEAKER_WORDS = /\b(power amp(lifier)?|stereo amp(lifier)?|mono(block|aural)? amp(lifier)?|dual mono amp(lifier)?|\d{2,4}\s?watts?\b|\d\s?x\s?\d{2,4}\s?w\b|home cinema|custom install(ation)?)\b/i;
+test("no speaker power amp anywhere is filed as a headphone amp", { todo }, () => {
+  const bad = db.items
+    .filter((i) => hpAmp(i) && i.offers.some((o) => SPEAKER_WORDS.test(o.title)) && !i.offers.some((o) => /headphone/i.test(o.title)))
+    .map((i) => `${i.id} (${i.role})`);
+  assert.deepEqual(bad, []);
+});
+
+// Line-level preamps drive a power amp, not headphones: role "preamp".
+for (const re of [/^XP-12 Line Level Preamplifier/, /^XP-22 Line Level Preamplifier/, /^ULTIMA PRE 2 Preamplifier/, /Goldmund MIMESIS .*Pre Amplifier/, /Benchmark LA4 Line Amplifier/])
+  test(`line preamp, not a headphone amp: ${re.source}`, { todo }, () => {
+    const found = byTitle(re);
+    assert.ok(found.length, "listing missing");
+    for (const i of found) assert.equal(i.role, "preamp", i.id);
+  });
+
+// Not amplifiers at all, yet filed as one.
+for (const re of [/Master Clock/i, /Reference Clock/, /Network Isolator|Network Conditioner|Galvanic Isolator|USB Optical Isolator/, /Kanto DM[12G] .*(Mount|Arm)/])
+  test(`not an amplifier: ${re.source}`, { todo }, () => {
+    assert.deepEqual(byTitle(re).filter(hpAmp).map((i) => `${i.id} (${i.role})`), []);
   });
 
 // ---------------------------------------------------------------- 4. sources in the right box

@@ -11,7 +11,9 @@ Sotto checks a headphone setup — phone or computer → dongle / DAC-amp → he
 
 It deliberately does **not** tell you what sounds good. That's taste; go to [squig.link](https://squig.link/), read reviews, listen.
 
-No AI. No tracking. No build step. No dependencies.
+No AI in the checks. No tracking. No build step. No dependencies.
+
+AI appears in one place only: an optional helper that turns review text a signed-in person pastes into a draft post. Every point it keeps must quote the pasted text word for word, or it is dropped. The calculations never use it.
 
 ## Run it
 
@@ -63,6 +65,6 @@ Brand and model names are trademarks of their owners and are used only to identi
 
 ### ภาษาไทย
 
-Sotto เช็กชุดหูฟังว่า **เสียบได้ไหม · ดังพอไหม · ต้องซื้อแอมป์ไหม** โดยคำนวณจากสเปกจริงที่มีลิงก์ที่มาทุกตัว ไม่ตัดสินว่าเสียงเพราะไหม ไม่มี AI ไม่มี tracking
+Sotto เช็กชุดหูฟังว่า **เสียบได้ไหม · ดังพอไหม · ต้องซื้อแอมป์ไหม** โดยคำนวณจากสเปกจริงที่มีลิงก์ที่มาทุกตัว ไม่ตัดสินว่าเสียงเพราะไหม ไม่มี tracking · การคำนวณไม่ใช้ AI (มี AI แค่ตัวช่วยร่างโพสต์จากรีวิวที่ผู้ใช้วางเอง และทุกข้อต้องมีประโยคต้นฉบับกำกับ)
 
 เพิ่มหรือแก้ข้อมูล: แก้ไฟล์ใน `data/` ใส่ลิงก์ที่มาทุกค่า รัน `npm run check` แล้วเปิด PR — รายละเอียดใน [CONTRIBUTING.md](CONTRIBUTING.md)

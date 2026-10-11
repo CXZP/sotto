@@ -11,7 +11,9 @@ Rules
 4. "problems" is only for faults: defects on arrival, things breaking, QC issues, hiss, firmware bugs, connection drops, heat. Sound preferences (bright, thin mids) go in cons, not problems.
 5. Ports and switches only if the source names them (e.g. "Optical in", "RCA out", "UAC1.0 switch", "Roon Ready").
 6. If the page didn't load or you only see a login or bot check, say so instead of guessing.
-7. Output only the block(s), nothing before or after.
+7. Cover the review fully: every pro and con the reviewer lists themselves gets its own point (up to 8 each). Don't pick a few.
+8. "verdict" and "unit" only if the source says so, with the quote; otherwise leave them out.
+9. Output only the block(s), nothing before or after.
 
 Block format (JSON, one per review):
 ```json
@@ -22,7 +24,9 @@ Block format (JSON, one per review):
   "reviewer": "name shown on the page",
   "date": "YYYY-MM-DD or empty",
   "rating": "as shown, e.g. 2.5/5, or empty",
-  "summary": "one neutral line, max 140 characters, in Thai",
+  "summary": "one neutral line, max 140 characters, in Thai, carrying the reviewer's overall verdict",
+  "verdict": { "point": "the reviewer's bottom line (grade, would buy or not), in Thai", "quote": "exact sentence from the source" },
+  "unit": { "how": "bought | free_sample | loan", "quote": "exact sentence that says how they got it" },
   "pros": [{ "point": "short, in Thai", "quote": "exact sentence from the source" }],
   "cons": [{ "point": "short, in Thai", "quote": "exact sentence from the source" }],
   "problems": [{ "point": "short, in Thai", "quote": "exact sentence from the source" }],

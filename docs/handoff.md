@@ -56,7 +56,9 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
   - 20 drafts per user per day.
   - Review summaries come in th/en/ja/zh at once; quotes stay in the original language. Posts keep them in `reports.i18n` (run `supabase/i18n.sql`), and each viewer sees their own language. Posts the writer edited before posting stay in one language.
   - One review summary per reviewer per page per model: `reports.dedupe_key` with a unique index (run `supabase/dedupe.sql`). Repeats are skipped and counted, not errors.
-- Posts list: chips by kind and source site, order (most confirmed / newest), 10 at a time; review summaries show the rating line and open pros/cons on click.
+- Review summaries also carry the reviewer's own verdict (1-3 quotes), how they got the unit, and every pro/con the reviewer listed (up to 8 each). "View original" shows the version in the review's own language.
+- Posts list: chips by kind and source site, order (most confirmed / newest), 10 at a time; review summaries show the rating, verdict and unit lines and open pros/cons on click.
+- SQL to run once, in order, after schema.sql: reviews.sql, i18n.sql, dedupe.sql, purchase.sql.
 - Gemini app skill "sotto-review-extractor" (docs/gemini-skill.md):
   - Turns one review page into JSON "Sotto blocks": one per reviewer, pros/cons/problems/ports, each with a verbatim quote.
   - Pasting a block into the site fills the form ("review summary" post type) without any API call.
@@ -101,7 +103,7 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
 **Data quality**
 - AI summaries without quotes are unreliable. Example: asked about Head-Fi's Blessing 3 reviews, the Gemini app gave a positive "community consensus". Meanwhile the review visible on the page was 2.5★ with harsh cons. It also contained claims we couldn't trace to that page.
 - One reviewer ≠ consensus: keep posts per source, show counts with n, never compute a score.
-- Free samples vs bought units should be marked (we have a field).
+- Free samples vs bought units are marked: the summariser reads bought / free sample / loan from the review, with the sentence that says so.
 
 ## What we'd like from Gemini
 

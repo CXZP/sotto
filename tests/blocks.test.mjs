@@ -72,3 +72,13 @@ test("how the reviewer got the unit is shown with its quote, in each language", 
   assert.match(all.th.body, /\nที่มาของเครื่อง: ยืมมารีวิว — “This was loaned by a good friend of mine”/);
   assert.match(all.en.body, /\nUnit: loaned for review — “This was loaned/);
 });
+
+test("blocks keep verdict and unit only with a quote", () => {
+  const [b] = parseBlocks(`{"sotto": 1, "pros": [{"point": "ดี", "quote": "Good build overall"}],
+    "verdict": {"point": "เกรด B-", "quote": "I grade the Blessing 3 a B-."}, "unit": {"how": "loan", "quote": "This was loaned by a good friend"}}`);
+  assert.equal(b.verdict.point, "เกรด B-");
+  assert.equal(b.unit.how, "loan");
+  const [c] = parseBlocks(`{"sotto": 1, "verdict": {"point": "x"}, "unit": {"how": "stolen", "quote": "abc def"}}`);
+  assert.equal(c.verdict, null);
+  assert.equal(c.unit, null);
+});

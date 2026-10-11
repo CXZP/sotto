@@ -53,6 +53,9 @@ function clean(o) {
     pros: pts(o.pros),
     cons: pts(o.cons),
     problems: pts(o.problems),
+    // The reviewer's bottom line and how they got the unit: kept only with a quote.
+    verdict: pts([o.verdict])[0] ?? null,
+    unit: ["bought", "free_sample", "loan"].includes(o.unit?.how) && String(o.unit?.quote ?? "").trim().length >= 3 ? { how: o.unit.how, quote: String(o.unit.quote).trim().slice(0, 400) } : null,
     ports_in: pick(o.ports_in, PORTS),
     ports_out: pick(o.ports_out, PORTS),
     features: pick(o.features, FEATURES),

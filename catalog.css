@@ -375,3 +375,10 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .brand-badge { display: inline-block; padding: 0 8px; border-radius: 999px; font-size: 11px; font-weight: 700; color: #fff; background: #2f6fde; vertical-align: 1px; }
 .brand-response { margin: 10px 0 0 12px; padding: 10px 14px; border-left: 3px solid #2f6fde; border-radius: 0 12px 12px 0; background: var(--surface-2); display: grid; gap: 4px; }
 .brand-response > button { justify-self: start; padding: 0; }
+
+/* Learn guide: sections side by side on wide screens instead of one narrow column */
+.learn-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 16px; align-items: start; }
+.learn-guide > :not(section) { grid-column: 1 / -1; }
+.learn-guide > section { margin: 0; }
+
+.region-pick select { width: auto; display: inline-block; margin-left: 6px; }

@@ -43,6 +43,13 @@ export function sendToSotto() {
       const body = m.querySelector('[slot="text-body"], [slot="comment"]');
       add(m.getAttribute("author"), m.getAttribute("created-timestamp"), m.getAttribute("permalink") ? `https://www.reddit.com${m.getAttribute("permalink")}` : "", body?.innerText);
     });
+    // Reddit (old.reddit.com): the post and each comment are a ".thing".
+    document.querySelectorAll(".thing.link, .thing.comment").forEach((m) => {
+      const body = m.querySelector(":scope > .entry .usertext-body .md");
+      const time = m.querySelector(":scope > .entry time");
+      const perm = m.getAttribute("data-permalink");
+      add(m.getAttribute("data-author"), time?.getAttribute("datetime"), perm ? `https://www.reddit.com${perm}` : "", body?.innerText);
+    });
     // Anything else: the main article text (a product page, a blog review).
     // Also when the posts found cover little of the page: a Head-Fi showcase
     // overview has its spec box styled as a post and its reviews styled

@@ -397,3 +397,7 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .filter-more { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
 .filter-more .mini-select { width: auto; }
 .filter-count { margin-left: auto; }
+
+.act-tabs { margin-bottom: 12px; flex-wrap: wrap; }
+details.danger-zone > summary { cursor: pointer; }
+details.danger-zone[open] > summary { margin-bottom: 8px; }

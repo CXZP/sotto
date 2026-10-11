@@ -1,18 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3q04gd";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3q04gd";
-import { renderChart } from "./chart.js?v=mv3q04gd";
-import { makeT } from "./i18n.js?v=mv3q04gd";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3q04gd";
-import { LEGAL } from "./legal.js?v=mv3q04gd";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3q04gd";
-import * as community from "./community.js?v=mv3q04gd";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3q04gd";
-import { redactImage } from "./redact.js?v=mv3q04gd";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3q04gd";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3q04gd";
-import { chainLinks } from "./chain.js?v=mv3q04gd";
-import { fits } from "./dcfit.js?v=mv3q04gd";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3q04gd";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3q1xro";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3q1xro";
+import { renderChart } from "./chart.js?v=mv3q1xro";
+import { makeT } from "./i18n.js?v=mv3q1xro";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3q1xro";
+import { LEGAL } from "./legal.js?v=mv3q1xro";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3q1xro";
+import * as community from "./community.js?v=mv3q1xro";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3q1xro";
+import { redactImage } from "./redact.js?v=mv3q1xro";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3q1xro";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3q1xro";
+import { chainLinks } from "./chain.js?v=mv3q1xro";
+import { fits } from "./dcfit.js?v=mv3q1xro";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3q1xro";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1697,7 +1697,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3q04gd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3q1xro" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -2406,6 +2406,21 @@ async function wireAccount(main) {
     const i = findItem(id);
     return `<a href="#item/${encodeURIComponent(id)}">${esc(i ? displayName(i) : id)}</a>`;
   };
+  const panels = {
+    threads: list(a.threads, (r) => `<li><a href="#discuss/${r.id}">${esc(r.title)}</a> <span class="muted small">· ${esc(t(`dc_${r.category}`))} · ▲ ${r.score} · ${esc(t("ds_n_comments", { n: r.comment_count }))} · ${esc(ago(r.created_at))}</span></li>`),
+    comments: list(a.comments, (r) => `<li><a href="#discuss/${r.thread_id}">${esc(r.body.slice(0, 120))}${r.body.length > 120 ? "…" : ""}</a> <span class="muted small">· ▲ ${r.score} · ${esc(ago(r.created_at))}</span></li>`),
+    reports: list(a.reports, (r) => `<li>${itemLink(r.item_id)}: ${esc(r.title)} <span class="muted small">· ${esc(t(`cm_kind_${r.kind}`))} · ${esc(t("cm_metoo"))} ${r.confirms} · ${esc(ago(r.created_at))}</span></li>`),
+    prices: list(a.prices, (r) => `<li>${itemLink(r.item_id)}: ${money(r.amount, r.currency)} <span class="muted small">· ${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}</span></li>`),
+  };
+  // Only tabs with something in them; the first non-empty one opens.
+  const tabs = [
+    ["threads", t("ac_threads"), a.threads.length],
+    ["comments", t("ac_comments"), a.comments.length],
+    ["reports", t("ac_reports"), a.reports.length],
+    ["prices", t("ac_prices"), a.prices.length],
+  ].filter(([, , n]) => n);
+  const total = tabs.length;
+  const firstTab = tabs[0]?.[0];
   el.innerHTML = `
     <section class="card pad"><h3>${esc(t("ac_profile"))}</h3>
       <form class="cm-form" data-form="rename"><label class="dfield"><span>${esc(t("cm_name"))}</span>
@@ -2413,12 +2428,23 @@ async function wireAccount(main) {
         <p class="muted small">${esc(t("ac_email", { email: a.email }))} · ${esc(t("ac_since", { date: day(a.since) }))}</p><p class="small status" role="status"></p></form>
       <div class="row-inline"><button type="button" class="pill" data-signout>${esc(t("cm_signout"))}</button></div>
     </section>
-    <section class="card pad"><h3>${esc(t("ac_threads"))} (${a.threads.length})</h3>${list(a.threads, (r) => `<li><a href="#discuss/${r.id}">${esc(r.title)}</a> <span class="muted small">· ${esc(t(`dc_${r.category}`))} · ▲ ${r.score} · ${esc(t("ds_n_comments", { n: r.comment_count }))} · ${esc(ago(r.created_at))}</span></li>`)}</section>
-    <section class="card pad"><h3>${esc(t("ac_comments"))} (${a.comments.length})</h3>${list(a.comments, (r) => `<li><a href="#discuss/${r.thread_id}">${esc(r.body.slice(0, 120))}${r.body.length > 120 ? "…" : ""}</a> <span class="muted small">· ▲ ${r.score} · ${esc(ago(r.created_at))}</span></li>`)}</section>
-    <section class="card pad"><h3>${esc(t("ac_reports"))} (${a.reports.length})</h3>${list(a.reports, (r) => `<li>${itemLink(r.item_id)}: ${esc(r.title)} <span class="muted small">· ${esc(t(`cm_kind_${r.kind}`))} · ${esc(t("cm_metoo"))} ${r.confirms} · ${esc(ago(r.created_at))}</span></li>`)}</section>
-    <section class="card pad"><h3>${esc(t("ac_prices"))} (${a.prices.length})</h3>${list(a.prices, (r) => `<li>${itemLink(r.item_id)}: ${money(r.amount, r.currency)} <span class="muted small">· ${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}</span></li>`)}</section>
-    <section class="card pad danger-zone"><h3>${esc(t("ac_delete_h"))}</h3><p class="small">${esc(t("ac_delete_what"))}</p>
-      <div class="row-inline"><button type="button" class="pill" data-delete-account>${esc(t("ac_delete"))}</button></div><p class="small status" role="status"></p></section>`;
+    <section class="card pad"><h3>${esc(t("ac_activity"))}</h3>
+      ${
+        total
+          ? `<div class="seg-links act-tabs">${tabs.map(([k, label, n]) => `<a href="#account" data-tab="${k}" class="${k === firstTab ? "on" : ""}">${esc(label)} · ${n}</a>`).join("")}</div>
+            ${tabs.map(([k]) => `<div data-panel="${k}"${k === firstTab ? "" : " hidden"}>${panels[k]}</div>`).join("")}`
+          : `<p class="muted">${esc(t("ac_empty"))}</p><div class="row-inline"><a class="pill" href="#discuss/new">${esc(t("ac_start_thread"))}</a><a class="pill" href="#catalog">${esc(t("ac_start_report"))}</a></div>`
+      }
+    </section>
+    <details class="card pad danger-zone"><summary class="small muted">${esc(t("ac_delete_h"))}</summary><p class="small">${esc(t("ac_delete_what"))}</p>
+      <div class="row-inline"><button type="button" class="pill" data-delete-account>${esc(t("ac_delete"))}</button></div><p class="small status" role="status"></p></details>`;
+  el.querySelectorAll("[data-tab]").forEach((b) =>
+    b.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      el.querySelectorAll("[data-tab]").forEach((x) => x.classList.toggle("on", x === b));
+      el.querySelectorAll("[data-panel]").forEach((p) => (p.hidden = p.dataset.panel !== b.dataset.tab));
+    }),
+  );
   el.querySelector('[data-form="rename"]').addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const st = ev.target.querySelector(".status");
@@ -2436,7 +2462,7 @@ async function wireAccount(main) {
   el.querySelector("[data-delete-account]").addEventListener("click", async (ev) => {
     const word = t("ac_delete_word");
     if (prompt(t("ac_delete_confirm", { word })) !== word) return;
-    const st = ev.target.closest("section").querySelector(".status");
+    const st = ev.target.closest(".danger-zone").querySelector(".status");
     try {
       await community.deleteAccount();
       st.textContent = t("ac_deleted");

@@ -2,6 +2,10 @@
 
 export const STRINGS = {
   th: {
+    ac_activity: "สิ่งที่ฉันโพสต์",
+    ac_empty: "ยังไม่มีโพสต์ กระทู้ ความเห็น รายงานปัญหา และราคาที่คุณแจ้งจะแสดงที่นี่",
+    ac_start_thread: "ตั้งกระทู้",
+    ac_start_report: "ไปหน้ารุ่นเพื่อแจ้งราคาหรือปัญหา",
     sort_label: "เรียงตาม",
     src_pick: "หรือเลือกเครื่องเล่นพกพา / เครื่องเล่น CD / สตรีมเมอร์",
     picker_title_src: "เลือกแหล่งเสียง",
@@ -560,6 +564,10 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    ac_activity: "My activity",
+    ac_empty: "Nothing yet. Your threads, comments, issue reports and prices will show here.",
+    ac_start_thread: "Start a thread",
+    ac_start_report: "Open a product to report a price or issue",
     sort_label: "Sort by",
     src_pick: "or pick a music player / CD player / streamer",
     picker_title_src: "Choose a source",

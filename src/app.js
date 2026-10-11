@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3tpvvh";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3tpvvh";
-import { renderChart } from "./chart.js?v=mv3tpvvh";
-import { makeT } from "./i18n.js?v=mv3tpvvh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3tpvvh";
-import { LEGAL } from "./legal.js?v=mv3tpvvh";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3tpvvh";
-import * as community from "./community.js?v=mv3tpvvh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3tpvvh";
-import { redactImage } from "./redact.js?v=mv3tpvvh";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3tpvvh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3tpvvh";
-import { chainLinks } from "./chain.js?v=mv3tpvvh";
-import { fits } from "./dcfit.js?v=mv3tpvvh";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3tpvvh";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3tpvvh";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3tpvvh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3tqawa";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3tqawa";
+import { renderChart } from "./chart.js?v=mv3tqawa";
+import { makeT } from "./i18n.js?v=mv3tqawa";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3tqawa";
+import { LEGAL } from "./legal.js?v=mv3tqawa";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3tqawa";
+import * as community from "./community.js?v=mv3tqawa";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3tqawa";
+import { redactImage } from "./redact.js?v=mv3tqawa";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3tqawa";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3tqawa";
+import { chainLinks } from "./chain.js?v=mv3tqawa";
+import { fits } from "./dcfit.js?v=mv3tqawa";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3tqawa";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3tqawa";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3tqawa";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1569,7 +1569,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3tpvvh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3tqawa" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1987,7 +1987,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3tpvvh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3tqawa" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

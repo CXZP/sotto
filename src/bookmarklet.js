@@ -34,7 +34,7 @@ export function sendToSotto() {
     });
     // Anything else: the main article text (a product page, a blog review).
     if (out.length <= 3) noPosts = true;
-    if (out.length <= 3) add(document.querySelector('meta[name="author"]')?.content, "", location.href, (document.querySelector("main, article, [role=main]") || document.body).innerText);
+    if (out.length <= 3) add(document.querySelector('meta[name="author"]')?.content, "", location.href, (document.querySelector("main, [role=main]") || document.body).innerText);
   }
   let text = out.join("\n");
   if (text.length > MAX) text = text.slice(0, MAX) + "\n…";

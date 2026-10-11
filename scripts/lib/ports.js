@@ -13,6 +13,7 @@ const PORTS = {
   bt: /\bbluetooth\b/i,
   rca: /\brca\b/i,
   xlr: /\bxlr\b(?![- ]?4)|\bbalanced (?:line|xlr)\b/i,
+  phono: /\bphono\b/i,
   line: /\bline[- ]?(?:in|out|level|input|output)s?\b|\bpre[- ]?outs?\b/i,
 };
 const IN = /\b(?:inputs?|in)\b/i;
@@ -33,6 +34,8 @@ const FEATURES = {
   upnp: /\bupnp\b|\bdlna\b/i,
   chromecast: /\bchromecast\b|\bgoogle cast\b/i,
   asio: /\basio\b/i,
+  // A turntable with its own phono stage gives line level (no separate phono preamp needed).
+  phono_pre: /built[- ]in (?:switchable )?(?:mm )?phono (?:pre-?amp\w*|stage)|switchable (?:phono )?pre-?amp|(?:phono\/line|line\/phono) (?:switch|output)|integrated phono (?:pre-?amp\w*|stage)/i,
 };
 
 /** {uac1: quote, nos: quote} for the switches a store mentions. */

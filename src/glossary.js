@@ -660,6 +660,50 @@ export const TERMS = [
     },
   },
   {
+    id: "phono",
+    tool: null,
+    related: ["power"],
+    refs: [W("Phono_input"), W("RIAA_equalization"), W("Magnetic_cartridge")],
+    th: {
+      title: "Phono stage, หัวเข็ม MM / MC",
+      short: "สัญญาณจากหัวเข็มเบาแค่มิลลิโวลต์และยังไม่ได้แก้ RIAA ต้องผ่าน phono stage ก่อนเข้าแอมป์",
+      body: `<h2>คืออะไร</h2>
+<p>หัวเข็มส่งสัญญาณเบามาก และแผ่นเสียงถูกตัดเสียงทุ้มลดลง/เสียงแหลมเพิ่มขึ้นตามมาตรฐาน <b>RIAA</b> ตอนผลิต <b>phono stage</b> (ปรีโฟโน) ทำสองอย่าง: ขยายสัญญาณขึ้นเป็นระดับ line และกลับ curve RIAA ให้เสียงสมดุล</p>
+<ul>
+<li><b>MM (moving magnet)</b> ราว 2–5 mV ใช้กับ phono stage ทั่วไป (ขยายราว 35–40 dB, โหลดมาตรฐาน 47 kΩ)</li>
+<li><b>MC (moving coil)</b> ราว 0.2–0.6 mV เบากว่าราว 10 เท่า ต้องใช้ phono stage ที่รับ MC (ขยายราว 55–65 dB) หรือใส่ <b>step-up transformer (SUT)</b> หน้า phono stage แบบ MM</li>
+<li><b>MC เอาต์พุตสูง</b> ราว 2 mV ใช้กับช่อง MM ได้</li>
+</ul>
+<h2>ในชุดของคุณ</h2>
+<p>เครื่องเล่นแผ่นเสียง → phono stage → แอมป์หูฟัง → หูฟัง ถ้าเครื่องเล่นมี phono stage ในตัว (สวิตช์ PHONO/LINE) ตั้งเป็น LINE แล้วต่อเข้าแอมป์ได้เลย แอมป์หรืออินทิเกรตบางรุ่นมีช่อง PHONO ในตัว</p>
+<h2>เข้าใจผิดบ่อย</h2>
+<ul>
+<li>ต่อเครื่องเล่นเข้าช่อง AUX ตรงๆ: เสียงเบามากและไม่มีเบส เพราะยังไม่ผ่าน RIAA</li>
+<li>ต่อช่อง LINE ของเครื่องเล่นที่มีปรีในตัวเข้าช่อง PHONO อีกที: ขยายซ้ำสองชั้น เสียงแตก</li>
+<li>เสียงฮัม: ต่อสายกราวด์ของเครื่องเล่นเข้าขั้ว GND ของ phono stage</li>
+</ul>`,
+    },
+    en: {
+      title: "Phono stage, MM / MC cartridges",
+      short: "A cartridge gives millivolts with the RIAA curve still on it: it needs a phono stage before the amp",
+      body: `<h2>What it is</h2>
+<p>A cartridge's signal is tiny, and records are cut with the bass reduced and the treble raised (the <b>RIAA</b> curve). A <b>phono stage</b> does two things: amplifies the signal to line level and undoes the RIAA curve.</p>
+<ul>
+<li><b>MM (moving magnet)</b>: about 2–5 mV. Works with any phono stage (about 35–40 dB of gain, standard 47 kΩ load).</li>
+<li><b>MC (moving coil)</b>: about 0.2–0.6 mV, roughly a tenth. Needs an MC-capable phono stage (about 55–65 dB of gain) or a <b>step-up transformer (SUT)</b> in front of an MM stage.</li>
+<li><b>High-output MC</b>: about 2 mV, works on an MM input.</li>
+</ul>
+<h2>In your chain</h2>
+<p>Turntable → phono stage → headphone amp → headphones. A turntable with a built-in phono stage (a PHONO/LINE switch) set to LINE goes straight into the amp. Some amps and integrated amps have a PHONO input built in.</p>
+<h2>Common misunderstandings</h2>
+<ul>
+<li>Turntable straight into AUX: very quiet and thin, because the RIAA curve was never undone.</li>
+<li>A turntable's LINE output into a PHONO input: amplified twice, it distorts.</li>
+<li>Hum: connect the turntable's ground wire to the phono stage's GND post.</li>
+</ul>`,
+    },
+  },
+  {
     id: "uac1",
     tool: null,
     related: ["nos"],

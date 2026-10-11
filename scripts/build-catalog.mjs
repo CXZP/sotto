@@ -7,7 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact, groupKey, deskRole, speakerKind } from "./lib/classify.js";
+import { classify, condition, modelKey, compact, groupKey, deskRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
 import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
@@ -16,7 +16,7 @@ import { preorder, listedAt } from "./lib/dates.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
-const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker"]);
+const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker", "turntable", "phono", "cartridge"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
 const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
@@ -27,7 +27,7 @@ const stats = { products: 0, kept: 0, byCategory: {}, withSpecs: {}, rejected: 0
 // Stores list their own name as the vendor for products they resell
 // ("The Hangout by Crinacle" for "CrinEar Project Monolith"). For those, take
 // the real brand from the start of the title when it is a brand seen elsewhere.
-const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap|discontinued|silentpower|kitsunehifi)$/i;
+const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap|discontinued|silentpower|kitsunehifi|audio advice)$/i;
 // One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
 // "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
 const brandKey = (b) => {
@@ -85,7 +85,7 @@ for (const file of files) {
       verified[field] = [];
       // Output power and output impedance describe sources, not headphones
       // ("works with amps delivering 125 mW" is a requirement, not a rating).
-      const isSource = category === "dongle" || category === "desktop" || category === "dap" || category === "cd";
+      const isSource = ["dongle", "desktop", "dap", "cd", "turntable", "phono", "cartridge"].includes(category);
       if ((field === "power" || field === "zout") && !isSource) continue;
       if (field === "impedance" && isSource) continue; // an amp's "impedance" is usually input impedance
       // "DT 990 PRO 250 ohm": the title names the impedance, so a description
@@ -132,13 +132,16 @@ for (const file of files) {
     if ((p.images?.length ?? 0) > (g.photos?.src.length ?? 1)) g.photos = { store: snap.store, url, src: p.images };
     if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
     if (category === "speaker") g.speaker ??= speakerKind(p);
+    // Vinyl: MM or MC cartridge, and which of them a phono stage takes (first store that says).
+    if (category === "cartridge") g.cart ??= cartridgeKind(p) ?? undefined;
+    if (category === "phono" || (category === "desktop" && /\bphono\b/i.test(p.body ?? ""))) g.phonoIn ??= phonoInputs(p) ?? undefined;
     // DC power: what a box needs, what a supply gives (first store with a stated line wins).
     if (category === "desktop" || category === "cd") {
       const need = !g.dcIn && dcInput(p.body);
       if (need) g.dcIn = { ...need, url };
     }
     // Ports and switches: the union over every store, first quote per port wins.
-    if (category === "desktop" || category === "cd" || category === "dap" || category === "dongle" || category === "speaker") {
+    if (["desktop", "cd", "dap", "dongle", "speaker", "turntable", "phono"].includes(category)) {
       const ports = extractPorts(p.body);
       if (ports)
         for (const dir of ["in", "out"])
@@ -309,7 +312,7 @@ const catalog = [...groups.values()]
       // Stores disagree ("DAC & Headphone Amp" vs "line outputs only"). A stated
       // headphone power rating settles it; otherwise the majority, and a tie stays DAC.
       const n = (r) => v.filter((x) => x === r).length;
-      rest.role = specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : "amp";
+      rest.role = specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : n("preamp") > n("amp") ? "preamp" : "amp";
     }
     if (rest.category !== "desktop") delete rest.role;
     // First time any store listed it: the release calendar's date for this model.

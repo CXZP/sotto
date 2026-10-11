@@ -458,7 +458,7 @@ nav a { white-space: nowrap; }
 .home-stage { position: relative; overflow: hidden; border-radius: 16px; padding: 18px; min-height: 360px; display: grid; gap: 12px; align-content: start; isolation: isolate; }
 /* The accent block behind the photo, like Endfield's yellow panel. */
 .home-stage::before { content: ""; position: absolute; z-index: -2; top: 0; bottom: 0; right: 0; width: 34%; background: var(--accent); opacity: 0.9; transform-origin: right; }
-.stage-brand { position: absolute; z-index: -1; left: -4px; top: 6px; font-size: clamp(56px, 11vw, 120px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px var(--line-strong); opacity: 0.9; pointer-events: none; }
+.stage-brand { position: absolute; z-index: -1; left: -4px; top: 6px; font-size: clamp(56px, 11vw, 120px); font-weight: 700; font-synthesis: none; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; white-space: nowrap; color: var(--line-strong); opacity: 0.45; pointer-events: none; }
 .stage-top { display: grid; grid-template-columns: 1fr 220px; gap: 12px; align-items: end; min-height: 200px; }
 .stage-img { grid-column: 2; grid-row: 1; width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 16px; position: relative; }
 .stage-id { grid-column: 1; grid-row: 1; display: grid; gap: 6px; padding-top: 56px; }

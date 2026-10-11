@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv48sxo4";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv48sxo4";
-import { renderChart } from "./chart.js?v=mv48sxo4";
-import { makeT } from "./i18n.js?v=mv48sxo4";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv48sxo4";
-import { LEGAL } from "./legal.js?v=mv48sxo4";
-import { track, stats, trackingOff } from "./analytics.js?v=mv48sxo4";
-import * as community from "./community.js?v=mv48sxo4";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv48sxo4";
-import { redactImage } from "./redact.js?v=mv48sxo4";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv48sxo4";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv48sxo4";
-import { chainLinks } from "./chain.js?v=mv48sxo4";
-import { fits } from "./dcfit.js?v=mv48sxo4";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv48sxo4";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv48sxo4";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv48sxo4";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv496a0x";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv496a0x";
+import { renderChart } from "./chart.js?v=mv496a0x";
+import { makeT } from "./i18n.js?v=mv496a0x";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv496a0x";
+import { LEGAL } from "./legal.js?v=mv496a0x";
+import { track, stats, trackingOff } from "./analytics.js?v=mv496a0x";
+import * as community from "./community.js?v=mv496a0x";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv496a0x";
+import { redactImage } from "./redact.js?v=mv496a0x";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv496a0x";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv496a0x";
+import { chainLinks } from "./chain.js?v=mv496a0x";
+import { fits } from "./dcfit.js?v=mv496a0x";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv496a0x";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv496a0x";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv496a0x";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -85,13 +85,13 @@ function query() {
 }
 function readHash() {
   const p = query();
-  if (route().name === "build") for (const k of ["device", "src", "dac", "amp", "hp", "plug", "level"]) state[k] = p.get(k) ?? (k === "device" ? state.device : k === "level" ? "normal" : "");
+  if (route().name === "build") for (const k of ["device", "src", "cart", "dac", "amp", "hp", "plug", "level"]) state[k] = p.get(k) ?? (k === "device" ? state.device : k === "level" ? "normal" : "");
   if (LANGS.includes(p.get("lang"))) state.lang = p.get("lang");
   if (["simple", "detail"].includes(p.get("mode"))) state.mode = p.get("mode");
 }
 function buildUrl() {
   const p = new URLSearchParams();
-  for (const k of ["device", "src", "dac", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
+  for (const k of ["device", "src", "cart", "dac", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
   return `#build?${p}`;
 }
 function go(hash) {
@@ -285,7 +285,7 @@ function homeExample({ device, amp, hp: hpId }) {
   try {
     const src = currentSource();
     const conn = connectionCard(src, hp);
-    const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level: LEVELS.normal, crest: CREST }) : { status: "no-output" };
+    const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level: LEVELS.normal, crest: CREST }) : { status: hasJack(src.driver) ? "unknown" : "no-output" };
     return { verdict: verdictCard(ev, hp, false, { amp: src.amp, device: src.device }), conn: conn.html };
   } finally {
     Object.assign(state, keep);
@@ -527,7 +527,8 @@ function currentSource() {
   const src = state.src ? findItem(state.src) : null;
   const dac = state.dac ? findItem(state.dac) : null;
   const amp = state.amp ? findItem(state.amp) : null;
-  const driver = amp ?? (dac && dac.role !== "dac" ? dac : null) ?? (dac ? null : src);
+  // A DAC-only box or a phono stage has no headphone jack, so it never drives the headphones.
+  const driver = amp ?? (dac && dac.role !== "dac" && dac.category !== "phono" ? dac : null) ?? (dac ? null : src);
   const outputs = driver ? sourceOutputs(driver) : dac ? [] : device.outputs;
   // The thing before the boxes, on its own (for "would it be loud enough without them").
   const own = src ? sourceOutputs(src) : device.outputs;
@@ -541,7 +542,8 @@ function chainSteps(reports = {}) {
   const amp = state.amp ? findItem(state.amp) : null;
   const st = (x) => (x ? { item: x } : null);
   const source = src ? { item: src } : { device };
-  const c = chainLinks({ source, dac: st(dac), amp: st(amp) }, reports);
+  const cart = state.cart ? findItem(state.cart) : null;
+  const c = chainLinks({ source, dac: st(dac), amp: st(amp), cart: st(cart) }, reports);
   const name = (stage) => (stage.item ? displayName(stage.item) : L(stage.device.name));
   const portName = (k) => t(`po_${k}`);
   const steps = c.links.map((l) => {
@@ -551,13 +553,19 @@ function chainSteps(reports = {}) {
     if (l.status === "adapter" && l.adapter === "lightning-usb") return `<li class="need">${esc(t("c_lightning"))}</li>`;
     if (l.status === "adapter") return `<li class="need">${esc(t("ch_link_cable", { a, b, from: portName(l.via[0]), to: portName(l.via[1]) }))}</li>`;
     if (l.status === "need_dac") return `<li class="danger">${esc(t("ch_link_need_dac", { a, b }))}</li>`;
+    if (l.status === "need_phono") return `<li class="danger">${esc(t("ch_link_need_phono", { a, b }))} <a href="#learn/phono">?</a></li>`;
     if (l.status === "no") return `<li class="danger">${esc(t("ch_link_no", { a, b, outs: l.outs.map(portName).join(", "), ins: l.ins.map(portName).join(", ") }))}</li>`;
     return `<li class="need">${esc(t(l.kind === "analog" ? "ch_link_unknown_analog" : "ch_link_unknown", { a, b }))} <a href="${href}">${esc(t("ch_check_ports"))}</a></li>`;
   });
   // A console or an old PC may only see the DAC in UAC 1.0 mode.
   const firstBox = dac ?? amp;
   if (!src && firstBox?.features?.uac1) steps.push(`<li class="alt">${esc(t("ch_uac1", { b: displayName(firstBox) }))} <a href="#learn/uac1">?</a></li>`);
-  if (c.dacOnlyLast) steps.push(`<li class="danger">${esc(t("ch_dac_only", { b: displayName(dac) }))}</li>`);
+  if (c.dacOnlyLast) steps.push(`<li class="danger">${esc(t(dac.category === "phono" ? "ch_phono_last" : "ch_dac_only", { b: displayName(dac) }))}</li>`);
+  if (c.preampLast) steps.push(`<li class="danger">${esc(t("ch_preamp_last", { b: displayName(amp) }))}</li>`);
+  if (c.vinylAlone) steps.push(`<li class="danger">${esc(t("ch_vinyl_alone", { a: displayName(src) }))} <a href="#learn/phono">?</a></li>`);
+  if (c.cart?.status === "need_mc") steps.push(`<li class="danger">${esc(t("ch_cart_need_mc", { a: displayName(cart) }))} <a href="#learn/phono">?</a></li>`);
+  if (c.cart?.status === "check") steps.push(`<li class="need">${esc(t("ch_cart_check", { a: displayName(cart) }))}</li>`);
+  if (c.cart?.status === "ok" && cart) steps.push(`<li>${esc(t("ch_cart_ok", { a: displayName(cart), kind: t(`cart_${cart.cart}`) }))}</li>`);
   return steps;
 }
 
@@ -566,6 +574,8 @@ function buildPage() {
   const amp = state.amp ? findItem(state.amp) : null;
   const hp = state.hp ? findItem(state.hp) : null;
   const dac = state.dac ? findItem(state.dac) : null;
+  const cart = state.cart ? findItem(state.cart) : null;
+  const vinyl = src?.category === "turntable";
   const needsDac = amp?.role === "amp" && !src;
   const lv = LEVELS[state.level] ?? LEVELS.normal;
   return `<div class="builder">
@@ -578,12 +588,13 @@ function buildPage() {
               .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(L(d.name))}</option>`)
               .join("")}</select></div> <button class="link small" data-pick="src">${esc(t("src_pick"))}</button>`,
       )}
-      ${slotRow(t("slot_dac"), pickedOrButton("dac", dac), needsDac && !dac ? t("slot_dac_hint") : dac ? "" : t("slot_dac_opt"))}
+      ${vinyl ? slotRow(t("slot_cart"), pickedOrButton("cart", cart), cart ? (cart.cart ? t(`cart_${cart.cart}`) : "") : t("slot_cart_opt")) : ""}
+      ${vinyl ? slotRow(t("slot_phono"), pickedOrButton("dac", dac), dac ? "" : src.features?.phono_pre ? t("slot_phono_builtin") : t("slot_phono_hint")) : slotRow(t("slot_dac"), pickedOrButton("dac", dac), needsDac && !dac ? t("slot_dac_hint") : dac ? "" : t("slot_dac_opt"))}
       ${slotRow(t("slot_amp"), pickedOrButton("amp", amp), amp?.role === "amp" ? t("role_note_amp") : "")}
       ${slotRow(t("slot_hp"), pickedOrButton("hp", hp))}
       ${hp ? slotRow(t("plug"), seg("plug", PLUGS.map((j) => [j, PLUG_SHORT[j]]), plugOf(hp)), !state.plug && !hp.stockPlug ? t("plug_guess") : "") : ""}
       ${slotRow(t("level"), seg("level", [["quiet", t("level_quiet")], ["normal", t("level_normal")], ["loud", t("level_loud")]], state.level), t("level_hint", { avg: lv, peak: lv + CREST }))}
-      ${buildTotal(amp, hp, dac, src)}
+      ${buildTotal(amp, hp, dac, src, cart)}
       ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[src?.id, dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
     <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
@@ -608,8 +619,8 @@ function pickedOrButton(slot, item) {
   </div>`;
 }
 
-function buildTotal(amp, hp, dac, src) {
-  const items = [src, dac, amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
+function buildTotal(amp, hp, dac, src, cart = null) {
+  const items = [src, cart, dac, amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
   if (!items.length) return "";
   const cur = new Set(items.map((o) => o.currency));
   const sum = items.reduce((s, o) => s + o.price, 0);
@@ -627,7 +638,7 @@ function buildResults(hp) {
   const level = LEVELS[state.level] ?? LEVELS.normal;
   const detail = state.mode === "detail";
   const conn = connectionCard(src, hp);
-  const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level, crest: CREST }) : { status: "no-output" };
+  const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level, crest: CREST }) : { status: hasJack(src.driver) ? "unknown" : "no-output" };
   // With an amp in the chain, "no amp needed" is the wrong message. Say whether the
   // device alone would also have been loud enough, so people don't buy one for loudness.
   let alone = null;
@@ -635,11 +646,19 @@ function buildResults(hp) {
   return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
 }
 
-function connectionCard({ outputs }, hp) {
+/** The box at the end of the chain has a headphone jack (its power may still be unknown). */
+function hasJack(driver) {
+  if (!driver) return false;
+  return !["dac", "preamp"].includes(driver.role) && !["phono", "turntable", "cartridge", "speaker", "power"].includes(driver.category);
+}
+
+function connectionCard({ outputs, driver }, hp) {
   const links = `<ol class="chain" id="chain-links">${chainSteps().join("")}</ol>`;
   const steps = [];
   if (!outputs.length) {
-    steps.push(`<li class="danger">${esc(t("v_no_output"))}</li>`);
+    // A headphone amp with no stated power is "can't tell", not "no jack".
+    if (hasJack(driver)) steps.push(`<li class="need">${esc(t("c_no_power", { a: displayName(driver) }))} <a href="#item/${encodeURIComponent(driver.id)}">${esc(t("ch_check_ports"))}</a></li>`);
+    else steps.push(`<li class="danger">${esc(t("v_no_output"))}</li>`);
     return { html: card(t("c_title"), `${links}<ol class="chain">${steps.join("")}</ol>`), outputs: [] };
   }
   const plug = plugOf(hp);
@@ -881,17 +900,20 @@ function wireChartPage(main) {
 function openPicker(slot) {
   const cats = slot === "hp" ? HEADPHONE_CATS : SOURCE_CATS;
   const isSrcSlot = slot === "src";
-  const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd"].includes(i.category) || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter((i) => i.role === "dac" || i.role === "dacamp").map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
-  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? i.role === "dac" || i.role === "dacamp" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
+  // The box between source and amp: a DAC, or a phono stage after a turntable.
+  const forDac = (i) => i.role === "dac" || i.role === "dacamp" || i.category === "phono";
+  const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd", "turntable"].includes(i.category) || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter(forDac).map((i) => i.id) : slot === "cart" ? db.items.filter((i) => i.category === "cartridge" && i.cart).map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
+  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? forDac(i) : slot === "cart" ? i.category === "cartridge" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
   // Type chips inside the picker, so a long list can be narrowed in one tap.
   const kindsBySlot = {
     hp: [["iem", t("cat_iem")], ["headphone", t("cat_headphone")]],
-    amp: [["dongle", t("cat_dongle")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["dap", t("cat_dap")]],
-    dac: [["dac", t("role_dac")], ["dacamp", t("role_dacamp")]],
-    src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["desktop", t("pk_streamer")]],
+    amp: [["dongle", t("cat_dongle")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["preamp", t("role_preamp")], ["dap", t("cat_dap")]],
+    dac: [["dac", t("role_dac")], ["dacamp", t("role_dacamp")], ["phono", t("cat_phono")]],
+    src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["turntable", t("cat_turntable")], ["desktop", t("pk_streamer")]],
+    cart: [["mm", t("cart_mm")], ["mc", t("cart_mc")], ["homc", t("cart_homc")]],
   };
   const kinds = [["", t("role_all")], ...(kindsBySlot[slot] ?? [])];
-  const kindOf = (i) => [i.category, i.role].filter(Boolean);
+  const kindOf = (i) => [i.category, i.role, i.cart].filter(Boolean);
   let kind = "";
   const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
   const dlg = document.createElement("div");
@@ -969,7 +991,7 @@ function catalogPage() {
   const brand = p.get("brand") ?? "";
   const mat = p.get("mat") ?? "";
   const role = cat === "desktop" ? p.get("role") ?? "" : "";
-  const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap", "cd", "speaker", "power"];
+  const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
@@ -1014,7 +1036,7 @@ function catalogPage() {
         <div class="seg-links">${["grid", "table"].map((v) => `<a class="${v === view ? "on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
       </div>
       <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
-      ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
+      ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp", "preamp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
       <div class="filter-more">
         <label class="check small"><input type="checkbox" data-toggle="specs"${specsOnly ? " checked" : ""}> ${esc(t("only_specs"))}</label>
         <label class="check small"><input type="checkbox" data-toggle="stock"${stockOnly ? " checked" : ""}> ${esc(t("only_stock"))}</label>
@@ -1185,10 +1207,13 @@ function itemPage(id) {
       ${looksLine(i)}
       ${i.addedFrom ? `<p class="small muted">${esc(t("added_from"))} <a href="${esc(i.addedFrom)}" target="_blank" rel="noopener">${esc(new URL(i.addedFrom).hostname)} ↗</a></p>` : ""}
       ${powerLine(i)}
+      ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
+      ${i.phonoIn ? `<p class="small role-note">${esc(t("phono_takes", { kinds: i.phonoIn.split("+").map((k) => t(`cart_${k}`)).join(" + ") }))}</p>` : ""}
+      ${i.role === "preamp" ? `<p class="small role-note">${esc(t("role_note_preamp"))}</p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" ? "dac" : ["dap", "cd"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
@@ -2067,7 +2092,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv48sxo4" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv496a0x" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2553,7 +2578,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv48sxo4" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv496a0x" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

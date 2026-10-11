@@ -1,16 +1,16 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv48sxo4";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv496a0x";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos] = await Promise.all([
-    fetch("data/catalog.json?v=mv48sxo4").then((r) => r.json()),
-    fetch("data/devices.json?v=mv48sxo4").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mv48sxo4").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mv48sxo4").then((r) => r.json()).catch(() => ({})),
+    fetch("data/catalog.json?v=mv496a0x").then((r) => r.json()),
+    fetch("data/devices.json?v=mv496a0x").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mv496a0x").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mv496a0x").then((r) => r.json()).catch(() => ({})),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   return { ...catalog, devices, byId, zhNames: zh.names, logos };
@@ -19,7 +19,7 @@ export async function loadData() {
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mv48sxo4").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mv496a0x").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 

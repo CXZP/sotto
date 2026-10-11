@@ -6,10 +6,20 @@ const has = (s, re) => re.test(s);
 const RULES = [
   // Things that are not part of a headphone chain, checked first.
   ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
+  // Vinyl: a turntable is a source, a phono stage sits between it and the amp,
+  // and the cartridge decides which phono stage works (MM or MC). Mats,
+  // clamps, belts and spare styli are accessories.
+  ["accessory", /\b(turntable mats?|platter mats?|slipmats?|record (?:clamps?|weights?|cleaners?|cleaning|brush(?:es)?|sleeves?)|drive belts?|dust ?covers?|headshells?|tonearms?|tonearm lifts?|stylus (?:brush|cleaner|gauge)|cover ?it|lacing bars?|racks?)\b|^(?!.*\bcartridges?\b).*\b(?:replacement )?styl(?:us|i)\b/i],
+  // Only next to a vinyl word: "noise isolation" on an IEM is not a turntable foot.
+  ["accessory", /^(?=.*\b(?:turntables?|cartridges?|vinyl|records?|tonearms?)\b).*\b(?:isolation|damping|feet|spacers?|clips?|alignment|gauges?|protractors?)\b/i],
+  ["phono", /^(?!.*\bturntables?\b).*\b(?:phono ?(?:pre-?amp\w*|stages?|amp\w*|equali[sz]er|box\w*)|step[- ]up transformers?|\bSUT\b|mm\/mc pre-?amp\w*)/i],
+  ["turntable", /^(?!.*\b(?:cables?|mats?|covers?)\b).*\b(?:turntables?|record players?)\b/i],
+  // "Rega Apheta 3 Moving Coil" names no cartridge but is one.
+  ["cartridge", /\b(?:phono )?cartridges?\b|\bmoving[- ](?:coil|magnet|iron)\b/i],
   // Home theatre and room hi-fi (Audio Advice, Addicted to Audio): outside a
   // headphone chain or a desk. "Matrix Audio" is a brand, so only "matrix" with
   // a switch/distribution word counts.
-  ["skip", /\b(home theat(?:er|re)|\d+[- ]channel|multi[- ]?channel|in[- ]wall|in[- ]ceiling|on[- ]wall|outdoor|center channel|lcr|floor[- ]?standing|tower speakers?|av receivers?|tuners?|distribution|matrix (?:switch|distribution)|service kit|soundbars?|network (?:audio )?(?:player|transport)|music server|turntables?|multi-?room|(?:preamp|power|rectifier|output) (?:vacuum )?tubes?|integrated (?:class|stereo)|streaming media players?)\b/i],
+  ["skip", /\b(home theat(?:er|re)|\d+[- ]channel|multi[- ]?channel|in[- ]wall|in[- ]ceiling|on[- ]wall|outdoor|center channel|lcr|floor[- ]?standing|tower speakers?|av receivers?|tuners?|distribution|matrix (?:switch|distribution)|service kit|soundbars?|network (?:audio )?(?:player|transport)|music server|multi-?room|(?:preamp|power|rectifier|output) (?:vacuum )?tubes?|integrated (?:class|stereo)|streaming media players?|pre-?(?:amp\w* )?processors?|av ?\d{1,5}\w*|\d+\.\d+[- ]?ch)\b/i],
   ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   ["skip", /\b(beanie|t-?shirts?|hoodies?|merch|toys?|bricks|keychains?|mouse ?pads?|posters?)\b/i],
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
@@ -59,6 +69,8 @@ export function deskRole(p) {
   if (COMBO_WORD.test(title)) return "dacamp";
   const dacT = DAC_WORD.test(title);
   const ampT = AMP_WORD.test(title.replace(/\bpre-?amp\w*\b/gi, ""));
+  // A line preamp: volume and inputs, no headphone jack (feeds active speakers or a power amp).
+  if (/\bpre-?amp/i.test(title) && !ampT && !HP_OUT.test(body)) return dacT || HAS_DAC.test(body) ? "dac" : "preamp";
   if (dacT && ampT) return "dacamp";
   if (dacT) return HP_OUT.test(body) ? "dacamp" : "dac";
   if (ampT) return HAS_DAC.test(body) && !NO_DAC.test(body) ? "dacamp" : "amp";
@@ -86,6 +98,10 @@ const NOISE = [
   /\s-+\s*(?:each|unit)\b/gi,
   /-*\s*\b(?:[a-c][- ]?)?grade\b/gi,
   /\b(?:uk|eu|us|au) plug\b/gi,
+  // Vinyl descriptors ("Debut 10 Turntable" == "Debut 10", "Shibata Moving Coil Phono Cartridge" == "Shibata").
+  /\b(?:(?:belt|direct)[- ]drive\s+|(?:semi[- ])?automatic\s+|manual\s+)*(?:turntables?|record players?)\b/gi,
+  /\b(?:(?:mm|mc|moving[- ](?:coil|magnet|iron))\s+)*(?:phono\s+)?cartridges?\b|\bmoving[- ](?:coil|magnet|iron)\b/gi,
+  /\bphono\s+(?:pre-?amp(?:lifier)?s?|stages?)\b/gi,
   // Stock notes some stores type into the title: "N8ii --- SOLD!", "N8iii --SOLD OUT".
   /-*\s*\bsold(?:\s*out)?\b\s*!*/gi,
   /\((?:[^)]*)\)/g,
@@ -157,4 +173,28 @@ export function modelKey(vendor, title) {
 
 function escapeRe(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Cartridge type: "mm" (moving magnet / iron, ~2-5 mV, any phono stage),
+ * "mc" (moving coil, ~0.2-0.6 mV, needs an MC stage or a step-up transformer),
+ * "homc" (high-output MC, works on an MM stage). null when the store doesn't say.
+ */
+export function cartridgeKind(p) {
+  for (const t of [p.title ?? "", (p.body ?? "").replace(/<[^>]+>/g, " ").slice(0, 4000)]) {
+    if (/\bhigh[- ]output (?:mc|moving[- ]coil)\b|\bHOMC\b/i.test(t)) return "homc";
+    // Uppercase MM/MC only: "mc" and "mm" in lowercase are often other words.
+    if (/\bmoving[- ](?:magnet|iron)\b/i.test(t) || /\bM[MI]\b/.test(t)) return "mm";
+    if (/\bmoving[- ]coil\b/i.test(t) || /\bMC\b(?![\/-]?\s*MM)/.test(t)) return "mc";
+  }
+  return null;
+}
+
+/** Which cartridges a phono stage takes: "mm", "mc" or "mm+mc"; null when not stated. */
+export function phonoInputs(p) {
+  const t = `${p.title ?? ""} ${(p.body ?? "").replace(/<[^>]+>/g, " ").slice(0, 6000)}`;
+  if (/\bMM\s*\/\s*MC\b|\bMC\s*\/\s*MM\b|\bMM\s*(?:and|&|\+)\s*MC\b/i.test(t)) return "mm+mc";
+  const mc = /\bmoving[- ]coil\b|step[- ]up transformer|\bSUT\b/i.test(t) || /\bMC\b/.test(t);
+  const mm = /\bmoving[- ]magnet\b/i.test(t) || /\bMM\b/.test(t);
+  return mc && mm ? "mm+mc" : mc ? "mc" : mm ? "mm" : null;
 }

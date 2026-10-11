@@ -35,6 +35,6 @@ body:
     id: proof
     attributes:
       label: Proof link
-      description: 'A public post or page on the brand''s official website or social account containing the text "Sotto verify: <display name>". You can delete it after we confirm.'
+      description: 'A public post or page on the brand''s official website or social account containing the text "Sotto verify: YOUR-DISPLAY-NAME". You can delete it after we confirm.'
     validations:
       required: true

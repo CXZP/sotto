@@ -13,13 +13,13 @@
   },
   {
     "id": "computer-usb",
-    "name": { "th": "คอมพิวเตอร์ (USB-A / USB-C)", "en": "Computer (USB-A / USB-C)" },
+    "name": { "th": "คอมพิวเตอร์ (USB)", "en": "Computer (USB)" },
     "port": "usb-a",
     "outputs": []
   },
   {
     "id": "apple-macbook-2021",
-    "name": { "th": "Mac (รุ่นปี 2021 ขึ้นไป ที่รองรับหูฟัง high-impedance)", "en": "Mac (2021 or later, high-impedance headphone support)" },
+    "name": { "th": "ช่องหูฟังของ Mac (รุ่นปี 2021 ขึ้นไป)", "en": "Mac headphone jack (2021 or later)" },
     "port": "usb-c",
     "outputs": [
       {

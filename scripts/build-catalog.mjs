@@ -11,6 +11,7 @@ import { classify, condition, modelKey, compact, groupKey, deskRole } from "./li
 import { extractSpecs, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
+import { extractPorts, extractFeatures } from "./lib/ports.js";
 
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power"]);
@@ -121,6 +122,20 @@ for (const file of files) {
     if (category === "desktop" || category === "cd") {
       const need = !g.dcIn && dcInput(p.body);
       if (need) g.dcIn = { ...need, url };
+    }
+    // Ports and switches: the union over every store, first quote per port wins.
+    if (category === "desktop" || category === "cd" || category === "dap" || category === "dongle") {
+      const ports = extractPorts(p.body);
+      if (ports)
+        for (const dir of ["in", "out"])
+          for (const [k, quote] of Object.entries(ports[dir])) {
+            g.ports ??= { in: {}, out: {} };
+            g.ports[dir][k] ??= { quote, url };
+          }
+      for (const [k, quote] of Object.entries(extractFeatures(p.body))) {
+        g.features ??= {};
+        g.features[k] ??= { quote, url };
+      }
     }
     if (category === "power" && !g.dcOut) {
       const out = dcOutputs(p.body);

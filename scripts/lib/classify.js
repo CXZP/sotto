@@ -121,7 +121,12 @@ export function modelKey(vendor, title) {
   const bare = t.replace(MARKETING, " ");
   if (/[a-z0-9]/i.test(bare.replace(/[|–—:,/+&-]+/g, ""))) t = bare;
   // A word the store repeated ("R2R R2R", "M25 M25") counts once.
-  const model = t.replace(/\s+/g, " ").trim().replace(/\b(\S+)(?: \1\b)+/gi, "$1");
+  const model = t
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b(\S+)(?: \1\b)+/gi, "$1")
+    // Leftover separators once noise words are gone ("PL200T -", "- Grand Tourer").
+    .replace(/^[-–—.\s]+|[-–—.\s]+$/g, "");
   const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return { key: `${slug(v) || "unknown"}--${slug(model) || "unknown"}`, model };
 }

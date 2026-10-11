@@ -1,17 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3pcx0d";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3pcx0d";
-import { renderChart } from "./chart.js?v=mv3pcx0d";
-import { makeT } from "./i18n.js?v=mv3pcx0d";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3pcx0d";
-import { LEGAL } from "./legal.js?v=mv3pcx0d";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3pcx0d";
-import * as community from "./community.js?v=mv3pcx0d";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3pcx0d";
-import { redactImage } from "./redact.js?v=mv3pcx0d";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3pcx0d";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3pcx0d";
-import { fits } from "./dcfit.js?v=mv3pcx0d";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3pcx0d";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3pxqrp";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3pxqrp";
+import { renderChart } from "./chart.js?v=mv3pxqrp";
+import { makeT } from "./i18n.js?v=mv3pxqrp";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3pxqrp";
+import { LEGAL } from "./legal.js?v=mv3pxqrp";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3pxqrp";
+import * as community from "./community.js?v=mv3pxqrp";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3pxqrp";
+import { redactImage } from "./redact.js?v=mv3pxqrp";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3pxqrp";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3pxqrp";
+import { chainLinks } from "./chain.js?v=mv3pxqrp";
+import { fits } from "./dcfit.js?v=mv3pxqrp";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3pxqrp";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -27,6 +28,7 @@ const state = {
   region: "",
   mode: load("mode", "simple"),
   device: "phone-usb-c",
+  src: "",
   amp: "",
   dac: "",
   hp: "",
@@ -79,13 +81,13 @@ function query() {
 }
 function readHash() {
   const p = query();
-  if (route().name === "build") for (const k of ["device", "dac", "amp", "hp", "plug", "level"]) if (p.has(k)) state[k] = p.get(k);
+  if (route().name === "build") for (const k of ["device", "src", "dac", "amp", "hp", "plug", "level"]) state[k] = p.get(k) ?? (k === "device" ? state.device : k === "level" ? "normal" : "");
   if (LANGS.includes(p.get("lang"))) state.lang = p.get("lang");
   if (["simple", "detail"].includes(p.get("mode"))) state.mode = p.get("mode");
 }
 function buildUrl() {
   const p = new URLSearchParams();
-  for (const k of ["device", "dac", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
+  for (const k of ["device", "src", "dac", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
   return `#build?${p}`;
 }
 function go(hash) {
@@ -231,29 +233,67 @@ function render() {
 
 function currentSource() {
   const device = db.devices.find((d) => d.id === state.device) ?? db.devices[0];
+  const src = state.src ? findItem(state.src) : null;
+  const dac = state.dac ? findItem(state.dac) : null;
   const amp = state.amp ? findItem(state.amp) : null;
-  const outputs = amp ? sourceOutputs(amp) : device.outputs;
-  return { device, amp, outputs, label: amp ? displayName(amp) : L(device.name) };
+  const driver = amp ?? (dac && dac.role !== "dac" ? dac : null) ?? (dac ? null : src);
+  const outputs = driver ? sourceOutputs(driver) : dac ? [] : device.outputs;
+  // The thing before the boxes, on its own (for "would it be loud enough without them").
+  const own = src ? sourceOutputs(src) : device.outputs;
+  return { device, src, dac, amp: driver && driver !== src ? driver : null, driver, outputs, own, label: driver ? displayName(driver) : L(device.name) };
+}
+
+/** Links between the boxes, as list items for the connection card. */
+function chainSteps(reports = {}) {
+  const { device, src } = currentSource();
+  const dac = state.dac ? findItem(state.dac) : null;
+  const amp = state.amp ? findItem(state.amp) : null;
+  const st = (x) => (x ? { item: x } : null);
+  const source = src ? { item: src } : { device };
+  const c = chainLinks({ source, dac: st(dac), amp: st(amp) }, reports);
+  const name = (stage) => (stage.item ? displayName(stage.item) : L(stage.device.name));
+  const portName = (k) => t(`po_${k}`);
+  const steps = c.links.map((l) => {
+    const a = name(l.from), b = name(l.to);
+    const href = l.to.item ? `#item/${encodeURIComponent(l.to.item.id)}` : "#";
+    if (l.status === "ok") return `<li>${esc(t("ch_link_ok", { a, b, via: l.via.map(portName).join(" / ") }))}</li>`;
+    if (l.status === "adapter" && l.adapter === "lightning-usb") return `<li class="need">${esc(t("c_lightning"))}</li>`;
+    if (l.status === "adapter") return `<li class="need">${esc(t("ch_link_cable", { a, b, from: portName(l.via[0]), to: portName(l.via[1]) }))}</li>`;
+    if (l.status === "need_dac") return `<li class="danger">${esc(t("ch_link_need_dac", { a, b }))}</li>`;
+    if (l.status === "no") return `<li class="danger">${esc(t("ch_link_no", { a, b, outs: l.outs.map(portName).join(", "), ins: l.ins.map(portName).join(", ") }))}</li>`;
+    return `<li class="need">${esc(t(l.kind === "analog" ? "ch_link_unknown_analog" : "ch_link_unknown", { a, b }))} <a href="${href}">${esc(t("ch_check_ports"))}</a></li>`;
+  });
+  // A console or an old PC may only see the DAC in UAC 1.0 mode.
+  const firstBox = dac ?? amp;
+  if (!src && firstBox?.features?.uac1) steps.push(`<li class="alt">${esc(t("ch_uac1", { b: displayName(firstBox) }))} <a href="#learn/uac1">?</a></li>`);
+  if (c.dacOnlyLast) steps.push(`<li class="danger">${esc(t("ch_dac_only", { b: displayName(dac) }))}</li>`);
+  return steps;
 }
 
 function buildPage() {
-  const { device, amp } = currentSource();
+  const { device, src } = currentSource();
+  const amp = state.amp ? findItem(state.amp) : null;
   const hp = state.hp ? findItem(state.hp) : null;
   const dac = state.dac ? findItem(state.dac) : null;
-  const needsDac = amp?.role === "amp";
+  const needsDac = amp?.role === "amp" && !src;
   const lv = LEVELS[state.level] ?? LEVELS.normal;
   return `<div class="builder">
     <section class="slots card">
-      ${slotRow(t("slot_device"), `<div class="select"><select id="device">${db.devices
-        .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(L(d.name))}</option>`)
-        .join("")}</select></div>`)}
-      ${needsDac || dac ? slotRow(t("slot_dac"), pickedOrButton("dac", dac), needsDac && !dac ? t("slot_dac_hint") : "") : ""}
+      ${slotRow(
+        t("slot_device"),
+        src
+          ? pickedOrButton("src", src)
+          : `<div class="select"><select id="device">${db.devices
+              .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(L(d.name))}</option>`)
+              .join("")}</select></div> <button class="link small" data-pick="src">${esc(t("src_pick"))}</button>`,
+      )}
+      ${slotRow(t("slot_dac"), pickedOrButton("dac", dac), needsDac && !dac ? t("slot_dac_hint") : dac ? "" : t("slot_dac_opt"))}
       ${slotRow(t("slot_amp"), pickedOrButton("amp", amp), amp?.role === "amp" ? t("role_note_amp") : "")}
       ${slotRow(t("slot_hp"), pickedOrButton("hp", hp))}
       ${hp ? slotRow(t("plug"), seg("plug", PLUGS.map((j) => [j, PLUG_SHORT[j]]), plugOf(hp)), !state.plug && !hp.stockPlug ? t("plug_guess") : "") : ""}
       ${slotRow(t("level"), seg("level", [["quiet", t("level_quiet")], ["normal", t("level_normal")], ["loud", t("level_loud")]], state.level), t("level_hint", { avg: lv, peak: lv + CREST }))}
-      ${buildTotal(amp, hp, dac)}
-      ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
+      ${buildTotal(amp, hp, dac, src)}
+      ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[src?.id, dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
     <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
       <div class="card chart-card" id="chart"></div>
@@ -277,8 +317,8 @@ function pickedOrButton(slot, item) {
   </div>`;
 }
 
-function buildTotal(amp, hp, dac) {
-  const items = [dac, amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
+function buildTotal(amp, hp, dac, src) {
+  const items = [src, dac, amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
   if (!items.length) return "";
   const cur = new Set(items.map((o) => o.currency));
   const sum = items.reduce((s, o) => s + o.price, 0);
@@ -300,19 +340,16 @@ function buildResults(hp) {
   // With an amp in the chain, "no amp needed" is the wrong message. Say whether the
   // device alone would also have been loud enough, so people don't buy one for loudness.
   let alone = null;
-  if (src.amp && src.device.outputs?.length) alone = evaluate(hp, src.device.outputs, { level, crest: CREST }).status;
-  return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, alone }), conn.html, reverseCard(hp, level)].join("");
+  if (src.amp && src.own?.length) alone = evaluate(hp, src.own, { level, crest: CREST }).status;
+  return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
 }
 
-function connectionCard({ device, amp, outputs }, hp) {
+function connectionCard({ outputs }, hp) {
+  const links = `<ol class="chain" id="chain-links">${chainSteps().join("")}</ol>`;
   const steps = [];
-  if (amp) {
-    const link = deviceToDac(device, amp);
-    steps.push(link.status === "adapter" ? `<li class="need">${esc(t("c_lightning"))}</li>` : `<li>${esc(t("c_usb", { amp: displayName(amp) }))}</li>`);
-  }
   if (!outputs.length) {
     steps.push(`<li class="danger">${esc(t("v_no_output"))}</li>`);
-    return { html: card(t("c_title"), `<ol class="chain">${steps.join("")}</ol>`), outputs: [] };
+    return { html: card(t("c_title"), `${links}<ol class="chain">${steps.join("")}</ol>`), outputs: [] };
   }
   const plug = plugOf(hp);
   let usable = outputs;
@@ -329,7 +366,7 @@ function connectionCard({ device, amp, outputs }, hp) {
   } else {
     steps.push(`<li class="need">${esc(t("c_jack_unknown"))}</li>`);
   }
-  return { html: card(t("c_title"), `<ol class="chain">${steps.join("")}</ol>`), outputs: usable };
+  return { html: card(t("c_title"), `${links}<ol class="chain">${steps.join("")}</ol>`), outputs: usable };
 }
 
 const VERDICT = {
@@ -348,7 +385,7 @@ function verdictCard(ev, hp, detail, chain = {}) {
   if (ev.status === "ok" && chain.amp) key = "v_ok_amp";
   let sub = subKey ? t(subKey) : "";
   if (chain.amp && chain.alone && ["ok", "overkill", "tight"].includes(ev.status))
-    sub = [sub, t(["ok", "overkill"].includes(chain.alone) ? "v_alone_ok" : "v_alone_no", { device: chain.L(device.name), amp: displayName(chain.amp) })].filter(Boolean).join(" · ");
+    sub = [sub, t(["ok", "overkill"].includes(chain.alone) ? "v_alone_ok" : "v_alone_no", { device: chain.src ? displayName(chain.src) : L(chain.device.name), amp: displayName(chain.amp) })].filter(Boolean).join(" · ");
   if (ev.status === "ambiguous") sub = t("v_ambiguous_sub", { a: t(VERDICT[ev.r.status][1]), b: t(VERDICT[ev.alt.r.status][1]) });
   else if (ev.unitAmbiguous) sub = t("v_unit_note");
   let body = `<div class="verdict"><span class="badge ${tone}" aria-hidden="true"></span><div><p class="big">${esc(t(key))}</p>${sub ? `<p class="sub">${esc(sub)}</p>` : ""}</div></div>`;
@@ -552,8 +589,9 @@ function wireChartPage(main) {
 
 function openPicker(slot) {
   const cats = slot === "hp" ? HEADPHONE_CATS : SOURCE_CATS;
-  const usable = new Set(slot === "dac" ? db.items.filter((i) => i.role === "dac" || i.role === "dacamp").map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
-  const pool = db.items.filter((i) => (slot === "dac" ? i.role === "dac" || i.role === "dacamp" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
+  const isSrcSlot = slot === "src";
+  const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd"].includes(i.category) || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter((i) => i.role === "dac" || i.role === "dacamp").map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
+  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? i.role === "dac" || i.role === "dacamp" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
   const dlg = document.createElement("div");
   dlg.className = "modal";
   dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot}`))}">
@@ -827,7 +865,7 @@ function itemPage(id) {
       ${powerLine(i)}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" ? "dac" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" ? "dac" : ["dap", "cd"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
@@ -835,6 +873,7 @@ function itemPage(id) {
       <section class="card pad"><h3>${esc(t("it_specs"))}</h3>${specRows || powerRows ? specRows + powerRows : `<p class="muted">${esc(t("it_no_specs"))}</p>`}${notes ? `<ul class="notes">${notes}</ul>` : ""}</section>
       <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
     </div>
+    ${isSrc ? `<section class="card pad ports" id="ports"></section>` : ""}
     <section class="card pad paid" id="paid"></section>
     ${channelsCard(i)}
     <section class="card pad community" id="community"></section>
@@ -860,6 +899,13 @@ function offersTable(offers) {
 
 function wire(main, r) {
   if (r.name === "build") {
+    // Ports users confirmed from back-panel photos can turn "not stated" into a match.
+    const ids = [state.src, state.dac, state.amp].filter(Boolean).map((id) => findItem(id)?.id);
+    if (ids.length)
+      community.portsFor(ids).then((reports) => {
+        const el = main.querySelector("#chain-links");
+        if (el && Object.keys(reports).length) el.innerHTML = chainSteps(reports).join("");
+      });
     main.querySelector("#device")?.addEventListener("change", (e) => {
       state.device = e.target.value;
       go(buildUrl());
@@ -893,6 +939,7 @@ function wire(main, r) {
     if (rev) rev.outerHTML = reverseCard(i, LEVELS.normal);
     if (i) renderCommunity(main.querySelector("#community"), i);
     if (i) renderPaid(main.querySelector("#paid"), i);
+    if (i) renderPorts(main.querySelector("#ports"), i);
     if (i) renderItemThreads(main.querySelector("#item-threads"), i);
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
@@ -1398,6 +1445,89 @@ function channelsCard(i) {
     <p class="muted small">${esc(t("aff_note"))}</p></section>`;
 }
 
+// ---------------------------------------------------------------------------
+// Ports (item page): what plugs in and out, from store lines and from users
+// who checked the back panel with a photo. Not listed ≠ not there.
+
+const PORT_KEYS = ["usb", "coax", "optical", "aes", "bt", "rca", "xlr", "line"];
+const FEATURE_KEYS = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
+// Glossary page for each switch or protocol.
+const FEATURE_TERM = { uac1: "uac1", nos: "nos", asio: "wasapi", roon: "streaming", airplay: "streaming", spotify: "streaming", tidal: "streaming", upnp: "streaming", chromecast: "streaming" };
+
+function rearSearch(i) {
+  return `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(`${displayName(i)} rear panel`)}`;
+}
+
+async function renderPorts(el, item) {
+  if (!el) return;
+  const head = `<h3>${esc(t("po_title"))}</h3><p class="muted small">${esc(t("po_lead"))}</p>`;
+  el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
+  const reports = (await community.portsFor([item.id]))[item.id] ?? [];
+  const s = await community.session();
+  const profile = s ? await community.myProfile() : null;
+  if (!el.isConnected) return;
+
+  const users = (dir, k) => reports.filter((r) => (dir === "f" ? r.features : r[dir])?.includes(k));
+  const chip = (dir, k) => {
+    const store = dir === "f" ? item.features?.[k] : item.ports?.[dir]?.[k];
+    const u = users(dir, k);
+    if (!store && !u.length) return "";
+    const label = dir === "f" ? t(`po_f_${k}`) : t(`po_${k}`);
+    const bits = [];
+    if (store) bits.push(`<a href="${esc(store.url)}" target="_blank" rel="noopener" title="${esc(store.quote)}">${esc(t("po_store"))}</a>`);
+    if (u.length) bits.push(`<a href="${esc(u[0].evidence_url)}" target="_blank" rel="noopener">${esc(t("po_users", { n: u.length }))}</a>`);
+    const learn = dir === "f" ? ` <a href="#learn/${FEATURE_TERM[k]}" title="${esc(t("nav_learn"))}">?</a>` : "";
+    return `<span class="port-chip">${esc(label)}${learn} <span class="muted small">${bits.join(" · ")}</span></span>`;
+  };
+  const row = (dir, title) => {
+    const chips = (dir === "f" ? FEATURE_KEYS : PORT_KEYS).map((k) => chip(dir, k)).filter(Boolean).join("");
+    return `<div class="port-row"><b class="small">${esc(title)}</b><div>${chips || `<span class="muted small">${esc(t("po_none"))}</span>`}</div></div>`;
+  };
+  const box = (name, keys, prefix) =>
+    `<fieldset><legend class="small">${esc(t(name))}</legend>${keys.map((k) => `<label class="check small"><input type="checkbox" name="${prefix}" value="${k}"> ${esc(t(prefix === "f" ? `po_f_${k}` : `po_${k}`))}</label>`).join("")}</fieldset>`;
+  const form = !s
+    ? `<p class="small muted">${esc(t("po_signin"))}</p>`
+    : !profile?.display_name
+      ? `<p class="small muted">${esc(t("pr_need_name"))}</p>`
+      : `<details class="port-add"><summary class="pill">${esc(t("po_add"))}</summary>
+        <form data-form="ports" class="port-form">
+          <p class="small muted">${esc(t("po_add_help"))} <a href="${esc(rearSearch(item))}" target="_blank" rel="noopener">${esc(t("sq_rear"))} ↗</a></p>
+          ${box("po_in", PORT_KEYS, "in")}${box("po_out", PORT_KEYS.filter((k) => k !== "bt"), "out")}${box("po_switches", FEATURE_KEYS, "f")}
+          <div class="row-inline"><label class="pill"><input type="file" name="shot" accept="image/*" hidden>${esc(t("po_pick"))}</label><span class="muted small" data-shot-state></span></div>
+          <input class="search" name="note" maxlength="300" placeholder="${esc(t("po_note_ph"))}">
+          <button class="pill primary">${esc(t("ds_send"))}</button><p class="small status" role="status"></p>
+        </form></details>`;
+  el.innerHTML = `${head}${row("in", t("po_in"))}${row("out", t("po_out"))}${row("f", t("po_switches"))}
+    <p class="small"><a href="${esc(rearSearch(item))}" target="_blank" rel="noopener">${esc(t("po_check_photos"))} ↗</a></p>${form}`;
+
+  const f = el.querySelector('[data-form="ports"]');
+  if (!f) return;
+  const status = f.querySelector(".status");
+  let shot = null;
+  f.shot.addEventListener("change", async () => {
+    const file = f.shot.files[0];
+    f.shot.value = "";
+    if (!file) return;
+    shot = await redactImage(file, t);
+    f.querySelector("[data-shot-state]").textContent = shot ? t("pr_shot_ready", { kb: Math.round(shot.size / 1024) }) : "";
+  });
+  f.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const vals = (n) => [...f.querySelectorAll(`input[name="${n}"]:checked`)].map((x) => x.value);
+    const row = { item_id: item.id, ports_in: vals("in"), ports_out: vals("out"), features: vals("f"), note: f.note.value.trim() };
+    if (!row.ports_in.length && !row.ports_out.length && !row.features.length) return (status.textContent = t("po_need_one"));
+    if (!shot) return (status.textContent = t("po_need_photo"));
+    try {
+      status.textContent = t("cm_loading");
+      row.evidence_url = await community.uploadEvidence(shot);
+      await community.addPorts(row);
+      renderPorts(el, item);
+    } catch (e) {
+      status.textContent = e.message ?? String(e);
+    }
+  });
+}
+
 async function renderPaid(el, item) {
   if (!el) return;
   const head = `<h3>${esc(t("pr_title"))}</h3><p class="muted small">${esc(t("pr_disclaimer"))}</p>`;
@@ -1551,7 +1681,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3pcx0d" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3pxqrp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

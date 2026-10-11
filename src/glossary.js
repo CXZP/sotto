@@ -659,6 +659,138 @@ export const TERMS = [
 </ul>`,
     },
   },
+  {
+    id: "uac1",
+    tool: null,
+    related: ["nos"],
+    refs: [W("USB_Audio")],
+    th: {
+      title: "UAC 1.0 / UAC 2.0 (USB Audio Class)",
+      short: "มาตรฐานเสียงผ่าน USB: UAC1 เสียบที่ไหนก็ติด แต่ความละเอียดจำกัด UAC2 ได้ความละเอียดสูงกว่า แต่บางอุปกรณ์ไม่รองรับ",
+      body: `<h2>คืออะไร</h2>
+<p>DAC แบบ USB คุยกับคอมหรือมือถือด้วยมาตรฐาน USB Audio Class มีสองรุ่นที่เจอบ่อย</p>
+<ul>
+<li><b>UAC 1.0</b> ใช้ USB ความเร็ว full-speed ปกติได้ถึงราว 24-bit/96 kHz ไม่ต้องลงไดรเวอร์ ใช้กับเครื่องเก่าหรือเครื่องเกมได้กว้างกว่า</li>
+<li><b>UAC 2.0</b> ใช้ USB high-speed ได้ sample rate สูงกว่าและ DSD Windows 10 (ตั้งแต่เวอร์ชัน 1703), macOS, iOS และ Android รองรับในตัว Windows ที่เก่ากว่านั้นต้องลงไดรเวอร์ของแบรนด์</li>
+</ul>
+<h2>ในชุดของคุณ</h2>
+<p>ถ้าเสียบแล้วเครื่องไม่เห็น DAC โดยเฉพาะ<b>เครื่องเกมคอนโซล</b>หรือคอมเก่า ให้ลองสลับเป็นโหมด UAC 1.0 (บางรุ่นมีสวิตช์หลังเครื่อง บางรุ่นตั้งในเมนู) ส่วนการฟังเพลงปกติที่ 44.1/48 kHz ทั้งสองโหมดส่งข้อมูลเสียงครบเท่ากัน</p>
+<h2>เข้าใจผิดบ่อย</h2>
+<ul><li>"UAC2 เสียงดีกว่า": สำหรับไฟล์ 44.1/48 kHz ข้อมูลที่ส่งเหมือนกัน ต่างกันแค่ความเข้ากันได้และ sample rate สูงสุด</li></ul>`,
+    },
+    en: {
+      title: "UAC 1.0 / UAC 2.0 (USB Audio Class)",
+      short: "The USB audio standard: UAC1 works almost anywhere at limited resolution; UAC2 goes higher but not every host supports it",
+      body: `<h2>What it is</h2>
+<p>A USB DAC talks to a computer or phone using the USB Audio Class standard. Two versions are common:</p>
+<ul>
+<li><b>UAC 1.0</b> runs over full-speed USB, typically up to about 24-bit/96 kHz. It needs no driver and works with more older devices and game consoles.</li>
+<li><b>UAC 2.0</b> runs over high-speed USB for higher sample rates and DSD. Windows 10 (version 1703 on), macOS, iOS and Android support it built in; older Windows needs the brand's driver.</li>
+</ul>
+<h2>In your chain</h2>
+<p>If the DAC isn't detected, especially on a <b>game console</b> or an old computer, try UAC 1.0 mode (a rear switch on some models, a menu setting on others). For normal 44.1/48 kHz music both modes carry the same data.</p>
+<h2>Common misunderstandings</h2>
+<ul><li>"UAC2 sounds better": for 44.1/48 kHz files the data sent is identical; the difference is compatibility and maximum sample rate.</li></ul>`,
+    },
+  },
+  {
+    id: "nos",
+    tool: null,
+    related: ["uac1"],
+    refs: [W("Oversampling"), W("Zero-order_hold")],
+    th: {
+      title: "NOS / OS (ไม่ใช้ / ใช้ oversampling)",
+      short: "สวิตช์บน DAC บางรุ่น (มักเป็น R2R) เลือกว่าจะใช้ฟิลเตอร์ดิจิทัลหรือไม่ มีผลกับช่วงเสียงสูงสุด",
+      body: `<h2>คืออะไร</h2>
+<ul>
+<li><b>OS (oversampling)</b>: DAC เพิ่ม sample rate และใช้ฟิลเตอร์ดิจิทัลกรองสัญญาณสะท้อนเหนือ 20 kHz ผลคือการตอบสนองเรียบไปจนสุดย่านที่หูได้ยิน</li>
+<li><b>NOS (non-oversampling)</b>: ไม่ใช้ฟิลเตอร์นี้ ผลที่วัดได้คือเสียงสูงตกลงเล็กน้อยใกล้ 20 kHz (ราว 3 dB สำหรับไฟล์ 44.1 kHz) และมีสัญญาณส่วนเกินเหนือย่านที่หูได้ยิน</li>
+</ul>
+<h2>ในชุดของคุณ</h2>
+<p>ตามการวัด OS แม่นกว่า แต่บางคนชอบเสียงแบบ NOS ทั้งสองโหมดไม่ทำให้อุปกรณ์เสีย ลองสลับฟังเองได้ ก่อนเทียบควรปรับความดังให้เท่ากัน เพราะเสียงที่ดังกว่านิดเดียวมักฟังดูดีกว่า</p>`,
+    },
+    en: {
+      title: "NOS / OS (non-oversampling / oversampling)",
+      short: "A switch on some DACs (often R2R) that turns the digital filter on or off, changing the top octave",
+      body: `<h2>What it is</h2>
+<ul>
+<li><b>OS (oversampling)</b>: the DAC raises the sample rate and uses a digital filter to remove images above 20 kHz. Response stays flat to the top of the audible band.</li>
+<li><b>NOS (non-oversampling)</b>: no such filter. Measurably, treble rolls off slightly near 20 kHz (about 3 dB for 44.1 kHz files) and ultrasonic images remain.</li>
+</ul>
+<h2>In your chain</h2>
+<p>By measurement OS is more accurate, but some people prefer NOS. Neither mode harms anything, so try both. Match the volume before comparing: slightly louder usually sounds better.</p>`,
+    },
+  },
+  {
+    id: "wasapi",
+    tool: null,
+    related: ["uac1", "streaming"],
+    refs: [W("Windows_Audio_Session_API"), W("Audio_Stream_Input/Output")],
+    th: {
+      title: "WASAPI / ASIO (ส่งเสียงออกจาก Windows)",
+      short: "วิธีที่โปรแกรมเล่นเพลงบน Windows ส่งเสียงไป DAC: แบบ shared ผ่านตัวผสมเสียงของ Windows หรือแบบ exclusive/ASIO ส่งตรง",
+      body: `<h2>คืออะไร</h2>
+<ul>
+<li><b>WASAPI shared</b> (ค่าปกติ): ทุกโปรแกรมใช้ DAC ร่วมกัน Windows ผสมเสียงและแปลง sample rate ให้ตรงกับที่ตั้งไว้ในแผง Sound</li>
+<li><b>WASAPI exclusive</b>: โปรแกรมเล่นเพลงยึด DAC ไว้คนเดียว ส่งไฟล์ที่ sample rate เดิมไปตรงๆ ไม่ผ่านตัวผสม เสียงแจ้งเตือนจากโปรแกรมอื่นจะไม่ดังระหว่างนั้น</li>
+<li><b>ASIO</b>: ช่องทางส่งตรงอีกแบบที่ใช้กันในงานสตูดิโอ ต้องมีไดรเวอร์ ASIO ของแบรนด์ DAC (มักมากับไดรเวอร์ UAC2)</li>
+</ul>
+<h2>ในชุดของคุณ</h2>
+<p>ถ้าอยากให้ไฟ sample rate บน DAC แสดงตรงกับไฟล์ หรือจะเล่น DSD ให้เลือก WASAPI exclusive หรือ ASIO ในโปรแกรมเล่นเพลง (foobar2000, MusicBee, Roon ฯลฯ) ถ้าฟังเพลงทั่วไปที่ 44.1/48 kHz และตั้ง Windows ไว้ตรงกัน แบบ shared ก็ไม่ได้ทำให้ข้อมูลเสียงหายไปมาก ข้อดีของ exclusive คือไม่มีการแปลงและไม่มีเสียงอื่นปน</p>
+<h2>เข้าใจผิดบ่อย</h2>
+<ul><li>"exclusive ทำให้เสียงดีขึ้นเสมอ": ถ้า sample rate ตรงกันอยู่แล้วและไม่ได้ปรับเสียงใน Windows ผลแทบไม่ต่าง ความต่างจะชัดเมื่อ Windows ต้องแปลง sample rate</li></ul>`,
+    },
+    en: {
+      title: "WASAPI / ASIO (audio output on Windows)",
+      short: "How a Windows music player sends audio to the DAC: shared through the Windows mixer, or exclusive/ASIO straight through",
+      body: `<h2>What it is</h2>
+<ul>
+<li><b>WASAPI shared</b> (the default): every app shares the DAC; Windows mixes them and converts to the sample rate set in Sound settings.</li>
+<li><b>WASAPI exclusive</b>: the music player takes the DAC for itself and sends the file at its own sample rate, bypassing the mixer. Other apps' sounds won't play meanwhile.</li>
+<li><b>ASIO</b>: another direct path, common in studios. It needs the DAC brand's ASIO driver (often bundled with its UAC2 driver).</li>
+</ul>
+<h2>In your chain</h2>
+<p>To have the DAC follow each file's sample rate, or to play DSD, choose WASAPI exclusive or ASIO in your player (foobar2000, MusicBee, Roon and so on). For ordinary 44.1/48 kHz music with Windows set to match, shared mode loses little; exclusive avoids conversion and other sounds mixing in.</p>
+<h2>Common misunderstandings</h2>
+<ul><li>"Exclusive always sounds better": if the sample rate already matches and Windows applies no processing, the difference is negligible. It matters when Windows would otherwise convert the sample rate.</li></ul>`,
+    },
+  },
+  {
+    id: "streaming",
+    tool: null,
+    related: ["wasapi"],
+    refs: [W("Roon_(software)"), W("AirPlay"), W("Universal_Plug_and_Play"), W("Chromecast")],
+    th: {
+      title: "Roon Ready, AirPlay, Spotify/Tidal Connect, UPnP",
+      short: "วิธีส่งเพลงผ่านเครือข่ายไปเครื่องสตรีม/DAC ที่มีช่อง LAN หรือ Wi-Fi โดยไม่ต้องเสียบสายจากคอม",
+      body: `<h2>คืออะไร</h2>
+<p>เครื่องที่มีช่อง LAN หรือ Wi-Fi รับเพลงจากแอปผ่านเครือข่ายได้ แต่ละแอปใช้มาตรฐานของตัวเอง ถ้าเครื่องไม่รองรับมาตรฐานของแอปที่คุณใช้ ก็ต้องกลับไปต่อผ่านคอมหรือมือถือ</p>
+<ul>
+<li><b>Roon Ready</b>: ใช้กับโปรแกรม Roon (เสียค่าสมาชิก) ต้องมีเครื่องหลัก (Roon Server) เปิดทิ้งไว้ในบ้าน</li>
+<li><b>AirPlay</b>: ส่งจาก iPhone, iPad, Mac</li>
+<li><b>Spotify Connect / Tidal Connect</b>: กดเลือกเครื่องในแอปนั้นได้เลย มือถือเป็นแค่รีโมต</li>
+<li><b>UPnP/DLNA</b>: มาตรฐานเปิด ใช้กับแอปอย่าง BubbleUPnP, mconnect หรือเล่นไฟล์จาก NAS</li>
+<li><b>Chromecast (Google Cast)</b>: ส่งจากแอปบน Android และ Chrome</li>
+</ul>
+<h2>ในชุดของคุณ</h2>
+<p>ดูว่าแอปที่คุณใช้ทุกวันรองรับมาตรฐานไหน แล้วเลือกเครื่องที่รองรับมาตรฐานนั้น บางยี่ห้อเพิ่มให้ภายหลังด้วยเฟิร์มแวร์ ควรเช็กกับเว็บแบรนด์ด้วย</p>`,
+    },
+    en: {
+      title: "Roon Ready, AirPlay, Spotify/Tidal Connect, UPnP",
+      short: "Ways to send music over the network to a streamer or DAC with LAN or Wi-Fi, without a cable from a computer",
+      body: `<h2>What it is</h2>
+<p>A box with LAN or Wi-Fi can receive music from apps over the network, but each app speaks its own protocol. If the box doesn't support the one your app uses, you're back to a cable from a computer or phone.</p>
+<ul>
+<li><b>Roon Ready</b>: for Roon (paid subscription); needs a Roon Server running somewhere at home.</li>
+<li><b>AirPlay</b>: from iPhone, iPad and Mac.</li>
+<li><b>Spotify Connect / Tidal Connect</b>: pick the device inside that app; the phone is only a remote.</li>
+<li><b>UPnP/DLNA</b>: an open standard, used by apps like BubbleUPnP or mconnect, or to play files from a NAS.</li>
+<li><b>Chromecast (Google Cast)</b>: from Android apps and Chrome.</li>
+</ul>
+<h2>In your chain</h2>
+<p>Check which protocol the app you use every day speaks, and pick a box that supports it. Some brands add protocols later by firmware, so check the brand's site too.</p>`,
+    },
+  },
 ];
 
 export const TERM = new Map(TERMS.map((t) => [t.id, t]));

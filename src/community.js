@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3pcx0d";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3pxqrp";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -137,6 +137,30 @@ export async function pricesFor(itemId) {
 export async function addPrice(row) {
   const sb = await client();
   const { error } = await sb.from("price_reports").insert(row);
+  if (error) throw error;
+}
+
+/** Port reports for some items: { itemId: [{in, out, features, evidence_url, ...}] }. */
+export async function portsFor(itemIds) {
+  const ids = [...new Set(itemIds.filter(Boolean))];
+  const sb = ids.length ? await client() : null;
+  if (!sb) return {};
+  const { data, error } = await sb.from("port_feed").select("*").in("item_id", ids).order("created_at", { ascending: false }).limit(500);
+  if (error) return {};
+  const out = {};
+  for (const r of data) (out[r.item_id] ??= []).push({ ...r, in: r.ports_in, out: r.ports_out });
+  return out;
+}
+
+export async function addPorts(row) {
+  const sb = await client();
+  const { error } = await sb.from("port_reports").insert(row);
+  if (error) throw error;
+}
+
+export async function deletePorts(id) {
+  const sb = await client();
+  const { error } = await sb.from("port_reports").delete().eq("id", id);
   if (error) throw error;
 }
 

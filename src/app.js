@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3vzysv";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3vzysv";
-import { renderChart } from "./chart.js?v=mv3vzysv";
-import { makeT } from "./i18n.js?v=mv3vzysv";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3vzysv";
-import { LEGAL } from "./legal.js?v=mv3vzysv";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3vzysv";
-import * as community from "./community.js?v=mv3vzysv";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3vzysv";
-import { redactImage } from "./redact.js?v=mv3vzysv";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3vzysv";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3vzysv";
-import { chainLinks } from "./chain.js?v=mv3vzysv";
-import { fits } from "./dcfit.js?v=mv3vzysv";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3vzysv";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost } from "./blocks.js?v=mv3vzysv";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3vzysv";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3ws0ja";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3ws0ja";
+import { renderChart } from "./chart.js?v=mv3ws0ja";
+import { makeT } from "./i18n.js?v=mv3ws0ja";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3ws0ja";
+import { LEGAL } from "./legal.js?v=mv3ws0ja";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3ws0ja";
+import * as community from "./community.js?v=mv3ws0ja";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3ws0ja";
+import { redactImage } from "./redact.js?v=mv3ws0ja";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3ws0ja";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3ws0ja";
+import { chainLinks } from "./chain.js?v=mv3ws0ja";
+import { fits } from "./dcfit.js?v=mv3ws0ja";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3ws0ja";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost } from "./blocks.js?v=mv3ws0ja";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3ws0ja";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -24,6 +24,8 @@ const PLUG_SHORT = { "3.5": "3.5", "6.35": "6.35", "4.4": "4.4", xlr4: "XLR" };
 
 const LANGS = ["th", "en", "ja", "zh"];
 const LOCALE = { th: "th-TH", en: "en-GB", ja: "ja-JP", zh: "zh-CN" };
+/** Each language in its own script, for "view original (English)". */
+const LANG_NAME = { th: "ไทย", en: "English", ja: "日本語", zh: "中文" };
 const browserLang = LANGS.find((l) => (navigator.language ?? "").toLowerCase().startsWith(l)) ?? "en";
 const state = {
   lang: load("lang", browserLang),
@@ -1191,8 +1193,9 @@ async function renderCommunity(el, item) {
 
   // A post written in several languages shows the viewer's one.
   const shown = (r) => r.i18n?.[state.lang] ?? r;
-  // The text as the writer posted it stays one click away.
-  const translated = (r) => shown(r) !== r && (shown(r).title !== r.title || shown(r).body !== r.body);
+  // The version in the review's own language (e.g. English for Head-Fi) stays one click away.
+  const original = (r) => r.i18n?.[r.i18n?._src] ?? null;
+  const translated = (r) => original(r) && r.i18n._src !== state.lang && original(r).body !== shown(r).body;
   // Review summaries show their first line (rating · reviewer · date); pros and cons open on click.
   const bodyHtml = (r, body) => {
     if (!body) return "";
@@ -1208,14 +1211,14 @@ async function renderCommunity(el, item) {
       <p class="post-title">${esc(shown(r).title)}</p>
       ${bodyHtml(r, shown(r).body)}
     </div>
-    ${translated(r) ? `<div class="post-text" hidden>
-      <p class="post-title">${esc(r.title)}</p>
-      ${bodyHtml(r, r.body)}
+    ${translated(r) ? `<div class="post-text" hidden lang="${esc(r.i18n._src)}">
+      <p class="post-title">${esc(original(r).title)}</p>
+      ${bodyHtml(r, original(r).body)}
     </div>` : ""}
     ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
     <div class="post-actions">
       <button class="pill small${mine.has(r.id) ? " on" : ""}" data-confirm="${r.id}" ${s ? "" : "disabled"} aria-pressed="${mine.has(r.id)}">${esc(t("cm_metoo"))} · ${r.confirms}</button>
-      ${translated(r) ? `<button class="link small" data-orig aria-pressed="false">${esc(t("cm_original"))}</button>` : ""}
+      ${translated(r) ? `<button class="link small" data-orig="${esc(LANG_NAME[r.i18n._src])}" aria-pressed="false">${esc(t("cm_original", { lang: LANG_NAME[r.i18n._src] }))}</button>` : ""}
       ${s && r.author !== s.user.id ? `<button class="link small" data-flag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}
       ${s && r.author === s.user.id ? `<button class="link small" data-del="${r.id}">${esc(t("cm_delete"))}</button>` : ""}
       ${canRespond && r.kind === "issue" ? `<button class="link small" data-respond="${r.id}">${esc(t("br_respond"))}</button>` : ""}
@@ -1345,7 +1348,7 @@ async function renderCommunity(el, item) {
       tr.hidden = on;
       orig.hidden = !on;
       b.setAttribute("aria-pressed", String(on));
-      b.textContent = t(on ? "cm_translated" : "cm_original");
+      b.textContent = t(on ? "cm_translated" : "cm_original", { lang: b.dataset.orig });
     }),
   );
   el.querySelectorAll("[data-flag]").forEach((b) =>
@@ -1670,7 +1673,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3vzysv" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3ws0ja" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1782,7 +1785,7 @@ function wireBot(root, item, apply) {
         return;
       }
       if (mode === "review") {
-        const blocks = (draft.reviews ?? []).map((r) => ({ product: item ? displayName(item) : "", source: link, reviewer: r.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : "", rating: r.rating, summary: r.summary, summary_i18n: r.summary_i18n, pros: r.pros, cons: r.cons, problems: r.problems, ports_in: [], ports_out: [], features: [] }));
+        const blocks = (draft.reviews ?? []).map((r) => ({ product: item ? displayName(item) : "", source: link, reviewer: r.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : "", rating: r.rating, summary: r.summary, summary_i18n: r.summary_i18n, verdict: r.verdict, source_lang: draft.lang, pros: r.pros, cons: r.cons, problems: r.problems, ports_in: [], ports_out: [], features: [] }));
         if (blocks.length === 1) {
           const quotes = [...blocks[0].pros, ...blocks[0].cons, ...blocks[0].problems].map((p) => p.quote);
           const qEl = box.querySelector(".bot-quotes");
@@ -2156,7 +2159,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3vzysv" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3ws0ja" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

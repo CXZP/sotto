@@ -50,7 +50,8 @@ const SCHEMAS: Record<string, string> = {
   issue: `{"title": string (max 140 chars, a neutral one-line summary of the problem), "body": string (max 600 chars, what owners report, in plain words, no exaggeration, say how many people if the text says), "quotes": string[] (1-4 short verbatim sentences from the text that support it)}`,
   ports: `{"in": [{"port": one of ${JSON.stringify(PORTS)}, "quote": verbatim text}], "out": [same], "features": [{"feature": one of ${JSON.stringify(FEATURES)}, "quote": verbatim text}]}`,
   // Review posts are read in every site language, so summary and points come in all of them.
-  review: `{"reviews": [{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": ${I18N} (each max 140 chars, one neutral line), "pros": [{"point": ${I18N} (short), "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}]}. One entry per reviewer, in page order, at most 20. Never merge reviewers; several comments by the same name are one reviewer. Skip the maker's own description and spec lists, people who say they have not used this product, and comments about other products, the brand in general or unrelated topics. Quotes stay in the original language; only summary and point are translated.`,
+  review: `{"lang": the language most of the pasted reviews are written in ("th", "en", "ja", "zh", or another ISO 639-1 code), "reviews": [{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": ${I18N} (each max 140 chars, one neutral line that carries the reviewer's overall verdict, not only the good or only the bad), "verdict": {"point": ${I18N} (the reviewer's own bottom line: grade, recommend or not, would buy or not), "quote": verbatim sentence} or null, "pros": [{"point": ${I18N} (short), "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}]}. One entry per reviewer, in page order, at most 20.
+Cover the review fully: every pro and con the reviewer lists themselves (their pros/cons box, TL;DR or conclusion) gets its own point, up to 8 each; add other clear points from the body only if they are not already covered. Do not pick a few and drop the rest. Never merge reviewers; several comments by the same name are one reviewer. Skip the maker's own description and spec lists, people who say they have not used this product, and comments about other products, the brand in general or unrelated topics. Quotes stay in the original language; only summary and point are translated.`,
   model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}. Facts are specifications only (impedance, sensitivity with its unit, output power with load, output impedance, drivers, connectors, ports, power supply), not marketing claims.`,
 };
 
@@ -177,11 +178,13 @@ ${text}
       .slice(0, 20)
       .map((r: Record<string, unknown>) => {
         const summary = multi(r?.summary, 140);
-        return { reviewer: String(r?.reviewer ?? "").slice(0, 80), date: String(r?.date ?? ""), rating: String(r?.rating ?? "").slice(0, 20), summary: one(summary), summary_i18n: summary, pros: pts(r?.pros), cons: pts(r?.cons), problems: pts(r?.problems) };
+        const [verdict] = pts([r?.verdict]);
+        return { reviewer: String(r?.reviewer ?? "").slice(0, 80), date: String(r?.date ?? ""), rating: String(r?.rating ?? "").slice(0, 20), summary: one(summary), summary_i18n: summary, verdict: verdict ?? null, pros: pts(r?.pros).slice(0, 10), cons: pts(r?.cons).slice(0, 10), problems: pts(r?.problems).slice(0, 10) };
       })
       .filter((r) => r.pros.length || r.cons.length || r.problems.length);
     if (!reviews.length) return json({ error: "no_support" }, 422);
-    draft = { reviews };
+    // Language of the reviews themselves, so "view original" can show that one.
+    draft = { reviews, lang: typeof draft.lang === "string" ? draft.lang.toLowerCase().slice(0, 5) : "" };
   } else if (mode === "issue") {
     const quotes = (draft.quotes as unknown[] ?? []).filter(inText);
     if (!quotes.length) return json({ error: "no_support" }, 422);

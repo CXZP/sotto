@@ -41,3 +41,16 @@ test("review post in every translated language, quotes kept as written", () => {
   assert.match(all.th.body, /- บิลด์แน่น —/);
   assert.equal(reviewPostI18n(parseBlocks(sample)[0]), null);
 });
+
+test("verdict line under the credit, and the review's own language kept for 'view original'", () => {
+  const b = {
+    ...parseBlocks(sample)[0],
+    source_lang: "en",
+    summary_i18n: { th: "เบสฟุ้ง", en: "Boomy bass" },
+    verdict: { point: "เกรด B-", point_i18n: { en: "Grade B-, not at retail" }, quote: "Will I buy it at retail? Absolutely not." },
+  };
+  const all = reviewPostI18n(b);
+  assert.equal(all._src, "en");
+  assert.match(all.en.body, /^★ 2\.5\/5 · Review by monkonomics.*\nVerdict: Grade B-, not at retail — “Will I buy it at retail\? Absolutely not\.”/);
+  assert.match(all.th.body, /\nสรุปของผู้รีวิว: เกรด B- — /);
+});

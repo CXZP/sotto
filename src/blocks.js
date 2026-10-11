@@ -79,10 +79,10 @@ export function reviewKey(url, reviewer) {
 
 /** Labels inside a review post, per site language. */
 export const REVIEW_LABELS = {
-  th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ" },
-  en: { pros: "Pros", cons: "Cons", by: "Review by", unknown: "unknown" },
-  ja: { pros: "良い点", cons: "気になる点", by: "レビュー:", unknown: "不明" },
-  zh: { pros: "优点", cons: "缺点", by: "评测者", unknown: "未知" },
+  th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ", verdict: "สรุปของผู้รีวิว" },
+  en: { pros: "Pros", cons: "Cons", by: "Review by", unknown: "unknown", verdict: "Verdict" },
+  ja: { pros: "良い点", cons: "気になる点", by: "レビュー:", unknown: "不明", verdict: "結論" },
+  zh: { pros: "优点", cons: "缺点", by: "评测者", unknown: "未知", verdict: "结论" },
 };
 
 /** The review-summary post for one block: {title, body} (body ≤ 2000 chars).
@@ -94,7 +94,7 @@ export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
   const host = sourceHost(b.source);
   const credit = `${labels.by} ${b.reviewer || labels.unknown || "?"}${host ? ` (${host})` : ""}`;
   const head = [b.rating && `★ ${b.rating}`, credit, b.date].filter(Boolean).join(" · ");
-  const parts = [head];
+  const parts = [b.verdict ? `${head}\n${labels.verdict || "Verdict"}: ${line(b.verdict).slice(2)}` : head];
   if (b.pros.length) parts.push(`${labels.pros}\n${b.pros.map(line).join("\n")}`);
   if (b.cons.length) parts.push(`${labels.cons}\n${b.cons.map(line).join("\n")}`);
   let body = parts.filter(Boolean).join("\n\n");
@@ -107,7 +107,10 @@ export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
 export function reviewPostI18n(b) {
   const langs = Object.keys(REVIEW_LABELS).filter((l) => b.summary_i18n?.[l]);
   if (!langs.length) return null;
-  return Object.fromEntries(langs.map((l) => [l, reviewPost(b, REVIEW_LABELS[l], l)]));
+  const out = Object.fromEntries(langs.map((l) => [l, reviewPost(b, REVIEW_LABELS[l], l)]));
+  // The language the review itself was written in: "view original" shows that version.
+  if (REVIEW_LABELS[b.source_lang]) out._src = b.source_lang;
+  return out;
 }
 
 /** One issue post per problem the review describes. */

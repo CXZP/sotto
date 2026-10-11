@@ -2,8 +2,14 @@
 
 export const STRINGS = {
   th: {
+    cm_kind_review: "สรุปรีวิว",
+    rv_pros: "ข้อดี",
+    rv_cons: "ข้อเสีย",
+    rv_by: "รีวิวโดย",
+    bot_block_done: "อ่านบล็อกจาก Gemini แล้ว ตรวจประโยคต้นทางเทียบกับลิงก์ก่อนส่ง",
+    bot_block_many: "เจอ {n} บล็อก ใส่ให้บล็อกแรก ส่งทีละรีวิว (หรือส่งทั้งหมดให้ทีมนำเข้า)",
     bot_open: "✨ ให้บอทสรุปจากโพสต์ที่คุณอ่าน (Head-Fi, หน้าแบรนด์, รีวิว)",
-    bot_help: "วางลิงก์ แล้วคัดลอกข้อความในหน้านั้นมาวาง (กด Ctrl+A แล้ว Ctrl+C ทั้งหน้าก็ได้) บอทไม่เข้าไปอ่านเว็บเอง จะร่างให้จากข้อความที่คุณวางเท่านั้น และทุกข้อต้องมีประโยคต้นทางจากข้อความนั้น ตรวจและแก้ก่อนส่งเสมอ",
+    bot_help: "วางบล็อกที่ได้จาก Gemini skill ของ Sotto หรือวางลิงก์แล้วคัดลอกข้อความในหน้านั้นมาวาง (Ctrl+A, Ctrl+C ทั้งหน้าก็ได้) บอทไม่เข้าไปอ่านเว็บเอง จะร่างให้จากข้อความที่คุณวางเท่านั้น และทุกข้อต้องมีประโยคต้นทางจากข้อความนั้น ตรวจและแก้ก่อนส่งเสมอ",
     bot_link_ph: "ลิงก์โพสต์ https://… (ใช้เป็นหลักฐาน)",
     bot_text_ph: "วางข้อความจากโพสต์ที่นี่",
     bot_run: "ร่างให้",
@@ -637,8 +643,14 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    cm_kind_review: "Review summary",
+    rv_pros: "Pros",
+    rv_cons: "Cons",
+    rv_by: "Review by",
+    bot_block_done: "Read the Gemini block. Check the quotes against the link before posting.",
+    bot_block_many: "Found {n} blocks; filled in the first. Post one review at a time (or send them all to the team to import).",
     bot_open: "✨ Let the bot draft this from a post you read (Head-Fi, brand page, review)",
-    bot_help: "Paste the link, then copy the page's text in (Ctrl+A, Ctrl+C on the whole page is fine). The bot doesn't visit websites; it drafts only from the text you paste, and every point must come with a sentence from that text. Always check and edit before posting.",
+    bot_help: "Paste a block from Sotto's Gemini skill, or paste the link and copy the page's text in (Ctrl+A, Ctrl+C on the whole page is fine). The bot doesn't visit websites; it drafts only from the text you paste, and every point must come with a sentence from that text. Always check and edit before posting.",
     bot_link_ph: "Post link https://… (kept as evidence)",
     bot_text_ph: "Paste the post's text here",
     bot_run: "Draft it",

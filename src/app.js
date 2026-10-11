@@ -1,18 +1,19 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3rrek0";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3rrek0";
-import { renderChart } from "./chart.js?v=mv3rrek0";
-import { makeT } from "./i18n.js?v=mv3rrek0";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3rrek0";
-import { LEGAL } from "./legal.js?v=mv3rrek0";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3rrek0";
-import * as community from "./community.js?v=mv3rrek0";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3rrek0";
-import { redactImage } from "./redact.js?v=mv3rrek0";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3rrek0";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3rrek0";
-import { chainLinks } from "./chain.js?v=mv3rrek0";
-import { fits } from "./dcfit.js?v=mv3rrek0";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3rrek0";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3rxgcz";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3rxgcz";
+import { renderChart } from "./chart.js?v=mv3rxgcz";
+import { makeT } from "./i18n.js?v=mv3rxgcz";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3rxgcz";
+import { LEGAL } from "./legal.js?v=mv3rxgcz";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3rxgcz";
+import * as community from "./community.js?v=mv3rxgcz";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3rxgcz";
+import { redactImage } from "./redact.js?v=mv3rxgcz";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3rxgcz";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3rxgcz";
+import { chainLinks } from "./chain.js?v=mv3rxgcz";
+import { fits } from "./dcfit.js?v=mv3rxgcz";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3rxgcz";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3rxgcz";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1116,7 +1117,7 @@ async function renderCommunity(el, item) {
   const responses = await community.responsesFor(rows.filter((r) => r.kind === "issue").map((r) => r.id));
   const rep = s ? await community.myBrand() : null;
   const canRespond = rep && item.brand && rep.brand.toLowerCase() === item.brand.toLowerCase();
-  const order = { issue: 0, owner: 1, correction: 2 };
+  const order = { issue: 0, review: 1, owner: 2, correction: 3 };
   rows.sort((a, b) => order[a.kind] - order[b.kind] || b.confirms - a.confirms);
 
   const post = (r) => `<article class="post k-${r.kind}">
@@ -1149,8 +1150,8 @@ async function renderCommunity(el, item) {
       <div class="row-inline"><input class="search" name="name" required minlength="2" maxlength="40" placeholder="${esc(t("cm_name"))}"><button class="pill primary">${esc(t("cm_save"))}</button></div></form>`;
   } else {
     composer = `<form class="cm-form" data-form="post">
-      <div class="seg" role="group" style="--n:3;--i:0" data-kind-seg>
-        ${["issue", "owner", "correction"].map((k, n) => `<button type="button" data-kind="${k}" aria-pressed="${n === 0}">${esc(t(`cm_kind_${k}`))}</button>`).join("")}
+      <div class="seg" role="group" style="--n:4;--i:0" data-kind-seg>
+        ${["issue", "review", "owner", "correction"].map((k, n) => `<button type="button" data-kind="${k}" aria-pressed="${n === 0}">${esc(t(`cm_kind_${k}`))}</button>`).join("")}
       </div>
       <input type="hidden" name="kind" value="issue">
       ${botBox("issue")}
@@ -1173,8 +1174,19 @@ async function renderCommunity(el, item) {
   const fail = (e) => (status.textContent = /rate_limit/.test(e?.message) ? t("cm_rate") : `${t("cm_error")} ${e?.message ?? ""}`);
   const again = () => renderCommunity(el, item);
   const postForm = el.querySelector('[data-form="post"]');
+  const setKind = (k) => el.querySelector(`[data-kind-seg] [data-kind="${k}"]`)?.click();
   if (postForm)
     wireBot(postForm, item, (d, link) => {
+      if (d.block) {
+        const b = d.block;
+        const asReview = b.pros.length || b.cons.length;
+        setKind(asReview ? "review" : "issue");
+        const post = asReview ? reviewPost(b, { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by") }) : { title: b.problems[0]?.point ?? b.summary, body: b.problems.map((p) => `- ${p.point} — “${p.quote}”`).join("\n") };
+        postForm.title.value = post.title;
+        postForm.body.value = post.body;
+        postForm.evidence_url.value = b.source || link;
+        return;
+      }
       if (d.title) postForm.title.value = d.title;
       if (d.body) postForm.body.value = d.body;
       if (link) postForm.evidence_url.value = link;
@@ -1253,7 +1265,7 @@ async function renderCommunity(el, item) {
       const form = el.querySelector('[data-form="post"]');
       form.kind.value = b.dataset.kind;
       // Evidence is mandatory only for issues.
-      form.evidence_url.required = b.dataset.kind === "issue";
+      form.evidence_url.required = b.dataset.kind === "issue" || b.dataset.kind === "review";
     }),
   );
   el.querySelector(".cm-form")?.addEventListener("submit", async (ev) => {
@@ -1541,6 +1553,18 @@ function wireBot(root, item, apply) {
   box.querySelector("[data-bot-run]").addEventListener("click", async () => {
     const text = box.querySelector('[name="bot_text"]').value.trim();
     const link = box.querySelector('[name="bot_link"]').value.trim();
+    // A block from the Gemini skill (docs/gemini-skill.md) fills the form directly.
+    const blocks = parseBlocks(text);
+    if (blocks.length) {
+      const b = blocks[0];
+      const quotes = [...b.pros, ...b.cons, ...b.problems].map((p) => p.quote);
+      const qEl = box.querySelector(".bot-quotes");
+      qEl.hidden = !quotes.length;
+      qEl.innerHTML = `<b>${esc(t("bot_quotes"))}</b><ul>${quotes.map((q) => `<li>“${esc(q)}”</li>`).join("")}</ul>`;
+      apply({ block: b, in: b.ports_in.map((port) => ({ port })), out: b.ports_out.map((port) => ({ port })), features: b.features.map((feature) => ({ feature })) }, b.source || link);
+      st.textContent = blocks.length > 1 ? t("bot_block_many", { n: blocks.length }) : t("bot_block_done");
+      return;
+    }
     if (text.length < 40) return (st.textContent = t("bot_err_too_short"));
     st.textContent = t("bot_working");
     try {
@@ -1904,7 +1928,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3rrek0" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3rxgcz" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

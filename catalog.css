@@ -401,3 +401,38 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .act-tabs { margin-bottom: 12px; flex-wrap: wrap; }
 details.danger-zone > summary { cursor: pointer; }
 details.danger-zone[open] > summary { margin-bottom: 8px; }
+
+/* Ports card: one chip per port, with room between them */
+.port-row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--surface-2); }
+.port-row > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.port-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); font-size: 14px; }
+.port-chip .muted a { color: var(--text-2); }
+.port-form fieldset { border: 1px solid var(--surface-2); border-radius: 12px; padding: 8px 12px; margin: 8px 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.port-form fieldset legend { padding: 0 6px; }
+.port-form .check { display: inline-flex; gap: 6px; align-items: center; }
+.port-add > summary { list-style: none; display: inline-block; margin: 8px 0; }
+.port-add > summary::-webkit-details-marker { display: none; }
+
+/* Dropdown lists follow the theme (white-on-white options in dark mode otherwise) */
+select option { background: var(--surface); color: var(--text); }
+
+/* Region picker inside "Where to buy" stays compact */
+.channels select, .region-pick select { width: auto; max-width: 100%; display: inline-block; }
+
+/* A–Z bar: a floating pill bar instead of a strip over the cards */
+.az { top: 80px; padding: 6px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 18px rgb(0 0 0 / .18); margin-bottom: 12px; }
+
+.pick-tools { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin: 8px 0; }
+.pick-tools .chips { gap: 6px; }
+.pick-tools .chip { font-size: 13px; padding: 4px 12px; cursor: pointer; color: var(--text-2); }
+.pick-tools .chip.on { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pick-tools .mini-select { width: auto; }
+
+/* Chart zoom */
+.chart-box { position: relative; }
+.zoom-ctl { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; z-index: 1; }
+.zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--surface-2); background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px; }
+.zoom-ctl button:hover { background: var(--surface-2); }
+.chart-box svg { cursor: crosshair; user-select: none; }
+.zoombox { fill: color-mix(in srgb, var(--accent) 15%, transparent); stroke: var(--accent); stroke-dasharray: 4 3; }
+.zoom-hint { margin: 4px 0 0; font-size: 12px; color: var(--text-2); }

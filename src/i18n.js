@@ -2,6 +2,12 @@
 
 export const STRINGS = {
   th: {
+    zoom_in: "ซูมเข้า",
+    zoom_out: "ซูมออก",
+    zoom_reset: "กลับไปเต็มกราฟ",
+    zoom_hint: "ลากคลุมส่วนของกราฟเพื่อซูม หรือใช้ปุ่ม ＋ －",
+    pk_streamer: "สตรีมเมอร์",
+    pk_no_calc: "ยังคำนวณไม่ได้ (ร้านไม่บอกกำลังขับ)",
     ac_activity: "สิ่งที่ฉันโพสต์",
     ac_empty: "ยังไม่มีโพสต์ กระทู้ ความเห็น รายงานปัญหา และราคาที่คุณแจ้งจะแสดงที่นี่",
     ac_start_thread: "ตั้งกระทู้",
@@ -564,6 +570,12 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    zoom_in: "Zoom in",
+    zoom_out: "Zoom out",
+    zoom_reset: "Show the whole chart",
+    zoom_hint: "Drag across part of the chart to zoom, or use ＋ －",
+    pk_streamer: "Streamers",
+    pk_no_calc: "can't calculate yet (no power spec)",
     ac_activity: "My activity",
     ac_empty: "Nothing yet. Your threads, comments, issue reports and prices will show here.",
     ac_start_thread: "Start a thread",

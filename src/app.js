@@ -1,18 +1,18 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3q1xro";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3q1xro";
-import { renderChart } from "./chart.js?v=mv3q1xro";
-import { makeT } from "./i18n.js?v=mv3q1xro";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3q1xro";
-import { LEGAL } from "./legal.js?v=mv3q1xro";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3q1xro";
-import * as community from "./community.js?v=mv3q1xro";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3q1xro";
-import { redactImage } from "./redact.js?v=mv3q1xro";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3q1xro";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3q1xro";
-import { chainLinks } from "./chain.js?v=mv3q1xro";
-import { fits } from "./dcfit.js?v=mv3q1xro";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3q1xro";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3qrxy4";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3qrxy4";
+import { renderChart } from "./chart.js?v=mv3qrxy4";
+import { makeT } from "./i18n.js?v=mv3qrxy4";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3qrxy4";
+import { LEGAL } from "./legal.js?v=mv3qrxy4";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3qrxy4";
+import * as community from "./community.js?v=mv3qrxy4";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3qrxy4";
+import { redactImage } from "./redact.js?v=mv3qrxy4";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3qrxy4";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3qrxy4";
+import { chainLinks } from "./chain.js?v=mv3qrxy4";
+import { fits } from "./dcfit.js?v=mv3qrxy4";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3qrxy4";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -492,7 +492,7 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
       peak,
       crest: CREST,
       size: opts.big ? { w: 1100, h: 640 } : undefined,
-      labels: { harder: t("chart_harder"), easier: t("chart_easier"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
+      labels: { harder: t("chart_harder"), easier: t("chart_easier"), zoomIn: t("zoom_in"), zoomOut: t("zoom_out"), zoomReset: t("zoom_reset"), zoomHint: t("zoom_hint"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
       fmt: { z: (z) => `${fmt(z, 1)} Ω`, v: vfmt },
       onPick: (id) => {
         draw(id);
@@ -591,39 +591,69 @@ function openPicker(slot) {
   const isSrcSlot = slot === "src";
   const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd"].includes(i.category) || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter((i) => i.role === "dac" || i.role === "dacamp").map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
   const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? i.role === "dac" || i.role === "dacamp" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
+  // Type chips inside the picker, so a long list can be narrowed in one tap.
+  const kindsBySlot = {
+    hp: [["iem", t("cat_iem")], ["headphone", t("cat_headphone")]],
+    amp: [["dongle", t("cat_dongle")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["dap", t("cat_dap")]],
+    dac: [["dac", t("role_dac")], ["dacamp", t("role_dacamp")]],
+    src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["desktop", t("pk_streamer")]],
+  };
+  const kinds = [["", t("role_all")], ...(kindsBySlot[slot] ?? [])];
+  const kindOf = (i) => [i.category, i.role].filter(Boolean);
+  let kind = "";
+  const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
   const dlg = document.createElement("div");
   dlg.className = "modal";
   dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot}`))}">
     <div class="sheet-head"><h2>${esc(t(`picker_title_${slot}`))}</h2><button class="icon-btn" data-close aria-label="${esc(t("close"))}">✕</button></div>
     <input class="search" type="search" placeholder="${esc(t("search"))}" autofocus>
-    <label class="check"><input type="checkbox" checked> ${esc(t("picker_only_specs"))}</label>
+    <div class="pick-tools"><div class="chips pick-kinds">${kinds.map(([k, label], n) => `<button type="button" class="chip${n ? "" : " on"}" data-kind="${k}">${esc(label)}</button>`).join("")}</div>
+      <select class="mini-select" data-sort aria-label="${esc(t("sort_label"))}">${["popular", "price", "price-desc"].map((v) => `<option value="${v}">${esc(t(`sort_${v}`))}</option>`).join("")}</select>
+      <label class="check small"><input type="checkbox" checked> ${esc(t("picker_only_specs"))}</label></div>
     <ul class="pick-list"></ul></div>`;
   document.body.append(dlg);
   const input = dlg.querySelector("input.search");
   const only = dlg.querySelector(".check input");
+  const sortSel = dlg.querySelector("[data-sort]");
   const list = dlg.querySelector(".pick-list");
   const draw = () => {
     const q = input.value.trim().toLowerCase();
     const res = pool
-      .filter((i) => (!only.checked || usable.has(i.id)) && (!q || matches(i, q)))
-      .sort((a, b) => Number(usable.has(b.id)) - Number(usable.has(a.id)) || Number(!!b.curated) - Number(!!a.curated) || b.offers.length - a.offers.length)
+      // Typing a name shows every match, even ones we can't calculate (marked as such).
+      .filter((i) => (q ? matches(i, q) : !only.checked || usable.has(i.id)) && (!kind || kindOf(i).includes(kind)))
+      .sort((a, b) =>
+        sortSel.value === "price"
+          ? priceOf(a) - priceOf(b)
+          : sortSel.value === "price-desc"
+            ? (priceOf(b) === Infinity ? -1 : priceOf(b)) - (priceOf(a) === Infinity ? -1 : priceOf(a))
+            : Number(usable.has(b.id)) - Number(usable.has(a.id)) || Number(!!b.curated) - Number(!!a.curated) || storeCount(b) - storeCount(a),
+      )
       .slice(0, 80);
     list.innerHTML = res
       .map((i) => {
         const p = prices(i).cheapest;
         const im = imageOf(i);
-        return `<li><button data-id="${esc(i.id)}">${im ? `<img class="pt-img" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="pt-img"></span>`}<span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(catLabel(i))} · ${esc(specLine(i) || "—")}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
+        return `<li><button data-id="${esc(i.id)}">${im ? `<img class="pt-img" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="pt-img"></span>`}<span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(catLabel(i))} · ${esc(specLine(i) || "—")}${usable.has(i.id) ? "" : ` · <span class="tag">${esc(t("pk_no_calc"))}</span>`}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
       })
       .join("");
   };
   const close = () => dlg.remove();
   input.addEventListener("input", draw);
   only.addEventListener("change", draw);
+  sortSel.addEventListener("change", draw);
+  dlg.querySelectorAll("[data-kind]").forEach((b) =>
+    b.addEventListener("click", () => {
+      kind = b.dataset.kind;
+      dlg.querySelectorAll("[data-kind]").forEach((x) => x.classList.toggle("on", x === b));
+      draw();
+    }),
+  );
   dlg.addEventListener("click", (e) => {
     if (e.target === dlg || e.target.closest("[data-close]")) close();
     const b = e.target.closest("button[data-id]");
     if (b) {
       state[slot] = b.dataset.id;
+      for (const other of ["src", "dac", "amp"]) if (other !== slot && state[other] === state[slot]) state[other] = "";
       if (slot === "hp") state.plug = "";
       close();
       go(buildUrl());
@@ -1697,7 +1727,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3q1xro" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3qrxy4" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

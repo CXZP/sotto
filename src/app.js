@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv45ih4u";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv45ih4u";
-import { renderChart } from "./chart.js?v=mv45ih4u";
-import { makeT } from "./i18n.js?v=mv45ih4u";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv45ih4u";
-import { LEGAL } from "./legal.js?v=mv45ih4u";
-import { track, stats, trackingOff } from "./analytics.js?v=mv45ih4u";
-import * as community from "./community.js?v=mv45ih4u";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv45ih4u";
-import { redactImage } from "./redact.js?v=mv45ih4u";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv45ih4u";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv45ih4u";
-import { chainLinks } from "./chain.js?v=mv45ih4u";
-import { fits } from "./dcfit.js?v=mv45ih4u";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv45ih4u";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv45ih4u";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv45ih4u";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv45rx3g";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv45rx3g";
+import { renderChart } from "./chart.js?v=mv45rx3g";
+import { makeT } from "./i18n.js?v=mv45rx3g";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv45rx3g";
+import { LEGAL } from "./legal.js?v=mv45rx3g";
+import { track, stats, trackingOff } from "./analytics.js?v=mv45rx3g";
+import * as community from "./community.js?v=mv45rx3g";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv45rx3g";
+import { redactImage } from "./redact.js?v=mv45rx3g";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv45rx3g";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv45rx3g";
+import { chainLinks } from "./chain.js?v=mv45rx3g";
+import { fits } from "./dcfit.js?v=mv45rx3g";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv45rx3g";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv45rx3g";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv45rx3g";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -257,6 +257,7 @@ function render() {
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else if (r.name === "home") main.innerHTML = homePage();
+  else if (r.name === "calendar") main.innerHTML = calendarPage();
   else main.innerHTML = buildPage();
   wire(main, r);
   scrollTo({ top: 0 });
@@ -1177,7 +1178,7 @@ function itemPage(id) {
   ];
   return `<article class="item">
     <header class="item-head${im ? " has-img" : ""}">
-      ${im ? `<a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a>` : ""}
+      ${im ? `<div class="item-media"><a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a><div class="item-thumbs" id="item-thumbs"></div></div>` : ""}
       <div class="item-title"><p class="muted item-kicker">${i.brand ? `${brandMark(i.brand, 24)} <a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
@@ -1206,12 +1207,123 @@ function itemPage(id) {
   </article>`;
 }
 
+// Extra store photos (ports, box, accessories) under the main image. They stay
+// on the store's CDN; the credit and link point at the store page they came from.
+async function wireThumbs(main, i) {
+  const box = main.querySelector("#item-thumbs");
+  const set = (await loadPhotos())[i.id];
+  if (!box || !box.isConnected || !set || set.src.length < 2) return;
+  const big = main.querySelector(".item-img");
+  const img = big.querySelector("img");
+  box.innerHTML = set.src
+    .map((src, n) => `<button type="button" data-src="${esc(src)}" aria-label="${n + 1} / ${set.src.length}"><img src="${esc(sized(src, 120))}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>`)
+    .join("");
+  const store = db.stores[set.store]?.name ?? set.store;
+  const show = (btn) => {
+    box.querySelectorAll("button").forEach((b) => b.toggleAttribute("aria-current", b === btn));
+    img.classList.add("swap");
+    const next = new Image();
+    next.referrerPolicy = "no-referrer";
+    next.src = sized(btn.dataset.src, 720);
+    const done = () => {
+      img.src = next.src;
+      img.classList.remove("swap");
+    };
+    next.decode().then(done, done);
+    big.href = set.url;
+    big.querySelector(".img-credit").textContent = t("img_from", { store });
+  };
+  box.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-src]");
+    if (btn) show(btn);
+  });
+}
+
+// Release calendar. Pre-orders are bars from when the store opened the page to
+// the date the store wrote; new listings are grouped by month. Every date comes
+// from a store page (scripts/lib/dates.js) and links back to it.
+const CAL_CATS = ["iem", "headphone", "dongle", "desktop", "dap", "speaker"];
+const DAY = 864e5;
+function calendarPage() {
+  const cat = query().get("cat") ?? "";
+  const now = Date.now();
+  const items = db.items.filter((i) => !cat || i.category === cat);
+  const pre = [];
+  const undated = [];
+  for (const i of items) {
+    const offers = i.offers.filter((o) => o.preorder);
+    if (!offers.length) continue;
+    const dated = offers.filter((o) => o.preorder.until && Date.parse(o.preorder.until) > now - 7 * DAY).sort((a, b) => a.preorder.until.localeCompare(b.preorder.until));
+    if (dated.length) pre.push({ i, o: dated[0] });
+    else if (offers.every((o) => !o.preorder.until)) undated.push({ i, o: offers[0] });
+  }
+  pre.sort((a, b) => a.o.preorder.until.localeCompare(b.o.preorder.until));
+  const fresh = items
+    .filter((i) => i.listedAt && Date.parse(i.listedAt) > now - 92 * DAY && !i.offers.some((o) => o.preorder))
+    .sort((a, b) => b.listedAt.localeCompare(a.listedAt));
+  const chips = `<div class="chips"><a class="chip${!cat ? " on" : ""}" href="#calendar">${esc(t("cat_all"))}</a>${CAL_CATS.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="#calendar?cat=${c}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>`;
+  const head = `<header class="deal-head"><h1>${esc(t("nav_calendar"))}</h1><p class="muted">${esc(t("cal_lead"))}</p></header>`;
+  if (!db.items.some((i) => i.listedAt || i.offers.some((o) => o.preorder)))
+    return `<div class="calendar">${head}<p class="note">${esc(t("cal_empty"))}</p></div>`;
+  return `<div class="calendar">${head}${chips}
+    <section class="card pad"><h2>${esc(t("cal_pre"))}</h2>${pre.length ? calTimeline(pre, now) : `<p class="muted">${esc(t("cal_none"))}</p>`}
+      ${undated.length ? `<h3>${esc(t("cal_pre_nodate"))}</h3><div class="cal-grid">${undated.map(({ i, o }) => calCard(i, o.preorder.quote, o)).join("")}</div>` : ""}</section>
+    <section class="card pad"><h2>${esc(t("cal_new"))}</h2>${fresh.length ? calMonths(fresh) : `<p class="muted">${esc(t("cal_none"))}</p>`}</section>
+    <p class="muted small">${esc(t("cal_note"))}</p></div>`;
+}
+
+function calTimeline(rows, now) {
+  const start = now - 28 * DAY;
+  const last = Math.max(...rows.map(({ o }) => Date.parse(o.preorder.until)));
+  const end = Math.min(Math.max(last + 14 * DAY, now + 60 * DAY), now + 200 * DAY);
+  const pct = (x) => Math.min(Math.max(((x - start) / (end - start)) * 100, 0), 100);
+  const ticks = [];
+  for (const d = new Date(start); d.getTime() < end; d.setUTCMonth(d.getUTCMonth() + 1, 1)) {
+    const first = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1);
+    if (first >= start) ticks.push(`<span style="--l:${pct(first).toFixed(2)}%">${esc(new Date(first).toLocaleDateString(loc(), { month: "short" }))}</span>`);
+  }
+  const bars = rows
+    .map(({ i, o }, n) => {
+      const to = Date.parse(o.preorder.until);
+      const from = o.listedAt ? Math.min(Date.parse(o.listedAt), to) : now;
+      const l = pct(from);
+      const w = Math.max(pct(to) - l, 2);
+      const im = imageOf(i);
+      return `<li class="cal-row" style="--d:${Math.min(n, 12)}">
+        <a class="cal-name" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(db.stores[o.store]?.name ?? o.store)} · ${money(o.price, o.currency)}</small></span></a>
+        <div class="cal-track"><a class="cal-bar${to > now ? "" : " past"}${to > now + 200 * DAY ? " cut" : ""}${w < 40 ? (l + w > 65 ? " out left" : " out") : ""}" href="${esc(o.url)}" target="_blank" rel="noopener" title="${esc(o.preorder.quote)}" style="--l:${l.toFixed(2)}%;--w:${w.toFixed(2)}%"><span>${esc(t("cal_pre_until", { date: day(o.preorder.until) }))}</span></a></div></li>`;
+    })
+    .join("");
+  return `<div class="cal" style="--t:${pct(now).toFixed(2)}%"><div class="cal-scale"><span></span><div class="cal-axis"><span class="cal-today">${esc(t("cal_today"))}</span>${ticks.join("")}</div></div><ol class="cal-rows">${bars}</ol></div>`;
+}
+
+function calMonths(list) {
+  const byMonth = new Map();
+  for (const i of list) {
+    const k = i.listedAt.slice(0, 7);
+    byMonth.set(k, [...(byMonth.get(k) ?? []), i]);
+  }
+  return [...byMonth]
+    .map(([k, xs]) => {
+      const label = new Date(`${k}-01T00:00:00Z`).toLocaleDateString(loc(), { month: "long", year: "numeric" });
+      const shown = xs.slice(0, 36);
+      return `<h3>${esc(label)} <span class="muted small">· ${fmt(xs.length, 0)}</span></h3><div class="cal-grid">${shown.map((i) => calCard(i, `${catLabel(i)} · ${day(i.listedAt)}`)).join("")}</div>${xs.length > shown.length ? `<p class="muted small">+${fmt(xs.length - shown.length, 0)}</p>` : ""}`;
+    })
+    .join("");
+}
+
+function calCard(i, sub, offer) {
+  const im = imageOf(i);
+  const pr = prices(i).cheapest;
+  return `<a class="cal-card" href="${offer ? esc(offer.url) : `#item/${encodeURIComponent(i.id)}`}"${offer ? ` target="_blank" rel="noopener"` : ""}>${im ? `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(sub)}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</small></span></a>`;
+}
+
 function offersTable(offers) {
   if (!offers.length) return `<p class="muted">—</p>`;
   return `<ul class="offers">${offers
     .map(
       (o) => `<li><a href="${esc(o.url)}" target="_blank" rel="noopener" class="strong">${esc(db.stores[o.store]?.name ?? o.store)}</a>
-      <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}${o.seenAt ? ` · ${esc(t("pr_seen", { date: day(o.seenAt) }))}` : ""}</span>
+      <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}${o.seenAt ? ` · ${esc(t("pr_seen", { date: day(o.seenAt) }))}` : ""}${o.preorder ? ` <span class="tag warn" title="${esc(o.preorder.quote)}">${esc(o.preorder.until ? t("cal_pre_until", { date: day(o.preorder.until) }) : t("cal_pre"))}</span>` : ""}</span>
       <span class="price">${money(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}</span></li>`,
     )
     .join("")}</ul>`;
@@ -1249,6 +1361,7 @@ function wire(main, r) {
   }
   if (r.name === "item") {
     const i = findItem(r.id);
+    if (i) wireThumbs(main, i);
     if (i && SOURCE_CATS.has(i.category) && sourceOutputs(i).length)
       drawChart(main.querySelector("#chart"), sourceOutputs(i), displayName(i), null, {
         srcParam: `src=${encodeURIComponent(i.id)}`,
@@ -1941,7 +2054,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv45ih4u" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv45rx3g" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2427,7 +2540,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv45ih4u" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv45rx3g" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

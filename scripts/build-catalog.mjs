@@ -12,6 +12,7 @@ import { extractSpecs, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
+import { preorder, listedAt } from "./lib/dates.js";
 
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker"]);
@@ -115,8 +116,12 @@ for (const file of files) {
       condition: condition(p.title),
       seenAt: snap.fetchedAt,
       image: p.image ?? undefined,
+      listedAt: listedAt(p) ?? undefined,
+      preorder: preorder(p, snap.fetchedAt) ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
+    // Photo set for the item page: the store with the most photos (links only).
+    if ((p.images?.length ?? 0) > (g.photos?.src.length ?? 1)) g.photos = { store: snap.store, url, src: p.images };
     if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
     if (category === "speaker") g.speaker ??= speakerKind(p);
     // DC power: what a box needs, what a supply gives (first store with a stated line wins).
@@ -264,6 +269,7 @@ const rank = (list) =>
       b.sources.length - a.sources.length,
   );
 
+const photoSets = {};
 const catalog = [...groups.values()]
   .map((g) => {
     const specs = Object.fromEntries(Object.entries(g.specs).map(([k, v]) => [k, merge(v).map((e) => ({ ...e, kind: "claimed" }))]));
@@ -282,7 +288,8 @@ const catalog = [...groups.values()]
       rank(specs[k]);
       if (!specs[k].length) delete specs[k];
     }
-    const { curatedSpecs, roleVotes, ...rest } = g;
+    const { curatedSpecs, roleVotes, photos, ...rest } = g;
+    if (photos) photoSets[rest.id] = photos;
     // Any store calling it a DAC/amp, or a headphone output power rating, means it has both.
     if (rest.category === "desktop" && !rest.role) {
       const v = roleVotes ?? [];
@@ -292,6 +299,9 @@ const catalog = [...groups.values()]
       rest.role = specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : "amp";
     }
     if (rest.category !== "desktop") delete rest.role;
+    // First time any store listed it: the release calendar's date for this model.
+    const listed = rest.offers.map((o) => o.listedAt).filter(Boolean).sort()[0];
+    if (listed) rest.listedAt = listed;
     return { ...rest, specs };
   })
   .sort((a, b) => a.id.localeCompare(b.id));
@@ -339,5 +349,8 @@ for (const g of catalog) {
   for (const i of catalog) if (i.brand) i.brand = pick.get(norm(i.brand));
 }
 
+// Extra photos live in their own file so the main catalog stays small; the
+// item page loads it on demand.
+await writeFile(new URL("data/photos.json", root), JSON.stringify(photoSets));
 await writeFile(new URL("data/catalog.json", root), JSON.stringify({ builtAt: new Date().toISOString(), stores: stats.stores, items: catalog }));
 console.log(JSON.stringify({ ...stats, models: catalog.length }, null, 2));

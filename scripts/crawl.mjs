@@ -54,11 +54,16 @@ function slim(p) {
     type: p.product_type,
     tags: p.tags,
     updatedAt: p.updated_at,
+    // When the store put the page up: the release calendar uses the earliest store.
+    publishedAt: p.published_at ?? null,
+    createdAt: p.created_at ?? null,
     // Keep every variant: "Case only" or "Cable only" options must not set the price.
     variants: p.variants.map((v) => ({ title: v.title, price: Number(v.price), available: v.available })),
     // Only the URL of the store's first product photo. The page loads it from
     // the store's CDN and links back; images are never copied into the repo.
     image: p.images?.[0]?.src ?? null,
+    // The other photos (ports, box, accessories), also as links only.
+    images: (p.images ?? []).slice(0, 12).map((x) => x.src),
     body: p.body_html ?? "",
   };
 }

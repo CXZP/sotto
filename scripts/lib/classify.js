@@ -11,11 +11,17 @@ const RULES = [
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
   ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],
   ["adapter", /\b(adapters?|adaptors?|converters?|converter plugs?|jack converters?)\b/i],
-  ["skip", /\b(microphones?|turntables?|phono|cd players?|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power supply|lps|power conditioner|streamers?|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
+  // CD players and transports (a "CD speaker" or a ripper is not one).
+  ["skip", /\b(cd speakers?|cd[- ]rippers?|rippers?|cassettes?)\b/i],
+  ["cd", /\b(?:sa)?cd[- ]?(?:players?|transports?|drives?)\b|\bcd (?:digital )?transport\b|\bdiscdream\b/i],
+  ["skip", /\b(microphones?|turntables?|phono|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power conditioner|streamers?|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
   ["wireless", /\b(tws|true wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
   ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
   ["dongle", /\b(dongle|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac)\b/i],
   ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
+  // External DC supplies (linear or not) for DACs and amps; bundles with an amp stay amps.
+  ["skip", /\b(chargers?|charging|power ?banks?|distribution block|power station|idefender|ground loop|bundle)\b/i],
+  ["power", /\b(linear power suppl(?:y|ies)|lps|(?:dc |audio |external |audiophile )?power suppl(?:y|ies)|psu|ipower\w*|power system)\b/i],
   ["iem", /\b(iems?|in[- ]ear|earphones?|earbuds?|universal iem|monitors?)\b/i],
   ["headphone", /\b(headphones?|over[- ]ear|open[- ]back|closed[- ]back|planar)\b/i],
 ];
@@ -73,6 +79,8 @@ const NOISE = [
   /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
   /[|–—:,/+&]+/g,
   // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
+  // CD player descriptors ("SMSL PL200 MQA CD Player" == "SMSL PL200 MKII All-in-One CD Player").
+  /\b((?:sa)?cd[- ]?(?:players?|transports?|drives?)|cd (?:digital )?transport|mqa|chips?|all[- ]in[- ]one|top[- ]loading|compact|rca|optical|portable stereo|stereo)\b/gi,
   /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
 ];
 

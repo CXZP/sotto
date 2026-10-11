@@ -10,9 +10,10 @@ import { readFile, readdir, writeFile } from "node:fs/promises";
 import { classify, condition, modelKey, compact, groupKey, deskRole } from "./lib/classify.js";
 import { extractSpecs, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
+import { dcInput, dcOutputs } from "./lib/dcpower.js";
 
 const root = new URL("..", import.meta.url);
-const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap"]);
+const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
 const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
@@ -23,18 +24,42 @@ const stats = { products: 0, kept: 0, byCategory: {}, withSpecs: {}, rejected: 0
 // Stores list their own name as the vendor for products they resell
 // ("The Hangout by Crinacle" for "CrinEar Project Monolith"). For those, take
 // the real brand from the start of the title when it is a brand seen elsewhere.
-const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com)$/i;
-const knownBrands = new Set();
+const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap)$/i;
+// One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
+// "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
+const brandKey = (b) => {
+  const k = b.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return k.length > 7 && k.endsWith("audio") ? k.slice(0, -5) : k;
+};
+const spellingCount = new Map();
 for (const file of files) {
   const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
-  for (const p of snap.products) if (p.vendor && !STORE_VENDOR.test(p.vendor.trim())) knownBrands.add(p.vendor.trim());
+  for (const p of snap.products) {
+    const v = p.vendor?.trim();
+    if (!v || STORE_VENDOR.test(v)) continue;
+    const m = spellingCount.get(brandKey(v)) ?? new Map();
+    m.set(v, (m.get(v) ?? 0) + 1);
+    spellingCount.set(brandKey(v), m);
+  }
 }
+const isMixed = (x) => x !== x.toUpperCase() && x !== x.toLowerCase();
+const canonical = new Map([...spellingCount].map(([k, m]) => [k, [...m].sort((a, b) => b[1] - a[1] || isMixed(b[0]) - isMixed(a[0]))[0][0]]));
+const knownBrands = new Set([...spellingCount.values()].flatMap((m) => [...m.keys()]));
 const brandsLongestFirst = [...knownBrands].sort((a, b) => b.length - a.length);
 function realVendor(p) {
-  const v = (p.vendor ?? "").trim();
-  if (!STORE_VENDOR.test(v)) return v;
-  const title = p.title.toLowerCase();
-  return brandsLongestFirst.find((b) => title.startsWith(`${b.toLowerCase()} `)) ?? v;
+  let v = (p.vendor ?? "").trim();
+  if (STORE_VENDOR.test(v)) {
+    const title = p.title.toLowerCase();
+    v = brandsLongestFirst.find((b) => title.startsWith(`${b.toLowerCase()} `)) ?? v;
+  }
+  return canonical.get(brandKey(v)) ?? v;
+}
+/** Remove every spelling of the brand from a title, not only the canonical one. */
+function stripBrand(vendor, title) {
+  const spellings = [...(spellingCount.get(brandKey(vendor))?.keys() ?? [vendor])].sort((a, b) => b.length - a.length);
+  let t = ` ${title} `;
+  for (const sp of spellings) t = t.replace(new RegExp(`(^|[^a-z0-9])${sp.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=[^a-z0-9]|$)`, "gi"), "$1 ");
+  return t.trim();
 }
 
 for (const file of files) {
@@ -57,7 +82,7 @@ for (const file of files) {
       verified[field] = [];
       // Output power and output impedance describe sources, not headphones
       // ("works with amps delivering 125 mW" is a requirement, not a rating).
-      const isSource = category === "dongle" || category === "desktop" || category === "dap";
+      const isSource = category === "dongle" || category === "desktop" || category === "dap" || category === "cd";
       if ((field === "power" || field === "zout") && !isSource) continue;
       if (field === "impedance" && isSource) continue; // an amp's "impedance" is usually input impedance
       for (const entry of specs[field]) {
@@ -68,7 +93,7 @@ for (const file of files) {
     }
 
     const vendor = realVendor(p);
-    const { key, model } = modelKey(vendor, p.title);
+    const { key, model } = modelKey(vendor, stripBrand(vendor, p.title));
     const gk = groupKey(key);
     const g =
       groups.get(gk) ??
@@ -92,8 +117,17 @@ for (const file of files) {
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
     if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
+    // DC power: what a box needs, what a supply gives (first store with a stated line wins).
+    if (category === "desktop" || category === "cd") {
+      const need = !g.dcIn && dcInput(p.body);
+      if (need) g.dcIn = { ...need, url };
+    }
+    if (category === "power" && !g.dcOut) {
+      const out = dcOutputs(p.body);
+      if (out) g.dcOut = { ...out, url };
+    }
     // Materials / looks with the store sentence they came from (first store wins).
-    if (category === "iem" || category === "headphone" || category === "dongle" || category === "desktop" || category === "dap") {
+    if (category !== "power") {
       const looks = detectLooks({ title: p.title, tags: p.tags, body: p.body });
       for (const kind of ["materials", "styles"])
         for (const [k, quote] of Object.entries(looks[kind])) {

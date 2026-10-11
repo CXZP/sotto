@@ -2,6 +2,14 @@
 
 export const STRINGS = {
   th: {
+    cat_cd: "เครื่องเล่น CD",
+    cat_power: "ภาคจ่ายไฟ (LPS)",
+    pw_needs: "ไฟเข้า (DC):",
+    pw_gives: "ไฟออก (DC):",
+    pw_source: "ที่มา",
+    pw_supplies: "ภาคจ่ายไฟในฐานข้อมูลที่แรงดันตรง {n} รุ่น (✓ = กระแสพอ, ? = ร้านไม่บอกกระแส)",
+    pw_devices: "เครื่องในฐานข้อมูลที่แรงดันตรง {n} รุ่น (✓ = กระแสพอ, ? = ร้านไม่บอกกระแส)",
+    pw_note: "เช็กแค่แรงดันและกระแส ก่อนซื้อต้องดูขนาดหัวแจ็ค (เช่น 5.5×2.1 มม.) และขั้ว (ขาในเป็นบวก/ลบ) ให้ตรงด้วย ส่วนเรื่องที่ว่า LPS ทำให้เสียงดีขึ้นยังถกเถียงกันอยู่ เราแสดงแค่ว่าใช้ด้วยกันได้หรือไม่",
     slot_dac: "DAC",
     slot_dac_hint: "แอมป์ตัวนี้ไม่มี DAC ในตัว เลือก DAC ที่จะต่อข้างหน้า (ไม่มีผลกับการคำนวณความดัง)",
     picker_title_dac: "เลือก DAC",
@@ -506,6 +514,14 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    cat_cd: "CD players",
+    cat_power: "Power supplies (LPS)",
+    pw_needs: "DC input:",
+    pw_gives: "DC output:",
+    pw_source: "source",
+    pw_supplies: "{n} supplies in the database with a matching voltage (✓ = enough current, ? = current not stated)",
+    pw_devices: "{n} devices in the database with a matching voltage (✓ = enough current, ? = current not stated)",
+    pw_note: "Only voltage and current are checked. Before buying, also match the plug size (e.g. 5.5×2.1 mm) and polarity (centre positive/negative). Whether a linear supply improves sound is debated; we only show whether they work together.",
     slot_dac: "DAC",
     slot_dac_hint: "This amp has no DAC built in. Pick the DAC that feeds it (it doesn't change the loudness maths).",
     picker_title_dac: "Choose a DAC",

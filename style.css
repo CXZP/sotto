@@ -75,6 +75,8 @@
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+h1, h2, h3 { text-wrap: balance; }
+p, li, .explore-item > span, .note { text-wrap: pretty; }
 body {
   margin: 0;
   background: var(--bg);
@@ -275,7 +277,7 @@ select:focus-visible, .seg button:focus-visible, .pill:focus-visible, .chip:focu
 .steps-list .why { display: block; margin-top: 2px; color: var(--text-2); font-size: 13px; }
 
 .meter { position: relative; height: 10px; margin: 34px 0 6px; border-radius: 999px; background: var(--surface-2); overflow: visible; }
-.meter-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--good), var(--accent)); transition: width 0.6s var(--ease); }
+.meter-fill { height: 100%; border-radius: inherit; transform-origin: left; background: linear-gradient(90deg, var(--good), var(--accent)); transition: width 0.6s var(--ease); }
 .meter .tick { position: absolute; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; background: var(--text); border-radius: 2px; }
 .meter .tick.peak { background: var(--text-2); }
 .meter .tick b { white-space: nowrap; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 600; color: var(--text-2); }
@@ -389,11 +391,11 @@ nav a { white-space: nowrap; }
 /* ---------------------------------------------------------------- home */
 .home { display: grid; gap: 28px; }
 .home-hero { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); padding: 64px 24px 32px; display: grid; gap: 28px; justify-items: center; text-align: center; isolation: isolate; }
-.home-hero-text { max-width: 760px; display: grid; gap: 14px; justify-items: center; }
+.home-hero-text { max-width: 920px; display: grid; gap: 14px; justify-items: center; }
 .home-kicker { margin: 0; letter-spacing: 0.18em; text-transform: uppercase; font-size: 12px; color: var(--text-2); }
-.home h1 { margin: 0; font-size: clamp(34px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.home h1 { margin: 0; font-size: clamp(30px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
 .home h2 { margin: 0; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.02em; text-align: center; }
-.home-sub { margin: 0; max-width: 640px; color: var(--text-2); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.5; text-align: center; justify-self: center; }
+.home-sub { margin: 0; max-width: 760px; text-wrap: balance; color: var(--text-2); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.5; text-align: center; justify-self: center; }
 .home-cta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .home-cta .pill { padding: 10px 20px; font-size: 15px; }
 .home-waves { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
@@ -404,7 +406,7 @@ nav a { white-space: nowrap; }
 .home-waves .wv3 { opacity: 0.12; animation-direction: reverse; }
 @keyframes home-drift { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .home-waves .wv { animation: none; } }
-.home-demo { width: min(720px, 100%); text-align: left; padding: 18px; display: grid; gap: 12px; background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.home-demo { width: min(880px, 100%); text-align: left; padding: 18px; display: grid; gap: 12px; background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .home-demo > p { margin: 0; }
 .home-ex { display: flex; flex-wrap: wrap; gap: 6px; }
 .home-ex-out { display: grid; gap: 12px; }
@@ -433,7 +435,8 @@ nav a { white-space: nowrap; }
 /* Phone width: the tool buttons scroll inside the bar instead of widening the page. */
 @media (max-width: 560px) {
   .bar-inner { max-width: 100%; box-sizing: border-box; }
-  .bar-tools { flex: 1 1 0; min-width: 0; overflow-x: auto; justify-content: flex-end; scrollbar-width: none; }
+  .bar-tools { flex: 1 1 0; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  .bar-tools > :first-child { margin-left: auto; }
   .bar-tools::-webkit-scrollbar, nav::-webkit-scrollbar { display: none; }
   .bar-tools > * { flex: none; }
   nav { scrollbar-width: none; }
@@ -494,7 +497,7 @@ nav a { white-space: nowrap; }
 @keyframes wash-in { 0% { opacity: 0.35; transform: translateX(28px); filter: sepia(1) saturate(6) hue-rotate(-12deg) brightness(1.1); } 45% { opacity: 1; } 100% { transform: none; filter: none; } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(10px); } }
 @keyframes draw { from { transform: scaleX(0); } }
-@keyframes meter-in { from { transform: scaleX(0); transform-origin: left; } }
+@keyframes meter-in { from { transform: scaleX(0); } }
 
 /* Apple-style explorer: pills that open into a card; the panel cross-fades. */
 .home-explore { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 20px; align-items: start; margin-top: 8px; }

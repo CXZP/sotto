@@ -27,7 +27,7 @@ const stats = { products: 0, kept: 0, byCategory: {}, withSpecs: {}, rejected: 0
 // Stores list their own name as the vendor for products they resell
 // ("The Hangout by Crinacle" for "CrinEar Project Monolith"). For those, take
 // the real brand from the start of the title when it is a brand seen elsewhere.
-const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap)$/i;
+const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap|discontinued|silentpower|kitsunehifi)$/i;
 // One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
 // "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
 const brandKey = (b) => {
@@ -78,7 +78,7 @@ for (const file of files) {
     if (!KEEP.has(category)) continue;
     stats.kept++;
 
-    const url = `https://${snap.host}/products/${p.handle}`;
+    const url = p.url ?? `https://${snap.host}/products/${p.handle}`; // WooCommerce stores give their own link
     const { lines, specs } = extractSpecs(p.body);
     const verified = {};
     for (const field of FIELDS) {

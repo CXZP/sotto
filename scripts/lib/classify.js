@@ -6,6 +6,10 @@ const has = (s, re) => re.test(s);
 const RULES = [
   // Things that are not part of a headphone chain, checked first.
   ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
+  // Home theatre and room hi-fi (Audio Advice, Addicted to Audio): outside a
+  // headphone chain or a desk. "Matrix Audio" is a brand, so only "matrix" with
+  // a switch/distribution word counts.
+  ["skip", /\b(home theat(?:er|re)|\d+[- ]channel|multi[- ]?channel|in[- ]wall|in[- ]ceiling|on[- ]wall|outdoor|center channel|lcr|floor[- ]?standing|tower speakers?|av receivers?|tuners?|distribution|matrix (?:switch|distribution)|service kit|soundbars?|network (?:audio )?(?:player|transport)|music server|turntables?|multi-?room|(?:preamp|power|rectifier|output) (?:vacuum )?tubes?|integrated (?:class|stereo)|streaming media players?)\b/i],
   ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   ["skip", /\b(beanie|t-?shirts?|hoodies?|merch|toys?|bricks|keychains?|mouse ?pads?|posters?)\b/i],
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
@@ -78,6 +82,10 @@ export function condition(title) {
 const MARKETING = /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi;
 
 const NOISE = [
+  // Listing notes after a dash: "805 D4 - Each", "Liberty II - UNIT", "HDI-1600 - A Grade".
+  /\s-+\s*(?:each|unit)\b/gi,
+  /-*\s*\b(?:[a-c][- ]?)?grade\b/gi,
+  /\b(?:uk|eu|us|au) plug\b/gi,
   // Stock notes some stores type into the title: "N8ii --- SOLD!", "N8iii --SOLD OUT".
   /-*\s*\bsold(?:\s*out)?\b\s*!*/gi,
   /\((?:[^)]*)\)/g,

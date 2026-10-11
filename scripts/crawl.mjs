@@ -43,6 +43,10 @@ await mkdir(new URL("cache/raw/", root), { recursive: true });
 
 for (const store of stores) {
   if (only.length && !only.includes(store.id)) continue;
+  if (store.kind === "woo") {
+    await writeSnapshot(store, await wooProducts(store));
+    continue;
+  }
   const meta = (await getJson(`https://${store.host}/meta.json`))?.data;
   const products = [];
   const currencies = new Set();
@@ -58,16 +62,56 @@ for (const store of stores) {
   }
   if (store.specPage) await addSpecPages(store, products);
   if (currencies.size > 1) throw new Error(`${store.id}: mixed currencies ${[...currencies]}`);
-  const snapshot = {
-    store: store.id,
-    host: store.host,
-    name: meta?.name ?? store.host,
-    currency: [...currencies][0] ?? meta?.currency ?? null,
-    fetchedAt: new Date().toISOString(),
-    products,
-  };
+  await writeSnapshot(store, { name: meta?.name, currency: [...currencies][0] ?? meta?.currency ?? null, products });
+}
+
+async function writeSnapshot(store, { name, currency, products }) {
+  const snapshot = { store: store.id, host: store.host, name: name ?? store.host, currency, fetchedAt: new Date().toISOString(), products };
   await writeFile(new URL(`cache/raw/${store.id}.json`, root), JSON.stringify(snapshot));
-  console.log(`${store.id.padEnd(16)} ${String(products.length).padStart(5)} products  ${snapshot.currency}`);
+  console.log(`${store.id.padEnd(16)} ${String(products.length).padStart(5)} products  ${currency}`);
+}
+
+// WooCommerce stores (Jaben) publish the same facts through the public Store
+// API: /wp-json/wc/store/v1/products. Thai stores write the model in English
+// and then a Thai description in the title; the model is the part before the
+// first Thai letter, the whole title still goes to the category guess.
+const THAI = /[\u0E00-\u0E7F]/;
+async function wooProducts(store) {
+  const products = [];
+  let currency = null;
+  for (let page = 1; page <= 60; page++) {
+    await pause(store);
+    const res = await getJson(`https://${store.host}/wp-json/wc/store/v1/products?per_page=100&page=${page}`);
+    const batch = Array.isArray(res?.data) ? res.data : [];
+    for (const p of batch) {
+      const unit = 10 ** (p.prices?.currency_minor_unit ?? 0);
+      currency ??= p.prices?.currency_code ?? null;
+      const name = decode(p.name ?? "");
+      const cut = name.search(THAI);
+      products.push({
+        id: p.id,
+        handle: p.slug,
+        url: p.permalink,
+        title: (cut > 0 ? name.slice(0, cut) : name).trim(),
+        vendor: p.brands?.[0]?.name ?? "",
+        type: (p.categories ?? []).map((c) => decode(c.name)).join(" "),
+        tags: [name, ...(p.tags ?? []).map((t) => decode(t.name))],
+        updatedAt: null,
+        publishedAt: null,
+        createdAt: null,
+        variants: [{ title: "", price: Number(p.prices?.price) / unit, available: Boolean(p.is_in_stock) }],
+        image: p.images?.[0]?.src ?? null,
+        images: (p.images ?? []).slice(0, 12).map((x) => x.src),
+        body: `${p.short_description ?? ""}\n${p.description ?? ""}`,
+      });
+    }
+    if (batch.length < 100) break;
+  }
+  return { name: store.name, currency, products };
+}
+
+function decode(s) {
+  return s.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#039;|&apos;/g, "'");
 }
 
 function slim(p) {

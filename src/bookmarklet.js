@@ -9,6 +9,7 @@
 
 export function sendToSotto() {
   const MAX = 38000;
+  let noPosts = false;
   const clean = (s) => (s || "").replace(/ /g, " ").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   const out = [`SOURCE: ${location.href}`, `TITLE: ${document.title}`, ""];
   const add = (author, date, link, text) => {
@@ -31,12 +32,19 @@ export function sendToSotto() {
       const body = m.querySelector('[slot="text-body"], [slot="comment"]');
       add(m.getAttribute("author"), m.getAttribute("created-timestamp"), m.getAttribute("permalink") ? `https://www.reddit.com${m.getAttribute("permalink")}` : "", body?.innerText);
     });
-    // Anything else: the main article text.
+    // Anything else: the main article text (a product page, a blog review).
+    if (out.length <= 3) noPosts = true;
     if (out.length <= 3) add(document.querySelector('meta[name="author"]')?.content, "", location.href, (document.querySelector("main, article, [role=main]") || document.body).innerText);
   }
   let text = out.join("\n");
   if (text.length > MAX) text = text.slice(0, MAX) + "\n…";
-  const done = () => alert(`Copied ${out.filter((l) => l.startsWith("--- ")).length} post(s) for Sotto.\nOpen the model on Sotto → From users → ✨ → paste.\nคัดลอกแล้ว ไปที่หน้ารุ่นใน Sotto → จากผู้ใช้ → ✨ → วาง`);
+  const showcase = /head-fi\.org\/showcase\/[^/]+\/?$/.test(location.href);
+  const done = () =>
+    noPosts
+      ? alert(
+          `No forum posts or reviews on this page, so the whole page was copied (fine for specs, not for problems).${showcase ? "\nOn Head-Fi, open the Reviews tab and click again." : ""}\nไม่เจอโพสต์หรือรีวิวในหน้านี้ เลยคัดลอกทั้งหน้า (ใช้กับสเปกได้ แต่ไม่ใช่ปัญหาจากผู้ใช้)${showcase ? "\nบน Head-Fi ให้เปิดแท็บ Reviews แล้วกดอีกครั้ง" : ""}`,
+        )
+      : alert(`Copied ${out.filter((l) => l.startsWith("--- ")).length} post(s) for Sotto.\nOpen the model on Sotto → From users → ✨ → paste.\nคัดลอกแล้ว ไปที่หน้ารุ่นใน Sotto → จากผู้ใช้ → ✨ → วาง`);
   const fallback = () => {
     const ta = document.createElement("textarea");
     ta.value = text;

@@ -51,9 +51,25 @@ test("FiiO RR13 radio is a source from FiiO, not a headphone or dongle", { todo 
 
 // ---------------------------------------------------------------- 2. store names are not brands
 
-const STORE_NAMES = /^(addicted to audio|addsoap|apos|audio46|bloom audio|hifigo|linsoul|shenzhenaudio|headphones\.com|audio advice|moon audio|zeppelin|kitsune|headphone ?zone|hifi headphones)$/i;
-test("no model is filed under a store's name", { todo }, () => {
-  const bad = db.items.filter((i) => STORE_NAMES.test(i.brand ?? "")).map((i) => `${i.id} (${i.brand})`);
+// A store's own name is only a brand when the store makes the thing and says so
+// in the title ("Linsoul Avant", "Apos x Salad Dynatone", "Kiwi Ears Aether").
+// Moon Audio's Dragon line and Kitsune's KTE phono stage are house brands
+// that don't repeat the store name.
+const norm = (s) => (s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const STORE_NAMES = new Set([
+  ...Object.values(db.stores).flatMap((s) => [norm(s.name), norm(s.host.split(".")[0])]),
+  ...Object.keys(db.stores).map(norm),
+  "addsoap", "addictedtoaudio", "audio46", "headphonescom",
+]);
+const HOUSE = /^(moon-audio--dragon|kitsunehifi--kte)/;
+test("no model is filed under a store's name unless the store makes it", { todo }, () => {
+  const bad = db.items
+    .filter((i) => STORE_NAMES.has(norm(i.brand)) && !HOUSE.test(i.id) && !i.offers.some((o) => norm(o.title).includes(norm(i.brand))))
+    .map((i) => `${i.id} (${i.brand})`);
+  assert.deepEqual(bad, []);
+});
+test("store merchandise is not a product (gift cards, tees, desk mats, lucky bags, mystery boxes)", { todo }, () => {
+  const bad = byTitle(/gift cards?|\btee\b|t-shirt|desk mat|lucky bag|mystery box/i).map((i) => `${i.id} (${i.category})`);
   assert.deepEqual(bad, []);
 });
 for (const [re, brand] of [
@@ -61,6 +77,9 @@ for (const [re, brand] of [
   [/SABAJ A20d/, /^sabaj$/i],
   [/LOXJIE D40 Pro/, /^loxjie$/i],
   [/ELAC Connex DCB41-ADSUM/, /^elac$/i],
+  [/FiiO RR13 Portable Radio/, /^fiio$/i],
+  [/Little Dot MK9/, /^little dot$/i],
+  [/COZOY TAKT C/, /^cozoy$/i],
 ])
   test(`brand from the title: ${re.source}`, { todo }, () => {
     const found = byTitle(re);

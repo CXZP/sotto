@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv41psoa";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv41psoa";
-import { renderChart } from "./chart.js?v=mv41psoa";
-import { makeT } from "./i18n.js?v=mv41psoa";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv41psoa";
-import { LEGAL } from "./legal.js?v=mv41psoa";
-import { track, stats, trackingOff } from "./analytics.js?v=mv41psoa";
-import * as community from "./community.js?v=mv41psoa";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv41psoa";
-import { redactImage } from "./redact.js?v=mv41psoa";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv41psoa";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv41psoa";
-import { chainLinks } from "./chain.js?v=mv41psoa";
-import { fits } from "./dcfit.js?v=mv41psoa";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv41psoa";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv41psoa";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv41psoa";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv42fkyn";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv42fkyn";
+import { renderChart } from "./chart.js?v=mv42fkyn";
+import { makeT } from "./i18n.js?v=mv42fkyn";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv42fkyn";
+import { LEGAL } from "./legal.js?v=mv42fkyn";
+import { track, stats, trackingOff } from "./analytics.js?v=mv42fkyn";
+import * as community from "./community.js?v=mv42fkyn";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv42fkyn";
+import { redactImage } from "./redact.js?v=mv42fkyn";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv42fkyn";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv42fkyn";
+import { chainLinks } from "./chain.js?v=mv42fkyn";
+import { fits } from "./dcfit.js?v=mv42fkyn";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv42fkyn";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv42fkyn";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv42fkyn";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -78,7 +78,7 @@ function route() {
   if (h.startsWith("learn/")) return { name: "learn", term: decodeURIComponent(h.slice(6)) };
   if (h === "discuss/new") return { name: "discuss", sub: "new" };
   if (h.startsWith("discuss/")) return { name: "discuss", sub: "thread", id: h.slice(8) };
-  return { name: h || "build" };
+  return { name: h || "home" };
 }
 function query() {
   return new URLSearchParams(location.hash.split("?")[1] ?? "");
@@ -256,6 +256,7 @@ function render() {
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
+  else if (r.name === "home") main.innerHTML = homePage();
   else main.innerHTML = buildPage();
   wire(main, r);
   scrollTo({ top: 0 });
@@ -264,6 +265,132 @@ function render() {
     lastViewKey = key;
     track("view", { path: [r.name, r.sub, r.term].filter(Boolean).join("/"), item: r.name === "item" ? r.id : null, lang: state.lang });
   }
+}
+
+// ---------------------------------------------------------------------------
+// Home: what Sotto answers, shown with real results computed on the page.
+
+// The setup most people start with: a phone and Apple's USB-C dongle.
+const HOME_EXAMPLES = [
+  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "moondrop--blessing-3" },
+  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "sennheiser--hd-600" },
+  { device: "phone-usb-c", amp: "apple--c-to-adapter", hp: "moondrop--cosmo" },
+];
+const exUrl = (e) => `#build?device=${e.device}&amp=${encodeURIComponent(e.amp)}&hp=${encodeURIComponent(findItem(e.hp).id)}`;
+
+/** The builder's verdict and connection cards for one setup, without touching the page state. */
+function homeExample({ device, amp, hp: hpId }) {
+  const hp = findItem(hpId);
+  if (!hp) return "";
+  const keep = { device: state.device, src: state.src, dac: state.dac, amp: state.amp, hp: state.hp, plug: state.plug, level: state.level };
+  Object.assign(state, { device, src: "", dac: "", amp: amp ?? "", hp: hp.id, plug: "", level: "normal" });
+  try {
+    const src = currentSource();
+    const conn = connectionCard(src, hp);
+    const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level: LEVELS.normal, crest: CREST }) : { status: "no-output" };
+    return verdictCard(ev, hp, false, { amp: src.amp, device: src.device }) + conn.html;
+  } finally {
+    Object.assign(state, keep);
+  }
+}
+
+function homeWaves() {
+  // Layered waves drifting sideways; each path is two periods wide so a -50% shift loops seamlessly.
+  const wave = (y, a) => `M0 ${y} C 150 ${y - a}, 350 ${y - a}, 500 ${y} S 850 ${y + a}, 1000 ${y} S 1350 ${y - a}, 1500 ${y} S 1850 ${y + a}, 2000 ${y} V 400 H 0 Z`;
+  return `<div class="home-waves" aria-hidden="true">${[
+    [150, 60, 38],
+    [210, 50, 29],
+    [270, 45, 23],
+    [320, 35, 17],
+  ]
+    .map(([y, a, s], n) => `<svg viewBox="0 0 1000 400" preserveAspectRatio="none" class="wv wv${n}" style="--s:${s}s"><path d="${wave(y, a)}"/></svg>`)
+    .join("")}</div>`;
+}
+
+function homePage() {
+  const brands = new Set(db.items.map((i) => i.brand)).size;
+  const sourced = db.items.reduce((n, i) => n + Object.values(i.specs ?? {}).reduce((m, v) => m + (Array.isArray(v) ? v.length : 0), 0), 0);
+  const stats = [
+    [fmt(db.items.length, 0), t("home_st_models")],
+    [fmt(Object.keys(db.stores).length, 0), t("home_st_stores")],
+    [fmt(brands, 0), t("home_st_brands")],
+    [fmt(sourced, 0), t("home_st_sourced")],
+  ];
+  const popular = db.items
+    .filter((i) => HEADPHONE_CATS.has(i.category) && imageOf(i))
+    .sort((a, b) => storeCount(b) - storeCount(a))
+    .slice(0, 4);
+  const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
+  return `<div class="home">
+    <section class="home-hero">${homeWaves()}
+      <div class="home-hero-text">
+        <p class="home-kicker">${esc(t("home_kicker"))}</p>
+        <h1>${t("home_h1").split("\n").map(esc).join("<br>")}</h1>
+        <p class="home-sub">${esc(t("home_sub"))}</p>
+        <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
+      </div>
+      <div class="home-demo card">
+        <p class="small muted">${esc(t("home_try"))} · ${esc(t("home_ex_chain", { amp: findItem(HOME_EXAMPLES[0].amp) ? displayName(findItem(HOME_EXAMPLES[0].amp)) : "dongle" }))}</p>
+        <div class="home-ex" role="tablist">${ex
+          .map((e, n) => `<button type="button" class="pill small${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-ex="${n}">${esc(displayName(findItem(e.hp)))}</button>`)
+          .join("")}</div>
+        <div class="home-ex-out" data-ex-out>${ex.length ? homeExample(ex[0]) : ""}</div>
+        <a class="link small" data-ex-open href="${ex.length ? exUrl(ex[0]) : "#build"}">${esc(t("home_open"))}</a>
+      </div>
+    </section>
+    <section class="home-stats">${stats.map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</section>
+    <section class="home-band">
+      <h2>${esc(t("home_s2_h"))}</h2><p class="home-sub">${esc(t("home_s2_sub"))}</p>
+      <div class="home-cta"><a class="pill primary" href="#catalog">${esc(t("home_cta_catalog"))}</a><a class="pill" href="#deal">${esc(t("home_cta_deal"))}</a></div>
+      <div class="home-products">${popular
+        .map((i) => {
+          const im = imageOf(i);
+          const p = prices(i).cheapest;
+          return `<a class="card home-product" href="#item/${encodeURIComponent(i.id)}"><img src="${esc(sized(im.src, 400))}" alt="" loading="lazy" referrerpolicy="no-referrer"><b>${esc(displayName(i))}</b><span class="muted small">${p ? `${esc(t("price_from"))} ${money(p.price, p.currency)} · ` : ""}${esc(t("stores", { n: storeCount(i) }))}</span></a>`;
+        })
+        .join("")}</div>
+    </section>
+    <section class="home-band" data-home-reviews>
+      <h2>${esc(t("home_s3_h"))}</h2><p class="home-sub">${esc(t("home_s3_sub"))}</p>
+      <div class="home-reviews" data-reviews></div>
+    </section>
+    <section class="home-band home-not">
+      <h2>${esc(t("home_s4_h"))}</h2>
+      <div class="home-not-grid">${[1, 2, 3].map((n) => `<div class="card pad"><b>${esc(t(`home_not${n}`))}</b><p class="muted small">${esc(t(`home_not${n}_sub`))}</p></div>`).join("")}</div>
+      <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#about">${esc(t("nav_about"))}</a></div>
+    </section>
+  </div>`;
+}
+
+function wireHome(main) {
+  const out = main.querySelector("[data-ex-out]");
+  const open = main.querySelector("[data-ex-open]");
+  const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
+  main.querySelectorAll("[data-ex]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const e = ex[Number(b.dataset.ex)];
+      out.innerHTML = homeExample(e);
+      open.href = exUrl(e);
+      main.querySelectorAll("[data-ex]").forEach((x) => {
+        x.classList.toggle("on", x === b);
+        x.setAttribute("aria-selected", String(x === b));
+      });
+    }),
+  );
+  // Newest review summaries from the community, with the reviewer line and verdict.
+  const box = main.querySelector("[data-reviews]");
+  community.latestReviews(3).then((rows) => {
+    if (!box.isConnected) return;
+    const cards = rows
+      .map((r) => {
+        const item = db.byId.get(r.item_id);
+        const shown = r.i18n?.[state.lang] ?? r;
+        const head = (shown.body ?? "").split("\n\n")[0];
+        return `<a class="card pad home-review" href="#item/${encodeURIComponent(r.item_id)}">${item ? `<span class="small muted">${esc(displayName(item))}</span>` : ""}<b>${esc(shown.title)}</b><p class="small">${esc(head)}</p></a>`;
+      })
+      .join("");
+    box.innerHTML = cards || `<p class="muted">${esc(t("home_s3_empty"))} <a href="#build">${esc(t("home_cta_build"))}</a></p>`;
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -970,6 +1097,7 @@ function offersTable(offers) {
 // Event wiring after each render
 
 function wire(main, r) {
+  if (r.name === "home") return wireHome(main);
   if (r.name === "build") {
     // Ports users confirmed from back-panel photos can turn "not stated" into a match.
     const ids = [state.src, state.dac, state.amp].filter(Boolean).map((id) => findItem(id)?.id);
@@ -1689,7 +1817,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv41psoa" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv42fkyn" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2175,7 +2303,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv41psoa" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv42fkyn" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

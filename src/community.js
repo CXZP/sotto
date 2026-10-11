@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv41psoa";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv42fkyn";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -74,6 +74,14 @@ export async function saveProfile(displayName) {
   const s = await session();
   const { error } = await sb.from("profiles").upsert({ id: s.user.id, display_name: displayName });
   if (error) throw error;
+}
+
+/** The newest review summaries across all models, for the home page. */
+export async function latestReviews(limit = 3) {
+  const sb = await client();
+  if (!sb) return [];
+  const { data, error } = await sb.from("report_feed").select("*").eq("kind", "review").order("created_at", { ascending: false }).limit(limit);
+  return error ? [] : data ?? [];
 }
 
 /** Posts for one or more catalog items, most-confirmed issues first. */

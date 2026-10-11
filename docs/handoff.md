@@ -29,6 +29,7 @@ An open-source website (code MIT, data CC BY-SA 4.0) that answers "will this aud
 - Brand logos from Simple Icons (CC0), exact name matches only (11 brands); initials otherwise.
 
 **Site**
+- Home page (`#`): the three questions, a live builder result for three real setups (phone → Apple USB-C dongle → Blessing 3 / HD 600 / Cosmo), counts from the data, popular models, newest review summaries, and what Sotto doesn't do. The builder moved to `#build`. With that dongle, no headphone in the catalog with a known sensitivity unit comes out "not loud enough" at 80 dB.
 - Chain builder:
   - Source: phone, computer, DAP, CD player or streamer
   - Then optional DAC → amp or DAC/amp → headphones

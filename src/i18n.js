@@ -2,6 +2,7 @@
 
 export const STRINGS = {
   th: {
+    bot_tools_link: "ปุ่ม \"ส่งเข้า Sotto\" คัดลอกพร้อมชื่อคนเขียนให้",
     rv_unknown: "ไม่ทราบชื่อ",
     rv_summarised_by: "สรุปโดย",
     tl_title: "เครื่องมือช่วยเพิ่มข้อมูล",
@@ -662,6 +663,7 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    bot_tools_link: "The \"Send to Sotto\" button copies posts with author names",
     rv_unknown: "unknown",
     rv_summarised_by: "Summarised by",
     tl_title: "Contributor tools",

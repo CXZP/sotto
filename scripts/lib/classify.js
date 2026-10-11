@@ -30,6 +30,27 @@ export function classify(p) {
   return "other";
 }
 
+// Desktop units do three different jobs: a DAC alone (no headphone output),
+// a headphone amp alone (needs a DAC in front), or both in one box.
+const DAC_WORD = /\b(dac|decoder|digital[- ]to[- ]analog|d\/a conver\w*|streamer|streaming)\b/i;
+const AMP_WORD = /\b(headphone amp(lifier)?s?|amp(lifier)?s?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|preamp\w*)\b/i;
+const COMBO_WORD = /\b(dac\/amp|dac[- ]amp|dac & amp|dac and (headphone )?amp|amp\/dac|all[- ]in[- ]one)\b/i;
+const HP_OUT = /\b(headphone (output|out|jack)s?|headphone amp|6\.35\s?mm|4\.4\s?mm (balanced )?(headphone )?out|phones? out)\b/i;
+const HAS_DAC = /\b(usb[- ]?(?:b|c)? (?:audio |input)|optical (?:input|in)|coaxial (?:input|in)|decod\w+|es9\d{3}\w*|ak4\d{3}\w*|cs43\d{3}\w*|pcm\d{4}\w*|r-?2r (?:dac|ladder)|bluetooth (?:receiver|input|5))\b/i;
+const NO_DAC = /\b(no (?:built[- ]in )?dac|requires? an? (?:external )?dac|without (?:a )?dac|pure (?:analog|analogue) (?:headphone )?amp)\b/i;
+
+export function deskRole(p) {
+  const title = p.title ?? "";
+  const body = (p.body ?? "").replace(/<[^>]+>/g, " ");
+  if (COMBO_WORD.test(title)) return "dacamp";
+  const dacT = DAC_WORD.test(title);
+  const ampT = AMP_WORD.test(title.replace(/\bpre-?amp\w*\b/gi, ""));
+  if (dacT && ampT) return "dacamp";
+  if (dacT) return HP_OUT.test(body) ? "dacamp" : "dac";
+  if (ampT) return HAS_DAC.test(body) && !NO_DAC.test(body) ? "dacamp" : "amp";
+  return HAS_DAC.test(body) ? (HP_OUT.test(body) ? "dacamp" : "dac") : "amp";
+}
+
 export function condition(title) {
   if (/\b(open[- ]box|b[- ]stock|refurbished|certified|pre[- ]owned|used|demo|scratch|dent)\b/i.test(title)) return "open-box/used";
   return "new";
@@ -51,6 +72,8 @@ const NOISE = [
   /\b(dual|quad)?\s*(es\d{4}\w*|cs\d{5}\w*|ak\d{4}\w*|pcm\d{4}\w*|tpa\d{4}\w*|ricore\w*|rt\d{4}\w*)\b/gi,
   /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
   /[|–—:,/+&]+/g,
+  // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
+  /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
 ];
 
 /**
@@ -89,7 +112,8 @@ export function modelKey(vendor, title) {
   }
   const bare = t.replace(MARKETING, " ");
   if (/[a-z0-9]/i.test(bare.replace(/[|–—:,/+&-]+/g, ""))) t = bare;
-  const model = t.replace(/\s+/g, " ").trim();
+  // A word the store repeated ("R2R R2R", "M25 M25") counts once.
+  const model = t.replace(/\s+/g, " ").trim().replace(/\b(\S+)(?: \1\b)+/gi, "$1");
   const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return { key: `${slug(v) || "unknown"}--${slug(model) || "unknown"}`, model };
 }

@@ -18,6 +18,7 @@ const SITE = (process.env.SITE_URL ?? "https://cxzp.github.io/sotto").replace(/\
 const catalog = JSON.parse(await readFile(new URL("data/catalog.json", root), "utf8"));
 
 const CAT = { iem: "IEM", headphone: "Headphones", dongle: "USB DAC/amp dongle", desktop: "Desktop DAC/amp", dap: "Music player" };
+const ROLE = { dac: "Desktop DAC", amp: "Desktop headphone amp", dacamp: "Desktop DAC/amp" };
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const name = (i) => (i.brand ? `${i.brand} ${i.model}` : i.model);
 const money = (n, c) => new Intl.NumberFormat("en-US", { style: "currency", currency: c || "USD", maximumFractionDigits: 0 }).format(n);
@@ -101,7 +102,7 @@ function page(i) {
   const pr = priceInfo(i);
   const url = `${SITE}/p/${i.id}/`;
   const app = `${SITE}/#item/${encodeURIComponent(i.id)}`;
-  const kind = CAT[i.category] ?? i.category;
+  const kind = (ROLE[i.role] ?? CAT[i.category]) ?? i.category;
   const desc = [kind, ...f, pr ? `from ${money(pr.low, pr.currency)} at ${pr.stores} store${pr.stores > 1 ? "s" : ""}` : null, "Sourced specs, real prices, and whether your phone or amp can drive it."]
     .filter(Boolean)
     .join(" · ");
@@ -177,7 +178,7 @@ for (const i of catalog.items) {
     new URL(`og/${i.id}.png`, out),
     png(
       cardSvg({
-        kicker: [i.brand, CAT[i.category]].filter(Boolean).join(" · "),
+        kicker: [i.brand, (ROLE[i.role] ?? CAT[i.category])].filter(Boolean).join(" · "),
         title: i.model,
         line1: facts(i).join("  ·  ") || "Specs, prices and compatibility",
         line2: pr ? `from ${money(pr.low, pr.currency)} · ${pr.stores} store${pr.stores > 1 ? "s" : ""}` : "Will your phone or amp drive it?",

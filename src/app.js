@@ -1,16 +1,16 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3p1xqd";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3p1xqd";
-import { renderChart } from "./chart.js?v=mv3p1xqd";
-import { makeT } from "./i18n.js?v=mv3p1xqd";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3p1xqd";
-import { LEGAL } from "./legal.js?v=mv3p1xqd";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3p1xqd";
-import * as community from "./community.js?v=mv3p1xqd";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3p1xqd";
-import { redactImage } from "./redact.js?v=mv3p1xqd";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3p1xqd";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3p1xqd";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3p1xqd";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3p6w5f";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3p6w5f";
+import { renderChart } from "./chart.js?v=mv3p6w5f";
+import { makeT } from "./i18n.js?v=mv3p6w5f";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3p6w5f";
+import { LEGAL } from "./legal.js?v=mv3p6w5f";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3p6w5f";
+import * as community from "./community.js?v=mv3p6w5f";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3p6w5f";
+import { redactImage } from "./redact.js?v=mv3p6w5f";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3p6w5f";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3p6w5f";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3p6w5f";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -27,6 +27,7 @@ const state = {
   mode: load("mode", "simple"),
   device: "phone-usb-c",
   amp: "",
+  dac: "",
   hp: "",
   plug: "",
   level: "normal",
@@ -77,13 +78,13 @@ function query() {
 }
 function readHash() {
   const p = query();
-  if (route().name === "build") for (const k of ["device", "amp", "hp", "plug", "level"]) if (p.has(k)) state[k] = p.get(k);
+  if (route().name === "build") for (const k of ["device", "dac", "amp", "hp", "plug", "level"]) if (p.has(k)) state[k] = p.get(k);
   if (LANGS.includes(p.get("lang"))) state.lang = p.get("lang");
   if (["simple", "detail"].includes(p.get("mode"))) state.mode = p.get("mode");
 }
 function buildUrl() {
   const p = new URLSearchParams();
-  for (const k of ["device", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
+  for (const k of ["device", "dac", "amp", "hp", "plug", "level"]) if (state[k]) p.set(k, state[k]);
   return `#build?${p}`;
 }
 function go(hash) {
@@ -163,6 +164,11 @@ document.addEventListener("change", (e) => {
   render();
 });
 
+/** "DAC", "Headphone amp" or "DAC + amp" for desktop units; the category otherwise. */
+function catLabel(i) {
+  return i.role ? t(`role_${i.role}`) : t(`cat_${i.category}`);
+}
+
 function setSeg(selector, key, value) {
   const buttons = [...document.querySelectorAll(selector)];
   buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[key] === value)));
@@ -213,18 +219,21 @@ function currentSource() {
 function buildPage() {
   const { device, amp } = currentSource();
   const hp = state.hp ? findItem(state.hp) : null;
+  const dac = state.dac ? findItem(state.dac) : null;
+  const needsDac = amp?.role === "amp";
   const lv = LEVELS[state.level] ?? LEVELS.normal;
   return `<div class="builder">
     <section class="slots card">
       ${slotRow(t("slot_device"), `<div class="select"><select id="device">${db.devices
         .map((d) => `<option value="${d.id}"${d.id === device.id ? " selected" : ""}>${esc(L(d.name))}</option>`)
         .join("")}</select></div>`)}
-      ${slotRow(t("slot_amp"), pickedOrButton("amp", amp))}
+      ${needsDac || dac ? slotRow(t("slot_dac"), pickedOrButton("dac", dac), needsDac && !dac ? t("slot_dac_hint") : "") : ""}
+      ${slotRow(t("slot_amp"), pickedOrButton("amp", amp), amp?.role === "amp" ? t("role_note_amp") : "")}
       ${slotRow(t("slot_hp"), pickedOrButton("hp", hp))}
       ${hp ? slotRow(t("plug"), seg("plug", PLUGS.map((j) => [j, PLUG_SHORT[j]]), plugOf(hp)), !state.plug && !hp.stockPlug ? t("plug_guess") : "") : ""}
       ${slotRow(t("level"), seg("level", [["quiet", t("level_quiet")], ["normal", t("level_normal")], ["loud", t("level_loud")]], state.level), t("level_hint", { avg: lv, peak: lv + CREST }))}
-      ${buildTotal(amp, hp)}
-      ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
+      ${buildTotal(amp, hp, dac)}
+      ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
     <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
       <div class="card chart-card" id="chart"></div>
@@ -248,8 +257,8 @@ function pickedOrButton(slot, item) {
   </div>`;
 }
 
-function buildTotal(amp, hp) {
-  const items = [amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
+function buildTotal(amp, hp, dac) {
+  const items = [dac, amp, hp].filter(Boolean).map((i) => prices(i).cheapest).filter(Boolean);
   if (!items.length) return "";
   const cur = new Set(items.map((o) => o.currency));
   const sum = items.reduce((s, o) => s + o.price, 0);
@@ -367,7 +376,7 @@ function reverseCard(hp, level) {
       .map(
         ({ s, ev, p }) => `<li><span class="st s-${ev.status}">${esc(t(`st_${ev.status}`))}</span>
         <button class="link strong" data-set-amp="${esc(s.id)}">${esc(displayName(s))}</button>
-        <span class="muted">${esc(t(`cat_${s.category}`))}${s.curated ? ` · ${esc(t("it_checked"))}` : ""}${
+        <span class="muted">${esc(catLabel(s))}${s.curated ? ` · ${esc(t("it_checked"))}` : ""}${
           ev.r?.available?.method === "extrapolated" ? ` · <span class="tag" title="">${esc(t("est"))}</span>` : ""
         }</span>
         <span class="price">${p ? money(p.price, p.currency) : ""}</span></li>`,
@@ -523,8 +532,8 @@ function wireChartPage(main) {
 
 function openPicker(slot) {
   const cats = slot === "hp" ? HEADPHONE_CATS : SOURCE_CATS;
-  const usable = new Set((slot === "hp" ? headphones : sources).map((i) => i.id));
-  const pool = db.items.filter((i) => cats.has(i.category));
+  const usable = new Set(slot === "dac" ? db.items.filter((i) => i.role === "dac" || i.role === "dacamp").map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
+  const pool = db.items.filter((i) => (slot === "dac" ? i.role === "dac" || i.role === "dacamp" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
   const dlg = document.createElement("div");
   dlg.className = "modal";
   dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot}`))}">
@@ -546,7 +555,7 @@ function openPicker(slot) {
       .map((i) => {
         const p = prices(i).cheapest;
         const im = imageOf(i);
-        return `<li><button data-id="${esc(i.id)}">${im ? `<img class="pt-img" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="pt-img"></span>`}<span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(t(`cat_${i.category}`))} · ${esc(specLine(i) || "—")}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
+        return `<li><button data-id="${esc(i.id)}">${im ? `<img class="pt-img" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="pt-img"></span>`}<span class="pn">${esc(displayName(i))}</span><span class="pm">${esc(catLabel(i))} · ${esc(specLine(i) || "—")}</span><span class="pp">${p ? money(p.price, p.currency) : ""}</span></button></li>`;
       })
       .join("");
   };
@@ -580,10 +589,12 @@ function catalogPage() {
   const limit = Number(p.get("n") ?? 60);
   const brand = p.get("brand") ?? "";
   const mat = p.get("mat") ?? "";
+  const role = cat === "desktop" ? p.get("role") ?? "" : "";
   const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
+      (!role || i.role === role) &&
       (!brand || i.brand === brand) &&
       (!mat || i.materials?.[mat] || i.styles?.[mat]) &&
       (!q || matches(i, q)) &&
@@ -611,7 +622,7 @@ function catalogPage() {
       return `<a class="tile card" href="#item/${encodeURIComponent(i.id)}">
         <div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
         <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div>
-        <div class="muted small">${esc(t(`cat_${i.category}`))}${specLine(i) ? ` · ${esc(specLine(i))}` : ""}</div>
+        <div class="muted small">${esc(catLabel(i))}${specLine(i) ? ` · ${esc(specLine(i))}` : ""}</div>
         <div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
     })
     .join("")}</div>`;
@@ -619,7 +630,8 @@ function catalogPage() {
     <div class="filters">
       <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
       <select class="mini-select" id="cbrand" aria-label="${esc(t("brand"))}"><option value="">${esc(t("brand_all"))}</option>${brandOptions(cat, brand)}</select>
-      <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
+      <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
+      ${cat === "desktop" ? `<div class="chips">${["", "dacamp", "dac", "amp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}</div><p class="muted small">${esc(t("role_help"))}</p>` : ""}
       <div class="chips">
         <a class="chip${specsOnly ? " on" : ""}" href="${link({ specs: specsOnly ? null : "1", n: null })}">${esc(t("only_specs"))}</a>
         <a class="chip${stockOnly ? " on" : ""}" href="${link({ stock: stockOnly ? null : "1", n: null })}">${esc(t("only_stock"))}</a>
@@ -638,7 +650,7 @@ function catalogPage() {
           const pr = prices(i);
           const stores = new Set(i.offers.map((o) => o.store)).size;
           const im = imageOf(i);
-          return `<tr><td class="with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="thumb"></span>`}<div><a href="#item/${encodeURIComponent(i.id)}" class="strong">${esc(displayName(i))}</a><div class="muted small">${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}</div></div></td>
+          return `<tr><td class="with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="thumb"></span>`}<div><a href="#item/${encodeURIComponent(i.id)}" class="strong">${esc(displayName(i))}</a><div class="muted small">${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}</div></div></td>
           <td>${i.specs?.impedance ? `${fmt(i.specs.impedance[0].value, 1)} Ω` : "—"}</td>
           <td>${sensOrPower(i)}</td>
           <td>${pr.cheapest ? money(pr.cheapest.price, pr.cheapest.currency) : "—"}</td>
@@ -679,7 +691,7 @@ function brandsPage() {
       current = L;
     }
     const pics = [...items].sort((x, y) => storeCount(y) - storeCount(x)).map(imageOf).filter(Boolean).slice(0, 3);
-    const cats = [...new Set(items.map((i) => t(`cat_${i.category}`)))].slice(0, 3).join(" · ");
+    const cats = [...new Set(items.map((i) => catLabel(i)))].slice(0, 3).join(" · ");
     html += `<a class="brand-tile card" href="#catalog?brand=${encodeURIComponent(b)}"><div class="brand-pics">${pics.map((im) => `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`).join("")}</div>
       <div class="brand-body"><b>${esc(b)}</b><span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></div></a>`;
   }
@@ -789,11 +801,12 @@ function itemPage(id) {
   return `<article class="item">
     <header class="item-head${im ? " has-img" : ""}">
       ${im ? `<a class="item-img" href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(sized(im.src, 720))}" alt="${esc(name)}" referrerpolicy="no-referrer"><span class="img-credit">${esc(t("img_from", { store: db.stores[im.store]?.name ?? im.store }))}</span></a>` : ""}
-      <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(t(`cat_${i.category}`))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
+      <div class="item-title"><p class="muted">${i.brand ? `<a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
+      ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" ? "dac" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
@@ -1517,7 +1530,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3p1xqd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3p6w5f" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -1879,7 +1892,7 @@ async function wireNewThread(main) {
   qIn.addEventListener("input", () => {
     const q = qIn.value.trim().toLowerCase();
     const hits = q.length < 2 ? [] : db.items.filter((i) => matches(i, q)).sort((a, b) => searchRank(a, q) - searchRank(b, q)).slice(0, 8);
-    sug.innerHTML = hits.map((i) => `<button type="button" data-pick-item="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(t(`cat_${i.category}`))}</span></button>`).join("");
+    sug.innerHTML = hits.map((i) => `<button type="button" data-pick-item="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(catLabel(i))}</span></button>`).join("");
     sug.querySelectorAll("[data-pick-item]").forEach((b) =>
       b.addEventListener("click", () => {
         if (picked.size < 5) picked.add(b.dataset.pickItem);
@@ -1987,7 +2000,7 @@ function asideProducts(ids, category) {
     .map((i) => {
       const im = imageOf(i);
       const pr = prices(i).cheapest;
-      return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(t(`cat_${i.category}`))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div></a>`;
+      return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(catLabel(i))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div></a>`;
     })
     .join("")}${extra}</section>`;
 }
@@ -2328,7 +2341,7 @@ async function wireSaved(main) {
           const pr = prices(i).cheapest;
           const im = imageOf(i);
           return `<a class="tile card" href="#item/${encodeURIComponent(i.id)}"><div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
-            <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div><div class="muted small">${esc(t(`cat_${i.category}`))}</div><div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
+            <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div><div class="muted small">${esc(catLabel(i))}</div><div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
         })
         .join("")}</div>`
     : `<p class="muted small">${esc(t("bm_none_items"))}</p>`;
@@ -2476,7 +2489,7 @@ async function wireCompare(main) {
   qIn.addEventListener("input", () => {
     const q = qIn.value.trim();
     const hits = q.length < 2 ? [] : db.items.filter((i) => matches(i, q) && !items.includes(i)).sort((a, b) => searchRank(a, q) - searchRank(b, q)).slice(0, 8);
-    sug.innerHTML = hits.map((i) => `<button type="button" data-add="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(t(`cat_${i.category}`))}</span></button>`).join("");
+    sug.innerHTML = hits.map((i) => `<button type="button" data-add="${esc(i.id)}">${esc(displayName(i))} <span class="muted small">${esc(catLabel(i))}</span></button>`).join("");
     sug.querySelectorAll("[data-add]").forEach((b) => b.addEventListener("click", () => setIds([...items.map((i) => i.id), b.dataset.add].slice(-4))));
   });
   const el = main.querySelector("#cmp");
@@ -2499,7 +2512,7 @@ async function wireCompare(main) {
   const anySrc = items.some((i) => SOURCE_CATS.has(i.category));
   const cheapest = Math.min(...items.map((i) => prices(i).cheapest?.price ?? Infinity));
   const rows = [
-    row(t("cmp_type"), (i) => esc(t(`cat_${i.category}`))),
+    row(t("cmp_type"), (i) => esc(catLabel(i))),
     row(t("col_price"), (i) => {
       const p = prices(i).cheapest;
       return p ? `<b class="${p.price === cheapest ? "best" : ""}">${money(p.price, p.currency)}</b> <span class="muted small">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span>` : null;

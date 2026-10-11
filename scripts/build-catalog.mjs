@@ -7,7 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact, groupKey } from "./lib/classify.js";
+import { classify, condition, modelKey, compact, groupKey, deskRole } from "./lib/classify.js";
 import { extractSpecs, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 
@@ -91,6 +91,7 @@ for (const file of files) {
       image: p.image ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
+    if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
     // Materials / looks with the store sentence they came from (first store wins).
     if (category === "iem" || category === "headphone" || category === "dongle" || category === "desktop" || category === "dap") {
       const looks = detectLooks({ title: p.title, tags: p.tags, body: p.body });
@@ -199,7 +200,8 @@ for (const hp of curatedHp) {
   }));
 }
 for (const amp of curatedAmps) {
-  attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs }));
+  // Every hand-checked amp takes a digital (USB) input, so it is a DAC and amp in one.
+  attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}) }));
 }
 
 const KIND_RANK = { measured: 0, claimed: 1 };
@@ -230,7 +232,16 @@ const catalog = [...groups.values()]
       rank(specs[k]);
       if (!specs[k].length) delete specs[k];
     }
-    const { curatedSpecs, ...rest } = g;
+    const { curatedSpecs, roleVotes, ...rest } = g;
+    // Any store calling it a DAC/amp, or a headphone output power rating, means it has both.
+    if (rest.category === "desktop" && !rest.role) {
+      const v = roleVotes ?? [];
+      // Stores disagree ("DAC & Headphone Amp" vs "line outputs only"). A stated
+      // headphone power rating settles it; otherwise the majority, and a tie stays DAC.
+      const n = (r) => v.filter((x) => x === r).length;
+      rest.role = specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : "amp";
+    }
+    if (rest.category !== "desktop") delete rest.role;
     return { ...rest, specs };
   })
   .sort((a, b) => a.id.localeCompare(b.id));

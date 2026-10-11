@@ -46,6 +46,7 @@ const FEATURES = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", 
 const SCHEMAS: Record<string, string> = {
   issue: `{"title": string (max 140 chars, a neutral one-line summary of the problem), "body": string (max 600 chars, what owners report, in plain words, no exaggeration, say how many people if the text says), "quotes": string[] (1-4 short verbatim sentences from the text that support it)}`,
   ports: `{"in": [{"port": one of ${JSON.stringify(PORTS)}, "quote": verbatim text}], "out": [same], "features": [{"feature": one of ${JSON.stringify(FEATURES)}, "quote": verbatim text}]}`,
+  review: `{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": string (max 140 chars, one neutral line in the requested language), "pros": [{"point": short, requested language, "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}. If the text holds several reviews, use only the first complete one; never merge reviewers.`,
   model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}`,
 };
 
@@ -99,6 +100,7 @@ Return JSON matching: ${SCHEMAS[mode]}
 ${text}
 </pasted_text>`;
   let raw = "";
+  let finish = "";
   if (geminiKey) {
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
       method: "POST",
@@ -106,27 +108,32 @@ ${text}
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json", maxOutputTokens: 1200, temperature: 0.2 },
+        // Newer models spend output tokens on thinking first; leave room for the JSON.
+        generationConfig: { responseMimeType: "application/json", maxOutputTokens: 8192, temperature: 0.2 },
       }),
     });
     if (!res.ok) return upstreamError("gemini", res);
     const out = await res.json();
-    raw = (out.candidates?.[0]?.content?.parts ?? []).map((p: { text?: string }) => p.text ?? "").join("");
+    const cand = out.candidates?.[0];
+    raw = (cand?.content?.parts ?? []).filter((p: { thought?: boolean }) => !p.thought).map((p: { text?: string }) => p.text ?? "").join("");
+    finish = cand?.finishReason ?? out.promptFeedback?.blockReason ?? "";
   } else {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "x-api-key": claudeKey!, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 1200, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
+      body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 4096, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
     });
     if (!res.ok) return upstreamError("claude", res);
     const out = await res.json();
     raw = (out.content ?? []).map((c: { text?: string }) => c.text ?? "").join("");
+    finish = out.stop_reason ?? "";
   }
   let draft: Record<string, unknown>;
   try {
     draft = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1));
   } catch {
-    return json({ error: "unreadable" }, 502);
+    console.error(`unreadable (${finish}): ${raw.slice(0, 300)}`);
+    return json({ error: "unreadable", detail: `finish=${finish || "?"}, got ${raw.length} chars` }, 502);
   }
 
   // Keep only facts whose quote really is in the pasted text.
@@ -141,7 +148,13 @@ ${text}
       .trim();
   const hay = norm(text);
   const inText = (q: unknown) => typeof q === "string" && q.length >= 3 && hay.includes(norm(q));
-  if (mode === "issue") {
+  if (mode === "review") {
+    const pts = (list: unknown) =>
+      (Array.isArray(list) ? list : []).filter((p) => p && typeof p.point === "string" && inText(p.quote)).map((p) => ({ point: String(p.point).slice(0, 200), quote: String(p.quote).slice(0, 400) }));
+    const out = { reviewer: String(draft.reviewer ?? "").slice(0, 80), date: String(draft.date ?? ""), rating: String(draft.rating ?? "").slice(0, 20), summary: String(draft.summary ?? "").slice(0, 140), pros: pts(draft.pros), cons: pts(draft.cons), problems: pts(draft.problems) };
+    if (!out.pros.length && !out.cons.length && !out.problems.length) return json({ error: "no_support" }, 422);
+    draft = out;
+  } else if (mode === "issue") {
     const quotes = (draft.quotes as unknown[] ?? []).filter(inText);
     if (!quotes.length) return json({ error: "no_support" }, 422);
     draft = { title: String(draft.title ?? "").slice(0, 140), body: String(draft.body ?? "").slice(0, 600), quotes };

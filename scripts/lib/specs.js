@@ -54,6 +54,27 @@ const PATTERNS = {
   ),
 };
 
+// Number first: "34 ohm impedance at 1kHz", "113dB sensitivity at 1kHz" (Audio46).
+const IMP_FIRST = new RegExp(`^[^:]{0,20}?\\b${NUM}${OHM}\\s+(?:nominal\\s+)?impedance\\b`, "i");
+const SENS_FIRST = new RegExp(`^[^:]{0,20}?\\b${NUM}\\s*dB(?:\\s*SPL)?(?:\\s*\\/\\s*(V\\s*rms|Vrms|V\\b|mW))?\\s+sensitivity\\b`, "i");
+
+// Long paragraphs: specs are often written into a sentence ("a low impedance
+// of just 7.7Ω and a high sensitivity of 119dB/Vrms"). Each sentence is
+// checked on its own and becomes the quote.
+// In prose only plain statements count: "impedance of 18 Ohm", "impedance is
+// 14 Ohms", "sensitivity rated at 112dB". Not "low-impedance ones (32 ohm)",
+// which is about the headphones an amp can drive.
+const LINK = "(?:\\s+(?:rating|rated|is|of|at|just|only|about|around|approximately|nominal|increased|reduced|to|a|an|high|low))*\\s*[:(]?\\s*";
+const PROSE = {
+  impedance: new RegExp(`(?<![-\\w])(?<!(?:output|input|line)\\s)impedance${LINK}${NUM}${OHM}`, "i"),
+  zout: new RegExp(`\\boutput\\s+impedance${LINK}[<≤]?\\s*${NUM}${OHM}`, "i"),
+  sensitivity: new RegExp(`(?<![-\\w])sensitivity${LINK}${NUM}\\s*dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`, "i"),
+};
+
+function sentences(line) {
+  return line.split(/(?<=[.!?])\s+(?=[A-Z])/).filter((x) => x.length <= 240);
+}
+
 // "240mW @ 32Ω", "240 mW (32Ω", "L+R≥240mW+240mW (32Ω", "@ 32Ω: 240 mW"
 const POWER_A = new RegExp(`${NUM}\\s*mW(?:\\s*\\+\\s*\\d+(?:\\.\\d+)?\\s*mW)?\\s*(?:x\\s*2\\s*)?(?:@|at|\\(|into|into a)\\s*${NUM}${OHM}`, "gi");
 const POWER_B = new RegExp(`@\\s*${NUM}${OHM}\\s*[:：]\\s*${NUM}\\s*mW`, "gi");
@@ -77,7 +98,22 @@ export function extractSpecs(html) {
   const lines = textify(html);
   const found = { impedance: [], sensitivity: [], zout: [], power: [] };
   for (const line of lines) {
-    if (line.length > 240) continue; // prose, not a spec line
+    if (line.length > 240) {
+      // Prose: label-first patterns only, one sentence at a time.
+      for (const sent of sentences(line))
+        for (const field of ["impedance", "zout", "sensitivity"]) {
+          const m = sent.match(PROSE[field]);
+          if (!m) continue;
+          const value = Number(m[1]);
+          if (field === "sensitivity") found.sensitivity.push({ value, unit: unitOf(m[2]) ?? unitNear(sent, m.index + m[0].length), quote: sent });
+          else found[field].push({ value, quote: sent });
+        }
+      continue;
+    }
+    const imp = line.match(IMP_FIRST);
+    if (imp) found.impedance.push({ value: Number(imp[1]), quote: line });
+    const sens = line.match(SENS_FIRST);
+    if (sens) found.sensitivity.push({ value: Number(sens[1]), unit: unitOf(sens[2]) ?? unitNear(line, sens.index + sens[0].length), quote: line });
     for (const field of ["impedance", "zout", "sensitivity"]) {
       const m = line.match(PATTERNS[field]);
       if (!m) continue;
@@ -113,7 +149,8 @@ function dedupe(found) {
  * Used for regex output and for any future AI output alike.
  */
 export function verify(field, entry, lines) {
-  if (!entry.quote || !lines.includes(entry.quote)) return { ok: false, why: "quote not found in source" };
+  // The quote is a whole line, or one sentence of a paragraph.
+  if (!entry.quote || !lines.some((l) => l === entry.quote || (entry.quote.length >= 20 && l.includes(entry.quote)))) return { ok: false, why: "quote not found in source" };
   const nums = (entry.quote.match(/\d+(?:\.\d+)?/g) ?? []).map(Number);
   const want = field === "power" ? [entry.mw, entry.load] : [entry.value];
   if (!want.every((n) => nums.includes(n))) return { ok: false, why: "number not in quote" };
@@ -155,7 +192,8 @@ export function extractSheet(html, lines = textify(html)) {
   const out = {};
   for (const line of lines) {
     if (line.length > 160) continue;
-    const m = line.match(/^[•\-*·\s]*([^:：]{1,40}?)\s*[:：]\s*(.+)$/);
+    // Bullets stores put before a label: "•", "-", ">" (HiFiGo), "▶", "◆"...
+    const m = line.match(/^[•\-*·>›»▶►◆◇■□✓✔➤→–—\s]*([^:：]{1,40}?)\s*[:：]\s*(.+)$/);
     if (!m) continue;
     const [, label, raw] = m;
     const value = raw.replace(/\s+/g, " ").trim().replace(/[;,.]$/, "");

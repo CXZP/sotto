@@ -30,3 +30,41 @@ test("first match wins, prose and unlabelled lines are skipped", () => {
   assert.equal(s.freq.value, "5Hz-40kHz");
   assert.equal(s.driver, undefined);
 });
+
+test("labels after a '>' bullet (HiFiGo)", () => {
+  const s = extractSheet("<p>&gt;Driver Configuration: 24 BA Per Side.</p><p>&gt;Frequency Response Range: 7Hz~35kHz.</p><p>&gt;Connector Type: 0.78mm 2-Pin Connectors.</p><p>&gt;Termination Plug: 3.5mm+4.4mm.</p>");
+  assert.equal(s.driver.value, "24 BA Per Side");
+  assert.equal(s.freq.value, "7Hz~35kHz");
+  assert.equal(s.connector.value, "0.78mm 2-Pin Connectors");
+  assert.equal(s.plug.value, "3.5mm+4.4mm");
+});
+
+import { extractSpecs, verify } from "../scripts/lib/specs.js";
+
+test("number before the label (Audio46)", () => {
+  const { specs, lines } = extractSpecs("<ul><li>34 ohm impedance at 1kHz</li><li>113dB sensitivity at 1kHz</li></ul>");
+  assert.equal(specs.impedance[0].value, 34);
+  assert.equal(specs.sensitivity[0].value, 113);
+  assert.ok(verify("impedance", specs.impedance[0], lines).ok);
+});
+
+test("specs inside a long paragraph quote just the sentence", () => {
+  const para = `Staying true to the heritage of the Starfield lineup, the Starfield 3 features an eye-catching shell treated with a special iridescent paint finish that shifts colors under different lighting angles. With a low impedance of just 7.7Ω and a high sensitivity of 119dB/Vrms, the Starfield 3 is remarkably easy to drive, sounding dynamic and full whether plugged into a smartphone.`;
+  const { specs, lines } = extractSpecs(`<p>${para}</p>`);
+  assert.equal(specs.impedance[0].value, 7.7);
+  assert.equal(specs.sensitivity[0].value, 119);
+  assert.equal(specs.sensitivity[0].unit, "dB/V");
+  assert.ok(specs.impedance[0].quote.startsWith("With a low impedance"));
+  assert.ok(verify("impedance", specs.impedance[0], lines).ok);
+});
+
+test("prose about what an amp can drive is not an impedance", () => {
+  const { specs } = extractSpecs(`<p>${"This amplifier is a great match for many setups. ".repeat(4)}It drives headphones with an output impedance below 1Ω and power to spare for anything you own.</p>`);
+  assert.equal(specs.impedance.length, 0);
+});
+
+test("prose that is about other headphones is not the product's impedance", () => {
+  const p = `<p>${"Built by hand in Poland from carefully selected parts. ".repeat(3)}The amplifier delivers exceptional sound on a broad range of headphones, even low-impedance ones (32 ohm). Compared with Fibae 4, the impedance is increased to 10 Ohm @1kHz, promising a more detailed sound.</p>`;
+  const { specs } = extractSpecs(p);
+  assert.deepEqual(specs.impedance.map((e) => e.value), [10]);
+});

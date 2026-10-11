@@ -88,7 +88,14 @@ for (const file of files) {
       const isSource = category === "dongle" || category === "desktop" || category === "dap" || category === "cd";
       if ((field === "power" || field === "zout") && !isSource) continue;
       if (field === "impedance" && isSource) continue; // an amp's "impedance" is usually input impedance
+      // "DT 990 PRO 250 ohm": the title names the impedance, so a description
+      // that says otherwise (copied from a sibling model) is not used.
+      const titled = field === "impedance" && p.title.match(/\b(\d{2,3})\s*(?:Ω|ohms?\b)/i);
       for (const entry of specs[field]) {
+        if (titled && entry.value !== Number(titled[1])) {
+          stats.rejected++;
+          continue;
+        }
         const check = verify(field, entry, lines);
         if (check.ok) verified[field].push({ ...entry, source: url });
         else stats.rejected++;

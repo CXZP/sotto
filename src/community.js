@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3zg52e";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3zp3pu";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -104,6 +104,8 @@ export async function addReport(row) {
   let { error } = await sb.from("reports").insert(row);
   // Database without supabase/i18n.sql or dedupe.sql yet: post without those columns.
   if (error && /i18n|dedupe_key/.test(error.message ?? "")) ({ error } = await sb.from("reports").insert({ ...row, i18n: undefined, dedupe_key: undefined }));
+  // Database without "loan" yet (supabase/purchase.sql): post as "not stated".
+  if (error?.code === "23514" && row.purchase === "loan") ({ error } = await sb.from("reports").insert({ ...row, purchase: "unknown" }));
   // Same reviewer from the same page is already on this model.
   if (error?.code === "23505") return { duplicate: true };
   if (error) throw error;

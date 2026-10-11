@@ -65,3 +65,10 @@ test("one-word points show their quote once; a verdict can carry several quotes"
   assert.match(body, /\n- “Detailed”\n/);
   assert.match(body, /Verdict: B-, not at retail — “I grade the Blessing 3 a B-\.” “Will I buy it at retail\? Absolutely not\.”/);
 });
+
+test("how the reviewer got the unit is shown with its quote, in each language", () => {
+  const b = { ...parseBlocks(sample)[0], summary_i18n: { th: "ก", en: "a" }, unit: { how: "loan", quote: "This was loaned by a good friend of mine" } };
+  const all = reviewPostI18n(b);
+  assert.match(all.th.body, /\nที่มาของเครื่อง: ยืมมารีวิว — “This was loaned by a good friend of mine”/);
+  assert.match(all.en.body, /\nUnit: loaned for review — “This was loaned/);
+});

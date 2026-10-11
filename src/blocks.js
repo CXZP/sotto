@@ -79,10 +79,10 @@ export function reviewKey(url, reviewer) {
 
 /** Labels inside a review post, per site language. */
 export const REVIEW_LABELS = {
-  th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ", verdict: "สรุปของผู้รีวิว" },
-  en: { pros: "Pros", cons: "Cons", by: "Review by", unknown: "unknown", verdict: "Verdict" },
-  ja: { pros: "良い点", cons: "気になる点", by: "レビュー:", unknown: "不明", verdict: "結論" },
-  zh: { pros: "优点", cons: "缺点", by: "评测者", unknown: "未知", verdict: "结论" },
+  th: { pros: "ข้อดี", cons: "ข้อเสีย", by: "รีวิวโดย", unknown: "ไม่ทราบชื่อ", verdict: "สรุปของผู้รีวิว", unit: "ที่มาของเครื่อง", bought: "ซื้อเอง", free_sample: "ได้ของฟรีจากแบรนด์/ร้าน", loan: "ยืมมารีวิว" },
+  en: { pros: "Pros", cons: "Cons", by: "Review by", unknown: "unknown", verdict: "Verdict", unit: "Unit", bought: "bought with own money", free_sample: "free from maker/seller", loan: "loaned for review" },
+  ja: { pros: "良い点", cons: "気になる点", by: "レビュー:", unknown: "不明", verdict: "結論", unit: "入手方法", bought: "自費購入", free_sample: "メーカー/販売店から無償提供", loan: "レビュー用に貸与" },
+  zh: { pros: "优点", cons: "缺点", by: "评测者", unknown: "未知", verdict: "结论", unit: "设备来源", bought: "自费购买", free_sample: "厂商/商家免费提供", loan: "借测" },
 };
 
 /** The review-summary post for one block: {title, body} (body ≤ 2000 chars).
@@ -100,7 +100,11 @@ export function reviewPost(b, labels = REVIEW_LABELS.th, lang) {
   const host = sourceHost(b.source);
   const credit = `${labels.by} ${b.reviewer || labels.unknown || "?"}${host ? ` (${host})` : ""}`;
   const head = [b.rating && `★ ${b.rating}`, credit, b.date].filter(Boolean).join(" · ");
-  const parts = [b.verdict ? `${head}\n${labels.verdict || "Verdict"}: ${line(b.verdict).slice(2)}` : head];
+  const top = [head];
+  if (b.verdict) top.push(`${labels.verdict || "Verdict"}: ${line(b.verdict).slice(2)}`);
+  // Who paid for the unit, in the reviewer's words: readers weigh a free sample differently.
+  if (b.unit) top.push(`${labels.unit || "Unit"}: ${labels[b.unit.how] || b.unit.how} — “${b.unit.quote}”`);
+  const parts = [top.join("\n")];
   if (b.pros.length) parts.push(`${labels.pros}\n${b.pros.map(line).join("\n")}`);
   if (b.cons.length) parts.push(`${labels.cons}\n${b.cons.map(line).join("\n")}`);
   let body = parts.filter(Boolean).join("\n\n");

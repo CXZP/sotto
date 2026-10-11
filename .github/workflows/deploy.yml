@@ -81,6 +81,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Check (syntax, data, tests) before publishing
+        run: npm run check
       - name: Assemble site
         run: |
           mkdir -p _site

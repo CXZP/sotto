@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3twbb0";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3twbb0";
-import { renderChart } from "./chart.js?v=mv3twbb0";
-import { makeT } from "./i18n.js?v=mv3twbb0";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3twbb0";
-import { LEGAL } from "./legal.js?v=mv3twbb0";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3twbb0";
-import * as community from "./community.js?v=mv3twbb0";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3twbb0";
-import { redactImage } from "./redact.js?v=mv3twbb0";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3twbb0";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3twbb0";
-import { chainLinks } from "./chain.js?v=mv3twbb0";
-import { fits } from "./dcfit.js?v=mv3twbb0";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3twbb0";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3twbb0";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3twbb0";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3u3uoe";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3u3uoe";
+import { renderChart } from "./chart.js?v=mv3u3uoe";
+import { makeT } from "./i18n.js?v=mv3u3uoe";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3u3uoe";
+import { LEGAL } from "./legal.js?v=mv3u3uoe";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3u3uoe";
+import * as community from "./community.js?v=mv3u3uoe";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3u3uoe";
+import { redactImage } from "./redact.js?v=mv3u3uoe";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3u3uoe";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3u3uoe";
+import { chainLinks } from "./chain.js?v=mv3u3uoe";
+import { fits } from "./dcfit.js?v=mv3u3uoe";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3u3uoe";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3u3uoe";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3u3uoe";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1569,7 +1569,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3twbb0" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3u3uoe" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1624,8 +1624,7 @@ function wireBot(root, item, apply) {
         const qEl = box.querySelector(".bot-quotes");
         qEl.hidden = false;
         qEl.innerHTML = `<b>${esc(t("bot_quotes"))}</b><ul>${facts.map((f) => `<li>“${esc(f.quote)}”</li>`).join("")}</ul>`;
-        apply({ title: t("bot_spec_title", { name: item ? displayName(item) : draft.model ?? "" }), body: facts.map((f) => `- ${f.label}: ${f.value} — “${f.quote}”`).join("
-").slice(0, 2000) }, link);
+        apply({ title: t("bot_spec_title", { name: item ? displayName(item) : draft.model ?? "" }), body: facts.map((f) => `- ${f.label}: ${f.value} — “${f.quote}”`).join("\n").slice(0, 2000) }, link);
         st.textContent = t("bot_done");
         return;
       }
@@ -1999,7 +1998,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3twbb0" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3u3uoe" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

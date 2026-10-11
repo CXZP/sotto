@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
     return json({ error: "bad_json" }, 400);
   }
   const mode = body.mode ?? "";
-  const text = String(body.text ?? "").slice(0, 12000);
+  const text = String(body.text ?? "").slice(0, 40000);
   if (!SCHEMAS[mode]) return json({ error: "mode" }, 400);
   if (text.trim().length < 40) return json({ error: "too_short" }, 400);
   const lang = body.lang === "th" ? "Thai" : body.lang === "ja" ? "Japanese" : body.lang === "zh" ? "Simplified Chinese" : "English";

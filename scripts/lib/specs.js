@@ -126,3 +126,45 @@ export function verify(field, entry, lines) {
   if (!bounds[field](entry)) return { ok: false, why: "out of physical range" };
   return { ok: true };
 }
+
+// The rest of a spec sheet: "Frequency Response: 20Hz-40kHz", "DAC Chip: CS43198".
+// Only labelled lines count, the value is what follows the label, and the
+// first label match wins. Values are short facts; prose lines are skipped.
+export const SHEET = [
+  ["freq", /^(?:frequency\s*(?:response|range)|FR)\b/i],
+  ["driver", /^(?:drivers?(?:\s*(?:units?|configuration|config|type|size))?|drive\s*units?|transducers?)\b/i],
+  ["thd", /^(?:THD(?:\s*\+\s*N)?|total\s+harmonic\s+distortion)\b/i],
+  ["snr", /^(?:SNR|S\/N|signal[\s-]to[\s-]noise(?:\s*ratio)?)\b/i],
+  ["dr", /^dynamic\s+range\b/i],
+  ["crosstalk", /^(?:crosstalk|channel\s+separation|separation)\b/i],
+  ["weight", /^(?:net\s+)?weight\b/i],
+  ["cable", /^cable(?:\s*(?:length|material|type))?\s*$/i],
+  ["connector", /^(?:(?:cable\s+)?connectors?|pin\s*type|connection\s+type|earphone\s+interface)\b/i],
+  ["plug", /^(?:plugs?|termination|jack|headphone\s+(?:outputs?|jacks?))\b/i],
+  ["dac", /^(?:DAC(?:\s*chips?)?|decod(?:ing|er)\s*chips?|chipset)\b/i],
+  ["ampchip", /^(?:amp(?:lifier)?\s*chips?|op-?amps?)\b/i],
+  ["pcm", /^(?:PCM|sampl(?:ing|e)\s*rate|max(?:imum)?\s*sampl(?:ing|e)\s*rate)\b/i],
+  ["dsd", /^DSD\b/i],
+  ["bt", /^bluetooth(?:\s*(?:version|chip))?\b/i],
+  ["codec", /^(?:(?:bluetooth\s+|supported\s+|audio\s+)?codecs?)\b/i],
+  ["battery", /^(?:battery(?:\s*(?:life|capacity))?|playback\s+time|play\s*time|music\s+playback)\b/i],
+];
+
+/** { key: { value, quote } } from the description's labelled lines. */
+export function extractSheet(html, lines = textify(html)) {
+  const out = {};
+  for (const line of lines) {
+    if (line.length > 160) continue;
+    const m = line.match(/^[•\-*·\s]*([^:：]{1,40}?)\s*[:：]\s*(.+)$/);
+    if (!m) continue;
+    const [, label, raw] = m;
+    const value = raw.replace(/\s+/g, " ").trim().replace(/[;,.]$/, "");
+    if (!value || value.length > 100 || !/[\p{L}\p{N}]/u.test(value)) continue;
+    for (const [key, re] of SHEET) {
+      if (out[key] || !re.test(label.trim())) continue;
+      out[key] = { value, quote: line };
+      break;
+    }
+  }
+  return out;
+}

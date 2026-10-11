@@ -8,7 +8,7 @@
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { classify, condition, modelKey, compact, groupKey, deskRole, speakerKind } from "./lib/classify.js";
-import { extractSpecs, verify } from "./lib/specs.js";
+import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
@@ -142,6 +142,11 @@ for (const file of files) {
         g.features ??= {};
         g.features[k] ??= { quote, url };
       }
+    }
+    // The rest of the spec sheet (frequency response, drivers, DAC chip...): first store per field wins.
+    for (const [k, e] of Object.entries(extractSheet(p.body, lines))) {
+      g.sheet ??= {};
+      g.sheet[k] ??= { value: e.value, store: snap.store };
     }
     if (category === "power" && !g.dcOut) {
       const out = dcOutputs(p.body);

@@ -530,3 +530,9 @@ select option { background: var(--surface); color: var(--text); }
   .cal-rows { gap: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .cal-bar { animation: none; } }
+
+/* Spec sheet: label / value rows from the store's own spec list. */
+.card .sheet { margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
+.sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.sheet dt { color: var(--text-2); font-size: 13px; }
+.sheet dd { margin: 0; overflow-wrap: anywhere; }

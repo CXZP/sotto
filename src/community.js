@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3sjhwc";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv3sw30e";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -159,10 +159,15 @@ export async function summarize(payload) {
   const { data, error } = await sb.functions.invoke("summarize", { body: payload });
   if (error) {
     let code = "unavailable";
+    let detail = "";
     try {
-      code = (await error.context?.json())?.error ?? code;
+      const body = await error.context?.json();
+      code = body?.error ?? code;
+      detail = body?.detail ?? "";
     } catch {}
-    throw new Error(code);
+    const e = new Error(code);
+    e.detail = detail;
+    throw e;
   }
   return data;
 }

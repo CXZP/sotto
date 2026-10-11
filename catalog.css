@@ -471,3 +471,6 @@ select option { background: var(--surface); color: var(--text); }
 .asks { padding: 10px 16px; }
 .asks p { margin: 0 0 6px; }
 .bookmarklet { cursor: grab; }
+
+.bot-box textarea, .bot-box input { width: 100%; box-sizing: border-box; }
+.bot-box textarea { min-height: 120px; resize: vertical; }

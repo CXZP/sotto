@@ -26,6 +26,20 @@ const cors = {
 };
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
+// Pass the provider's own error message back (no keys in it), and log it,
+// so a wrong model name, a bad key or a used-up quota is obvious.
+async function upstreamError(who: string, res: Response) {
+  let detail = "";
+  try {
+    const body = await res.json();
+    detail = body?.error?.message ?? JSON.stringify(body).slice(0, 300);
+  } catch {
+    detail = res.statusText;
+  }
+  console.error(`${who} ${res.status}: ${detail}`);
+  return json({ error: "upstream", status: res.status, detail: `${who} ${res.status}: ${String(detail).slice(0, 300)}` }, 502);
+}
+
 const PORTS = ["usb", "coax", "optical", "aes", "bt", "rca", "xlr", "line"];
 const FEATURES = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
 
@@ -95,7 +109,7 @@ ${text}
         generationConfig: { responseMimeType: "application/json", maxOutputTokens: 1200, temperature: 0.2 },
       }),
     });
-    if (!res.ok) return json({ error: "upstream", status: res.status }, 502);
+    if (!res.ok) return upstreamError("gemini", res);
     const out = await res.json();
     raw = (out.candidates?.[0]?.content?.parts ?? []).map((p: { text?: string }) => p.text ?? "").join("");
   } else {
@@ -104,7 +118,7 @@ ${text}
       headers: { "x-api-key": claudeKey!, "anthropic-version": "2023-06-01", "content-type": "application/json" },
       body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 1200, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
     });
-    if (!res.ok) return json({ error: "upstream", status: res.status }, 502);
+    if (!res.ok) return upstreamError("claude", res);
     const out = await res.json();
     raw = (out.content ?? []).map((c: { text?: string }) => c.text ?? "").join("");
   }

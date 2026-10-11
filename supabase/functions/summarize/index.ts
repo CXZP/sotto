@@ -10,11 +10,14 @@
 // - 20 drafts per person per day.
 //
 // Deploy: Supabase dashboard → Edge Functions → New function "summarize",
-// paste this file; then Secrets → ANTHROPIC_API_KEY. Run supabase/bot.sql first.
+// paste this file; then Secrets → GEMINI_API_KEY (Google AI Studio) or
+// ANTHROPIC_API_KEY. Gemini is used when its key is set. Optional:
+// GEMINI_MODEL (default below). Run supabase/bot.sql first.
 
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 
-const MODEL = "claude-haiku-5-5";
+const CLAUDE_MODEL = "claude-haiku-5-5";
+const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.5-flash";
 const DAILY = 20;
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -46,8 +49,9 @@ Deno.serve(async (req) => {
   const url = Deno.env.get("SUPABASE_URL")!;
   const anon = Deno.env.get("SUPABASE_ANON_KEY")!;
   const service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const key = Deno.env.get("ANTHROPIC_API_KEY");
-  if (!key) return json({ error: "not_configured" }, 503);
+  const geminiKey = Deno.env.get("GEMINI_API_KEY");
+  const claudeKey = Deno.env.get("ANTHROPIC_API_KEY");
+  if (!geminiKey && !claudeKey) return json({ error: "not_configured" }, 503);
 
   // Who is asking (must be signed in).
   const asUser = createClient(url, anon, { global: { headers: { Authorization: auth } } });
@@ -73,24 +77,37 @@ Deno.serve(async (req) => {
   if ((count ?? 0) >= DAILY) return json({ error: "rate_limit" }, 429);
   await admin.from("bot_usage").insert({ user_id: who.user.id, mode });
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 1200,
-      system: SYSTEM,
-      messages: [
-        {
-          role: "user",
-          content: `Language for title/body: ${lang}.\nProduct (if known): ${body.item ?? "unknown"}.\nReturn JSON matching: ${SCHEMAS[mode]}\n\n<pasted_text>\n${text}\n</pasted_text>`,
-        },
-      ],
-    }),
-  });
-  if (!res.ok) return json({ error: "upstream", status: res.status }, 502);
-  const out = await res.json();
-  const raw = (out.content ?? []).map((c: { text?: string }) => c.text ?? "").join("");
+  const prompt = `Language for title/body: ${lang}.
+Product (if known): ${body.item ?? "unknown"}.
+Return JSON matching: ${SCHEMAS[mode]}
+
+<pasted_text>
+${text}
+</pasted_text>`;
+  let raw = "";
+  if (geminiKey) {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
+      method: "POST",
+      headers: { "x-goog-api-key": geminiKey, "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM }] },
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json", maxOutputTokens: 1200, temperature: 0.2 },
+      }),
+    });
+    if (!res.ok) return json({ error: "upstream", status: res.status }, 502);
+    const out = await res.json();
+    raw = (out.candidates?.[0]?.content?.parts ?? []).map((p: { text?: string }) => p.text ?? "").join("");
+  } else {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "x-api-key": claudeKey!, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 1200, system: SYSTEM, messages: [{ role: "user", content: prompt }] }),
+    });
+    if (!res.ok) return json({ error: "upstream", status: res.status }, 502);
+    const out = await res.json();
+    raw = (out.content ?? []).map((c: { text?: string }) => c.text ?? "").join("");
+  }
   let draft: Record<string, unknown>;
   try {
     draft = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1));

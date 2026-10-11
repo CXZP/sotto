@@ -20,6 +20,20 @@ const root = new URL("..", import.meta.url);
 const stores = JSON.parse(await readFile(new URL("scripts/stores.json", root), "utf8"));
 const only = process.argv.slice(2);
 const sleep = (s) => new Promise((r) => setTimeout(r, s * 1000));
+
+// Shopify counts requests per visitor IP across every Shopify store, so all
+// stores share one budget. Go one request at a time, and the first time any
+// store says "slow down" (429), double the gap for the rest of the run and
+// wait as long as it asks (Retry-After) before trying again.
+let slow = 1;
+const pause = (store) => sleep(store.delay * slow);
+async function slowDown(res, attempt) {
+  slow = Math.min(slow * 2, 8);
+  const asked = Number(res.headers.get("retry-after"));
+  const wait = Number.isFinite(asked) && asked > 0 ? asked : 60 * attempt;
+  console.log(`429 from ${new URL(res.url).host}: waiting ${wait}s, gaps now x${slow}`);
+  await sleep(wait);
+}
 // Product pages fetched per run for stores whose spec list lives on the page
 // (see scripts/lib/specpage.js). The rest wait for the next run; pages already
 // read are remembered in cache/pages/ until the product changes.
@@ -33,7 +47,7 @@ for (const store of stores) {
   const products = [];
   const currencies = new Set();
   for (let page = 1; page <= 100; page++) {
-    await sleep(store.delay);
+    await pause(store);
     const res = await getJson(`https://${store.host}/products.json?limit=250&page=${page}`);
     const batch = res?.data?.products ?? [];
     // Shopify localises prices by visitor location. The currency actually used
@@ -95,7 +109,7 @@ async function addSpecPages(store, products) {
       // Stop for this run when out of budget or when the store keeps saying
       // "slow down": the pages left are picked up next week.
       if (fetched >= PAGE_BUDGET || failedInRow >= 5) continue;
-      await sleep(store.delay);
+      await pause(store);
       fetched++;
       const html = await getText(`https://${store.host}/products/${p.handle}`);
       if (html == null) {
@@ -122,7 +136,7 @@ async function getText(url) {
     try {
       const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html", cookie: "localization=US; cart_currency=USD" } });
       if (res.status === 429) {
-        await sleep(20 * attempt);
+        await slowDown(res, attempt);
         continue;
       }
       return res.ok ? await res.text() : null;
@@ -141,7 +155,7 @@ async function getJson(url) {
         headers: { "user-agent": UA, accept: "application/json", cookie: "localization=US; cart_currency=USD" },
       });
       if (res.status === 429) {
-        await sleep(30 * attempt);
+        await slowDown(res, attempt);
         continue;
       }
       if (!res.ok) return null;

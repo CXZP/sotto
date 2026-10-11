@@ -78,6 +78,8 @@ export function condition(title) {
 const MARKETING = /\b(discontinued|professional|pro audio|studio|reference|stereo|hi[- ]?res|hifi|hi[- ]fi|audiophile|flagship|premium|official|edition stereo|with mic|for (?:audiophiles?|musicians?|gaming)|and|with|the|new|version|x)\b/gi;
 
 const NOISE = [
+  // Stock notes some stores type into the title: "N8ii --- SOLD!", "N8iii --SOLD OUT".
+  /-*\s*\bsold(?:\s*out)?\b\s*!*/gi,
   /\((?:[^)]*)\)/g,
   /\[(?:[^\]]*)\]/g,
   /\b(open[- ]box|b[- ]stock|refurbished|apos certified|certified|pre[- ]owned|used|demo|clearance|new|pre[- ]?order|limited edition)\b/gi,

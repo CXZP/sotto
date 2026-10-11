@@ -1,16 +1,16 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv476cly";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv48htd7";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos] = await Promise.all([
-    fetch("data/catalog.json?v=mv476cly").then((r) => r.json()),
-    fetch("data/devices.json?v=mv476cly").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mv476cly").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mv476cly").then((r) => r.json()).catch(() => ({})),
+    fetch("data/catalog.json?v=mv48htd7").then((r) => r.json()),
+    fetch("data/devices.json?v=mv48htd7").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mv48htd7").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mv48htd7").then((r) => r.json()).catch(() => ({})),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   return { ...catalog, devices, byId, zhNames: zh.names, logos };
@@ -19,7 +19,7 @@ export async function loadData() {
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mv476cly").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mv48htd7").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 
@@ -87,8 +87,13 @@ export function evaluate(item, outputs, opts) {
 const group = (s) => (s === "overkill" ? "ok" : s);
 
 /** Cheapest new offer per currency, and all offers sorted by price. */
+// Rough US dollars per unit, only to put offers in different currencies in
+// order. Prices are always shown in the store's own currency.
+const USD_PER = { USD: 1, SGD: 0.75, EUR: 1.1, GBP: 1.3, AUD: 0.66, CAD: 0.73, JPY: 0.0067, CNY: 0.14, THB: 0.03, MYR: 0.22, INR: 0.012 };
+const approxUsd = (o) => o.price * (USD_PER[o.currency] ?? 1);
+
 export function prices(item) {
-  const offers = [...(item.offers ?? [])].filter((o) => o.price != null).sort((a, b) => a.price - b.price);
+  const offers = [...(item.offers ?? [])].filter((o) => o.price != null).sort((a, b) => approxUsd(a) - approxUsd(b));
   const ok = offers.filter((o) => !o.suspect);
   const cheapest = ok.find((o) => o.condition === "new" && o.available) ?? ok.find((o) => o.condition === "new") ?? ok[0];
   return { offers, cheapest };

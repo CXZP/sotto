@@ -6,5 +6,7 @@
   { "id": "linsoul", "host": "linsoul.com", "delay": 2, "specPage": true },
   { "id": "headphones-com", "host": "headphones.com", "delay": 2 },
   { "id": "apos", "host": "apos.audio", "delay": 10 },
-  { "id": "hangout", "host": "hangout.audio", "delay": 2 }
+  { "id": "hangout", "host": "hangout.audio", "delay": 2 },
+  { "id": "zeppelin", "host": "zeppelinandco.com", "delay": 3 },
+  { "id": "kiwiears", "host": "kiwiears.com", "delay": 3 }
 ]

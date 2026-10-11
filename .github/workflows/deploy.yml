@@ -60,7 +60,7 @@ jobs:
           node scripts/stamp.mjs
           git config user.name "sotto-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/catalog.json data/photos.json data/logos.json src index.html
+          git add data/catalog.json data/photos.json data/prices.json data/logos.json src index.html
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: weekly store crawl $(date -u +%F)" && git push; fi
 
   deploy:

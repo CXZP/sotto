@@ -13,6 +13,7 @@ import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
 import { preorder, listedAt } from "./lib/dates.js";
+import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
 const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker"]);
@@ -352,6 +353,15 @@ for (const g of catalog) {
   const mixed = (s) => s !== s.toUpperCase() && s !== s.toLowerCase();
   const pick = new Map([...spellings].map(([k, m]) => [k, [...m].sort((a, b) => b[1] - a[1] || mixed(b[0]) - mixed(a[0]))[0][0]]));
   for (const i of catalog) if (i.brand) i.brand = pick.get(norm(i.brand));
+}
+
+// Price history: catalog.json is rebuilt each week, so changes are appended to
+// their own file. A new point only when a store's price or stock changed.
+{
+  const file = new URL("data/prices.json", root);
+  const prev = await readFile(file, "utf8").then(JSON.parse, () => ({}));
+  const day = Object.values(stats.stores).map((s) => s.fetchedAt).sort().at(-1)?.slice(0, 10) ?? new Date().toISOString().slice(0, 10);
+  await writeFile(file, JSON.stringify(appendHistory(prev, catalog, day)));
 }
 
 // Extra photos live in their own file so the main catalog stays small; the

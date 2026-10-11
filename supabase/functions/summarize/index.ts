@@ -46,7 +46,7 @@ const FEATURES = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", 
 const SCHEMAS: Record<string, string> = {
   issue: `{"title": string (max 140 chars, a neutral one-line summary of the problem), "body": string (max 600 chars, what owners report, in plain words, no exaggeration, say how many people if the text says), "quotes": string[] (1-4 short verbatim sentences from the text that support it)}`,
   ports: `{"in": [{"port": one of ${JSON.stringify(PORTS)}, "quote": verbatim text}], "out": [same], "features": [{"feature": one of ${JSON.stringify(FEATURES)}, "quote": verbatim text}]}`,
-  review: `{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": string (max 140 chars, one neutral line in the requested language), "pros": [{"point": short, requested language, "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}. If the text holds several reviews, use only the first complete one; never merge reviewers.`,
+  review: `{"reviews": [{"reviewer": string (name shown in the text, or ""), "date": string (YYYY-MM-DD or ""), "rating": string (as written, e.g. "2.5/5", or ""), "summary": string (max 140 chars, one neutral line in the requested language), "pros": [{"point": short, requested language, "quote": verbatim sentence}], "cons": [same], "problems": [same, only faults/defects/QC/failures, not sound preferences]}]}. One entry per reviewer, in page order, at most 10. Never merge reviewers. Skip the maker's own description and spec lists.`,
   model: `{"brand": string, "model": string, "kind": one of ["iem","headphone","dongle","dac","amp","dacamp","dap","cd","speaker","power"], "facts": [{"label": string, "value": string, "quote": verbatim text}]}. Facts are specifications only (impedance, sensitivity with its unit, output power with load, output impedance, drivers, connectors, ports, power supply), not marketing claims.`,
 };
 
@@ -151,9 +151,13 @@ ${text}
   if (mode === "review") {
     const pts = (list: unknown) =>
       (Array.isArray(list) ? list : []).filter((p) => p && typeof p.point === "string" && inText(p.quote)).map((p) => ({ point: String(p.point).slice(0, 200), quote: String(p.quote).slice(0, 400) }));
-    const out = { reviewer: String(draft.reviewer ?? "").slice(0, 80), date: String(draft.date ?? ""), rating: String(draft.rating ?? "").slice(0, 20), summary: String(draft.summary ?? "").slice(0, 140), pros: pts(draft.pros), cons: pts(draft.cons), problems: pts(draft.problems) };
-    if (!out.pros.length && !out.cons.length && !out.problems.length) return json({ error: "no_support" }, 422);
-    draft = out;
+    const list = Array.isArray(draft.reviews) ? draft.reviews : [draft];
+    const reviews = list
+      .slice(0, 10)
+      .map((r: Record<string, unknown>) => ({ reviewer: String(r?.reviewer ?? "").slice(0, 80), date: String(r?.date ?? ""), rating: String(r?.rating ?? "").slice(0, 20), summary: String(r?.summary ?? "").slice(0, 140), pros: pts(r?.pros), cons: pts(r?.cons), problems: pts(r?.problems) }))
+      .filter((r) => r.pros.length || r.cons.length || r.problems.length);
+    if (!reviews.length) return json({ error: "no_support" }, 422);
+    draft = { reviews };
   } else if (mode === "issue") {
     const quotes = (draft.quotes as unknown[] ?? []).filter(inText);
     if (!quotes.length) return json({ error: "no_support" }, 422);

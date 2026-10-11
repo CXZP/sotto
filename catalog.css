@@ -474,3 +474,7 @@ select option { background: var(--surface); color: var(--text); }
 
 .bot-box textarea, .bot-box input { width: 100%; box-sizing: border-box; }
 .bot-box textarea { min-height: 120px; resize: vertical; }
+
+.bot-many { display: grid; gap: 8px; }
+.bot-draft { display: grid; grid-template-columns: auto 1fr; gap: 10px; padding: 10px; border-radius: 12px; background: var(--surface-2); cursor: pointer; }
+.bot-draft pre { white-space: pre-wrap; margin: 4px 0 0; font-family: inherit; color: var(--text-2); max-height: 160px; overflow: auto; }

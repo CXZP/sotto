@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3u3uoe";
-import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3u3uoe";
-import { renderChart } from "./chart.js?v=mv3u3uoe";
-import { makeT } from "./i18n.js?v=mv3u3uoe";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv3u3uoe";
-import { LEGAL } from "./legal.js?v=mv3u3uoe";
-import { track, stats, trackingOff } from "./analytics.js?v=mv3u3uoe";
-import * as community from "./community.js?v=mv3u3uoe";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3u3uoe";
-import { redactImage } from "./redact.js?v=mv3u3uoe";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3u3uoe";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3u3uoe";
-import { chainLinks } from "./chain.js?v=mv3u3uoe";
-import { fits } from "./dcfit.js?v=mv3u3uoe";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv3u3uoe";
-import { parseBlocks, reviewPost } from "./blocks.js?v=mv3u3uoe";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3u3uoe";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv3ua7ij";
+import { loadData, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv3ua7ij";
+import { renderChart } from "./chart.js?v=mv3ua7ij";
+import { makeT } from "./i18n.js?v=mv3ua7ij";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv3ua7ij";
+import { LEGAL } from "./legal.js?v=mv3ua7ij";
+import { track, stats, trackingOff } from "./analytics.js?v=mv3ua7ij";
+import * as community from "./community.js?v=mv3ua7ij";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv3ua7ij";
+import { redactImage } from "./redact.js?v=mv3ua7ij";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv3ua7ij";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv3ua7ij";
+import { chainLinks } from "./chain.js?v=mv3ua7ij";
+import { fits } from "./dcfit.js?v=mv3ua7ij";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv3ua7ij";
+import { parseBlocks, reviewPost } from "./blocks.js?v=mv3ua7ij";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv3ua7ij";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1290,6 +1290,7 @@ async function renderCommunity(el, item) {
       seg.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       const form = el.querySelector('[data-form="post"]');
       form.kind.value = b.dataset.kind;
+      seg.dataset.touched = "1";
       // Evidence is mandatory only for issues.
       form.evidence_url.required = b.dataset.kind === "issue" || b.dataset.kind === "review";
     }),
@@ -1569,7 +1570,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3u3uoe" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv3ua7ij" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -1587,6 +1588,44 @@ function botBox(mode) {
     <textarea class="search" name="bot_text" rows="5" maxlength="40000" placeholder="${esc(t("bot_text_ph"))}"></textarea>
     <div class="row-inline"><button type="button" class="pill" data-bot-run>${esc(t("bot_run"))}</button><span class="small status" data-bot-status></span></div>
     <div class="bot-quotes small" hidden></div></details>`;
+}
+
+/** Several reviews found: one draft per reviewer, all ticked, posted with one click. */
+function showManyReviews(box, item, blocks, link) {
+  let list = box.querySelector(".bot-many");
+  if (!list) {
+    list = document.createElement("div");
+    list.className = "bot-many";
+    box.append(list);
+  }
+  const labels = { pros: t("rv_pros"), cons: t("rv_cons"), by: t("rv_by"), unknown: t("rv_unknown") };
+  const posts = blocks.map((b) => ({ ...reviewPost(b, labels), problems: b.problems }));
+  list.innerHTML = `${posts
+    .map(
+      (p, n) => `<label class="bot-draft"><input type="checkbox" data-n="${n}" checked>
+        <div><b>${esc(p.title)}</b><pre class="small">${esc(p.body)}</pre></div></label>`,
+    )
+    .join("")}
+    <div class="row-inline"><button type="button" class="pill primary" data-post-all>${esc(t("bot_post_all"))}</button><span class="small status" data-all-status></span></div>
+    <p class="muted small">${esc(t("bot_many_check"))}</p>`;
+  list.querySelector("[data-post-all]").addEventListener("click", async (ev) => {
+    const st = list.querySelector("[data-all-status]");
+    const chosen = [...list.querySelectorAll("input[data-n]:checked")].map((x) => posts[Number(x.dataset.n)]);
+    if (!chosen.length) return;
+    ev.target.disabled = true;
+    let done = 0;
+    try {
+      for (const p of chosen) {
+        await community.addReport({ item_id: item.id, kind: "review", title: p.title, body: p.body, evidence_url: link || null, purchase: "unknown" });
+        done++;
+        st.textContent = t("bot_posted_n", { n: done, of: chosen.length });
+      }
+      location.reload();
+    } catch (e) {
+      st.textContent = `${t("cm_error")} ${e.message ?? e} (${done}/${chosen.length})`;
+      ev.target.disabled = false;
+    }
+  });
 }
 
 function wireBot(root, item, apply) {
@@ -1616,7 +1655,9 @@ function wireBot(root, item, apply) {
       // On the report form, the "review summary" tab asks for pros/cons rather than a problem.
       const kind = root.querySelector('[name="kind"]')?.value;
       // "Review summary" asks for pros/cons; "correction" reads specs from a maker's page.
-      const mode = box.dataset.bot === "issue" && kind === "review" ? "review" : box.dataset.bot === "issue" && kind === "correction" ? "model" : box.dataset.bot;
+      // The report box reads reviews unless "problem" or "correction" was picked on purpose.
+      const picked = root.querySelector("[data-kind-seg]")?.dataset.touched === "1";
+      const mode = box.dataset.bot !== "issue" ? box.dataset.bot : kind === "correction" ? "model" : kind === "review" || !picked ? "review" : "issue";
       const { draft } = await community.summarize({ mode, text, link, lang: state.lang, item: item ? displayName(item) : undefined });
       if (mode === "model") {
         const facts = draft.facts ?? [];
@@ -1629,13 +1670,18 @@ function wireBot(root, item, apply) {
         return;
       }
       if (mode === "review") {
-        const b = { product: item ? displayName(item) : "", source: link, reviewer: draft.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(draft.date) ? draft.date : "", rating: draft.rating, summary: draft.summary, pros: draft.pros, cons: draft.cons, problems: draft.problems, ports_in: [], ports_out: [], features: [] };
-        const quotes = [...b.pros, ...b.cons, ...b.problems].map((p) => p.quote);
-        const qEl = box.querySelector(".bot-quotes");
-        qEl.hidden = !quotes.length;
-        qEl.innerHTML = `<b>${esc(t("bot_quotes"))}</b><ul>${quotes.map((q) => `<li>“${esc(q)}”</li>`).join("")}</ul>`;
-        apply({ block: b }, link);
-        st.textContent = t("bot_done");
+        const blocks = (draft.reviews ?? []).map((r) => ({ product: item ? displayName(item) : "", source: link, reviewer: r.reviewer, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : "", rating: r.rating, summary: r.summary, pros: r.pros, cons: r.cons, problems: r.problems, ports_in: [], ports_out: [], features: [] }));
+        if (blocks.length === 1) {
+          const quotes = [...blocks[0].pros, ...blocks[0].cons, ...blocks[0].problems].map((p) => p.quote);
+          const qEl = box.querySelector(".bot-quotes");
+          qEl.hidden = !quotes.length;
+          qEl.innerHTML = `<b>${esc(t("bot_quotes"))}</b><ul>${quotes.map((q) => `<li>“${esc(q)}”</li>`).join("")}</ul>`;
+          apply({ block: blocks[0] }, link);
+          st.textContent = t("bot_done");
+        } else {
+          showManyReviews(box, item, blocks, link);
+          st.textContent = t("bot_many_found", { n: blocks.length });
+        }
         return;
       }
       const quotes = draft.quotes ?? [...(draft.in ?? []), ...(draft.out ?? []), ...(draft.features ?? []), ...(draft.facts ?? [])].map((x) => x.quote);
@@ -1998,7 +2044,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3u3uoe" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv3ua7ij" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

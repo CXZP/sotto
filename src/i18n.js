@@ -2,6 +2,10 @@
 
 export const STRINGS = {
   th: {
+    bot_many_found: "เจอ {n} รีวิว แยกให้คนละโพสต์แล้ว ติ๊กอันที่จะโพสต์",
+    bot_post_all: "โพสต์ที่ติ๊กไว้ทั้งหมด",
+    bot_posted_n: "โพสต์แล้ว {n}/{of}",
+    bot_many_check: "แต่ละโพสต์ให้เครดิตคนเขียนรีวิวและลิงก์ต้นทาง ประโยคที่ยกมาผ่านการตรวจว่าอยู่ในข้อความที่วางแล้ว",
     bot_spec_title: "สเปกจากหน้าแบรนด์: {name}",
     bot_tools_link: "ปุ่ม \"ส่งเข้า Sotto\" คัดลอกพร้อมชื่อคนเขียนให้",
     rv_unknown: "ไม่ทราบชื่อ",
@@ -664,6 +668,10 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    bot_many_found: "Found {n} reviews, one post each. Untick any you don't want.",
+    bot_post_all: "Post all ticked",
+    bot_posted_n: "Posted {n}/{of}",
+    bot_many_check: "Each post credits its reviewer and links the source; every quote was checked against the pasted text.",
     bot_spec_title: "Specs from the maker's page: {name}",
     bot_tools_link: "The \"Send to Sotto\" button copies posts with author names",
     rv_unknown: "unknown",

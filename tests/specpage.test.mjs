@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { specBlock, noSheet } from "../scripts/lib/specpage.js";
-import { extractSheet, extractSpecs } from "../scripts/lib/specs.js";
+import { extractSheet, extractSpecs, verify } from "../scripts/lib/specs.js";
 
 const PAGE = `<div class="tabs-adds-blocks"><div class="tabs-adds-header border-color-border border-b">
     SPECIFICATIONS
@@ -36,4 +36,18 @@ test("Linsoul technical-details rows read as label: value", () => {
   const b = specBlock('<div class="row"><div class="col-name">Impedance</div><div class="col-desc">18 Ohm @ 1kHz</div></div><div class="row"><div class="col-name">Frequency Range</div><div class="col-desc">20Hz – 20KHz</div></div>');
   assert.equal(extractSpecs(b).specs.impedance[0].value, 18);
   assert.equal(extractSheet(b).freq.value, "20Hz – 20KHz");
+});
+
+test("store page layouts: feature chart, spec rows, tables, spec lists", () => {
+  const chart = specBlock(`<div class="feature-chart__table-row"><div\n class="feature-chart__heading bold"\n >\n Impedance\n </div><div\n class="feature-chart__value text-subdued"\n >32 Ohms</div></div>`);
+  assert.equal(extractSpecs(chart).specs.impedance[0].value, 32);
+  const kiwi = specBlock(`<div class="pk-specrow2 flex"><p class="m-0">Impedance</p><p class="m-0">13 Ohm</p></div>`);
+  assert.equal(extractSpecs(kiwi).specs.impedance[0].value, 13);
+  const table = specBlock(`<table><tr><td colspan="2"><strong>Specifications</strong></td></tr><tr><td>Drivers</td><td>40mm dynamic</td></tr></table>`);
+  assert.equal(extractSheet(table).driver.value, "40mm dynamic");
+  const list = specBlock(`<h3>Technical Specifications</h3><ul><li>Headphone Output Power (Balanced 4.4mm RMS): 6.94V/1,513mW (@ 32Ω)</li><li>Line Output Impedance: ≤205Ω (BAL 4.4mm)</li><li>Output Impedance: ≤0.4Ω BAL</li></ul>`);
+  const { specs, lines } = extractSpecs(list);
+  assert.deepEqual(specs.zout.map((e) => e.value), [0.4]);
+  assert.equal(specs.power[0].mw, 1513);
+  assert.ok(verify("power", specs.power[0], lines).ok);
 });

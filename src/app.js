@@ -1,20 +1,20 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv496a0x";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv496a0x";
-import { renderChart } from "./chart.js?v=mv496a0x";
-import { makeT } from "./i18n.js?v=mv496a0x";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv496a0x";
-import { LEGAL } from "./legal.js?v=mv496a0x";
-import { track, stats, trackingOff } from "./analytics.js?v=mv496a0x";
-import * as community from "./community.js?v=mv496a0x";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv496a0x";
-import { redactImage } from "./redact.js?v=mv496a0x";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv496a0x";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv496a0x";
-import { chainLinks } from "./chain.js?v=mv496a0x";
-import { fits } from "./dcfit.js?v=mv496a0x";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv496a0x";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv496a0x";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv496a0x";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4a143p";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4a143p";
+import { renderChart } from "./chart.js?v=mv4a143p";
+import { makeT } from "./i18n.js?v=mv4a143p";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4a143p";
+import { LEGAL } from "./legal.js?v=mv4a143p";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4a143p";
+import * as community from "./community.js?v=mv4a143p";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4a143p";
+import { redactImage } from "./redact.js?v=mv4a143p";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4a143p";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4a143p";
+import { chainLinks } from "./chain.js?v=mv4a143p";
+import { fits } from "./dcfit.js?v=mv4a143p";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4a143p";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4a143p";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4a143p";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -2092,7 +2092,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv496a0x" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4a143p" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2578,7 +2578,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv496a0x" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4a143p" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3749,8 +3749,12 @@ function seg(name, items, value) {
     .join("")}</div>`;
 }
 /** First store photo for an item: { src, url, store }. Loaded from the store CDN, never copied. */
+// Stores whose first photo is a product shot on a plain background come first;
+// big hi-fi shops often lead with a room or lifestyle photo.
+const PHOTO_LAST = new Set(["a2a", "audioadvice", "moon", "hifiheadphones", "headphonezone", "zeppelin", "kitsune"]);
 function imageOf(i) {
-  const o = (i.offers ?? []).find((x) => x.image && !x.suspect);
+  const offers = (i.offers ?? []).filter((x) => x.image && !x.suspect);
+  const o = offers.find((x) => !PHOTO_LAST.has(x.store)) ?? offers[0];
   return o ? { src: o.image, url: o.url, store: o.store } : null;
 }
 /** Shopify CDN resizes on request; other hosts ignore the parameter. */

@@ -8,13 +8,13 @@
   { "id": "apos", "host": "apos.audio", "delay": 10 },
   { "id": "hangout", "host": "hangout.audio", "delay": 2 },
   { "id": "zeppelin", "host": "zeppelinandco.com", "delay": 3 },
-  { "id": "kiwiears", "host": "kiwiears.com", "delay": 3 },
+  { "id": "kiwiears", "host": "kiwiears.com", "delay": 3, "specPage": true },
   { "id": "nicehck", "host": "nicehck.com", "delay": 3 },
   { "id": "keephifi", "host": "keephifi.com", "delay": 3 },
-  { "id": "hifiheadphones", "host": "hifiheadphones.co.uk", "delay": 3 },
-  { "id": "audioadvice", "host": "audioadvice.com", "delay": 3 },
-  { "id": "kitsune", "host": "kitsunehifi.com", "delay": 3 },
-  { "id": "headphonezone", "host": "headphonezone.in", "delay": 3 },
-  { "id": "a2a", "host": "addictedtoaudio.com.au", "delay": 3 },
-  { "id": "moon", "host": "moon-audio.com", "delay": 3 }
+  { "id": "hifiheadphones", "host": "hifiheadphones.co.uk", "delay": 3, "specPage": true },
+  { "id": "audioadvice", "host": "audioadvice.com", "delay": 3, "specPage": true },
+  { "id": "kitsune", "host": "kitsunehifi.com", "delay": 3, "specPage": true },
+  { "id": "headphonezone", "host": "headphonezone.in", "delay": 3, "specPage": true },
+  { "id": "a2a", "host": "addictedtoaudio.com.au", "delay": 3, "specPage": true },
+  { "id": "moon", "host": "moon-audio.com", "delay": 3, "specPage": true }
 ]

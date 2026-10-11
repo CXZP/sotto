@@ -47,7 +47,8 @@ const OHM = "\\s*(?:Ω|ohms?\\b)";
 
 const PATTERNS = {
   impedance: new RegExp(`^(?!.*\\b(?:output|input|line)\\b)[^:]*?\\bimpedance\\b[^\\d]{0,24}?[:：]?\\s*[~≈]?\\s*${NUM}${OHM}`, "i"),
-  zout: new RegExp(`\\boutput\\s+impedance\\b[^\\d]{0,24}?[:：]?\\s*[<≤]?\\s*${NUM}${OHM}`, "i"),
+  // Not a line/RCA/pre output: that feeds an amp, not headphones.
+  zout: new RegExp(`^(?!.*\\b(?:line|rca|pre-?outs?|pre-?amp\\w*)\\b[^:]*:?[^:]*output\\s+impedance)(?!.*\\b(?:line|rca)\\s+output\\s+impedance).*?\\boutput\\s+impedance\\b[^\\d]{0,24}?[:：]?\\s*[<≤]?\\s*${NUM}${OHM}`, "i"),
   sensitivity: new RegExp(
     `\\b(?:sensitivity|SPL)\\b[^\\d]{0,24}?[:：]?\\s*${NUM}\\s*(?:±\\s*\\d+(?:\\.\\d+)?\\s*)?dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`,
     "i",
@@ -76,7 +77,8 @@ function sentences(line) {
 }
 
 // "240mW @ 32Ω", "240 mW (32Ω", "L+R≥240mW+240mW (32Ω", "@ 32Ω: 240 mW"
-const POWER_A = new RegExp(`${NUM}\\s*mW(?:\\s*\\+\\s*\\d+(?:\\.\\d+)?\\s*mW)?\\s*(?:x\\s*2\\s*)?(?:@|at|\\(|into|into a)\\s*${NUM}${OHM}`, "gi");
+// "1,513mW (@ 32Ω)": thousands commas and "(@" are common too.
+const POWER_A = new RegExp(`(\\d{1,3}(?:,\\d{3})+|\\d+(?:\\.\\d+)?)\\s*mW(?:\\s*\\+\\s*\\d+(?:\\.\\d+)?\\s*mW)?\\s*(?:x\\s*2\\s*)?(?:\\(\\s*@|@|at|\\(|into|into a)\\s*${NUM}${OHM}`, "gi");
 const POWER_B = new RegExp(`@\\s*${NUM}${OHM}\\s*[:：]\\s*${NUM}\\s*mW`, "gi");
 
 // The unit often trails the number: "102 dB @ 1 kHz, 1mW", "97 dB (1 V)".
@@ -124,7 +126,7 @@ export function extractSpecs(html) {
         found[field].push({ value, quote: line });
       }
     }
-    for (const m of line.matchAll(POWER_A)) found.power.push({ load: Number(m[2]), mw: Number(m[1]), quote: line });
+    for (const m of line.matchAll(POWER_A)) found.power.push({ load: Number(m[2]), mw: Number(m[1].replace(/,/g, "")), quote: line });
     for (const m of line.matchAll(POWER_B)) found.power.push({ load: Number(m[1]), mw: Number(m[2]), quote: line });
   }
   return { lines, specs: dedupe(found) };
@@ -151,7 +153,7 @@ function dedupe(found) {
 export function verify(field, entry, lines) {
   // The quote is a whole line, or one sentence of a paragraph.
   if (!entry.quote || !lines.some((l) => l === entry.quote || (entry.quote.length >= 20 && l.includes(entry.quote)))) return { ok: false, why: "quote not found in source" };
-  const nums = (entry.quote.match(/\d+(?:\.\d+)?/g) ?? []).map(Number);
+  const nums = (entry.quote.replace(/(\d),(?=\d{3}(?!\d))/g, "$1").match(/\d+(?:\.\d+)?/g) ?? []).map(Number);
   const want = field === "power" ? [entry.mw, entry.load] : [entry.value];
   if (!want.every((n) => nums.includes(n))) return { ok: false, why: "number not in quote" };
   const bounds = {

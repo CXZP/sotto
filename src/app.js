@@ -1,20 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4b3gam";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4b3gam";
-import { renderChart } from "./chart.js?v=mv4b3gam";
-import { makeT } from "./i18n.js?v=mv4b3gam";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4b3gam";
-import { LEGAL } from "./legal.js?v=mv4b3gam";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4b3gam";
-import * as community from "./community.js?v=mv4b3gam";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4b3gam";
-import { redactImage } from "./redact.js?v=mv4b3gam";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4b3gam";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4b3gam";
-import { chainLinks } from "./chain.js?v=mv4b3gam";
-import { fits } from "./dcfit.js?v=mv4b3gam";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4b3gam";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4b3gam";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4b3gam";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4bdykj";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4bdykj";
+import { renderChart } from "./chart.js?v=mv4bdykj";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4bdykj";
+import { makeT } from "./i18n.js?v=mv4bdykj";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4bdykj";
+import { LEGAL } from "./legal.js?v=mv4bdykj";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4bdykj";
+import * as community from "./community.js?v=mv4bdykj";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4bdykj";
+import { redactImage } from "./redact.js?v=mv4bdykj";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4bdykj";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4bdykj";
+import { chainLinks } from "./chain.js?v=mv4bdykj";
+import { fits } from "./dcfit.js?v=mv4bdykj";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4bdykj";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4bdykj";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4bdykj";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -252,6 +253,7 @@ function render() {
   else if (r.name === "compare") main.innerHTML = comparePage();
   else if (r.name === "gallery") main.innerHTML = galleryPage();
   else if (r.name === "tools") main.innerHTML = toolsPage();
+  else if (r.name === "fr") main.innerHTML = frPage();
   else if (LEGAL[r.name]) main.innerHTML = `<article class="prose legal">${L(LEGAL[r.name])}</article>`;
   else if (r.name === "inbox") main.innerHTML = inboxPage();
   else if (r.name === "learn") main.innerHTML = learnPage(r.term);
@@ -1213,7 +1215,7 @@ function itemPage(id) {
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a>${isHp ? `<a class="pill" href="#fr?item=${encodeURIComponent(i.id)}">${esc(t("fr_item_btn"))}</a>` : ""}<a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
@@ -1484,6 +1486,7 @@ function offersTable(offers) {
 
 function wire(main, r) {
   if (r.name === "home") return wireHome(main);
+  if (r.name === "fr") return wireFr(main);
   if (r.name === "build") {
     // Ports users confirmed from back-panel photos can turn "not stated" into a match.
     const ids = [state.src, state.dac, state.amp].filter(Boolean).map((id) => findItem(id)?.id);
@@ -2197,6 +2200,160 @@ function channelsCard(i) {
 // ---------------------------------------------------------------------------
 // Contributor tools (#tools): the "Send to Sotto" bookmarklet and the Gemini skill.
 
+// ---------------------------------------------------------------------------
+// Frequency response from the reader's own files. Parsed and drawn in this
+// browser; nothing is uploaded, and Sotto keeps no one's measurements.
+const FR_COLORS = ["#E8862E", "#3B82F6", "#10B981", "#A855F7", "#EF4444", "#14B8A6"];
+const FR_KEY = "sotto.fr";
+function frLoad() {
+  try {
+    return JSON.parse(localStorage.getItem(FR_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+function frSave(list) {
+  try {
+    localStorage.setItem(FR_KEY, JSON.stringify(list));
+  } catch {
+    /* private window: the graph still works for this visit */
+  }
+}
+
+function frPage() {
+  const item = query().get("item") ? findItem(query().get("item")) : null;
+  return `<div class="fr-page">
+    <header class="deal-head"><h1>${esc(t("fr_title"))}</h1><p class="muted">${esc(t("fr_lead"))}</p></header>
+    <label class="fr-drop card" id="fr-drop" tabindex="0">
+      <input type="file" id="fr-file" accept=".txt,.csv,.frd,text/plain,text/csv" multiple hidden>
+      <b>${esc(t("fr_drop"))}</b><span class="muted small">${esc(t("fr_formats"))}</span>
+      ${item ? `<span class="small">${esc(t("fr_for", { name: displayName(item) }))}</span>` : ""}
+    </label>
+    <p class="small status" id="fr-msg" role="status"></p>
+    <section class="card pad fr-card">
+      <div class="fr-tools">
+        <div class="select"><select id="fr-smooth" aria-label="${esc(t("fr_smooth"))}">${[[0, t("fr_smooth_none")], [12, "1/12 oct"], [6, "1/6 oct"], [3, "1/3 oct"]].map(([v, l]) => `<option value="${v}"${v === 6 ? " selected" : ""}>${esc(t("fr_smooth"))}: ${esc(l)}</option>`).join("")}</select></div>
+        <label class="small"><input type="checkbox" id="fr-delta"> ${esc(t("fr_delta"))}</label>
+        <span class="small muted fr-read" id="fr-read"></span>
+      </div>
+      <div class="fr-host" id="fr-host"></div>
+      <ul class="fr-legend" id="fr-legend"></ul>
+    </section>
+    <p class="muted small">${esc(t("fr_private"))}</p>
+    <section class="card pad"><h3>${esc(t("fr_where_h"))}</h3><ul class="small">
+      <li>${esc(t("fr_where_rew"))} <a href="https://www.roomeqwizard.com/" target="_blank" rel="noopener">REW ↗</a></li>
+      <li>${esc(t("fr_where_autoeq"))} <a href="https://github.com/jaakkopasanen/AutoEq" target="_blank" rel="noopener">AutoEq ↗</a></li>
+      <li>${esc(t("fr_where_squig"))} <a href="https://squig.link/" target="_blank" rel="noopener">squig.link ↗</a></li>
+    </ul><p class="muted small">${esc(t("fr_where_rule"))}</p></section>
+  </div>`;
+}
+
+function wireFr(main) {
+  const item = query().get("item") ? findItem(query().get("item")) : null;
+  let list = frLoad();
+  const host = main.querySelector("#fr-host");
+  const legend = main.querySelector("#fr-legend");
+  const msg = main.querySelector("#fr-msg");
+  const draw = () => {
+    const frac = Number(main.querySelector("#fr-smooth").value);
+    const delta = main.querySelector("#fr-delta").checked && list.filter((x) => !x.off).length > 1;
+    const shown = list.filter((x) => !x.off);
+    const base = delta ? smooth(normalize(shown[0].points), frac) : null;
+    const traces = shown.map((x) => {
+      let pts = smooth(normalize(x.points), frac);
+      if (base) pts = pts.map((p, i) => ({ f: p.f, db: p.db - base[i].db }));
+      return { label: x.label, color: x.color, points: pts, dashed: base && x === shown[0] };
+    });
+    const g = frSvg(traces, { delta: !!base });
+    host.innerHTML = list.length ? g.svg : `<p class="muted fr-empty">${esc(t("fr_empty"))}</p>`;
+    legend.innerHTML = list
+      .map(
+        (x, i) => `<li${x.off ? ' class="off"' : ""}><button type="button" class="fr-swatch" data-toggle="${i}" style="--c:${x.color}" aria-pressed="${!x.off}" aria-label="${esc(t("fr_toggle"))}"></button>
+        <input class="fr-name" data-name="${i}" value="${esc(x.label)}" aria-label="${esc(t("fr_name"))}"><span class="muted small">${esc(x.file)}</span>
+        <button type="button" class="link small" data-del="${i}">${esc(t("fr_remove"))}</button></li>`,
+      )
+      .join("");
+    const svg = host.querySelector("svg");
+    if (!svg) return;
+    const hover = svg.querySelector(".fr-hover");
+    const read = main.querySelector("#fr-read");
+    svg.addEventListener("pointermove", (e) => {
+      const r = svg.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * g.box.W;
+      if (x < g.box.PAD.l || x > g.box.W - g.box.PAD.r) return;
+      const f = g.fOfX(x);
+      hover.hidden = false;
+      hover.querySelector("line").setAttribute("x1", x);
+      hover.querySelector("line").setAttribute("x2", x);
+      read.textContent = `${f >= 1000 ? `${(f / 1000).toFixed(2)} kHz` : `${Math.round(f)} Hz`} · ${traces.map((tr) => `${tr.label}: ${dbAt(tr.points, f) >= 0 ? "+" : ""}${dbAt(tr.points, f).toFixed(1)} dB`).join(" · ")}`;
+    });
+    svg.addEventListener("pointerleave", () => {
+      hover.hidden = true;
+      read.textContent = "";
+    });
+  };
+  const addFiles = async (files) => {
+    const notes = [];
+    for (const file of files) {
+      if (file.size > 2e6) {
+        notes.push(t("fr_too_big", { file: file.name }));
+        continue;
+      }
+      const points = parseFR(await file.text());
+      if (points.length < 10) {
+        notes.push(t("fr_bad", { file: file.name }));
+        continue;
+      }
+      const used = new Set(list.map((x) => x.color));
+      const label = list.length === 0 && item ? displayName(item) : file.name.replace(/\.(txt|csv|frd)$/i, "").replace(/[_]+/g, " ");
+      list.push({ label, file: file.name, color: FR_COLORS.find((c) => !used.has(c)) ?? FR_COLORS[list.length % FR_COLORS.length], points });
+      notes.push(t("fr_added", { file: file.name, n: points.length }));
+    }
+    list = list.slice(-FR_COLORS.length);
+    frSave(list);
+    msg.textContent = notes.join(" · ");
+    draw();
+  };
+  const drop = main.querySelector("#fr-drop");
+  main.querySelector("#fr-file").addEventListener("change", (e) => addFiles([...e.target.files]));
+  drop.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") main.querySelector("#fr-file").click();
+  });
+  // Drop anywhere on the page, not only on the box.
+  const over = (e) => {
+    e.preventDefault();
+    drop.classList.add("over");
+  };
+  main.addEventListener("dragover", over);
+  main.addEventListener("dragleave", (e) => {
+    if (!main.contains(e.relatedTarget)) drop.classList.remove("over");
+  });
+  main.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("over");
+    addFiles([...(e.dataTransfer?.files ?? [])]);
+  });
+  main.querySelector("#fr-smooth").addEventListener("change", draw);
+  main.querySelector("#fr-delta").addEventListener("change", draw);
+  legend.addEventListener("click", (e) => {
+    const tog = e.target.closest("[data-toggle]");
+    const del = e.target.closest("[data-del]");
+    if (tog) list[tog.dataset.toggle].off = !list[tog.dataset.toggle].off;
+    else if (del) list.splice(Number(del.dataset.del), 1);
+    else return;
+    frSave(list);
+    draw();
+  });
+  legend.addEventListener("change", (e) => {
+    const inp = e.target.closest("[data-name]");
+    if (!inp) return;
+    list[inp.dataset.name].label = inp.value.slice(0, 60) || list[inp.dataset.name].file;
+    frSave(list);
+    draw();
+  });
+  draw();
+}
+
 function toolsPage() {
   return `<div class="discuss narrow"><header class="deal-head"><h1>${esc(t("tl_title"))}</h1><p class="muted">${esc(t("tl_lead"))}</p></header>
     <section class="card pad"><h3>${esc(t("tl_bm_h"))}</h3>
@@ -2204,7 +2361,8 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4b3gam" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4bdykj" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+    <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
       <p class="muted small">${esc(t("tl_gm_rules"))}</p></section>
@@ -2690,7 +2848,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4b3gam" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4bdykj" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

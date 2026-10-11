@@ -59,3 +59,25 @@ a.img-credit:hover { background: rgba(0, 0, 0, 0.75); }
 @keyframes lb-in { from { opacity: 0; } }
 @keyframes lb-out { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .lightbox, .lightbox.closing, .lb-stage img { animation: none; transition: none; } }
+
+/* FR graph from the reader's files */
+.fr-page { display: grid; gap: 14px; max-width: 900px; margin: 0 auto; }
+.fr-drop { display: grid; gap: 4px; place-items: center; text-align: center; padding: 28px 16px; border: 2px dashed var(--line-strong); border-radius: var(--radius); cursor: pointer; transition: border-color 0.2s, transform 0.3s cubic-bezier(0.32, 0.72, 0, 1); }
+.fr-drop:hover, .fr-drop:focus-visible { border-color: var(--accent); outline: none; }
+.fr-drop.over { border-color: var(--accent); transform: scale(1.01); }
+.fr-tools { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin-bottom: 8px; }
+.fr-read { flex: 1 1 260px; min-height: 1.4em; font-variant-numeric: tabular-nums; }
+.fr-host { width: 100%; }
+.fr-svg { width: 100%; height: auto; display: block; touch-action: none; }
+.fr-grid line { stroke: var(--line); stroke-width: 1; }
+.fr-grid line.zero { stroke: var(--text-2); }
+.fr-grid text, .fr-unit { fill: var(--text-2); font-size: 11px; }
+.fr-lines path { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.fr-cross { stroke: var(--text-2); stroke-width: 1; stroke-dasharray: 3 3; }
+.fr-empty { padding: 40px 0; text-align: center; }
+.fr-legend { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.fr-legend li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fr-legend li.off { opacity: 0.45; }
+.fr-swatch { width: 22px; height: 6px; padding: 0; border: 0; border-radius: 3px; background: var(--c); cursor: pointer; }
+.fr-name { flex: 1 1 160px; min-width: 0; font: inherit; color: var(--text); background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 2px 0; }
+.fr-name:focus { outline: none; border-bottom-color: var(--accent); }

@@ -6,18 +6,22 @@ const has = (s, re) => re.test(s);
 const RULES = [
   // Things that are not part of a headphone chain, checked first.
   ["skip", /\b(gift card|insurance|warranty|shipping protection|deposit|sample|demo unit fee)\b/i],
-  ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stand|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   ["skip", /\b(beanie|t-?shirts?|hoodies?|merch|toys?|bricks|keychains?|mouse ?pads?|posters?)\b/i],
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
   ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],
   ["adapter", /\b(adapters?|adaptors?|converters?|converter plugs?|jack converters?)\b/i],
   // CD players and transports (a "CD speaker" or a ripper is not one).
   ["skip", /\b(cd speakers?|cd[- ]rippers?|rippers?|cassettes?)\b/i],
+  // Speakers for a desk or a room. Portable Bluetooth/party speakers, speakerphones,
+  // grilles, STAX "earspeakers" and speaker amps are not.
+  ["skip", /^(?=.*speaker)(?:.*\b(?:portable|waterproof|party ?box|bluetooth (?:wireless )?speaker|compact|speakerphones?|grilles?|earspeakers?|conference|power ?bank)\b|.*\bspeaker amp)/i],
+  ["speaker", /\b(?:desktop|active|powered|bookshelf|studio|monitor|stereo|wireless|computer|pc|hi-?fi)\s+(?:loud)?speakers?\b|\bloudspeakers?\b/i],
   ["cd", /\b(?:sa)?cd[- ]?(?:players?|transports?|drives?)\b|\bcd (?:digital )?transport\b|\bdiscdream\b/i],
   ["skip", /\b(microphones?|turntables?|phono|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power conditioner|streamers?|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
   ["wireless", /\b(tws|true wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
   ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
-  ["dongle", /\b(dongle|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac)\b/i],
+  ["dongle", /\b(dongle|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable (usb )?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac|bluetooth (?:dac|receiver|amp)\w*|portable (?:headphone )?amp\w*|btr\d+\w*)\b/i],
   ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
   // External DC supplies (linear or not) for DACs and amps; bundles with an amp stay amps.
   ["skip", /\b(chargers?|charging|power ?banks?|distribution block|power station|idefender|ground loop|bundle)\b/i],
@@ -57,6 +61,14 @@ export function deskRole(p) {
   return HAS_DAC.test(body) ? (HP_OUT.test(body) ? "dacamp" : "dac") : "amp";
 }
 
+/** Speakers: "passive" needs an amplifier, "active" has one built in. */
+export function speakerKind(p) {
+  const t = `${p.title} ${(p.body ?? "").replace(/<[^>]+>/g, " ").slice(0, 3000)}`;
+  if (/\bpassive\b/i.test(p.title)) return "passive";
+  if (/\b(active|powered|wireless|built-?in amp\w*|bluetooth|streaming)\b/i.test(p.title)) return "active";
+  return /\b(built-?in (?:class[- ]?d )?amp\w*|powered|active speakers?|amplifier built in)\b/i.test(t) ? "active" : "passive";
+}
+
 export function condition(title) {
   if (/\b(open[- ]box|b[- ]stock|refurbished|certified|pre[- ]owned|used|demo|scratch|dent)\b/i.test(title)) return "open-box/used";
   return "new";
@@ -78,9 +90,11 @@ const NOISE = [
   /\b(dual|quad)?\s*(es\d{4}\w*|cs\d{5}\w*|ak\d{4}\w*|pcm\d{4}\w*|tpa\d{4}\w*|ricore\w*|rt\d{4}\w*)\b/gi,
   /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
   /[|–—:,/+&]+/g,
-  // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
+  // Speaker descriptors ("KEF Q350 Passive Bookshelf Speakers" == "KEF Q350").
+  /\b((?:passive|active|powered|wireless|bookshelf|desktop|stereo|hi-?fi|high-fidelity|2-way|two-way|three-way)\s+)*(?:loud)?speakers?\b(\s*-?\s*pair)?|\b(?:pair|freight damaged)\b/gi,
   // CD player descriptors ("SMSL PL200 MQA CD Player" == "SMSL PL200 MKII All-in-One CD Player").
   /\b((?:sa)?cd[- ]?(?:players?|transports?|drives?)|cd (?:digital )?transport|mqa|chips?|all[- ]in[- ]one|top[- ]loading|compact|rca|optical|portable stereo|stereo)\b/gi,
+  // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
   /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
 ];
 

@@ -436,3 +436,15 @@ select option { background: var(--surface); color: var(--text); }
 .chart-box svg { cursor: crosshair; user-select: none; }
 .zoombox { fill: color-mix(in srgb, var(--accent) 15%, transparent); stroke: var(--accent); stroke-dasharray: 4 3; }
 .zoom-hint { margin: 4px 0 0; font-size: 12px; color: var(--text-2); }
+
+/* Brand mark: logo (monochrome, follows the theme) or initials */
+.brand-mark { display: inline-grid; place-items: center; width: var(--s); height: var(--s); border-radius: 10px; background: var(--surface-2); color: var(--text); flex: none; }
+.brand-mark svg { width: 62%; height: 62%; fill: currentColor; }
+.brand-mark.initials { font-weight: 700; font-size: calc(var(--s) * 0.38); letter-spacing: .02em; color: var(--text-2); }
+.brand-body { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; }
+.brand-body .brand-mark { grid-row: span 2; }
+
+.item-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.item-kicker .brand-mark { border-radius: 6px; }
+
+.brand-body > :not(.brand-mark) { min-width: 0; overflow-wrap: anywhere; }

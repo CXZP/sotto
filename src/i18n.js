@@ -2,6 +2,12 @@
 
 export const STRINGS = {
   th: {
+    cat_speaker: "ลำโพง",
+    spk_active: "ลำโพงแอคทีฟ (มีแอมป์ในตัว)",
+    spk_passive: "ลำโพงพาสซีฟ (ต้องใช้แอมป์)",
+    spk_note_active: "ลำโพงแอคทีฟมีแอมป์ในตัว ต่อจากมือถือ คอม หรือ DAC ได้เลย ตัวคำนวณของ Sotto ทำไว้สำหรับหูฟัง ส่วนการจับคู่ลำโพงดูได้ที่",
+    spk_note_passive: "ลำโพงพาสซีฟต้องใช้แอมป์ลำโพง (integrated/power amp) ซึ่ง Sotto ยังไม่มีในฐานข้อมูล การจับคู่ลำโพงกับแอมป์ดูได้ที่",
+    logo_note: "โลโก้เป็นของเจ้าของแบรนด์ ใช้เพื่อระบุตัวสินค้าเท่านั้น ไม่ได้แปลว่าแบรนด์รับรอง Sotto (ไอคอนจาก Simple Icons, CC0) แบรนด์ที่ไม่มีไอคอนใช้ตัวอักษรย่อแทน",
     zoom_in: "ซูมเข้า",
     zoom_out: "ซูมออก",
     zoom_reset: "กลับไปเต็มกราฟ",
@@ -570,6 +576,23 @@ export const STRINGS = {
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
+    po_users_one: "{n} user (photo)",
+    pw_supplies_one: "{n} supply in the database with a matching voltage (✓ = enough current, ? = current not stated)",
+    pw_devices_one: "{n} device in the database with a matching voltage (✓ = enough current, ? = current not stated)",
+    stores_one: "{n} store",
+    n_results_one: "{n} model",
+    it_sources_one: "{n} source",
+    pr_n_one: "{n} report",
+    ds_n_comments_one: "{n} comment",
+    ph_ready_one: "{n} photo ready; file metadata such as GPS removed",
+    ds_collapsed_one: "{n} comment collapsed",
+    ds_n_threads_one: "{n} thread",
+    cat_speaker: "Speakers",
+    spk_active: "Active speakers (built-in amp)",
+    spk_passive: "Passive speakers (need an amp)",
+    spk_note_active: "Active speakers have an amp built in: connect a phone, computer or DAC directly. Sotto's calculator is for headphones; for speaker matching see",
+    spk_note_passive: "Passive speakers need a speaker amp (integrated or power amp), which Sotto doesn't list yet. For speaker and amp matching see",
+    logo_note: "Logos belong to their brands and are used only to identify products; this doesn't mean a brand endorses Sotto (icons from Simple Icons, CC0). Brands without an icon show initials.",
     zoom_in: "Zoom in",
     zoom_out: "Zoom out",
     zoom_reset: "Show the whole chart",
@@ -1141,6 +1164,8 @@ export const STRINGS = {
 
 export function makeT(lang) {
   const table = STRINGS[lang] ?? STRINGS.en;
+  // "1 models" → "1 model": a key_one variant wins when n is 1.
+  const pick = (key, vars) => (Number(vars.n) === 1 ? table[`${key}_one`] ?? (table[key] ? null : STRINGS.en[`${key}_one`]) : null);
   return (key, vars = {}) =>
-    (table[key] ?? STRINGS.en[key] ?? key).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
+    (pick(key, vars) ?? table[key] ?? STRINGS.en[key] ?? key).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
 }

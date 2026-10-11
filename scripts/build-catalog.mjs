@@ -7,14 +7,14 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact, groupKey, deskRole } from "./lib/classify.js";
+import { classify, condition, modelKey, compact, groupKey, deskRole, speakerKind } from "./lib/classify.js";
 import { extractSpecs, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
 
 const root = new URL("..", import.meta.url);
-const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power"]);
+const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
 const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
@@ -118,13 +118,14 @@ for (const file of files) {
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
     if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
+    if (category === "speaker") g.speaker ??= speakerKind(p);
     // DC power: what a box needs, what a supply gives (first store with a stated line wins).
     if (category === "desktop" || category === "cd") {
       const need = !g.dcIn && dcInput(p.body);
       if (need) g.dcIn = { ...need, url };
     }
     // Ports and switches: the union over every store, first quote per port wins.
-    if (category === "desktop" || category === "cd" || category === "dap" || category === "dongle") {
+    if (category === "desktop" || category === "cd" || category === "dap" || category === "dongle" || category === "speaker") {
       const ports = extractPorts(p.body);
       if (ports)
         for (const dir of ["in", "out"])

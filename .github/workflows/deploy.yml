@@ -63,6 +63,8 @@ jobs:
         run: node scripts/build-catalog.mjs
       - name: Brand logos (Simple Icons, exact name matches)
         run: node scripts/build-logos.mjs
+      - name: Links to squig.link graph sites (model names only)
+        run: node scripts/build-squig.mjs || echo "squig.link index skipped"
       - name: Check data and tests
         run: npm run check
       - name: Guard against a broken crawl
@@ -79,7 +81,7 @@ jobs:
           node scripts/stamp.mjs
           git config user.name "sotto-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/catalog.json data/photos.json data/prices.json data/logos.json src index.html
+          git add data/catalog.json data/photos.json data/prices.json data/logos.json data/squig.json src index.html
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git commit -m "data: weekly store crawl $(date -u +%F)"
           # Someone pushed in the last minute: replay on top, the fresh data wins.

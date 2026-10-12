@@ -8,13 +8,26 @@
     "addedFrom": "https://www.fiio.com/newsinfo/1135697.html",
     "ports": {
       "in": {
-        "rca": { "quote": "Equipped with both 3.5mm and RCA inputs", "url": "https://www.fiio.com/newsinfo/1135697.html" },
-        "line": { "quote": "Equipped with both 3.5mm and RCA inputs", "url": "https://www.fiio.com/newsinfo/1135697.html" }
+        "rca": {
+          "quote": "Equipped with both 3.5mm and RCA inputs",
+          "url": "https://www.fiio.com/newsinfo/1135697.html"
+        },
+        "line": {
+          "quote": "Equipped with both 3.5mm and RCA inputs",
+          "url": "https://www.fiio.com/newsinfo/1135697.html"
+        }
       },
       "out": {}
     },
     "dcIn": {
-      "needs": [{ "v": 5 }, { "v": 12 }],
+      "needs": [
+        {
+          "v": 5
+        },
+        {
+          "v": 12
+        }
+      ],
       "usb": true,
       "quote": "High and low gain settings, 5V and 12V PD power supply",
       "url": "https://www.fiio.com/newsinfo/1135697.html"
@@ -26,5 +39,203 @@
         "source": "https://www.fiio.com/newsinfo/1135697.html"
       }
     ]
+  },
+  {
+    "id": "audalytic--dr70-dr70n-r2r",
+    "brand": "AUDALYTIC",
+    "model": "DR70",
+    "category": "desktop",
+    "role": "dac",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "1x USB-C",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        },
+        "coax": {
+          "quote": "2x Coaxial",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        },
+        "optical": {
+          "quote": "1x Optical Toslink",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        },
+        "bt": {
+          "quote": "Bluetooth 5.0",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "1x Unbalanced stereo RCA output",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        },
+        "xlr": {
+          "quote": "1x Balanced stereo XLR output",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
+        }
+      }
+    }
+  },
+  {
+    "id": "fiio--k17",
+    "brand": "FiiO",
+    "model": "K17",
+    "category": "desktop",
+    "role": "dacamp",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "K17 supports USB input, coaxial input, optical input, line input, balanced input, Bluetooth input, streaming, local playback, a total of 8 input modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "coax": {
+          "quote": "K17 supports USB input, coaxial input, optical input, line input, balanced input, Bluetooth input, streaming, local playback, a total of 8 input modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "optical": {
+          "quote": "K17 supports USB input, coaxial input, optical input, line input, balanced input, Bluetooth input, streaming, local playback, a total of 8 input modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "line": {
+          "quote": "K17 supports USB input, coaxial input, optical input, line input, balanced input, Bluetooth input, streaming, local playback, a total of 8 input modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "bt": {
+          "quote": "K17 supports USB input, coaxial input, optical input, line input, balanced input, Bluetooth input, streaming, local playback, a total of 8 input modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "K17 supports 6.35mm single-ended output, 4.4 balanced output, XLR4 balanced output, RCA line output (LINE OUT), balanced line output (BALANCED OUT), optical output, coaxial output, a total of seven output modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "xlr": {
+          "quote": "K17 supports 6.35mm single-ended output, 4.4 balanced output, XLR4 balanced output, RCA line output (LINE OUT), balanced line output (BALANCED OUT), optical output, coaxial output, a total of seven output modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "optical": {
+          "quote": "K17 supports 6.35mm single-ended output, 4.4 balanced output, XLR4 balanced output, RCA line output (LINE OUT), balanced line output (BALANCED OUT), optical output, coaxial output, a total of seven output modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        },
+        "coax": {
+          "quote": "K17 supports 6.35mm single-ended output, 4.4 balanced output, XLR4 balanced output, RCA line output (LINE OUT), balanced line output (BALANCED OUT), optical output, coaxial output, a total of seven output modes.",
+          "url": "https://fiio.com/newsinfo/998789.html"
+        }
+      }
+    }
+  },
+  {
+    "id": "topping--a70-pro",
+    "brand": "TOPPING",
+    "model": "A70 Pro",
+    "category": "desktop",
+    "role": "amp",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Topping A70 Pro supports a set of balanced XLR and Single-Ended RCA inputs.",
+          "url": "https://hifigo.com/products/topping-a70pro"
+        },
+        "rca": {
+          "quote": "Topping A70 Pro supports a set of balanced XLR and Single-Ended RCA inputs.",
+          "url": "https://hifigo.com/products/topping-a70pro"
+        }
+      },
+      "out": {}
+    },
+    "addedFrom": "https://hifigo.com/products/topping-a70pro"
+  },
+  {
+    "id": "topping--d900",
+    "brand": "TOPPING",
+    "model": "D900",
+    "category": "desktop",
+    "role": "dac",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "1x USB-C",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        },
+        "coax": {
+          "quote": "2x Coaxial",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        },
+        "optical": {
+          "quote": "2x Toslink optical",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        },
+        "aes": {
+          "quote": "1x AES/EBU",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        },
+        "i2s": {
+          "quote": "1x I2S via HDMI",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        },
+        "bt": {
+          "quote": "Supported Bluetooth codecs: SBC, AAC, aptX, aptX-HD, aptX-Adaptive and LDAC",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "1x XLR line output",
+          "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
+        }
+      }
+    }
+  },
+  {
+    "id": "gustard--h26",
+    "brand": "GUSTARD",
+    "model": "H26",
+    "category": "desktop",
+    "role": "amp",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "1x RCA stereo",
+          "url": "https://www.audiophonics.fr/en/preamplifiers-volume-controllers/gustard-h26-black-p-18645.html"
+        },
+        "xlr": {
+          "quote": "2x XLR balanced",
+          "url": "https://www.audiophonics.fr/en/preamplifiers-volume-controllers/gustard-h26-black-p-18645.html"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "1x Stereo RCA output",
+          "url": "https://www.audiophonics.fr/en/preamplifiers-volume-controllers/gustard-h26-black-p-18645.html"
+        },
+        "xlr": {
+          "quote": "1x XLR stereo balanced output",
+          "url": "https://www.audiophonics.fr/en/preamplifiers-volume-controllers/gustard-h26-black-p-18645.html"
+        }
+      }
+    }
+  },
+  {
+    "id": "topping--l50",
+    "brand": "TOPPING",
+    "model": "L50",
+    "category": "desktop",
+    "role": "amp",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "1x Single-ended stereo RCA",
+          "url": "https://www.audiophonics.fr/en/desktop-headphone-amplifiers/topping-l50-balanced-headphone-amplifier-nfca-black-p-15586.html"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "1x Single-ended stereo RCA",
+          "url": "https://www.audiophonics.fr/en/desktop-headphone-amplifiers/topping-l50-balanced-headphone-amplifier-nfca-black-p-15586.html"
+        }
+      }
+    }
   }
 ]

@@ -439,15 +439,23 @@ for (const g of catalog) {
   if (g.specs.zout) w.zout++;
 }
 
-// Models no tracked store sells yet, added by hand from the maker's own page
-// (data/extra-items.json, every value quoted with its source). A store listing
-// for the same model later takes over the prices; the hand-added facts stay.
+// Models no tracked store sells yet, and facts stores leave out (sockets most
+// of all), added by hand from the maker's own page (data/extra-items.json,
+// every value quoted with its source). A store listing for the same model
+// takes over the prices; the hand-added facts stay.
 {
   const extra = JSON.parse(await readFile(new URL("data/extra-items.json", root), "utf8"));
   for (const e of extra) {
     const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id));
     if (hit) {
-      for (const k of ["role", "ports", "dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
+      for (const k of ["dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
+      // The role read off the maker's page beats the one guessed from store titles.
+      if (e.role) hit.role = e.role;
+      // Sockets from the maker fill in what stores don't list; a store's own line stays.
+      if (e.ports) {
+        hit.ports ??= { in: {}, out: {} };
+        for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(e.ports[dir] ?? {})) hit.ports[dir][p] ??= v;
+      }
     } else catalog.push({ offers: [], specs: {}, ...e });
   }
   catalog.sort((a, b) => a.id.localeCompare(b.id));

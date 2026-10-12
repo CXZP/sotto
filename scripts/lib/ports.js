@@ -9,6 +9,8 @@ const PORTS = {
   usb: /\busb(?:[- ]?(?:b|c|type[- ]?[bc]))?\b(?![- ]?(?:power|charg))/i,
   optical: /\b(?:optical|toslink|opt)\b/i,
   coax: /\bcoax(?:ial)?\b/i,
+  // I2S between boxes, usually on an HDMI or RJ45 socket ("I2S over HDMI").
+  i2s: /\bi2s\b|\biis\b/i,
   aes: /\baes(?:\/ebu|3)?\b/i,
   bt: /\bbluetooth\b/i,
   rca: /\brca\b/i,

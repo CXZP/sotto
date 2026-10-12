@@ -48,3 +48,11 @@ test("user reports add ports the store didn't list", () => {
   const c = chainLinks({ source: bare, dac }, { dp11: [{ out: ["coax"] }] });
   assert.equal(c.links[0].status, "ok");
 });
+
+test("I2S: both sides have it, but the pinout must be checked", () => {
+  const a = { in: new Set(), out: new Set(["i2s"]), known: true };
+  const b = { in: new Set(["i2s", "usb"]), out: new Set(), known: true };
+  assert.equal(link(a, b, "digital").status, "i2s");
+  const c = { in: new Set(), out: new Set(["i2s", "coax"]), known: true };
+  assert.equal(link(c, { in: new Set(["coax", "i2s"]), out: new Set(), known: true }, "digital").status, "ok");
+});

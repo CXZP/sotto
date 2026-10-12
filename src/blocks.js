@@ -2,7 +2,7 @@
 // docs/gemini-skill.md, or a person) produces from one review. Shared by the
 // site (paste into a form) and scripts/blocks-to-sql.mjs (bulk import).
 
-const PORTS = ["usb", "coax", "optical", "aes", "bt", "rca", "xlr", "line"];
+const PORTS = ["usb", "coax", "optical", "aes", "i2s", "bt", "rca", "xlr", "line"];
 const FEATURES = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
 
 /** Every {"sotto": 1, ...} object in a pasted text (fenced or not, one or many). */

@@ -2,7 +2,7 @@
 // Pure functions; ports come from store spec lines and user reports.
 // "unknown" means nobody has stated the port, never that it is missing.
 
-export const DIGITAL = ["usb", "coax", "optical", "aes", "bt"];
+export const DIGITAL = ["usb", "coax", "optical", "aes", "i2s", "bt"];
 export const ANALOG = ["rca", "xlr", "line", "phono"];
 
 /** Virtual sources (phone, computer...) only have USB out to a DAC. */
@@ -47,6 +47,8 @@ export function link(from, to, kind) {
   const outs = set.filter((x) => from.out.has(x));
   const ins = set.filter((x) => to.in.has(x));
   const common = outs.filter((x) => ins.includes(x));
+  // I2S has no standard pinout: brands wire the HDMI/RJ45 socket differently.
+  if (common.length === 1 && common[0] === "i2s") return { status: "i2s", via: common };
   if (common.length) return { status: from.adapter ? "adapter" : "ok", via: common, adapter: from.adapter ?? null };
   if (kind === "analog") {
     // Phono level is a few millivolts with the RIAA curve still on it: a line

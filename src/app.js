@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5bqf7g";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5bqf7g";
-import { renderChart } from "./chart.js?v=mv5bqf7g";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5bqf7g";
-import { makeT } from "./i18n.js?v=mv5bqf7g";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5bqf7g";
-import { LEGAL } from "./legal.js?v=mv5bqf7g";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5bqf7g";
-import * as community from "./community.js?v=mv5bqf7g";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5bqf7g";
-import { redactImage } from "./redact.js?v=mv5bqf7g";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5bqf7g";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5bqf7g";
-import { chainLinks } from "./chain.js?v=mv5bqf7g";
-import { fits } from "./dcfit.js?v=mv5bqf7g";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5bqf7g";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5bqf7g";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5bqf7g";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5cwhed";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5cwhed";
+import { renderChart } from "./chart.js?v=mv5cwhed";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5cwhed";
+import { makeT } from "./i18n.js?v=mv5cwhed";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5cwhed";
+import { LEGAL } from "./legal.js?v=mv5cwhed";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5cwhed";
+import * as community from "./community.js?v=mv5cwhed";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5cwhed";
+import { redactImage } from "./redact.js?v=mv5cwhed";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5cwhed";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5cwhed";
+import { chainLinks } from "./chain.js?v=mv5cwhed";
+import { fits } from "./dcfit.js?v=mv5cwhed";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5cwhed";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5cwhed";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5cwhed";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -570,6 +570,7 @@ function chainSteps(reports = {}) {
     if (l.status === "ok") return `<li>${esc(t("ch_link_ok", { a, b, via: l.via.map(portName).join(" / ") }))}</li>`;
     if (l.status === "adapter" && l.adapter === "lightning-usb") return `<li class="need">${esc(t("c_lightning"))}</li>`;
     if (l.status === "adapter") return `<li class="need">${esc(t("ch_link_cable", { a, b, from: portName(l.via[0]), to: portName(l.via[1]) }))}</li>`;
+    if (l.status === "i2s") return `<li class="need">${esc(t("ch_link_i2s", { a, b }))}</li>`;
     if (l.status === "need_dac") return `<li class="danger">${esc(t("ch_link_need_dac", { a, b }))}</li>`;
     if (l.status === "need_phono") return `<li class="danger">${esc(t("ch_link_need_phono", { a, b }))} <a href="#learn/phono">?</a></li>`;
     if (l.status === "no") return `<li class="danger">${esc(t("ch_link_no", { a, b, outs: l.outs.map(portName).join(", "), ins: l.ins.map(portName).join(", ") }))}</li>`;
@@ -1285,7 +1286,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5bqf7g").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5cwhed").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2574,7 +2575,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5bqf7g" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5cwhed" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2719,7 +2720,7 @@ function wireBot(root, item, apply) {
 // Ports (item page): what plugs in and out, from store lines and from users
 // who checked the back panel with a photo. Not listed ≠ not there.
 
-const PORT_KEYS = ["usb", "coax", "optical", "aes", "bt", "rca", "xlr", "line"];
+const PORT_KEYS = ["usb", "coax", "optical", "aes", "i2s", "bt", "rca", "xlr", "line"];
 const FEATURE_KEYS = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
 // Glossary page for each switch or protocol.
 const FEATURE_TERM = { uac1: "uac1", nos: "nos", asio: "wasapi", roon: "streaming", airplay: "streaming", spotify: "streaming", tidal: "streaming", upnp: "streaming", chromecast: "streaming" };
@@ -3061,7 +3062,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5bqf7g" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5cwhed" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

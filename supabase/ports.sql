@@ -5,8 +5,8 @@
 create table if not exists public.port_reports (
   id bigint generated always as identity primary key,
   item_id text not null check (char_length(item_id) between 3 and 200),
-  ports_in text[] not null default '{}' check (ports_in <@ array['usb', 'coax', 'optical', 'aes', 'bt', 'rca', 'xlr', 'line']),
-  ports_out text[] not null default '{}' check (ports_out <@ array['usb', 'coax', 'optical', 'aes', 'bt', 'rca', 'xlr', 'line']),
+  ports_in text[] not null default '{}' check (ports_in <@ array['usb', 'coax', 'optical', 'aes', 'i2s', 'bt', 'rca', 'xlr', 'line']),
+  ports_out text[] not null default '{}' check (ports_out <@ array['usb', 'coax', 'optical', 'aes', 'i2s', 'bt', 'rca', 'xlr', 'line']),
   features text[] not null default '{}' check (features <@ array['uac1', 'nos', 'roon', 'airplay', 'spotify', 'tidal', 'upnp', 'chromecast', 'asio']),
   evidence_url text not null check (evidence_url ~ '^https://[^ ]+$'),
   note text not null default '' check (char_length(note) <= 300),

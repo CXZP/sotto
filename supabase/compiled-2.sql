@@ -43,7 +43,7 @@ select * from (values
   (
     'fiio--ka13', 'issue',
     'Left channel louder on iPhones',
-    'FiiO''s notes for KA13 firmware v0.21 (2025-07-23) list a fix for the left channel possibly sounding louder when playing from Apple phones.',
+    'FiiO''s notes for KA13 firmware v0.21 (2025-07-23) list a fix for the left channel possibly sounding louder when playing from Apple phones. Owners on the same FiiO thread had reported that, on firmware v0.17 and v0.18, the left ear became suddenly very loud each time the KA13 was connected to an iPhone, until a volume button was pressed.',
     'https://forum.fiio.com/note/showNoteContent.do?id=202309281720242213748',
     'unknown', null::uuid, 'fixed', 'v0.21',
     '1. Fixed the issue where the left channel may sound louder when playing songs on Apple phones.',
@@ -79,7 +79,7 @@ select * from (values
   (
     'fiio--ka15', 'issue',
     'Power-saving mode could not be turned off',
-    'FiiO''s notes for KA15 firmware V1.1.6 (2026-03-04) list a fix for power-saving mode that could not be turned off; the same notes explain how to turn it off.',
+    'FiiO''s notes for KA15 firmware V1.1.6 (2026-03-04) list a fix for power-saving mode that could not be turned off. FiiOs instruction: "Turn off power saving mode: Long press the Volume- button and power the KA15".',
     'https://forum.fiio.com/note/showNoteContent.do?id=202412181648159317941',
     'unknown', null::uuid, 'fixed', 'V1.1.6',
     '1. Fixed the issue where power saving mode could not be turned off.',

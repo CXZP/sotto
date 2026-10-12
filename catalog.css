@@ -685,3 +685,4 @@ select option { background: var(--surface); color: var(--text); }
 .ck-n { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
 .ck-n input { width: 52px; font: inherit; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); }
 @media (max-width: 860px) { .ck-grid { grid-template-columns: 1fr; } }
+.ck-entry { display: block; margin-bottom: 12px; color: var(--text); }

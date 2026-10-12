@@ -3,10 +3,10 @@
 // "right" or fixes it. Only a person's check makes an entry "checked"; makers'
 // pages, store text, rules and AI only decide the order of the queue.
 
-import { socketsOf, sameSockets, checkState, CHECK_IN, CHECK_OUT, CHECK_JACKS } from "./sockets.js?v=mv5vbs6o";
-import { panelSpec, panelSvg, frontSpec, hasFront, PANEL_DEFS } from "./panel.js?v=mv5vbs6o";
-import { loadPhotos } from "./data.js?v=mv5vbs6o";
-import * as community from "./community.js?v=mv5vbs6o";
+import { socketsOf, sameSockets, checkState, CHECK_IN, CHECK_OUT, CHECK_JACKS } from "./sockets.js?v=mv5vqms7";
+import { panelSpec, panelSvg, frontSpec, hasFront, PANEL_DEFS } from "./panel.js?v=mv5vqms7";
+import { loadPhotos } from "./data.js?v=mv5vqms7";
+import * as community from "./community.js?v=mv5vqms7";
 
 const CATS = ["dongle", "desktop", "dap", "cd", "phono", "turntable", "speaker"];
 const PORT_NAME = { usb: "USB", coax: "Coaxial", optical: "Optical", aes: "AES/EBU", i2s: "I2S", bt: "Bluetooth", rca: "RCA", xlr: "XLR", line: "Line (3.5/4.4)", phono: "Phono", dc: "DC", spk: "Speaker" };
@@ -30,7 +30,7 @@ export async function wireCheck(main, ctx) {
     community.allChecks(),
     community.amChecker(),
     community.session(),
-    fetch("data/audit.json?v=mv5vbs6o").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch("data/audit.json?v=mv5vqms7").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   if (!body.isConnected) return;
   const flagged = new Map();

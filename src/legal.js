@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv4hth3y";
+import { REPO } from "./content.js?v=mv4iukkh";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -40,7 +40,7 @@ export const LEGAL = {
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv4hth3y" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv4iukkh" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -72,7 +72,7 @@ export const LEGAL = {
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv4hth3y" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv4iukkh" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `
@@ -141,5 +141,31 @@ export const LEGAL = {
 <a class="card pad" href="${REPO}/issues" target="_blank" rel="noopener"><b>Anything else / feature ideas</b><span class="muted small">GitHub Issues</span></a>
 </div>
 <p class="muted small">Every user post has a "Report post" button, which is faster for spam or abuse.</p>`,
+  },
+  compiled: {
+    th: `
+<h1>โพสต์ที่ Sotto รวบรวม</h1>
+<p>โพสต์ที่ขึ้นว่า "รวบรวมโดย Sotto" ไม่ได้มาจากผู้ใช้ เราใส่ไว้ก่อน เพื่อให้คนที่กำลังจะซื้อเห็นปัญหาที่มีคนพูดถึงแล้ว</p>
+<h2>ทำยังไง</h2>
+<ol><li><b>ร่าง:</b> AI (Claude) อ่านแหล่งสาธารณะแล้วร่างโพสต์ พร้อมยกประโยคจากแหล่งมาแบบคำต่อคำ</li>
+<li><b>ตรวจ:</b> คนในทีม Sotto อ่านแหล่งเอง ตรวจว่าประโยคที่ยกมามีอยู่จริงและโพสต์ไม่พูดเกินแหล่ง แล้วจึงเผยแพร่</li>
+<li><b>ระบุสถานะ:</b> ปัญหาที่แก้แล้วบอกว่าแก้ในเฟิร์มแวร์เวอร์ชันไหน ปัญหาที่ยังไม่ชัดขึ้นว่า "ยังไม่ชัด" และทุกโพสต์มีวันที่ตรวจล่าสุด</li></ol>
+<h2>ใช้แหล่งไหน</h2>
+<p>บันทึกการอัปเดตเฟิร์มแวร์และหน้าซัพพอร์ตของผู้ผลิต (ผู้ผลิตยอมรับเองว่ามีปัญหาและแก้แล้ว), รายการเรียกคืนสินค้า, เว็บวัดค่า และกระทู้ที่คนในทีมอ่านเอง เราไม่ใช้บอทดูดเว็บที่ห้ามไว้ (Head-Fi, Reddit, Audio Science Review)</p>
+<h2>ไม่ใช่ข้อสรุปของ Sotto</h2>
+<p>เราเขียนว่าใครรายงานอะไร ไม่ได้ฟันธงว่าสินค้าเสีย ถ้าคุณเป็นเจ้าของแล้วเจอเหมือนกัน กด "เจอเหมือนกัน" ถ้าไม่เจอหรือโพสต์ผิด กด "รายงานโพสต์" หรือแจ้งผ่าน<a href="#contact">หน้าติดต่อ</a> แบรนด์ที่ยืนยันตัวตนแล้วตอบใต้โพสต์ได้</p>
+<p class="muted small">โพสต์ที่รวบรวมไม่นับเป็นยอดของผู้ใช้ในสถิติใด ๆ</p>`,
+    en: `
+<h1>Posts compiled by Sotto</h1>
+<p>Posts marked "Compiled by Sotto" are not from users. We add them so people about to buy can see problems that have already been reported.</p>
+<h2>How</h2>
+<ol><li><b>Draft:</b> an AI (Claude) reads public sources and drafts the post, quoting the source word for word.</li>
+<li><b>Check:</b> a person on the Sotto team reads the source, checks that the quote is really there and that the post doesn't say more than the source, and only then publishes it.</li>
+<li><b>Status:</b> a fixed problem says which firmware fixed it; an unclear one says "unclear"; every post shows when it was last checked.</li></ol>
+<h2>Sources</h2>
+<p>Makers' firmware release notes and support pages (the maker itself acknowledging and fixing a problem), recalls, measurement sites, and threads a person on the team has read. We don't run bots on sites that forbid it (Head-Fi, Reddit, Audio Science Review).</p>
+<h2>Not Sotto's conclusion</h2>
+<p>We say who reported what; we don't declare a product faulty. If you own one and see the same thing, press "Me too". If you don't, or the post is wrong, press "Report post" or use the <a href="#contact">contact page</a>. Verified brands can reply under the post.</p>
+<p class="muted small">Compiled posts are never counted as user activity in any statistic.</p>`,
   },
 };

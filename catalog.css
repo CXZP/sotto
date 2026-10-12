@@ -130,6 +130,7 @@ a.chip.on { background: var(--text); color: var(--bg); border-color: var(--text)
 .spec-name { font-weight: 600; margin-bottom: 4px; }
 .spec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .tag.warn { color: var(--warn); border-color: currentColor; }
+.tag.ok { color: var(--good); border-color: currentColor; }
 .srcs .src + .src { margin-left: 6px; }
 q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px solid var(--line-strong); color: var(--text-2); font-size: 13px; quotes: none; font-family: ui-monospace, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
 .offers { list-style: none; margin: 0; padding: 0; }
@@ -490,6 +491,8 @@ select option { background: var(--surface); color: var(--text); }
 .post-sec ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 10px; }
 .post-sec li { line-height: 1.5; }
 .post-quote { display: block; margin-top: 2px; color: var(--text-2); font-size: 14px; }
+/* The source sentence a compiled post rests on. */
+.post-source-quote { margin: 8px 0 4px; padding: 6px 12px; border-left: 2px solid var(--line, rgba(127,127,127,.35)); color: var(--text-2); }
 [data-posts] > [data-more] { margin-top: 8px; }
 .post-filters label { display: flex; align-items: center; gap: 8px; }
 .post-filters select { width: auto; }

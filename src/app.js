@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4hth3y";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4hth3y";
-import { renderChart } from "./chart.js?v=mv4hth3y";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4hth3y";
-import { makeT } from "./i18n.js?v=mv4hth3y";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4hth3y";
-import { LEGAL } from "./legal.js?v=mv4hth3y";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4hth3y";
-import * as community from "./community.js?v=mv4hth3y";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4hth3y";
-import { redactImage } from "./redact.js?v=mv4hth3y";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4hth3y";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4hth3y";
-import { chainLinks } from "./chain.js?v=mv4hth3y";
-import { fits } from "./dcfit.js?v=mv4hth3y";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4hth3y";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4hth3y";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4hth3y";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4iukkh";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4iukkh";
+import { renderChart } from "./chart.js?v=mv4iukkh";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4iukkh";
+import { makeT } from "./i18n.js?v=mv4iukkh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4iukkh";
+import { LEGAL } from "./legal.js?v=mv4iukkh";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4iukkh";
+import * as community from "./community.js?v=mv4iukkh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4iukkh";
+import { redactImage } from "./redact.js?v=mv4iukkh";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4iukkh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4iukkh";
+import { chainLinks } from "./chain.js?v=mv4iukkh";
+import { fits } from "./dcfit.js?v=mv4iukkh";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4iukkh";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4iukkh";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4iukkh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1254,7 +1254,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4hth3y").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv4iukkh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1766,7 +1766,8 @@ async function renderCommunity(el, item) {
   const post = (r, n) => `<article class="post k-${r.kind}" data-kind="${r.kind}" data-src="${esc(sourceHost(r.evidence_url))}" data-t="${Date.parse(r.created_at) || 0}" data-o="${n}">
     <div class="post-head"><span class="tag ${r.kind === "issue" ? "warn" : ""}">${esc(t(`cm_kind_${r.kind}`))}</span>
       ${["bought", "free_sample", "loan"].includes(r.purchase) ? `<span class="tag${r.purchase === "bought" ? "" : " warn"}">${esc(t(`cm_${r.purchase}`))}</span>` : ""}
-      <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${esc(r.author ? r.author_name || t("cm_user") : t("cm_maintainer"))} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
+      ${r.kind === "issue" && r.issue_state ? `<span class="tag${r.issue_state === "fixed" ? " ok" : r.issue_state === "open" ? " warn" : ""}">${esc(r.issue_state === "fixed" && r.fixed_in ? t("is_fixed_in", { v: r.fixed_in }) : t(`is_${r.issue_state}`))}</span>` : ""}
+      <span class="muted small">${r.kind === "review" ? `${esc(t("rv_summarised_by"))} ` : ""}${r.author ? esc(r.author_name || t("cm_user")) : `${esc(t("cm_maintainer"))} <a href="#compiled">${esc(t("cm_how"))}</a>`} · ${new Date(r.created_at).toLocaleDateString(loc())}</span></div>
     <div class="post-text">
       <p class="post-title">${esc(shown(r).title)}</p>
       ${bodyHtml(r, shown(r).body)}
@@ -1775,7 +1776,8 @@ async function renderCommunity(el, item) {
       <p class="post-title">${esc(original(r).title)}</p>
       ${bodyHtml(r, original(r).body)}
     </div>` : ""}
-    ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}</p>` : ""}
+    ${r.quote ? `<blockquote class="post-source-quote small">“${esc(r.quote)}”</blockquote>` : ""}
+    ${r.evidence_url ? `<p class="small">${esc(t("cm_evidence"))}: ${srcLink(r.evidence_url)}${r.checked_on ? ` <span class="muted">· ${esc(t("cm_checked", { date: new Date(r.checked_on).toLocaleDateString(loc()) }))}</span>` : ""}</p>` : ""}
     <div class="post-actions">
       <button class="pill small${mine.has(r.id) ? " on" : ""}" data-confirm="${r.id}" ${s ? "" : "disabled"} aria-pressed="${mine.has(r.id)}">${esc(t("cm_metoo"))} · ${r.confirms}</button>
       ${translated(r) ? `<button class="link small" data-orig="${esc(LANG_NAME[r.i18n._src])}" aria-pressed="false">${esc(t("cm_original", { lang: LANG_NAME[r.i18n._src] }))}</button>` : ""}
@@ -2410,7 +2412,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4hth3y" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4iukkh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2897,7 +2899,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4hth3y" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4iukkh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

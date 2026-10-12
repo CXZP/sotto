@@ -79,7 +79,7 @@ select * from (values
   (
     'fiio--ka15', 'issue',
     'Power-saving mode could not be turned off',
-    'FiiO''s notes for KA15 firmware V1.1.6 (2026-03-04) list a fix for power-saving mode that could not be turned off. FiiOs instruction: "Turn off power saving mode: Long press the Volume- button and power the KA15".',
+    'FiiO''s notes for KA15 firmware V1.1.6 (2026-03-04) list a fix for power-saving mode that could not be turned off. FiiO''s instruction: "Turn off power saving mode: Long press the Volume- button and power the KA15".',
     'https://forum.fiio.com/note/showNoteContent.do?id=202412181648159317941',
     'unknown', null::uuid, 'fixed', 'V1.1.6',
     '1. Fixed the issue where power saving mode could not be turned off.',

@@ -2585,5 +2585,209 @@
       }
     },
     "portsComplete": true
+  },
+  {
+    "id": "fiio--btr7",
+    "brand": "FiiO",
+    "model": "BTR7",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/btr7",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "when the BTR7 is connected to the computer via USB in UAC 2.0 mode the Bluetooth will automatically be turned off",
+          "url": "https://www.fiio.com/btr7",
+          "conn": "usbC"
+        },
+        "bt": {
+          "quote": "After disconnecting from USB, the BTR7 will automatically switch Bluetooth back on and connect to the previously used device",
+          "url": "https://www.fiio.com/btr7"
+        }
+      },
+      "out": {}
+    },
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามหน้า FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
+        "en": "Headphone jacks per FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
+        "source": "https://www.fiio.com/btr7"
+      }
+    ]
+  },
+  {
+    "id": "fiio--btr7-high-fidelity",
+    "brand": "FiiO",
+    "model": "BTR7 High-Fidelity",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/btr7",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "when the BTR7 is connected to the computer via USB in UAC 2.0 mode the Bluetooth will automatically be turned off",
+          "url": "https://www.fiio.com/btr7",
+          "conn": "usbC"
+        },
+        "bt": {
+          "quote": "After disconnecting from USB, the BTR7 will automatically switch Bluetooth back on and connect to the previously used device",
+          "url": "https://www.fiio.com/btr7"
+        }
+      },
+      "out": {}
+    },
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามหน้า FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
+        "en": "Headphone jacks per FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
+        "source": "https://www.fiio.com/btr7"
+      }
+    ]
+  },
+  {
+    "id": "fiio--ka11",
+    "brand": "FiiO",
+    "model": "KA11",
+    "category": "dongle",
+    "addedFrom": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Input: USB",
+          "url": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามตารางสเปก Audiophonics: \"Output: Jack 3.5mm\" (FiiO ยังไม่มีหน้าสเปกของรุ่นนี้)",
+        "en": "Headphone jack per Audiophonics' spec table: \"Output: Jack 3.5mm\" (FiiO has no spec page for this model yet)",
+        "source": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html"
+      }
+    ]
+  },
+  {
+    "id": "fiio--ka11-c",
+    "brand": "FiiO",
+    "model": "KA11 -C",
+    "category": "dongle",
+    "addedFrom": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Input: USB",
+          "url": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามตารางสเปก Audiophonics: \"Output: Jack 3.5mm\" (FiiO ยังไม่มีหน้าสเปกของรุ่นนี้)",
+        "en": "Headphone jack per Audiophonics' spec table: \"Output: Jack 3.5mm\" (FiiO has no spec page for this model yet)",
+        "source": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ka11-usb-c-p-21646.html"
+      }
+    ]
+  },
+  {
+    "id": "fiio--ja11",
+    "brand": "FiiO",
+    "model": "JA11",
+    "category": "dongle",
+    "addedFrom": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ja11-black-p-21654.html",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Input: USB",
+          "url": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ja11-black-p-21654.html",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามตารางสเปก Audiophonics: \"Output: Jack 3.5mm\" (FiiO ยังไม่มีหน้าสเปกของรุ่นนี้)",
+        "en": "Headphone jack per Audiophonics' spec table: \"Output: Jack 3.5mm\" (FiiO has no spec page for this model yet)",
+        "source": "https://www.audiophonics.fr/en/portable-dac-and-mobile/fiio-ja11-black-p-21654.html"
+      }
+    ]
+  },
+  {
+    "id": "fiio--jade-jiezi-a-c-to",
+    "brand": "FiiO",
+    "model": "Jade JIEZI-A -C to",
+    "category": "dongle",
+    "addedFrom": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB port",
+          "url": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "คู่มือ JadeAudio JIEZI: รุ่น 3.5 มี \"3.5mm SE headphone out\" (อีกรุ่นเป็น \"4.4mm BAL headphone out\")",
+        "en": "JadeAudio JIEZI guide: the 3.5 version has a \"3.5mm SE headphone out\" (the other version a \"4.4mm BAL headphone out\")",
+        "source": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3"
+      }
+    ]
+  },
+  {
+    "id": "fiio--jiezi-type-c-to",
+    "brand": "FiiO",
+    "model": "JIEZI Type C to",
+    "category": "dongle",
+    "addedFrom": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB port",
+          "url": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "คู่มือ JadeAudio JIEZI: รุ่น 3.5 มี \"3.5mm SE headphone out\" (อีกรุ่นเป็น \"4.4mm BAL headphone out\")",
+        "en": "JadeAudio JIEZI guide: the 3.5 version has a \"3.5mm SE headphone out\" (the other version a \"4.4mm BAL headphone out\")",
+        "source": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3"
+      }
+    ]
   }
 ]

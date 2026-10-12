@@ -1,22 +1,23 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5i6kk1";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5i6kk1";
-import { renderChart } from "./chart.js?v=mv5i6kk1";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5i6kk1";
-import { makeT } from "./i18n.js?v=mv5i6kk1";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5i6kk1";
-import { LEGAL } from "./legal.js?v=mv5i6kk1";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5i6kk1";
-import * as community from "./community.js?v=mv5i6kk1";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5i6kk1";
-import { redactImage } from "./redact.js?v=mv5i6kk1";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5i6kk1";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5i6kk1";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5i6kk1";
-import { chainLinks } from "./chain.js?v=mv5i6kk1";
-import { fits } from "./dcfit.js?v=mv5i6kk1";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5i6kk1";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5i6kk1";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5i6kk1";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5iifgs";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5iifgs";
+import { renderChart } from "./chart.js?v=mv5iifgs";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5iifgs";
+import { makeT } from "./i18n.js?v=mv5iifgs";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5iifgs";
+import { LEGAL } from "./legal.js?v=mv5iifgs";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5iifgs";
+import * as community from "./community.js?v=mv5iifgs";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5iifgs";
+import { redactImage } from "./redact.js?v=mv5iifgs";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5iifgs";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5iifgs";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5iifgs";
+import { gearKind, gearSvg } from "./gear.js?v=mv5iifgs";
+import { chainLinks } from "./chain.js?v=mv5iifgs";
+import { fits } from "./dcfit.js?v=mv5iifgs";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5iifgs";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5iifgs";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5iifgs";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -926,15 +927,16 @@ function wireChartPage(main) {
 function openPicker(slot) {
   const cats = slot === "hp" ? HEADPHONE_CATS : SOURCE_CATS;
   const isSrcSlot = slot === "src";
-  // The box between source and amp: a DAC, or a phono stage after a turntable.
-  const forDac = (i) => i.role === "dac" || i.role === "dacamp" || i.category === "phono";
+  // The box between source and amp: a phono stage after a turntable, a DAC otherwise.
+  const vinyl = (state.src ? findItem(state.src) : null)?.category === "turntable";
+  const forDac = (i) => (vinyl ? i.category === "phono" : i.role === "dac" || i.role === "dacamp");
   const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd", "turntable"].includes(i.category) || i.role === "streamer" || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter(forDac).map((i) => i.id) : slot === "cart" ? db.items.filter((i) => i.category === "cartridge" && i.cart).map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
-  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? forDac(i) : slot === "cart" ? i.category === "cartridge" : cats.has(i.category) && (slot !== "amp" || !["dac", ...NOT_HP_ROLES].includes(i.role))));
+  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? forDac(i) : slot === "cart" ? i.category === "cartridge" : cats.has(i.category) && (slot !== "amp" || (i.category !== "cd" && !["dac", ...NOT_HP_ROLES].includes(i.role)))));
   // Type chips inside the picker, so a long list can be narrowed in one tap.
   const kindsBySlot = {
     hp: [["iem", t("cat_iem")], ["headphone", t("cat_headphone")]],
     amp: [["dongle", t("cat_dongle")], ["portable", t("cat_portable")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["preamp", t("role_preamp")], ["dap", t("cat_dap")]],
-    dac: [["dac", t("role_dac")], ["dacamp", t("role_dacamp")], ["phono", t("cat_phono")]],
+    dac: vinyl ? [] : [["dac", t("role_dac")], ["dacamp", t("role_dacamp")]],
     src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["turntable", t("cat_turntable")], ["streamer", t("pk_streamer")]],
     cart: [["mm", t("cart_mm")], ["mc", t("cart_mc")], ["homc", t("cart_homc")]],
   };
@@ -944,10 +946,10 @@ function openPicker(slot) {
   const priceOf = (i) => usdOf(prices(i).cheapest);
   const dlg = document.createElement("div");
   dlg.className = "modal";
-  dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot}`))}">
-    <div class="sheet-head"><h2>${esc(t(`picker_title_${slot}`))}</h2><button class="icon-btn" data-close aria-label="${esc(t("close"))}">✕</button></div>
+  dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot === "dac" && vinyl ? "phono" : slot}`))}">
+    <div class="sheet-head"><h2>${esc(t(`picker_title_${slot === "dac" && vinyl ? "phono" : slot}`))}</h2><button class="icon-btn" data-close aria-label="${esc(t("close"))}">✕</button></div>
     <input class="search" type="search" placeholder="${esc(t("search"))}" autofocus>
-    <div class="pick-tools"><div class="chips pick-kinds">${kinds.map(([k, label], n) => `<button type="button" class="chip${n ? "" : " on"}" data-kind="${k}">${esc(label)}</button>`).join("")}</div>
+    <div class="pick-tools"><div class="chips pick-kinds">${kinds.length < 2 ? "" : kinds.map(([k, label], n) => `<button type="button" class="chip${n ? "" : " on"}" data-kind="${k}">${esc(label)}</button>`).join("")}</div>
       <select class="mini-select" data-sort aria-label="${esc(t("sort_label"))}">${["popular", "price", "price-desc"].map((v) => `<option value="${v}">${esc(t(`sort_${v}`))}</option>`).join("")}</select>
       <label class="check small"><input type="checkbox" checked> ${esc(t("picker_only_specs"))}</label></div>
     <ul class="pick-list"></ul><p class="small muted">${esc(t("add_model_hint"))} <a href="${REPO}/issues/new?template=add-model.yml" target="_blank" rel="noopener">${esc(t("add_model"))} ↗</a></p></div>`;
@@ -1289,7 +1291,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5i6kk1").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5iifgs").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2579,7 +2581,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5i6kk1" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5iifgs" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3066,7 +3068,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5i6kk1" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5iifgs" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4446,7 +4448,8 @@ function wireDesk(main) {
   const cheapest = (n) => (n.node?.item ? prices(n.node.item).cheapest : null);
   const thumb = (n, w) => {
     const im = n.node.item ? imageOf(n.node.item) : null;
-    return im ? `<img src="${esc(sized(im.src, w))}" alt="" referrerpolicy="no-referrer" draggable="false">` : `<span class="dk-dev">${n.node.device ? { phone: "📱", computer: "💻", tv: "📺" }[n.node.device] : ""}</span>`;
+    const icon = `<span class="dk-dev">${gearSvg(gearKind(n.node))}</span>`;
+    return im ? `<img src="${esc(sized(im.src, w))}" alt="" referrerpolicy="no-referrer" draggable="false" data-gear="${gearKind(n.node)}">` : icon;
   };
 
   // --- Free mode: cards anywhere, cables socket to socket.
@@ -4633,6 +4636,15 @@ function wireDesk(main) {
     commit();
   };
 
+  // A photo that fails to load: the drawing of its kind instead.
+  board.addEventListener(
+    "error",
+    (e) => {
+      const img = e.target;
+      if (img.tagName === "IMG" && img.dataset.gear) img.outerHTML = `<span class="dk-dev">${gearSvg(img.dataset.gear)}</span>`;
+    },
+    true,
+  );
   board.addEventListener("click", (e) => {
     const del = e.target.closest("[data-del]");
     if (del) {
@@ -4786,7 +4798,8 @@ function wireDesk(main) {
       return out.slice(0, n);
     };
     const all = nodes();
-    const shots = await Promise.all(all.map((n) => (n.node?.item && imageOf(n.node.item) ? photo(sized(imageOf(n.node.item).src, 240)) : null)));
+    const drawing = (n) => photo(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(gearSvg(gearKind(n.node), ink2))}`);
+    const shots = await Promise.all(all.map(async (n) => (n.node ? ((n.node.item && imageOf(n.node.item) ? await photo(sized(imageOf(n.node.item).src, 240)) : null) ?? (await drawing(n))) : null)));
     all.forEach((n, idx) => {
       const p = layout.pos[idx];
       if (!n.node || !p) return;
@@ -4801,13 +4814,13 @@ function wireDesk(main) {
       g.stroke();
       const ph = p.side ? 48 : 96;
       const px = p.x + (w - ph) / 2;
-      g.fillStyle = "#fff";
+      const im = shots[idx];
+      g.fillStyle = im?.src.startsWith("data:") ? col("--surface-2", "#eee") : "#fff";
       g.beginPath();
       g.roundRect(px, p.y + 10, ph, ph, 10);
       g.fill();
-      const im = shots[idx];
       if (im) {
-        const s = Math.min(ph / im.width, ph / im.height);
+        const s = Math.min(ph / im.width, ph / im.height) * (im.src.startsWith("data:") ? 0.8 : 1);
         g.drawImage(im, px + (ph - im.width * s) / 2, p.y + 10 + (ph - im.height * s) / 2, im.width * s, im.height * s);
       }
       g.textAlign = "center";

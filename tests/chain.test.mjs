@@ -56,3 +56,10 @@ test("I2S: both sides have it, but the pinout must be checked", () => {
   const c = { in: new Set(), out: new Set(["i2s", "coax"]), known: true };
   assert.equal(link(c, { in: new Set(["coax", "i2s"]), out: new Set(), known: true }, "digital").status, "ok");
 });
+
+test("a DAC after a turntable: it needs a phono stage, not a digital port", () => {
+  const tt = { item: { category: "turntable", offers: [] } };
+  const dac = { item: { category: "desktop", role: "dac", offers: [], ports: { in: { usb: {}, coax: {} }, out: { line: {} } } } };
+  const c = chainLinks({ source: tt, dac });
+  assert.equal(c.links[0].status, "need_phono");
+});

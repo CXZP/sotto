@@ -640,3 +640,4 @@ select option { background: var(--surface); color: var(--text); }
 .desk-board.flow .dk-wires { pointer-events: none; }
 .desk-board.flow .dk-wire { pointer-events: stroke; }
 .dk-mount { fill: none; stroke: var(--line-strong); stroke-width: 2; stroke-dasharray: 4 5; }
+.dk-dev .gear-ic { width: 80%; height: 80%; }

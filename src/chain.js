@@ -91,8 +91,10 @@ export function chainLinks({ source, dac, amp, cart }, reports = {}) {
   const phonoBox = dac?.item?.category === "phono";
   const dacIsDacOnly = dac?.item?.role === "dac" || phonoBox;
   if (dac) {
-    // A phono stage takes the turntable's analog signal; a DAC takes digital.
-    links.push({ from: source, to: dac, kind: phonoBox ? "analog" : "digital", ...link(P(source), P(dac), phonoBox ? "analog" : "digital") });
+    // A phono stage takes the turntable's analog signal; a DAC takes digital. A
+    // turntable's signal is analog whatever box follows it.
+    const kind = phonoBox || vinyl ? "analog" : "digital";
+    links.push({ from: source, to: dac, kind, ...link(P(source), P(dac), kind) });
     // A DAC's (or phono stage's) output is analog, so whatever follows it takes a line input.
     if (amp) links.push({ from: dac, to: amp, kind: "analog", ...link(P(dac), P(amp), "analog") });
   } else if (amp) {

@@ -152,6 +152,7 @@ for (const file of files) {
     // the conflict is recorded so a person can look.
     // The shortest name in the group names it ("Warmer R2R" over "WARMER R2R Tube").
     if (groups.has(gk) && key.length < g.id.length) Object.assign(g, { id: key, model });
+    (g.catVotes ??= {})[category] = (g.catVotes[category] ?? 0) + 1;
     if (g.category !== category) g.categoryConflict = [...new Set([...(g.categoryConflict ?? [g.category]), category])];
     const { price, priceMax, available } = mainPrice(p.variants);
     if (price == null) continue;
@@ -395,7 +396,16 @@ const catalog = [...groups.values()]
       rank(specs[k]);
       if (!specs[k].length) delete specs[k];
     }
-    const { curatedSpecs, roleVotes, roleStated, photos, ...rest } = g;
+    const { curatedSpecs, roleVotes, roleStated, photos, catVotes, ...rest } = g;
+    // Stores disagree on the kind of thing: one store filing "iFi Neo Stream"
+    // under headphones doesn't make it headphones when most say otherwise.
+    if (catVotes && rest.categoryConflict) {
+      const [top, n] = Object.entries(catVotes).sort((a, b) => b[1] - a[1])[0];
+      // Only out of headphones: a store filing amps under "headphones" is common;
+      // dongle vs desktop is settled by the titles below.
+      const ears = ["headphone", "iem"];
+      if (ears.includes(rest.category) && !ears.includes(top) && n > (catVotes[rest.category] ?? 0)) rest.category = top;
+    }
 
     // Stores disagree on desktop vs dongle ("Pilot II USB DAC" vs "Pilot II | Portable
     // Balanced USB DAC"): a title that says portable or dongle settles it.

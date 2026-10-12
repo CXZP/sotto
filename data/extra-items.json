@@ -678,5 +678,95 @@
         }
       }
     }
+  },
+  {
+    "id": "schiit-audio--magni-unity",
+    "brand": "Schiit Audio",
+    "model": "Magni",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://www.schiit.com/products/magni-unity",
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "style": "schiit",
+      "finish": "silver"
+    }
+  },
+  {
+    "id": "schiit-audio--midgard",
+    "brand": "Schiit Audio",
+    "model": "Midgard",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://www.schiit.com/products/midgard",
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "xlr4"
+    ],
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Yes, XLR and RCA.",
+          "url": "https://www.schiit.com/products/midgard"
+        },
+        "rca": {
+          "quote": "Yes, XLR and RCA.",
+          "url": "https://www.schiit.com/products/midgard"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Yes, XLR and RCA preamp outputs on the back.",
+          "url": "https://www.schiit.com/products/midgard"
+        },
+        "rca": {
+          "quote": "Yes, XLR and RCA preamp outputs on the back.",
+          "url": "https://www.schiit.com/products/midgard"
+        }
+      }
+    }
+  },
+  {
+    "id": "schiit-audio--bifrost",
+    "brand": "Schiit Audio",
+    "model": "Bifrost",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://www.schiit.com/products/bifrost",
+    "portsComplete": true,
+    "look": {
+      "style": "schiit",
+      "finish": "silver"
+    },
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Inputs: Coaxial SPDIF, Optical SPDIF, USB",
+          "url": "https://www.schiit.com/products/bifrost",
+          "conn": "usbB"
+        },
+        "optical": {
+          "quote": "Inputs: Coaxial SPDIF, Optical SPDIF, USB",
+          "url": "https://www.schiit.com/products/bifrost"
+        },
+        "coax": {
+          "quote": "Inputs: Coaxial SPDIF, Optical SPDIF, USB",
+          "url": "https://www.schiit.com/products/bifrost"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Outputs: RCA (single-ended) and XLR (balanced)",
+          "url": "https://www.schiit.com/products/bifrost"
+        },
+        "xlr": {
+          "quote": "Outputs: RCA (single-ended) and XLR (balanced)",
+          "url": "https://www.schiit.com/products/bifrost"
+        }
+      }
+    }
   }
 ]

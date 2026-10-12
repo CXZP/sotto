@@ -165,3 +165,26 @@ test("iFi ZEN listings: one model each", () => {
   assert.equal(d("ifi--zen-stream-3-wi-fi-transport"), d("ifi--zen-stream-3"));
   assert.notEqual(d("ifi--zen-can-signature-mz99"), d("ifi--zen-can-signature"));
 });
+
+test("an upgrade board is an accessory, not headphones", () => {
+  assert.equal(classify({ title: "Schiit Bifrost Multibit Upgrade" }), "accessory");
+});
+
+test("a store's 'headphones' shelf doesn't make a preamp headphones", () => {
+  assert.equal(classify({ title: "LADDER Chopin II R2R Preamplifier", kind: "headphone" }), "desktop");
+  assert.equal(classify({ title: "HIFIMAN Sundara", kind: "headphone" }), "headphone");
+});
+
+test("preamplifiers: kept, named without the word", () => {
+  assert.equal(classify({ title: "Hegel P20 Preamplifier" }), "desktop");
+  assert.equal(modelKey("Hegel", "Hegel P20 Preamplifier").key, "hegel--p20");
+  assert.equal(classify({ title: "AudioQuest Pre-Jumpers Male-Male" }), "cable");
+});
+
+test("FiiO Class A: named Class A, not 'Amplifier'", () => {
+  assert.equal(modelKey("FiiO", "FiiO Class A Headphone Amplifier and Preamplifier").key, "fiio--class-a");
+});
+
+test("a moving-coil preamplifier is a phono stage, not a cartridge", () => {
+  assert.equal(classify({ title: "Rega Aos Moving Coil Preamplifier - Black" }), "phono");
+});

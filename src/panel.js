@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5l76gk";
-import { gearSvg } from "./gear.js?v=mv5l76gk";
+import { nodePorts } from "./desk.js?v=mv5mphri";
+import { gearSvg } from "./gear.js?v=mv5mphri";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -23,7 +23,7 @@ const BRAND_CHASSIS = {
   ferrum: ["compact", "black"],
   "aune audio": ["compact", "black"],
   "matrix audio": ["compact", "silver"],
-  "schiit audio": ["compact", "silver"],
+  "schiit audio": ["schiit", "black"],
   "pro-ject": ["compact", "black"],
   rega: ["compact", "black"],
   ifi: ["zen", "navy"],
@@ -125,7 +125,7 @@ export function frontSpec(node) {
   const titles = [i.model, ...(i.offers ?? []).map((o) => o.title)].join(" ");
   const tubes = look.tubes ?? (/\btubes?\b|\bvalve\b/i.test(titles) && !/tube buffer/i.test(titles) ? 2 : 0);
   const vu = look.vu ?? false;
-  const w = { full: 520, inset: 520, slim: 440, wood: 460, jewel: 300, zen: 420 }[chassis.style] ?? 380;
+  const w = { schiit: 400, full: 520, inset: 520, slim: 440, wood: 460, jewel: 300, zen: 420 }[chassis.style] ?? 380;
   const lift = tubes ? 70 : 0;
   const h = 150 + lift;
   const sockets = [];
@@ -184,7 +184,7 @@ export function panelSpec(node) {
     for (const p of ports.in) sockets.push({ port: p, dir: "in", glyph: p === "usb" ? (detachable ? "usbC" : "tether") : p, x: p === "usb" && detachable ? 184 : 236, y: 68 });
     return { w: 260, h: 140, chassis: { ...chassis, detachable }, groups, sockets };
   }
-  const usbKind = ["full", "wood", "plinth", "slim", "inset"].includes(chassis.style) ? "usbB" : "usbC";
+  const usbKind = ["full", "wood", "plinth", "slim", "inset", "schiit"].includes(chassis.style) ? "usbB" : "usbC";
   // A screw-on antenna socket on a box; on a phone or pocket device, just the radio.
   const btKind = ["pocket", "device"].includes(chassis.style) ? "bt" : "sma";
   // Order on the panel: digital in, analog in, analog out, digital out, power.
@@ -209,7 +209,8 @@ export function panelSpec(node) {
   const place = (c, label, dashed, extra = {}) => {
     const w = extra.glyph === "jack" ? 56 : (horiz && ["rca", "line", "phono"].includes(c.port) ? 30 : 0) + (CELL[c.port] ?? 56);
     groups.push({ x, y: top, w, h: cellH, label, dashed, bal: extra.glyph === "jack" ? null : ["xlr", "aes"].includes(c.port) ? true : ["rca", "line", "phono"].includes(c.port) ? false : null });
-    const glyph = c.port === "usb" ? usbKind : c.port === "bt" ? btKind : c.port === "xlr" ? (c.dir === "in" ? "xlrF" : "xlrM") : c.port === "line" ? "rca" : c.port;
+    const named = i?.ports?.[c.dir]?.[c.port]?.conn;
+    const glyph = ["usbB", "usbC"].includes(named) ? named : c.port === "usb" ? usbKind : c.port === "bt" ? btKind : c.port === "xlr" ? (c.dir === "in" ? "xlrF" : "xlrM") : c.port === "line" ? "rca" : c.port;
     sockets.push({ port: c.port, dir: c.dir, glyph, x: x + w / 2, y: top + 42, pair: PAIR.has(c.port) && extra.glyph !== "jack", horiz: horiz && ["rca", "line", "phono"].includes(c.port), ...extra });
     x += w + 8;
   };
@@ -251,11 +252,15 @@ export function panelSpec(node) {
     x += w + 8;
   }
   // Mains inlet on boxes that plug into the wall (not a DC-only box or a pocket one).
-  const mains = (["full", "wood", "slim", "compact", "jewel", "zen", "plinth", "inset"].includes(chassis.style) || chassis.active) && !ports.in.includes("dc");
+  const mains = (["full", "wood", "slim", "compact", "jewel", "zen", "plinth", "inset", "schiit"].includes(chassis.style) || chassis.active) && !ports.in.includes("dc");
   // A power supply always takes mains: that is its job.
   if (mains && (["full", "wood", "slim", "inset"].includes(chassis.style) || i?.category === "power" || chassis.active)) {
     groups.push({ x, y: top, w: 74, h: cellH, label: "AC IN", deco: "iec" });
     x += 82;
+  } else if (mains && chassis.style === "schiit") {
+    // Schiit: a wall transformer into a barrel socket marked AC IN.
+    groups.push({ x, y: top, w: 56, h: cellH, label: "AC IN", deco: "barrel" });
+    x += 64;
   }
   const w = Math.max(x + pad - 8 + (chassis.style === "wood" ? 30 : 0), ["full", "inset"].includes(chassis.style) ? 560 : chassis.style === "pocket" ? 200 : 260);
   // Centre the row inside a wider chassis.
@@ -407,7 +412,7 @@ export function panelSvg(spec, name = "") {
   const h = spec.h - lift;
   const f = FINISH[chassis.finish] ?? FINISH.black;
   // An inset plate is dark whatever the frame: light print on it.
-  const ink = chassis.style === "inset" ? "#d9d9d9" : f.ink;
+  const ink = chassis.style === "inset" || (chassis.style === "schiit" && spec.face !== "front") ? "#e2e3e6" : f.ink;
   const body = (() => {
     switch (chassis.style) {
       case "slim":
@@ -437,6 +442,11 @@ export function panelSvg(spec, name = "") {
         const screw = (a, b) => `<g transform="translate(${a},${b})">${ring(5, "#9a9da3", "#00000088")}<path d="M-3 0h6M0 -3v6" stroke="#444" stroke-width="1.2"/></g>`;
         return `<rect x="0" y="0" width="${w}" height="${h - 10}" rx="6" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/><rect x="10" y="8" width="${w - 20}" height="${h - 26}" rx="4" fill="#23262d" stroke="#0005"/>${screw(22, 20)}${screw(w - 22, 20)}${screw(22, h - 30)}${screw(w - 22, h - 30)}${[0.18, 0.82].map((k) => `<ellipse cx="${w * k}" cy="${h - 6}" rx="34" ry="6" fill="#c9ccd1" stroke="#8d9096"/>`).join("")}`;
       }
+      case "schiit": {
+        const tab = (a) => `<path d="M${a - 16} 10 a16 14 0 0 0 32 0z" fill="${f.face}"/><g transform="translate(${a},12)">${ring(5, "#0d0d0f", "#444")}<path d="M-3 0h6M0 -3v6" stroke="#666" stroke-width="1"/></g>`;
+        if (spec.face === "front") return `<rect x="0" y="0" width="${w}" height="${h - 6}" rx="10" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/><rect x="40" y="${h - 16}" width="${w - 80}" height="4" rx="2" fill="#00000055"/>${[0.1, 0.9].map((k) => `<rect x="${w * k - 10}" y="${h - 6}" width="20" height="6" rx="2" fill="#111"/>`).join("")}`;
+        return `<rect x="0" y="0" width="${w}" height="${h - 6}" rx="3" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/><rect x="8" y="10" width="${w - 16}" height="${h - 24}" rx="2" fill="#5a5d63" stroke="#00000066"/>${tab(w * 0.45)}${tab(w * 0.7)}${[0.1, 0.9].map((k) => `<rect x="${w * k - 10}" y="${h - 6}" width="20" height="6" rx="2" fill="#111"/>`).join("")}`;
+      }
       case "full":
         return `<rect x="0" y="0" width="${w}" height="${h}" rx="5" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/>${[0.08, 0.92].map((k) => `<rect x="${w * k - 18}" y="${h - 4}" width="36" height="6" rx="2" fill="#0a0a0a"/>`).join("")}`;
       default:
@@ -447,6 +457,7 @@ export function panelSvg(spec, name = "") {
     .map(
       (g) =>
         `<rect x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}" rx="6" fill="none" stroke="${f.frame}" stroke-width="1" ${g.dashed ? 'stroke-dasharray="4 4"' : ""}/>` +
+        (g.deco === "barrel" ? `<g transform="translate(${g.x + g.w / 2},${g.y + 42})"><rect x="-13" y="-13" width="26" height="26" rx="2" fill="#0d0d0f"/>${ring(6, "#000", "#555")}${ring(2, GOLD, "none")}</g>` : "") +
         (g.deco === "iec"
           ? `<g transform="translate(${g.x + g.w / 2},${g.y + 42})"><rect x="-22" y="-26" width="44" height="22" rx="3" fill="#111"/><rect x="-8" y="-22" width="16" height="14" rx="2" fill="#2a2a2a" stroke="#555"/><path d="M-22 4h44l-6 22h-32z" fill="#111" stroke="#555"/><rect x="-14" y="10" width="4" height="9" fill="#ccc"/><rect x="10" y="10" width="4" height="9" fill="#ccc"/><rect x="-2" y="16" width="4" height="8" fill="#ccc"/></g>`
           : "") +
@@ -492,6 +503,10 @@ function frontOver(spec, f) {
     const mx = screenX + (room - mw) / 2;
     const meter = (x0, w0) => `<path d="M${x0 + 14} ${cy + 8} Q${x0 + w0 / 2} ${cy - 22} ${x0 + w0 - 14} ${cy + 8}" stroke="#3a2a10" fill="none" stroke-width="1.2"/><path d="M${x0 + w0 * 0.72} ${cy - 10} L${x0 + w0 * 0.86} ${cy - 4}" stroke="#c0392b" stroke-width="2.2"/><line x1="${x0 + w0 / 2}" y1="${cy + 22}" x2="${x0 + w0 * 0.36}" y2="${cy - 14}" stroke="#222" stroke-width="1.4"/><text x="${x0 + w0 / 2}" y="${cy + 26}" font-size="7" text-anchor="middle" fill="#3a2a10">VU</text>`;
     return `<rect x="${mx}" y="${cy - 32}" width="${mw}" height="62" rx="4" fill="#f2b632" stroke="#00000055"/><rect x="${mx}" y="${cy - 32}" width="${mw}" height="62" rx="4" fill="url(#vuGlow)"/>${meter(mx, mw / 2)}${meter(mx + mw / 2, mw / 2)}${knob}`;
+  }
+  if (spec.chassis.style === "schiit") {
+    const tog = (x) => `<rect x="${x - 5}" y="${cy - 12}" width="10" height="24" rx="5" fill="#0b0b0c"/><circle cx="${x}" cy="${cy + 4}" r="4" fill="#c9ccd1"/>`;
+    return `${tog(knobX - 70)}${tog(knobX - 48)}<g transform="translate(${knobX},${cy})">${ring(22, "#1a1b1e", "#000", 1.5)}${ring(18, f.face === "#cfd2d6" ? "#e6e8eb" : "#2a2b2f", "none")}<circle cx="0" cy="-12" r="2.2" fill="#ddd"/></g>`;
   }
   const sw = Math.min(room, 200);
   const sx = screenX + (room - sw) / 2;

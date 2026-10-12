@@ -19,6 +19,8 @@ const RULES = [
   // Vinyl: a turntable is a source, a phono stage sits between it and the amp,
   // and the cartridge decides which phono stage works (MM or MC). Mats,
   // clamps, belts and spare styli are accessories.
+  // An upgrade board for a box someone already owns ("Bifrost Multibit Upgrade").
+  ["accessory", /\bupgrade (?:card|board|module|kit)s?\b|\b(?:multibit|dac|usb) upgrade\b/i],
   ["accessory", /\b(turntable mats?|platter mats?|slipmats?|record (?:clamps?|weights?|cleaners?|cleaning|brush(?:es)?|sleeves?)|drive belts?|dust ?covers?|headshells?|tonearms?|tonearm lifts?|stylus (?:brush|cleaner|gauge)|cover ?it|lacing bars?|racks?)\b|^(?!.*\bcartridges?\b).*\b(?:replacement )?styl(?:us|i)\b/i],
   // Only next to a vinyl word: "noise isolation" on an IEM is not a turntable foot.
   ["accessory", /^(?=.*\b(?:turntables?|cartridges?|vinyl|records?|tonearms?)\b).*\b(?:isolation|damping|feet|spacers?|clips?|alignment|gauges?|protractors?)\b/i],
@@ -31,7 +33,7 @@ const RULES = [
   ["desktop", new RegExp(`^(?!.*\\b(?:amp(?:lifier)?s?|speakers?|(?:sa)?cd|iems?|earphones?|headphones?|portable)\\b).*${STREAMER.source}`, "i")],
   // Clocks, isolators, network conditioners and screen mounts are not amps.
   ["skip", /\b(?:master|reference|word) clocks?\b|\bclock (?:generators?|synchroni[sz]ers?)\b|^(?!.*\bearphones?\b).*\bisolators?\b|\bnetwork conditioners?\b|\b(?:monitor|display|desktop) mounts?\b|\bmonitor arms?\b|\b(?:full )?system\b.*\bmaster clock\b/i],
-  ["phono", /^(?!.*\bturntables?\b(?!\s+phono))(?!.*\bwith (?:a |built-in )?phono\b).*\b(?:phono ?(?:pre-?amp\w*|stages?|amp\w*|equali[sz]er|box\w*)|step[- ]up transformers?|\bSUT\b|mm\/mc pre-?amp\w*)/i],
+  ["phono", /^(?!.*\bturntables?\b(?!\s+phono))(?!.*\bwith (?:a |built-in )?phono\b).*\b(?:phono ?(?:pre-?amp\w*|stages?|amp\w*|equali[sz]er|box\w*)|step[- ]up transformers?|\bSUT\b|mm\/mc pre-?amp\w*|moving[- ](?:coil|magnet) pre-?amp\w*)/i],
   // "Turntable with Cartridge" is a turntable; "MC Cadenza Red Turntable Cartridge" is not.
   ["turntable", /^(?!.*\b(?:cables?|mats?|covers?)\b)(?!.*\bturntable cartridges?\b).*\b(?:turntables?|record players?)\b/i],
   // "Rega Apheta 3 Moving Coil" names no cartridge but is one.
@@ -51,7 +53,7 @@ const RULES = [
   // A radio is a source with its own headphone out, like a portable player.
   ["dap", /^(?!.*\bspeakers?\b).*\b(?:fm |portable |retro )*radio\b/i],
   ["accessory", /\b(replaceable|quick[- ]switch|impedance|modular) plugs?\b/i],
-  ["cable", /\b(cables?|cords?|interconnects?|extensions?)\b/i],
+  ["cable", /\b(cables?|cords?|interconnects?|extensions?|jumpers?)\b/i],
   ["adapter", /\b(adapters?|adaptors?|converters?|converter plugs?|jack converters?)\b/i],
   // CD players and transports (a "CD speaker" or a ripper is not one).
   ["skip", /\b(cd speakers?|cd[- ]rippers?|rippers?|cassettes?)\b/i],
@@ -70,7 +72,7 @@ const RULES = [
   // One with a DAC is turned back into a dongle when the catalog is built.
   ["portable", /\bportable (?:(?!dac\b)[\w-]+ ){0,3}amp(?:lifier)?s?\b/i],
   ["dongle", /\b(dongle|ear[- ]?hooks?|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable[- ](?:balanced[- ])?(usb[- ])?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac|bluetooth (?:dac|receiver|amp)\w*|portable (?:headphone )?amp\w*|btr\d+\w*)\b/i],
-  ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
+  ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|pre-?amp(?:lifier)?s?|dac)\b/i],
   // External DC supplies (linear or not) for DACs and amps; bundles with an amp stay amps.
   ["skip", /\b(chargers?|charging|power ?banks?|distribution block|power station|idefender|ground loop|bundle)\b/i],
   ["power", /\b(linear power suppl(?:y|ies)|lps|(?:dc |audio |external |audiophile )?power suppl(?:y|ies)|psu|ipower\w*|power system)\b/i],
@@ -86,7 +88,10 @@ export function classify(p) {
   // title still wins when it says the product is a part, a cable or not ours.
   if (p.kind) {
     const fromTitle = RULES.find(([, re]) => has(title, re))?.[0];
-    return ["accessory", "skip", "cable", "adapter", "power"].includes(fromTitle) ? fromTitle : p.kind;
+    if (["accessory", "skip", "cable", "adapter", "power"].includes(fromTitle)) return fromTitle;
+    // A store that files amps and DACs under "headphones": the title says what it is.
+    if (["headphone", "iem"].includes(p.kind) && ["desktop", "dongle", "dap", "portable"].includes(fromTitle)) return fromTitle;
+    return p.kind;
   }
   // Title first, then the store's product type, then tags (tags are noisy: "Desktop HiFi" on an IEM).
   for (const text of [title, p.type ?? "", tags]) {
@@ -211,7 +216,7 @@ const NOISE = [
   // CD player descriptors ("SMSL PL200 MQA CD Player" == "SMSL PL200 MKII All-in-One CD Player").
   /\b((?:sa)?cd[- ]?(?:players?|transports?|drives?)|cd (?:digital )?transport|digital transport|mqa|chips?|all[- ]in[- ]one|top[- ]loading|compact|rca|optical|portable stereo|stereo)\b/gi,
   // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
-  /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|with gan charger|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
+  /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|with gan charger|(?:solid[- ]state |vacuum tube |tube |digital |modular )?pre-?amplifiers?|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
 ];
 
 /**
@@ -302,6 +307,8 @@ export function modelKey(vendor, title) {
   let t = ` ${title.split(" | ")[0]} `;
   // "ES9039SPRO*4": how many chips, not part of the model.
   t = t.replace(/\*\s*\d+\b/g, " ");
+  // "Class A Headphone Amplifier and Preamplifier": the second role, not a name.
+  t = t.replace(/\s(?:and|&)\s+pre-?amp(?:lifier)?s?\b/gi, " ");
   const v = (vendor ?? "").trim();
   if (v) t = t.replace(new RegExp(`\\b${escapeRe(v)}\\b`, "gi"), " ");
   // A model whose name starts with "Amp" ("WiiM Amp Pro") keeps it: it is not the noise word.
@@ -312,7 +319,8 @@ export function modelKey(vendor, title) {
   // "QDC HiFi" are model names that happen to be marketing words.
   for (const re of NOISE) {
     const next = t.replace(re, " ");
-    if (/[a-z0-9]/i.test(next)) t = next;
+    // Nor one that leaves only a product word: "Class A Headphone Amplifier" is the Class A.
+    if (/[a-z0-9]/i.test(next) && !/^\W*(?:(?:amp(?:lifier)?s?|dac|pre-?amp(?:lifier)?s?|headphones?)\W*)+$/i.test(next)) t = next;
   }
   const bare = t.replace(MARKETING, " ");
   if (/[a-z0-9]/i.test(bare.replace(/[|–—:,/+&-]+/g, ""))) t = bare;

@@ -4,7 +4,7 @@
 // model, every socket with the line it came from and the page URL. The
 // catalog build fills in what stores don't list from it.
 //
-// Run: node scripts/maker-ports.mjs [fiio|ifi|schiit|topping ...]
+// Run: node scripts/maker-ports.mjs [fiio|ifi|schiit|topping|smsl ...]
 // Topping needs pdftotext (poppler) on the PATH.
 // Slow on purpose (one page every few seconds), pages cached in cache/makers/.
 
@@ -12,7 +12,7 @@ import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlugs, manualPairs, calloutPairs } from "./lib/makerpages.js";
+import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlugs, manualPairs, calloutPairs, smslPairs } from "./lib/makerpages.js";
 
 const root = new URL("../", import.meta.url);
 const UA = "Mozilla/5.0 (compatible; SottoBot/1.0; +https://cxzp.github.io/sotto/)";
@@ -63,10 +63,11 @@ async function pdfText(url) {
   } catch {
     console.log(`  pdftotext failed on ${url}`);
     return null;
-  } finally {
-    await rm(pdf, { force: true });
   }
-  return readFile(txt, "utf8");
+  const text = await readFile(txt, "utf8");
+  // A picture-only manual is kept, to be read by eye (cache/ isn't committed).
+  if (text.trim().length > 500) await rm(pdf, { force: true });
+  return text;
 }
 
 // ---------------------------------------------------------------------------
@@ -175,6 +176,30 @@ if (!only.length || only.includes("topping")) {
     const e = count(fromList) ? fromList : toEntry(manual, calloutPairs(text ?? ""));
     if (count(e)) (result[i.id] = { ...e, category: i.category }), done++;
     console.log(`topping ${i.id} <- ${h.handle}: ${Object.keys(e.ports.in)} | ${Object.keys(e.ports.out)} | ${e.jacks}`);
+  }
+}
+
+if (!only.length || only.includes("smsl")) {
+  // SMSL's manual library lists every model with its PDF.
+  const html = (await get("https://www.smsl-audio.com/portal/product/downlist/id/12.html")) ?? "";
+  const roman = (s) => s.replace(/Ⅱ/g, "II").replace(/Ⅲ/g, "III");
+  const sq = (x) => roman(x).toLowerCase().replace(/\bsmsl\b/g, "").replace(/mk ?iii\b/g, "mk3").replace(/mk ?ii\b/g, "mk2").replace(/[^a-z0-9]/g, "");
+  const manuals = [...html.matchAll(/data-name="([^"]+)"[\s\S]*?href="([^"]+\.pdf)"/g)].map((m) => ({ key: sq(m[1]), name: roman(m[1]), url: new URL(m[2], "https://www.smsl-audio.com/").href }));
+  for (const i of models.filter((i) => /^smsl$/i.test(i.brand))) {
+    const own = sq(i.model);
+    const titles = [own, ...i.offers.map((o) => sq(o.title))];
+    const fit = manuals.filter((m) => m.key.length > 1 && own.startsWith(m.key) && titles.every((t) => t.includes(m.key))).sort((a, b) => b.key.length - a.key.length)[0];
+    if (!fit) continue;
+    // "VMV A1 Pro" isn't the VMV A1; "C200 Pro ESS" (the chip) or a repeated "MK2" is.
+    let rest = own.slice(fit.key.length);
+    while (rest && fit.key.endsWith(rest.slice(0, 3))) rest = rest.slice(3);
+    if (/^(?:pro|ultra|mk\d|ii|se\b|ex$|es$|s$|n$|plus|max|r$)/.test(rest)) continue;
+    const text = await pdfText(fit.url);
+    const listed = smslPairs(text ?? "");
+    const fromList = toEntry(fit.url, listed);
+    const e = count(fromList) ? fromList : toEntry(fit.url, calloutPairs(text ?? ""));
+    if (count(e)) (result[i.id] = { ...e, category: i.category }), done++;
+    console.log(`smsl ${i.id} <- ${fit.name}: ${(text ?? "").length} chars | ${Object.keys(e.ports.in)} | ${Object.keys(e.ports.out)} | ${e.jacks}`);
   }
 }
 

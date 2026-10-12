@@ -2,7 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fiioSlugs, readPair, fiioPairs, ifiPairs, toEntry, manualPairs, calloutPairs } from "../scripts/lib/makerpages.js";
+import { smslPairs, fiioSlugs, readPair, fiioPairs, ifiPairs, toEntry, manualPairs, calloutPairs } from "../scripts/lib/makerpages.js";
 
 const sockets = (label, value) => readPair(label, value).sockets.map((s) => `${s.dir}:${s.port}${s.conn ? `:${s.conn}` : ""}`);
 
@@ -64,4 +64,19 @@ test("FiiO page names from store names", () => {
   assert.deepEqual(fiioSlugs("Echo Mini 512MB"), ["ECHOMINI512MB", "ECHOMINI"]);
   assert.deepEqual(fiioSlugs("KA13 DACs Mini -Class").at(-1), "KA13");
   assert.deepEqual(fiioSlugs("KA5 Ultra"), ["KA5ULTRA"]);
+});
+
+test("SMSL manuals: dotted spec rows and the numbered panel key", () => {
+  const text = [
+    "Input ............................................. USB / Optical / Coaxial / Bluetooth",
+    "Output ........................................... RCA/XLR/4.4mm Headphone Jack/",
+    "",
+    "                 6.35mm Headphone Jack/4-Pin XLR Headphone Jack",
+    "Output impedance ................................ XLR            200",
+    "USB ................................Windows 7 / 8 / 8.1 / 10 / 11",
+    "7 RCA output             8 Bluetooth antenna  9 Balanced output",
+    "4               5 4.4mm         6 6.35mm",
+  ].join(String.fromCharCode(10));
+  const e = toEntry("u", smslPairs(text));
+  assert.deepEqual([Object.keys(e.ports.in), Object.keys(e.ports.out).sort(), e.jacks], [["usb", "optical", "coax", "bt"], ["rca", "xlr"], ["xlr4", "6.35", "4.4"]]);
 });

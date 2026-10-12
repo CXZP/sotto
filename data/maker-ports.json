@@ -4429,5 +4429,3106 @@
   ],
   "complete": true,
   "category": "desktop"
+ },
+ "smsl--a100": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Inputs: USB , Bluetooth , LINE IN",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    },
+    "bt": {
+     "quote": "Inputs: USB , Bluetooth , LINE IN",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--a100-mini-class-d-80w-x2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Inputs: USB , Bluetooth , LINE IN",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    },
+    "bt": {
+     "quote": "Inputs: USB , Bluetooth , LINE IN",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--a200-integrated": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "10 USB: 10 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf"
+    },
+    "optical": {
+     "quote": "Inputs: OPTICAL",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf"
+    },
+    "coax": {
+     "quote": "Inputs: COAXIAL",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf"
+    },
+    "rca": {
+     "quote": "LINE IN: LINE IN",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A200Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--a300": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/A300Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: RCA , BT , USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A300Manual.pdf"
+    },
+    "rca": {
+     "quote": "Input: RCA , BT , USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A300Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--a50-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/A50ProManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB           10: USB           10",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A50ProManual.pdf"
+    },
+    "optical": {
+     "quote": "Inputs: OPTICAL",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A50ProManual.pdf"
+    },
+    "rca": {
+     "quote": "Line in: Line in",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A50ProManual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/A50ProManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--al200-integrated": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/AL200Manual.pdf",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Input: RCA , BT , USB , Coaxial , Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AL200Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: RCA , BT , USB , Coaxial , Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AL200Manual.pdf"
+    },
+    "usb": {
+     "quote": "Input: RCA , BT , USB , Coaxial , Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AL200Manual.pdf"
+    },
+    "rca": {
+     "quote": "Input: RCA , BT , USB , Coaxial , Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AL200Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--ao200-digital-input": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/AO200Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Inputs: XLR , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Inputs: XLR , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200Manual.pdf"
+    },
+    "usb": {
+     "quote": "USB input: USB input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--ao200-mkii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/AO200MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Inputs: XLR , RCA , BT , USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "Inputs: XLR , RCA , BT , USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200MK2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Inputs: XLR , RCA , BT , USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200MK2Manual.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth input: Bluetooth input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO200MK2Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--ao300-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/AO300PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "x USB: x USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/AO300PROManual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--c200-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB Input: USB Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth Input: Bluetooth Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial Input: Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "xlr": {
+     "quote": "TRS Balanced Output: TRS Balanced Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--c200-pro-ess": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB Input: USB Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth Input: Bluetooth Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial Input: Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    },
+    "xlr": {
+     "quote": "TRS Balanced Output: TRS Balanced Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/C200PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--d10": {
+  "url": "https://www.smsl-audio.com/upload/portal/20240722/202407221113429548.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "3.5mm 2 4.4mm 3 USB: 3.5mm 2 4.4mm 3 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/20240722/202407221113429548.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "smsl--d10-2": {
+  "url": "https://www.smsl-audio.com/upload/portal/20240722/202407221113429548.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "3.5mm 2 4.4mm 3 USB: 3.5mm 2 4.4mm 3 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/20240722/202407221113429548.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "smsl--d100": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "8 USB: 8 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D100Manual.pdf"
+    },
+    "coax": {
+     "quote": "Single-ended Output 5 Coaxial Input: Single-ended Output 5 Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D100Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical Input: Optical Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D100Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--d12": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D12Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D12Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA output: RCA output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D12Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--d300": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--d400-mk2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "11 USB: 11 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    },
+    "aes": {
+     "quote": "AES/EBU Input: AES/EBU Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial Input: Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical input: Optical input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR output: XLR output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--d400-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "11 USB: 11 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400proManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--d400ex": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D400EXManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--d6": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "5 USB        6: 5 USB        6",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/D6Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--dl100": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA outputs: RCA outputs",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR outputs: XLR outputs",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL100Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--dl200": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "10 USB: 10 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    },
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL200Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--dl300": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DL300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--do100-pro-dsd512": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO100PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--do200-2-xmos": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "11 USB         12: 11 USB         12",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--do200-mkii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "11 USB           12: 11 USB           12",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO200MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--do200-pro-12x-decording": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "x USB: x USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR outputs: XLR outputs",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    },
+    "rca": {
+     "quote": "RCA outputs: RCA outputs",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO200PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--do300ex": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB              14: USB              14",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DO300EXManual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--do400": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "x USB: x USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DO400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--dp5-music": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "17 USB 2.0: 17 USB 2.0",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   },
+   "out": {
+    "aes": {
+     "quote": "AES output: AES output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--dp5-network": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "17 USB 2.0: 17 USB 2.0",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   },
+   "out": {
+    "aes": {
+     "quote": "AES output: AES output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "dap"
+ },
+ "smsl--dp5-network-full-decoding-player": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "17 USB 2.0: 17 USB 2.0",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   },
+   "out": {
+    "aes": {
+     "quote": "AES output: AES output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/DP5Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "dap"
+ },
+ "smsl--dp5se": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "16 USB 2.0: 16 USB 2.0",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    }
+   },
+   "out": {
+    "aes": {
+     "quote": "AES/EBU output: AES/EBU output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    },
+    "i2s": {
+     "quote": "I2S output interface: I2S output interface",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "dap"
+ },
+ "smsl--dp5se-network": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "16 USB 2.0: 16 USB 2.0",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    }
+   },
+   "out": {
+    "aes": {
+     "quote": "AES/EBU output: AES/EBU output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    },
+    "i2s": {
+     "quote": "I2S output interface: I2S output interface",
+     "url": "https://www.smsl-audio.com/upload/portal/download/DP5SEManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "dap"
+ },
+ "smsl--h300": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h300-preamplifier": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h400-2024": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h400-high-end-silver": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h400-mk2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h400-mk2-preamplifier": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--h400-preamplifier": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/H400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--ho100-output": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/HO100Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/HO100Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/HO100Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--m300se": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB          14: USB          14",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf"
+    },
+    "optical": {
+     "quote": "Inputs: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf"
+    },
+    "coax": {
+     "quote": "Inputs: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf"
+    },
+    "bt": {
+     "quote": "Inputs: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA output: RCA output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M300SEManual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--m400": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB                   11: USB                   11",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--m400-dsd-dsd512-32bit-768khz-pre": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB                   11: USB                   11",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/M400Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--m500-mkiii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/M500MK3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--pa40": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PA40Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Line input (L/R RCA): Line input (L/R RCA)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PA40Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--pa400": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PA40Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Line input (L/R RCA): Line input (L/R RCA)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PA40Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--pl150": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PL150Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "x USB: x USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL150Manual.pdf"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL150Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical output: Optical output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL150Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA output                15: RCA output                15",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL150Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "cd"
+ },
+ "smsl--pl200-mk2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB Input: USB Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR balanced output: XLR balanced output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical Output: Optical Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "cd"
+ },
+ "smsl--pl200-mk2-mk-ii-ess": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB Input: USB Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR balanced output: XLR balanced output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical Output: Optical Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PL200MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "cd"
+ },
+ "smsl--ps200-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PS200PROManual02.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB        9: USB        9",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PS200PROManual02.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--ps200-pro-high-end": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/PS200PROManual02.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB        9: USB        9",
+     "url": "https://www.smsl-audio.com/upload/portal/download/PS200PROManual02.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--r100": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "7 USB: 7 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical Input: Optical Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial Input: Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Output: XLR Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--r100-r2r": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "7 USB: 7 USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical Input: Optical Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial Input: Coaxial Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Output: RCA Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Output: XLR Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R100Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--r3": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C USB: Type-C USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Optical Input: Optical Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Optical Output: Optical Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "smsl--r3-gaming": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C USB: Type-C USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Optical Input: Optical Input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Optical Output: Optical Output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/R3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "smsl--raw-dac1": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB     14: USB     14",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial input 2: Coaxial input 2",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical input 1: Optical input 1",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    },
+    "i2s": {
+     "quote": "I2S input: I2S input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA outputs: RCA outputs",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR output: XLR output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWDAC1Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--raw-mda1": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB       15: USB       15",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical x2",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial x2",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--raw-mda1-dual-ess": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB       15: USB       15",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical x2",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial x2",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/RAWMDA1Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--sa300-digital-aptx": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Inputs: USB , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    },
+    "rca": {
+     "quote": "Inputs: USB , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sa300-integrated": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Inputs: USB , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    },
+    "rca": {
+     "quote": "Inputs: USB , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    }
+   },
+   "out": {
+    "spk": {
+     "quote": "Right speaker output: Right speaker output",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SA300Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sa400-integrated": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SA400Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Inputs: XLR , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SA400Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Inputs: XLR , RCA , BT",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SA400Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sanskrit-10th-mkiii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SK10MK3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SK10MK3Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SK10MK3Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SK10MK3Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sd-9-sd9-network-player": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB(B): USB(B)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "aes": {
+     "quote": "AES output: AES output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical output: Optical output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "i2s": {
+     "quote": "I2S output interface: I2S output interface",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sd9-music": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB(B): USB(B)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "aes": {
+     "quote": "AES output: AES output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical output: Optical output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    },
+    "i2s": {
+     "quote": "I2S output interface: I2S output interface",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SD9Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sh8s-opa564": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SH8SManual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SH8SManual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR input: XLR input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SH8SManual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--shx": {
+  "url": "https://www.smsl-audio.com/upload/portal/20240819/202408191524086603.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/20240819/202408191524086603.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/20240819/202408191524086603.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR balanced output: XLR balanced output",
+     "url": "https://www.smsl-audio.com/upload/portal/20240819/202408191524086603.pdf"
+    },
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/20240819/202408191524086603.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--sp400": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/SP400Manual.pdf",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "RCA(SE IN): RCA(SE IN)",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SP400Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR input: XLR input",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SP400Manual.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "category": "desktop"
+ },
+ "smsl--su-1-su1-decktop": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA output: RCA output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-10-support-cd-jas": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "5 USB-B: 5 USB-B",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf",
+     "conn": "usbB"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-3": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB        7: USB        7",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical input: Optical input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial input: Coaxial input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR output: XLR output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA output: RCA output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-6": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-6-ldac": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU6Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-9-pro": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-9-pro-cd-bt-5-0": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9PROManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su-9n-ldac": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su1": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA output: RCA output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU1Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su10": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "5 USB-B: 5 USB-B",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf",
+     "conn": "usbB"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU10Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su9": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su9-ultra": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/SU9ULTRAManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--su9n": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SU9NManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--sux": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-B: USB-B",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf",
+     "conn": "usbB"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/SUXManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d1se": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d1se-768khz-32bit": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1seManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d1se2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d1se2-dsd512": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD1SE2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r-bd34301ekv": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r-full-decording-cd-bd34301ekv": {
+  "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "i2s": {
+     "quote": "Input: I2S",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "bt": {
+     "quote": "Input: Bluetooth",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/undefined/VMVD2RManual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r-mk2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-C            6: USB-C            6",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r-mk2-dual-rohm-bd34302ekv": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-C            6: USB-C            6",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d2r-mk2-mkii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-C            6: USB-C            6",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD2RMK2Manual.pdf",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d3": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES(EBU)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d3-r-2r-dsd512": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Input: USB",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "optical": {
+     "quote": "Input: Optical",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "coax": {
+     "quote": "Input: Coaxial",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "aes": {
+     "quote": "Input: AES(EBU)",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: RCA",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    },
+    "xlr": {
+     "quote": "Output: XLR",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d3r": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3RManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-C: USB-C",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3RManual.pdf",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-d3r-dual-rohm-bd34302ekv": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3RManual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB-C: USB-C",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVD3RManual.pdf",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "smsl--vmv-p2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--vmv-p2-hpa": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--vmv-p2-mk2": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "usb": {
+     "quote": "USB port: USB port",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--vmv-p2-mk2-mkii": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "usb": {
+     "quote": "USB port: USB port",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--vmv-p2-mk2-preamplifier": {
+  "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR balanced input: XLR balanced input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "rca": {
+     "quote": "RCA input: RCA input",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "usb": {
+     "quote": "USB port: USB port",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "RCA Pre-output: RCA Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    },
+    "xlr": {
+     "quote": "XLR Pre-output: XLR Pre-output",
+     "url": "https://www.smsl-audio.com/upload/portal/download/VMVP2MK2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "smsl--vmv-t2": {
+  "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB input: USB input",
+     "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf"
+    },
+    "aes": {
+     "quote": "AES/EBU input: AES/EBU input",
+     "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Coaxial output",
+     "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf"
+    },
+    "optical": {
+     "quote": "Optical output: Optical output",
+     "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf"
+    },
+    "aes": {
+     "quote": "AES/EBU output 2 17 AES/EBU output 1: AES/EBU output 2 17 AES/EBU output 1",
+     "url": "https://www.smsl-audio.com/upload/original/VMVT2Manual.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "cd"
  }
 }

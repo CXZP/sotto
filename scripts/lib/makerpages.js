@@ -33,7 +33,9 @@ export function readPair(label, value) {
     if (/s\/?pdif|coax/.test(V)) add("coax", "out", "spdif35");
     return found;
   }
-  if (/headphone|phones?\b|headset|\bpo\b|bal(?:anced)? output interface|balanced out(?:put)? interface|\bbal output\b|^balanced headphone|^balanced output ports?$/.test(L) && !/line/.test(L)) {
+  // SMSL: "Output: 6.35 Headphone jack" (the value says it's a headphone jack).
+  const hpValue = /^outputs?$/.test(L) && /headphone/.test(V);
+  if ((hpValue || /headphone|phones?\b|headset|\bpo\b|bal(?:anced)? output interface|balanced out(?:put)? interface|\bbal output\b|^balanced headphone|^balanced output ports?$/.test(L)) && !/line/.test(L)) {
     found.jacks.push(...jacksIn(value));
     // A shared socket: "3.5mm port (PO/coaxial out shared)".
     if (/coax/.test(V)) add("coax", "out", "spdif35");
@@ -42,7 +44,7 @@ export function readPair(label, value) {
   }
   // "Optical Out: Up to 96kHz" names the socket in the label.
   if (FIGURE.test(V) && !CONNECTOR.test(V) && !(dir && /optical|coax|usb/.test(L))) return found;
-  if (/^speaker (?:output|terminal|out)/.test(L)) return add("spk", "out"), found;
+  if (/speaker (?:output|terminal|out)/.test(L) && !/subwoofer/.test(L)) return add("spk", "out"), found;
   if (/optical|toslink/.test(all)) add("optical");
   if (/coax/.test(all)) add("coax");
   if ((/\busb\b|type-?c/.test(L) || (dir === "in" && /\busb\b/.test(V))) && (/data|transfer|transmission|audio|dac/.test(all) || !/power|charg|host|upgrade|otg|usb-?a\b/.test(all))) add("usb", "in", /type-?b|usb-?b\b/.test(V) ? "usbB" : /type-?c|usb-?c/.test(V) ? "usbC" : undefined);
@@ -51,7 +53,11 @@ export function readPair(label, value) {
   if (/bluetooth/.test(all) && dir === "in") add("bt");
   // One 3.5 hole for optical and coaxial ("S/PDIF (optical/coaxial)").
   if (/s\/?pdif/.test(V) && /optical/.test(V) && /coax/.test(V)) for (const s of found.sockets) if (["optical", "coax"].includes(s.port)) s.conn = "spdif35";
-  if ((/line|preamp|pre-out|analog(?:ue)?\b/.test(L) || (dir && /\brca\b|\bxlr\b|balanced|single-ended/.test(V))) && CONNECTOR.test(V) && !/optical|coax|usb|s\/?pdif|\baes/.test(all)) {
+  // A list naming both ("Output: RCA / XLR", "Input: USB / RCA / XLR"): each one.
+  if (dir && /\brca\b/.test(V) && /\bxlr\b/.test(V) && !/optical|coax|usb|s\/?pdif|\baes/.test(L) && !/\baes/.test(V)) {
+    add("rca", dir);
+    add("xlr", dir);
+  } else if ((/line|preamp|pre-out|analog(?:ue)?\b/.test(L) || (dir && /\brca\b|\bxlr\b|balanced|single-ended/.test(V))) && CONNECTOR.test(V) && !/s\/?pdif|\baes/.test(all) && !/optical|coax|usb/.test(/\brca\b|\bxlr\b/.test(V) ? L : all)) {
     const bal = /balanced|\bbal\b|xlr/.test(all) && !/single|unbal|s-bal/.test(all);
     const conn = /4\.4/.test(V) ? "4.4" : /3\.5/.test(V) ? "3.5" : undefined;
     if (bal) add("xlr", dir, conn);
@@ -199,6 +205,43 @@ export function calloutPairs(text) {
       const c = chunk.trim();
       if (c.length < 4 || c.length > 70 || !/[a-z]{3}/i.test(c) || /^(?:see|\*|press|rotate|please)\b/i.test(c)) continue;
       pairs.push([c, c]);
+    }
+  }
+  return pairs;
+}
+
+// SMSL manuals (pdftotext): an English "Specifications" list with dotted
+// leaders ("Input ........ USB / Optical / Coaxial / Bluetooth") and a panel key
+// of numbered labels, several to a line ("7 RCA output   8 Bluetooth antenna").
+const MEASURE = /impedance|level|amplitude|thd|snr|dynamic|noise|crosstalk|gain|frequency|sensitivity|consumption|standby|bit depth|sampling|separation|distortion|range|voltage|power output|output power|transmission|compatib|specification/i;
+export function smslPairs(text) {
+  const pairs = [];
+  const lines = text.split(/\r?\n/);
+  for (let k = 0; k < lines.length; k++) {
+    const raw = lines[k];
+    const lead = raw.match(/^\s*([A-Za-z][A-Za-z0-9 /&()-]{1,40}?)\s*\.{4,}\s*(\S.*)$/);
+    if (lead) {
+      const label = lead[1].trim();
+      // Only rows about sockets ("USB ..... Windows 7 / 8" is not one).
+      if (MEASURE.test(label) || !/inputs?\b|outputs?\b|jack|port|terminal|interface/i.test(label)) continue;
+      // A list that ends in "/" runs on to the next line.
+      let value = lead[2];
+      while (/\/\s*$/.test(value)) {
+        let j = k + 1;
+        while (j < lines.length && j < k + 3 && !lines[j].trim()) j++;
+        if (j >= lines.length || !lines[j].trim() || /\.{4,}/.test(lines[j])) break;
+        value += lines[j].trim();
+        k = j;
+      }
+      // "6.35 Headphone jack /4 .4mm Headphone Jack / RCA / XLR": one row each.
+      for (const part of value.replace(/(\d) \.(\d)/g, "$1.$2").split(/\s*\/\s*/)) if (/[a-z]/i.test(part)) pairs.push([label, part.trim()]);
+      continue;
+    }
+    // "7 RCA output             8 Bluetooth antenna  9 Balanced output" ("5 4.4mm headphone jack")
+    if (!/^\s*\d{1,2}\s+[A-Za-z0-9]/.test(raw)) continue;
+    for (const m of raw.matchAll(/(?:^|\s{2,})\d{1,2}\s+(\S.*?)(?=\s{2,}\d{1,2}\s+\S|\s*$)/g)) {
+      const label = m[1].replace(/[*]+$/, "").trim();
+      if (/[a-z]{3}/i.test(label) && label.length > 3 && label.length < 60 && !MEASURE.test(label)) pairs.push([label, label]);
     }
   }
   return pairs;

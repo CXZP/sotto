@@ -8,6 +8,8 @@
 .deal h3 { margin-top: 0; }
 .dfield { display: grid; gap: 4px; margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
 .dfield .search, .dfield .mini-select { color: var(--text); }
+/* Selects match the text boxes beside them: same height, so labels line up. */
+.dfield .mini-select { width: 100%; padding: 10px 16px; line-height: inherit; }
 input.num { font-variant-numeric: tabular-nums; }
 .deal-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0 12px; align-items: end; }
 .deal-fields .check { margin-bottom: 14px; }
@@ -19,6 +21,7 @@ input.num { font-variant-numeric: tabular-nums; }
 .code-row .search { padding: 7px 12px; min-width: 0; }
 .code-row .link { align-self: center; }
 .paste .search { min-width: 220px; }
+.paste .mini-select { padding: 10px 16px; } /* same height as the text box beside it */
 
 .deal-big { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 4px 0; font-variant-numeric: tabular-nums; }
 .deal-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
@@ -77,6 +80,9 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 .gloss { display: grid; gap: 4px; align-content: start; padding: 14px; border-radius: 14px; background: var(--surface-2); color: var(--text); }
 .gloss:hover { text-decoration: none; outline: 1px solid var(--line-strong); }
 .gloss .tag { justify-self: start; }
+/* The article card spans the page like the cards below it; the text keeps a readable line length. */
+.term-body.prose { max-width: none; }
+.term-body > * { max-width: 760px; }
 .term-body h2 { font-size: 18px; margin: 18px 0 6px; }
 .term-body h2:first-child { margin-top: 0; }
 .tool-in { display: flex; gap: 8px; align-items: center; }

@@ -768,5 +768,54 @@
         }
       }
     }
+  },
+  {
+    "id": "fiio--k15",
+    "brand": "FiiO",
+    "model": "K15",
+    "category": "desktop",
+    "addedFrom": "https://www.fiio.com/k15",
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังด้านหน้า: 6.35 มม., 4.4 มม. บาลานซ์ และ XLR 4 ขา ตารางพอร์ตของ FiiO เขียนว่า \"Headphone out: Standard 3.5mm port\" แต่หน้าเดียวกันวัดค่าที่ \"headphone output (6.35mm out ...)\" และรูปผังพอร์ตก็เป็น 6.35 มม.",
+        "en": "Front headphone jacks: 6.35 mm, 4.4 mm balanced and 4-pin XLR. FiiO's port table says \"Headphone out: Standard 3.5mm port\", but the same page measures the \"headphone output (6.35mm out ...)\" and the port diagram shows 6.35 mm.",
+        "source": "https://www.fiio.com/K15_parameters"
+      }
+    ],
+    "ports": {
+      "in": {
+        "bt": {
+          "quote": "Digital inputs include USB, coaxial, optical, Bluetooth, streaming media and local playback.",
+          "url": "https://www.fiio.com/k15"
+        }
+      },
+      "out": {}
+    },
+    "look": {
+      "vu": true,
+      "style": "full",
+      "finish": "black"
+    }
+  },
+  {
+    "id": "fiio--k13",
+    "brand": "FiiO",
+    "model": "K13",
+    "category": "desktop",
+    "addedFrom": "https://www.fiio.com/k13",
+    "ports": {
+      "in": {
+        "bt": {
+          "quote": "With support for Bluetooth 5.4 and reception for the LDAC/AAC/SBC codecs, the K13 allows you to be immersed into in a world of high- quality music even when listening wirelessly.",
+          "url": "https://www.fiio.com/k13"
+        }
+      },
+      "out": {}
+    }
   }
 ]

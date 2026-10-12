@@ -2,7 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readPair, fiioPairs, ifiPairs, toEntry } from "../scripts/lib/makerpages.js";
+import { readPair, fiioPairs, ifiPairs, toEntry, manualPairs, calloutPairs } from "../scripts/lib/makerpages.js";
 
 const sockets = (label, value) => readPair(label, value).sockets.map((s) => `${s.dir}:${s.port}${s.conn ? `:${s.conn}` : ""}`);
 
@@ -42,4 +42,17 @@ test("a FiiO table and an iFi spec list", () => {
   assert.deepEqual(Object.keys(f.ports.in), ["usb"]);
   assert.deepEqual(Object.keys(f.ports.out).sort(), ["rca", "xlr"]);
   assert.equal(f.ports.out.xlr.conn, "4.4");
+});
+
+test("Topping manuals: numbered lists and callouts", () => {
+  const listed = ["2.1 Front panel", "1. 3.5mm headphone / headset jack", "2. 4.4mm balanced headphone output jack", "3. Screen", "2.3 Rear panel",
+    "1. 4.4mm balanced stereo output", "     This port is a Line Out output.", "2. SPDIF optical input", "3. USB input & power input",
+    "     The DX1 II USB port handles both audio data transmission and power supply.", "3. Connection"].join(String.fromCharCode(10));
+  const a = toEntry("u", manualPairs(listed));
+  assert.deepEqual([Object.keys(a.ports.in), Object.keys(a.ports.out), a.jacks], [["optical", "usb"], ["xlr"], ["4.4", "3.5"]]);
+  const drawn = ["   Front panel", "   Rear panel                1   3.Output settings   12", "Front panel",
+    "     4.4mm balanced headphone output jack        Menu", "4-PIN-XLR headphone output jack     Screen", "Rear panel",
+    "      Balanced XLR output         Coaxial SPDIF input", "      Power input (AC 100-277V 50Hz/60Hz)    Single-ended RCA output", "Display"].join(String.fromCharCode(10));
+  const b = toEntry("u", calloutPairs(drawn));
+  assert.deepEqual([Object.keys(b.ports.in), Object.keys(b.ports.out).sort(), b.jacks], [["coax"], ["rca", "xlr"], ["xlr4", "4.4"]]);
 });

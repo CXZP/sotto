@@ -452,6 +452,7 @@ for (const g of catalog) {
   if (g.specs.zout) w.zout++;
 }
 
+const handPorts = new Map();
 // Models no tracked store sells yet, and facts stores leave out (sockets most
 // of all), added by hand from the maker's own page (data/extra-items.json,
 // every value quoted with its source). A store listing for the same model
@@ -474,6 +475,8 @@ for (const g of catalog) {
       // which can be wrong ("line in" on a DAC that has none).
       if (e.ports && e.portsComplete) hit.ports = structuredClone(e.ports);
       else if (e.ports) {
+        // Kept aside too, so a maker's full table below doesn't drop them.
+        handPorts.set(hit, e.ports);
         hit.ports ??= { in: {}, out: {} };
         for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(e.ports[dir] ?? {})) hit.ports[dir][p] ??= v;
       }
@@ -498,7 +501,10 @@ for (const g of catalog) {
     const g = byKey.get(groupKey(id)) ?? byKey.get(groupKey(before[id] ?? "")) ?? (m.category ? byLoose.get(looseKey(id, m.category)) : null);
     if (!g || hand.has(groupKey(g.id))) continue;
     if (m.jacks?.length && !g.jacks) g.jacks = m.jacks;
-    if (m.complete) g.ports = structuredClone(m.ports);
+    if (m.complete) {
+      g.ports = structuredClone(m.ports);
+      for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(handPorts.get(g)?.[dir] ?? {})) g.ports[dir][p] = v;
+    }
     else {
       g.ports ??= { in: {}, out: {} };
       for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;

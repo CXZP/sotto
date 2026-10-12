@@ -1,1615 +1,4 @@
 {
- "ifi--go-bar": {
-  "url": "https://ifi-audio.com/products/go-bar",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB C",
-     "url": "https://ifi-audio.com/products/go-bar"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-bar-10th-anniversary-gold": {
-  "url": "https://ifi-audio.com/products/go-bar",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB C",
-     "url": "https://ifi-audio.com/products/go-bar"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-bar-gold-bar-ultraportable-c-pre": {
-  "url": "https://ifi-audio.com/products/go-bar",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB C",
-     "url": "https://ifi-audio.com/products/go-bar"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-bar-kensei": {
-  "url": "https://ifi-audio.com/products/go-bar-kensei",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-bar-kensei",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "dongle"
- },
- "ifi--go-bar-kensei-ultraportable": {
-  "url": "https://ifi-audio.com/products/go-bar-kensei",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-bar-kensei",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--go-bar-kensei-ultraportable-c-pre": {
-  "url": "https://ifi-audio.com/products/go-bar-kensei",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-bar-kensei",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "dongle"
- },
- "ifi--go-bar-kensei-ultraportable-k2hd-technology": {
-  "url": "https://ifi-audio.com/products/go-bar-kensei",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-bar-kensei",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--go-blu": {
-  "url": "https://ifi-audio.com/products/go-blu",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
-     "url": "https://ifi-audio.com/products/go-blu"
-    },
-    "usb": {
-     "quote": "input: Wired: USB-C (24/96)",
-     "url": "https://ifi-audio.com/products/go-blu",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-blu-air": {
-  "url": "https://ifi-audio.com/products/go-blu-air",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.2",
-     "url": "https://ifi-audio.com/products/go-blu-air"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-blu-air-hd": {
-  "url": "https://ifi-audio.com/products/go-blu-air",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.2",
-     "url": "https://ifi-audio.com/products/go-blu-air"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-blu-hd": {
-  "url": "https://ifi-audio.com/products/go-blu",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
-     "url": "https://ifi-audio.com/products/go-blu"
-    },
-    "usb": {
-     "quote": "input: Wired: USB-C (24/96)",
-     "url": "https://ifi-audio.com/products/go-blu",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link": {
-  "url": "https://ifi-audio.com/products/go-link",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "dongle"
- },
- "ifi--go-link-2": {
-  "url": "https://ifi-audio.com/products/go-link-2",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link-2-c": {
-  "url": "https://ifi-audio.com/products/go-link-2",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link-2-max": {
-  "url": "https://ifi-audio.com/products/go-link-2-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link-2-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link-2-max-c": {
-  "url": "https://ifi-audio.com/products/go-link-2-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link-2-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link-c": {
-  "url": "https://ifi-audio.com/products/go-link",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "dongle"
- },
- "ifi--go-link-max": {
-  "url": "https://ifi-audio.com/products/go-link-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--go-link-max-3-5-output": {
-  "url": "https://ifi-audio.com/products/go-link-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--go-link-max-c": {
-  "url": "https://ifi-audio.com/products/go-link-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/go-link-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--hip-dac3": {
-  "url": "https://ifi-audio.com/products/hip-dac-3",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/hip-dac-3",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-diablo-2": {
-  "url": "https://ifi-audio.com/products/idsd-diablo-2",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4™",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-diablo-2-ultra-res-wireless": {
-  "url": "https://ifi-audio.com/products/idsd-diablo-2",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4™",
-     "url": "https://ifi-audio.com/products/idsd-diablo-2"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--idsd-gr-2": {
-  "url": "https://ifi-audio.com/products/idsd-gr-2",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C;<br)",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-gr-2"
-    },
-    "xlr": {
-     "quote": "Analogue input: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "3.5"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "3.5"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-gr-2-mt": {
-  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C;<br)",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
-    },
-    "xlr": {
-     "quote": "Analogue input: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "3.5"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "3.5"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-gr-2-mt-ultra-res-master-tuned-series": {
-  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C;<br)",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
-    },
-    "xlr": {
-     "quote": "Analogue input: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "3.5"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
-     "conn": "3.5"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-gr-2-ultra-res": {
-  "url": "https://ifi-audio.com/products/idsd-gr-2",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-C;<br)",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-gr-2"
-    },
-    "xlr": {
-     "quote": "Analogue input: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "3.5"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1 x Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 1 x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-gr-2",
-     "conn": "3.5"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-phantom": {
-  "url": "https://ifi-audio.com/products/idsd-phantom",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-B 3.0",
-     "url": "https://ifi-audio.com/products/idsd-phantom",
-     "conn": "usbB"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "aes": {
-     "quote": "Digital input: 1x AES3 (XLR);",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "optical": {
-     "quote": "Digital input: 1x Optical (SC);",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1x Balanced XLR (L/R)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "rca": {
-     "quote": "Line output: 1x RCA (L/R)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    }
-   }
-  },
-  "jacks": [
-   "xlr4",
-   "6.35",
-   "4.4",
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--idsd-phantom-class-pre": {
-  "url": "https://ifi-audio.com/products/idsd-phantom",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "Digital input: 1x USB-B 3.0",
-     "url": "https://ifi-audio.com/products/idsd-phantom",
-     "conn": "usbB"
-    },
-    "coax": {
-     "quote": "Digital input: 1x S/PDIF (coaxial)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "aes": {
-     "quote": "Digital input: 1x AES3 (XLR);",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "optical": {
-     "quote": "Digital input: 1x Optical (SC);",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 1x Balanced XLR (L/R)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    },
-    "rca": {
-     "quote": "Line output: 1x RCA (L/R)",
-     "url": "https://ifi-audio.com/products/idsd-phantom"
-    }
-   }
-  },
-  "jacks": [
-   "xlr4",
-   "6.35",
-   "4.4",
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--idsd-valkyrie": {
-  "url": "https://ifi-audio.com/products/idsd-valkyrie",
-  "ports": {
-   "in": {
-    "xlr": {
-     "quote": "Analogue input: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 2x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "rca": {
-     "quote": "Line output: RCA",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-valkyrie-mastering-black": {
-  "url": "https://ifi-audio.com/products/idsd-valkyrie",
-  "ports": {
-   "in": {
-    "xlr": {
-     "quote": "Analogue input: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 2x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "rca": {
-     "quote": "Line output: RCA",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--idsd-valkyrie-transportable": {
-  "url": "https://ifi-audio.com/products/idsd-valkyrie",
-  "ports": {
-   "in": {
-    "xlr": {
-     "quote": "Analogue input: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Analogue input: Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "usbC"
-    },
-    "optical": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "spdif35"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced 4.4mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "4.4"
-    },
-    "line": {
-     "quote": "Line output: 2x Single-Ended 3.5mm",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie",
-     "conn": "3.5"
-    },
-    "rca": {
-     "quote": "Line output: RCA",
-     "url": "https://ifi-audio.com/products/idsd-valkyrie"
-    }
-   }
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--neo-idsd-2": {
-  "url": "https://ifi-audio.com/products/neo-idsd-2",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
-     "url": "https://ifi-audio.com/products/neo-idsd-2",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
-     "url": "https://ifi-audio.com/products/neo-idsd-2",
-     "conn": "spdif35"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced XLR: 19.5V max. (variable) 4.4V­ fixed",
-     "url": "https://ifi-audio.com/products/neo-idsd-2",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: UnBAL RCA: 10.5V max. (variable) 2.2V ­fixed",
-     "url": "https://ifi-audio.com/products/neo-idsd-2"
-    }
-   }
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--neo-idsd-3": {
-  "url": "https://ifi-audio.com/products/neo-idsd-3",
-  "ports": {
-   "in": {
-    "rca": {
-     "quote": "Analogue input: Single-Ended RCA (L/R)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-B 3.0;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3",
-     "conn": "usbB"
-    },
-    "coax": {
-     "quote": "Digital input: S/PDIF Coaxial;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "optical": {
-     "quote": "Digital input: S/PDIF Optical;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    }
-   }
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--neo-idsd-3-ultra-res": {
-  "url": "https://ifi-audio.com/products/neo-idsd-3",
-  "ports": {
-   "in": {
-    "rca": {
-     "quote": "Analogue input: Single-Ended RCA (L/R)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.4;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-B 3.0;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3",
-     "conn": "usbB"
-    },
-    "coax": {
-     "quote": "Digital input: S/PDIF Coaxial;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    },
-    "optical": {
-     "quote": "Digital input: S/PDIF Optical;",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
-     "url": "https://ifi-audio.com/products/neo-idsd-3"
-    }
-   }
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--neo-stream-3": {
-  "url": "https://ifi-audio.com/products/neo-stream-3",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "Digital input: Optical)",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C (front)",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "usbC"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 4.4mm Balanced",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: SE RCA",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "optical": {
-     "quote": "Output: S/PDIF Optical",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "aes": {
-     "quote": "Output: AES/EBU",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "i2s": {
-     "quote": "Output: I2S",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--neo-stream-3-network": {
-  "url": "https://ifi-audio.com/products/neo-stream-3",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "Digital input: Optical)",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C (front)",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "usbC"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 4.4mm Balanced",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: SE RCA",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "optical": {
-     "quote": "Output: S/PDIF Optical",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "aes": {
-     "quote": "Output: AES/EBU",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "i2s": {
-     "quote": "Output: I2S",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--neo-stream-3-ultra-res-network-integrated": {
-  "url": "https://ifi-audio.com/products/neo-stream-3",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "Digital input: Optical)",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C (front)",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "usbC"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 4.4mm Balanced",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: SE RCA",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "optical": {
-     "quote": "Output: S/PDIF Optical",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "aes": {
-     "quote": "Output: AES/EBU",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "i2s": {
-     "quote": "Output: I2S",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--neo-stream-3-wi-fi-transport": {
-  "url": "https://ifi-audio.com/products/neo-stream-3",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "Digital input: Optical)",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "usb": {
-     "quote": "Digital input: USB-C (front)",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "usbC"
-    }
-   },
-   "out": {
-    "xlr": {
-     "quote": "Line output: 4.4mm Balanced",
-     "url": "https://ifi-audio.com/products/neo-stream-3",
-     "conn": "4.4"
-    },
-    "rca": {
-     "quote": "Line output: SE RCA",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "optical": {
-     "quote": "Output: S/PDIF Optical",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "aes": {
-     "quote": "Output: AES/EBU",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    },
-    "i2s": {
-     "quote": "Output: I2S",
-     "url": "https://ifi-audio.com/products/neo-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--pro-idsd-signature-class-interface-controller": {
-  "url": "https://ifi-audio.com/products/pro-idsd-signature",
-  "ports": {
-   "in": {
-    "optical": {
-     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
-     "url": "https://ifi-audio.com/products/pro-idsd-signature",
-     "conn": "spdif35"
-    },
-    "coax": {
-     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
-     "url": "https://ifi-audio.com/products/pro-idsd-signature",
-     "conn": "spdif35"
-    },
-    "usb": {
-     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
-     "url": "https://ifi-audio.com/products/pro-idsd-signature"
-    },
-    "aes": {
-     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
-     "url": "https://ifi-audio.com/products/pro-idsd-signature"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--uno": {
-  "url": "https://ifi-audio.com/products/uno",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/uno",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "dongle"
- },
- "ifi--up-play-up-play-max-c-transmitters": {
-  "url": "https://ifi-audio.com/products/up-play-max",
-  "ports": {
-   "in": {
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/up-play-max",
-     "conn": "usbC"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--xcan": {
-  "url": "https://ifi-audio.com/products/xcan",
-  "ports": {
-   "in": {
-    "line": {
-     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
-     "url": "https://ifi-audio.com/products/xcan",
-     "conn": "3.5"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "portable"
- },
- "ifi--xcan-dual-mono": {
-  "url": "https://ifi-audio.com/products/xcan",
-  "ports": {
-   "in": {
-    "line": {
-     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
-     "url": "https://ifi-audio.com/products/xcan",
-     "conn": "3.5"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--xdsd-gryphon-black": {
-  "url": "https://ifi-audio.com/products/xdsd-gryphon",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon"
-    },
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon",
-     "conn": "usbC"
-    },
-    "xlr": {
-     "quote": "input: Balanced: 4.4mm",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon",
-     "conn": "4.4"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "dongle"
- },
- "ifi--xdsd-gryphon-pro-pack-ultra-res-wireless-belt-pack-system": {
-  "url": "https://ifi-audio.com/products/xdsd-gryphon",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon"
-    },
-    "usb": {
-     "quote": "input: USB-C",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon",
-     "conn": "usbC"
-    },
-    "xlr": {
-     "quote": "input: Balanced: 4.4mm",
-     "url": "https://ifi-audio.com/products/xdsd-gryphon",
-     "conn": "4.4"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "4.4",
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-air-blue": {
-  "url": "https://ifi-audio.com/products/zen-air-blue",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.0TM with SBC",
-     "url": "https://ifi-audio.com/products/zen-air-blue"
-    }
-   },
-   "out": {
-    "rca": {
-     "quote": "Output: Audio RCA L/R",
-     "url": "https://ifi-audio.com/products/zen-air-blue"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-air-blue-2-car": {
-  "url": "https://ifi-audio.com/products/zen-air-blue-2",
-  "ports": {
-   "in": {},
-   "out": {
-    "rca": {
-     "quote": "Output: RCA L/R​",
-     "url": "https://ifi-audio.com/products/zen-air-blue-2"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-blue-3-wireless": {
-  "url": "https://ifi-audio.com/products/zen-blue-3",
-  "ports": {
-   "in": {
-    "bt": {
-     "quote": "input: Bluetooth 5.4 (aptX Lossless, aptX Adaptive, aptX",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    },
-    "usb": {
-     "quote": "input: USB",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    },
-    "optical": {
-     "quote": "input: Optical",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    },
-    "coax": {
-     "quote": "input: Coaxial",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    },
-    "rca": {
-     "quote": "input: RCA L/R (Analogue)",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    },
-    "dc": {
-     "quote": "Power supply: USB-C or DC 5V/≥0.5A (centre +ve)",
-     "url": "https://ifi-audio.com/products/zen-blue-3"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-can-3-analogue": {
-  "url": "https://ifi-audio.com/products/zen-can-3",
-  "ports": {
-   "in": {
-    "rca": {
-     "quote": "Analogue input: SE RCA L/R:",
-     "url": "https://ifi-audio.com/products/zen-can-3"
-    },
-    "line": {
-     "quote": "Analogue input: SE 3.5mm:",
-     "url": "https://ifi-audio.com/products/zen-can-3",
-     "conn": "3.5"
-    },
-    "xlr": {
-     "quote": "Analogue input: BAL 4.4mm:",
-     "url": "https://ifi-audio.com/products/zen-can-3",
-     "conn": "4.4"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-3-pre": {
-  "url": "https://ifi-audio.com/products/zen-can-3",
-  "ports": {
-   "in": {
-    "rca": {
-     "quote": "Analogue input: SE RCA L/R:",
-     "url": "https://ifi-audio.com/products/zen-can-3"
-    },
-    "line": {
-     "quote": "Analogue input: SE 3.5mm:",
-     "url": "https://ifi-audio.com/products/zen-can-3",
-     "conn": "3.5"
-    },
-    "xlr": {
-     "quote": "Analogue input: BAL 4.4mm:",
-     "url": "https://ifi-audio.com/products/zen-can-3",
-     "conn": "4.4"
-    }
-   },
-   "out": {}
-  },
-  "jacks": [
-   "6.35",
-   "4.4"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-signature": {
-  "url": "https://ifi-audio.com/products/zen-can-signature",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-signature-6xx": {
-  "url": "https://ifi-audio.com/products/zen-can-signature",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-signature-hfm": {
-  "url": "https://ifi-audio.com/products/zen-can-signature",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-signature-mz99": {
-  "url": "https://ifi-audio.com/products/zen-can-signature",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-can-signature-pre": {
-  "url": "https://ifi-audio.com/products/zen-can-signature",
-  "ports": {
-   "in": {},
-   "out": {}
-  },
-  "jacks": [
-   "3.5"
-  ],
-  "category": "desktop"
- },
- "ifi--zen-one-signature": {
-  "url": "https://ifi-audio.com/products/zen-one-signature",
-  "ports": {
-   "in": {
-    "coax": {
-     "quote": "Digital input: S/PDIF (coaxial",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "optical": {
-     "quote": "Digital input: TOSLINK optical)",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    }
-   },
-   "out": {
-    "coax": {
-     "quote": "Line output: Coaxial",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "rca": {
-     "quote": "Line output: Audio RCA L/R",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "xlr": {
-     "quote": "Line output: 4.4 Balanced Lineout",
-     "url": "https://ifi-audio.com/products/zen-one-signature",
-     "conn": "4.4"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-one-signature-hd-s-pdif": {
-  "url": "https://ifi-audio.com/products/zen-one-signature",
-  "ports": {
-   "in": {
-    "coax": {
-     "quote": "Digital input: S/PDIF (coaxial",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "optical": {
-     "quote": "Digital input: TOSLINK optical)",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "bt": {
-     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    }
-   },
-   "out": {
-    "coax": {
-     "quote": "Line output: Coaxial",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "rca": {
-     "quote": "Line output: Audio RCA L/R",
-     "url": "https://ifi-audio.com/products/zen-one-signature"
-    },
-    "xlr": {
-     "quote": "Line output: 4.4 Balanced Lineout",
-     "url": "https://ifi-audio.com/products/zen-one-signature",
-     "conn": "4.4"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-stream-3": {
-  "url": "https://ifi-audio.com/products/zen-stream-3",
-  "ports": {
-   "in": {},
-   "out": {
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/zen-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-stream-3-network": {
-  "url": "https://ifi-audio.com/products/zen-stream-3",
-  "ports": {
-   "in": {},
-   "out": {
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/zen-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
- "ifi--zen-stream-3-wi-fi-transport": {
-  "url": "https://ifi-audio.com/products/zen-stream-3",
-  "ports": {
-   "in": {},
-   "out": {
-    "coax": {
-     "quote": "Output: S/PDIF Coaxial",
-     "url": "https://ifi-audio.com/products/zen-stream-3"
-    }
-   }
-  },
-  "jacks": [],
-  "category": "desktop"
- },
  "fiio--btr11": {
   "url": "https://www.fiio.com/BTR11_parameters",
   "ports": {
@@ -2989,5 +1378,1755 @@
   ],
   "complete": true,
   "category": "dap"
+ },
+ "ifi--go-bar": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-10th-anniversary-gold": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-gold-bar-ultraportable-c-pre": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei": {
+  "url": "https://ifi-audio.com/products/go-bar-kensei",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-bar-kensei",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei-ultraportable": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--go-bar-kensei-ultraportable-c-pre": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei-ultraportable-k2hd-technology": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--go-blu": {
+  "url": "https://ifi-audio.com/products/go-blu",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
+     "url": "https://ifi-audio.com/products/go-blu"
+    },
+    "usb": {
+     "quote": "input: Wired: USB-C (24/96)",
+     "url": "https://ifi-audio.com/products/go-blu",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-air": {
+  "url": "https://ifi-audio.com/products/go-blu-air",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.2",
+     "url": "https://ifi-audio.com/products/go-blu-air"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-air-hd": {
+  "url": "https://ifi-audio.com/products/go-blu-air",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.2",
+     "url": "https://ifi-audio.com/products/go-blu-air"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-hd": {
+  "url": "https://ifi-audio.com/products/go-blu",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
+     "url": "https://ifi-audio.com/products/go-blu"
+    },
+    "usb": {
+     "quote": "input: Wired: USB-C (24/96)",
+     "url": "https://ifi-audio.com/products/go-blu",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link": {
+  "url": "https://ifi-audio.com/products/go-link",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-link-2": {
+  "url": "https://ifi-audio.com/products/go-link-2",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-c": {
+  "url": "https://ifi-audio.com/products/go-link-2",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-max": {
+  "url": "https://ifi-audio.com/products/go-link-2-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-2-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-max-c": {
+  "url": "https://ifi-audio.com/products/go-link-2-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-2-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-c": {
+  "url": "https://ifi-audio.com/products/go-link",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-link-max": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-max-3-5-output": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--go-link-max-c": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--hip-dac3": {
+  "url": "https://ifi-audio.com/products/hip-dac-3",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/hip-dac-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-diablo-2": {
+  "url": "https://ifi-audio.com/products/idsd-diablo-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4™",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2-mt": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2-mt-ultra-res-master-tuned-series": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-phantom": {
+  "url": "https://ifi-audio.com/products/idsd-phantom",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-B 3.0",
+     "url": "https://ifi-audio.com/products/idsd-phantom",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "aes": {
+     "quote": "Digital input: 1x AES3 (XLR);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "optical": {
+     "quote": "Digital input: 1x Optical (SC);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1x Balanced XLR (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "rca": {
+     "quote": "Line output: 1x RCA (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-phantom-class-pre": {
+  "url": "https://ifi-audio.com/products/idsd-phantom",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-B 3.0",
+     "url": "https://ifi-audio.com/products/idsd-phantom",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "aes": {
+     "quote": "Digital input: 1x AES3 (XLR);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "optical": {
+     "quote": "Digital input: 1x Optical (SC);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1x Balanced XLR (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "rca": {
+     "quote": "Line output: 1x RCA (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-valkyrie": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-valkyrie-mastering-black": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-valkyrie-transportable": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-idsd-2": {
+  "url": "https://ifi-audio.com/products/neo-idsd-2",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "spdif35"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR: 19.5V max. (variable) 4.4V­ fixed",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: UnBAL RCA: 10.5V max. (variable) 2.2V ­fixed",
+     "url": "https://ifi-audio.com/products/neo-idsd-2"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-idsd-3": {
+  "url": "https://ifi-audio.com/products/neo-idsd-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: Single-Ended RCA (L/R)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-B 3.0;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF Coaxial;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF Optical;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-network": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-wi-fi-transport": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--pro-idsd-signature-class-interface-controller": {
+  "url": "https://ifi-audio.com/products/pro-idsd-signature",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature",
+     "conn": "spdif35"
+    },
+    "usb": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature"
+    },
+    "aes": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--uno": {
+  "url": "https://ifi-audio.com/products/uno",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/uno",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--up-play-up-play-max-c-transmitters": {
+  "url": "https://ifi-audio.com/products/up-play-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/up-play-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--xcan": {
+  "url": "https://ifi-audio.com/products/xcan",
+  "ports": {
+   "in": {
+    "line": {
+     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
+     "url": "https://ifi-audio.com/products/xcan",
+     "conn": "3.5"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "portable"
+ },
+ "ifi--xcan-dual-mono": {
+  "url": "https://ifi-audio.com/products/xcan",
+  "ports": {
+   "in": {
+    "line": {
+     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
+     "url": "https://ifi-audio.com/products/xcan",
+     "conn": "3.5"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--xdsd-gryphon-black": {
+  "url": "https://ifi-audio.com/products/xdsd-gryphon",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon"
+    },
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "usbC"
+    },
+    "xlr": {
+     "quote": "input: Balanced: 4.4mm",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--zen-air-blue": {
+  "url": "https://ifi-audio.com/products/zen-air-blue",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.0TM with SBC",
+     "url": "https://ifi-audio.com/products/zen-air-blue"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-air-blue"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-air-blue-2-car": {
+  "url": "https://ifi-audio.com/products/zen-air-blue-2",
+  "ports": {
+   "in": {},
+   "out": {
+    "rca": {
+     "quote": "Output: RCA L/R​",
+     "url": "https://ifi-audio.com/products/zen-air-blue-2"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-blue-3-wireless": {
+  "url": "https://ifi-audio.com/products/zen-blue-3",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.4 (aptX Lossless, aptX Adaptive, aptX",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "usb": {
+     "quote": "input: USB",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "optical": {
+     "quote": "input: Optical",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "coax": {
+     "quote": "input: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "rca": {
+     "quote": "input: RCA L/R (Analogue)",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "dc": {
+     "quote": "Power supply: USB-C or DC 5V/≥0.5A (centre +ve)",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-can-3-analogue": {
+  "url": "https://ifi-audio.com/products/zen-can-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: SE RCA L/R:",
+     "url": "https://ifi-audio.com/products/zen-can-3"
+    },
+    "line": {
+     "quote": "Analogue input: SE 3.5mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Analogue input: BAL 4.4mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-3-pre": {
+  "url": "https://ifi-audio.com/products/zen-can-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: SE RCA L/R:",
+     "url": "https://ifi-audio.com/products/zen-can-3"
+    },
+    "line": {
+     "quote": "Analogue input: SE 3.5mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Analogue input: BAL 4.4mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-6xx": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-hfm": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-mz99": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-pre": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-one-signature": {
+  "url": "https://ifi-audio.com/products/zen-one-signature",
+  "ports": {
+   "in": {
+    "coax": {
+     "quote": "Digital input: S/PDIF (coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "optical": {
+     "quote": "Digital input: TOSLINK optical)",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Line output: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "rca": {
+     "quote": "Line output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "xlr": {
+     "quote": "Line output: 4.4 Balanced Lineout",
+     "url": "https://ifi-audio.com/products/zen-one-signature",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-one-signature-hd-s-pdif": {
+  "url": "https://ifi-audio.com/products/zen-one-signature",
+  "ports": {
+   "in": {
+    "coax": {
+     "quote": "Digital input: S/PDIF (coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "optical": {
+     "quote": "Digital input: TOSLINK optical)",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Line output: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "rca": {
+     "quote": "Line output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "xlr": {
+     "quote": "Line output: 4.4 Balanced Lineout",
+     "url": "https://ifi-audio.com/products/zen-one-signature",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3-network": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3-wi-fi-transport": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "topping--a900": {
+  "url": "https://dl.topping.audio/um/a900.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "XLR IN: XLR IN",
+     "url": "https://dl.topping.audio/um/a900.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR Balanced PRE output: XLR Balanced PRE output",
+     "url": "https://dl.topping.audio/um/a900.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "topping--d900": {
+  "url": "https://dl.topping.audio/um/d900.pdf",
+  "ports": {
+   "in": {
+    "aes": {
+     "quote": "AES input: AES input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth input: Bluetooth input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial SPDIF input: Coaxial SPDIF input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "optical": {
+     "quote": "Optical SPDIF input: Optical SPDIF input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "usb": {
+     "quote": "USB-C input: USB-C input",
+     "url": "https://dl.topping.audio/um/d900.pdf",
+     "conn": "usbC"
+    },
+    "i2s": {
+     "quote": "IIS input: IIS input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR balanced preamp output XLR balanced line output: XLR balanced preamp output XLR balanced line output",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "topping--d900-qcc5125-peq": {
+  "url": "https://dl.topping.audio/um/d900.pdf",
+  "ports": {
+   "in": {
+    "aes": {
+     "quote": "AES input: AES input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth input: Bluetooth input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "coax": {
+     "quote": "Coaxial SPDIF input: Coaxial SPDIF input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "optical": {
+     "quote": "Optical SPDIF input: Optical SPDIF input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    },
+    "usb": {
+     "quote": "USB-C input: USB-C input",
+     "url": "https://dl.topping.audio/um/d900.pdf",
+     "conn": "usbC"
+    },
+    "i2s": {
+     "quote": "IIS input: IIS input",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR balanced preamp output XLR balanced line output: XLR balanced preamp output XLR balanced line output",
+     "url": "https://dl.topping.audio/um/d900.pdf"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "topping--dx5-ii": {
+  "url": "https://dl.topping.audio/um/dx5_ii.pdf",
+  "ports": {
+   "in": {
+    "coax": {
+     "quote": "Coaxial SPDIF input: Coaxial SPDIF input",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    },
+    "bt": {
+     "quote": "Bluetooth input: Bluetooth input",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    },
+    "usb": {
+     "quote": "USB input: USB input",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    },
+    "optical": {
+     "quote": "Optical SPDIF input: Optical SPDIF input",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "XLR OUT: XLR OUT",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    },
+    "rca": {
+     "quote": "Single-ended RCA output: Single-ended RCA output",
+     "url": "https://dl.topping.audio/um/dx5_ii.pdf"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "topping--mini-300": {
+  "url": "https://dl.topping.audio/um/Mini_300.pdf",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Left channel 6.35mm TRS balanced input: Left channel 6.35mm TRS balanced input",
+     "url": "https://dl.topping.audio/um/Mini_300.pdf"
+    },
+    "rca": {
+     "quote": "Left channel single-ended RCA input: Left channel single-ended RCA input",
+     "url": "https://dl.topping.audio/um/Mini_300.pdf"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--idsd-diablo-2-ultra-res-wireless": {
+  "url": "https://ifi-audio.com/products/idsd-diablo-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4™",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-gr-2-ultra-res": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--neo-idsd-3-ultra-res": {
+  "url": "https://ifi-audio.com/products/neo-idsd-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: Single-Ended RCA (L/R)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-B 3.0;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF Coaxial;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF Optical;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-ultra-res-network-integrated": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
  }
 }

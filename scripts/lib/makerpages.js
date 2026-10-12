@@ -7,7 +7,7 @@ import { extractPorts } from "./ports.js";
 // Label/value pairs ("Digital coaxial in" / "RCA port") into sockets.
 
 const JACK = [
-  ["xlr4", /\bxlr ?4\b|4[- ]pin xlr|xlr 4[- ]pin|4-?pin (?:balanced )?xlr|4-?cores? xlr|neutrik 4/i],
+  ["xlr4", /\bxlr ?4\b|4[- ]?pin[- ]xlr|xlr 4[- ]pin|4-?pin (?:balanced )?xlr|4-?cores? xlr|neutrik 4/i],
   ["6.35", /6\.35(?! ?v)|6\.3 ?mm|1\/4|¼/i],
   ["4.4", /4\.4(?! ?v)/i],
   ["3.5", /3\.5(?! ?v)/i],
@@ -55,7 +55,7 @@ export function readPair(label, value) {
     if (bal) add("xlr", dir, conn);
     else add(conn ? "line" : "rca", dir, conn);
   }
-  if (/^power|power supply|dc (?:power )?in/.test(L) && /\bdc\b|\d+ ?v\b/.test(V) && (/\bdc\b/.test(V) || !/battery|usb|type-?c/.test(V))) add("dc", "in");
+  if (/^power|power supply|dc (?:power )?in/.test(L) && /\bdc\b|\d+ ?v\b/.test(V) && (/\bdc\b/.test(V) || !/battery|usb|type-?c|\bac\b/.test(V))) add("dc", "in");
   return found;
 }
 
@@ -127,6 +127,56 @@ export function ifiPairs(html) {
         if (/MAXIMUM OUTPUT POWER|RMS OUTPUT/.test(label) && sec !== "Headphone") continue;
         pairs.push([L, part.trim()]);
       }
+    }
+  }
+  return pairs;
+}
+
+// A manual's "Front panel" / "Rear panel" lists (Topping, as pdftotext gives
+// them): "2. 4.4mm balanced headphone output jack", then lines describing it.
+// A list runs 1, 2, 3...; any other number or a "2.4" heading ends it.
+export function manualPairs(text) {
+  const pairs = [];
+  let side = null, next = 0, item = null;
+  const flush = () => item && pairs.push([item.label, item.lines.join(" ")]) && (item = null);
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.replace(/\s{3,}\d+ of \d+\s*$/, "").trim();
+    const head = line.match(/^(?:\d+\.\d+\s+)?(front|rear|back) panel\b/i);
+    if (head) { flush(); side = head[1].toLowerCase() === "front" ? "Front" : "Rear"; next = 1; continue; }
+    if (!side) continue;
+    const m = line.match(/^(\d{1,2})\.\s+(\S.*)$/);
+    if (m && +m[1] === next) { flush(); item = { label: m[2], lines: [m[2]] }; next++; continue; }
+    if (m || /^\d+\.\d+\s+\S/.test(line)) { flush(); side = null; continue; }
+    if (item && line && item.lines.length < 4) item.lines.push(line);
+  }
+  flush();
+  return pairs;
+}
+
+// Older Topping manuals label a panel drawing with callouts instead of a list:
+// "Front panel" on its own line, then indented lines holding several labels
+// spaced apart, up to the next unindented heading ("Display").
+export function calloutPairs(text) {
+  const lines = text.split(/\r?\n/);
+  const pairs = [];
+  for (let k = 0; k < lines.length; k++) {
+    if (!/^ {0,8}(?:front|rear|back) panel\s*$/i.test(lines[k])) continue;
+    // A contents page lists "Front panel" then "Rear panel 1 3.Output settings".
+    const following = lines.slice(k + 1).find((l) => l.trim()) ?? "";
+    if (/^\s*(?:front|rear|back) panel\b|^\s*display\b/i.test(following)) continue;
+    const body = [];
+    for (let j = k + 1; j < lines.length; j++) {
+      const l = lines[j];
+      if (!l.trim()) continue;
+      if (/^\S.{0,40}$/.test(l.trimEnd()) && !/\s{2,}/.test(l.trim())) break;
+      body.push(l);
+    }
+    // A contents page lists "Front panel" then "Rear panel" with nothing between.
+    if (body.length < 2) continue;
+    for (const l of body) for (const chunk of l.trim().split(/\s{2,}/)) {
+      const c = chunk.trim();
+      if (c.length < 4 || c.length > 70 || !/[a-z]{3}/i.test(c) || /^(?:see|\*|press|rotate|please)\b/i.test(c)) continue;
+      pairs.push([c, c]);
     }
   }
   return pairs;

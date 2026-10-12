@@ -2,7 +2,7 @@
 // Plain language. This is a student open-source project, not legal advice;
 // a lawyer should review before any commercial launch.
 
-import { REPO } from "./content.js?v=mv5oe6ni";
+import { REPO } from "./content.js?v=mv5owqx3";
 
 export const LEGAL_UPDATED = "2026-10-11";
 const issue = (template, title) => `${REPO}/issues/new?template=${template}&title=${encodeURIComponent(title)}`;
@@ -40,7 +40,7 @@ export const LEGAL = {
 <h2>ความเป็นอิสระ</h2>
 <p>Sotto ไม่มีส่วนเกี่ยวข้องและไม่ได้รับการรับรองจากแบรนด์หรือร้านใด ลิงก์ร้านไม่มี affiliate ถ้าวันหนึ่งมี จะติดป้ายทุกลิงก์ และลำดับจะไม่เปลี่ยนตามค่าคอมมิชชัน ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ</p>
 <h2>การเปลี่ยนแปลง</h2>
-<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv5oe6ni" target="_blank" rel="noopener">GitHub</a></p>`,
+<p>ถ้าแก้ข้อตกลงนี้ เราจะเปลี่ยนวันที่ด้านบน และบันทึกประวัติการแก้ไขทั้งหมดไว้ใน <a href="${REPO}/commits/main/src/legal.js?v=mv5owqx3" target="_blank" rel="noopener">GitHub</a></p>`,
     en: `
 <h1>Terms of use</h1>
 <p class="muted">Updated ${LEGAL_UPDATED}</p>
@@ -72,7 +72,7 @@ export const LEGAL = {
 <h2>Independence</h2>
 <p>Sotto is not affiliated with or endorsed by any brand or store. Store links are not affiliate links; if that ever changes, every such link will be labelled and ordering will never depend on commission. Brand and model names are trademarks of their owners.</p>
 <h2>Changes</h2>
-<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv5oe6ni" target="_blank" rel="noopener">GitHub</a>.</p>`,
+<p>If these terms change, the date above changes and the full history stays on <a href="${REPO}/commits/main/src/legal.js?v=mv5owqx3" target="_blank" rel="noopener">GitHub</a>.</p>`,
   },
   privacy: {
     th: `

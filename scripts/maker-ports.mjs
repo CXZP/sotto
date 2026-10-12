@@ -4,12 +4,15 @@
 // model, every socket with the line it came from and the page URL. The
 // catalog build fills in what stores don't list from it.
 //
-// Run: node scripts/maker-ports.mjs [fiio|ifi|schiit ...]
+// Run: node scripts/maker-ports.mjs [fiio|ifi|schiit|topping ...]
+// Topping needs pdftotext (poppler) on the PATH.
 // Slow on purpose (one page every few seconds), pages cached in cache/makers/.
 
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
-import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlug } from "./lib/makerpages.js";
+import { execFileSync } from "node:child_process";
+import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlug, manualPairs, calloutPairs } from "./lib/makerpages.js";
 
 const root = new URL("../", import.meta.url);
 const UA = "Mozilla/5.0 (compatible; SottoBot/1.0; +https://cxzp.github.io/sotto/)";
@@ -44,15 +47,40 @@ async function get(url) {
   return html;
 }
 
+// A PDF's text, kept next to the pages (the PDF itself isn't kept).
+async function pdfText(url) {
+  const txt = new URL(`cache/makers/${url.replace(/^https?:\/\//, "").replace(/[^a-z0-9]+/gi, "_")}.txt`, root);
+  if (existsSync(txt)) return readFile(txt, "utf8");
+  const wait = last + DELAY - Date.now();
+  if (wait > 0) await sleep(wait);
+  last = Date.now();
+  const res = await fetch(url, { headers: { "user-agent": UA } });
+  if (!res.ok) return console.log(`  ${res.status} ${url}`), null;
+  const pdf = new URL(`${txt.href}.pdf`);
+  await writeFile(pdf, Buffer.from(await res.arrayBuffer()));
+  try {
+    execFileSync("pdftotext", ["-layout", fileURLToPath(pdf), fileURLToPath(txt)], { stdio: "ignore" });
+  } catch {
+    console.log(`  pdftotext failed on ${url}`);
+    return null;
+  } finally {
+    await rm(pdf, { force: true });
+  }
+  return readFile(txt, "utf8");
+}
+
 // ---------------------------------------------------------------------------
 
 // The maker page whose name is in the model's name and every store's title,
 // the longest such ("ZEN DAC 3" over "ZEN DAC").
-const squash = (s) => String(s).toLowerCase().replace(/\b(?:ifi|schiit|audio)\b/g, "").replace(/[^a-z0-9]/g, "");
+const squash = (s) => String(s).toLowerCase().replace(/\b(?:ifi|schiit|topping|audio)\b/g, "").replace(/[^a-z0-9]/g, "");
 function bestPage(item, pages) {
   const titles = [item.model, ...item.offers.map((o) => o.title)].map(squash);
   const fits = pages.filter((p) => {
     const k = squash(p.key);
+    // "A900 Ultra" isn't the A900: what's left of the name mustn't be a model step.
+    const rest = squash(item.model).split(k).slice(1).join(k);
+    if (/^(?:ultra(?!res)|pro|plus|ii|iii|iv|se|le|lite|mk|max|r2r|octo|sabre|velvet|v\d?$|s$)/.test(rest)) return false;
     return k.length > 2 && titles.every((t) => t.includes(k)) && squash(item.model).startsWith(k.slice(0, 3));
   });
   return fits.sort((a, b) => squash(b.key).length - squash(a.key).length)[0] ?? null;
@@ -108,6 +136,31 @@ if (!only.length || only.includes("schiit")) {
     const e = schiitEntry(url, html);
     if (count(e)) (result[i.id] = { ...e, category: i.category }), done++;
     console.log(`schiit ${i.id} <- ${h}: ${Object.keys(e.ports.in)} | ${Object.keys(e.ports.out)} | ${e.jacks}`);
+  }
+}
+
+if (!only.length || only.includes("topping")) {
+  // Topping's spec tabs are pictures; the words are in the user manuals
+  // (PDF, read with poppler's pdftotext). Older manuals are pictures too.
+  const products = new Map();
+  for (const cat of ["dac", "dac-amp-combo", "headphone-amp", "power-amplifier", "portable", "preamplifier", "player", "others"]) {
+    const html = await get(`https://www.toppingaudio.com/products-list/${cat}`);
+    for (const m of (html ?? "").matchAll(/\{id:\d+,slug:"([a-z0-9-]+)",category_id:\d+,title:"([^"]+)"/g)) products.set(m[1], m[2]);
+  }
+  const pages = [...products].map(([handle, title]) => ({ handle, key: title }));
+  // Add-on boards and modules aren't the box they fit in.
+  for (const i of models.filter((i) => i.brand === "TOPPING" && !/module|upgrade|board|\bcard\b|power supply/i.test(i.model))) {
+    const h = bestPage(i, pages);
+    if (!h) continue;
+    const html = await get(`https://www.toppingaudio.com/product-item/${h.handle}`);
+    const manual = [...(html ?? "").matchAll(/download_url:"(https:\/\/dl\.topping\.audio\/[^"]+\.pdf)"/g)].map((m) => m[1]).find((u) => /\/(?:um|usermanual)\//.test(u) && !/quick/i.test(u));
+    if (!manual) continue;
+    const text = await pdfText(manual);
+    const listed = manualPairs(text ?? "");
+    const fromList = toEntry(manual, listed);
+    const e = count(fromList) ? fromList : toEntry(manual, calloutPairs(text ?? ""));
+    if (count(e)) (result[i.id] = { ...e, category: i.category }), done++;
+    console.log(`topping ${i.id} <- ${h.handle}: ${Object.keys(e.ports.in)} | ${Object.keys(e.ports.out)} | ${e.jacks}`);
   }
 }
 

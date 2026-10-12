@@ -553,3 +553,16 @@ select option { background: var(--surface); color: var(--text); }
 .sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .sheet dt { color: var(--text-2); font-size: 13px; }
 .sheet dd { margin: 0; overflow-wrap: anywhere; }
+
+/* Item header: fewer things competing. Price links to the code calculator;
+   search links and "report a mistake" fold under one line. */
+.price-deal { font-size: 14px; font-weight: 500; margin-left: 4px; white-space: nowrap; }
+.item-more { margin-top: 12px; }
+.item-more > summary { cursor: pointer; font-size: 13px; color: var(--text-2); list-style: none; }
+.item-more > summary::-webkit-details-marker { display: none; }
+.item-more > summary::before { content: "▸ "; }
+.item-more[open] > summary::before { content: "▾ "; }
+.item-more .issue-search { margin-top: 6px; }
+/* A card title with a control on the right (currency menu on Prices by store). */
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.card-head h3 { margin: 0; }

@@ -572,6 +572,15 @@ let aliases = {};
   // Ids the owner flagged as wrong (stock words in a model name) are not kept, only aliased.
   const STOCK = /(^|-)(pre-?owned|preowned|pre-?sale|pre-?order|open-box|b-stock|refurbished|demo|clearance|used|discontinued)(-|$)/;
   const claims = [];
+  // Hand-checked entries no store sells have no listing URL to follow: their own
+  // entry id (data/amps.json, headphones.json...) carries the old id over, ahead
+  // of any store vote. Without this a naming change moves them (the home page's
+  // Apple dongle became "apple--usb-c-to-adapter").
+  const oldByCurated = new Map((prev?.items ?? []).filter((i) => i.curatedId).map((i) => [i.curatedId, i.id]));
+  for (const g of catalog) {
+    const old = g.curatedId && oldByCurated.get(g.curatedId);
+    if (old && brandOf(old) === brandOf(g.id) && !STOCK.test(old)) claims.push({ g, old, n: Infinity, same: old === g.id });
+  }
   for (const g of catalog) {
     const votes = new Map();
     for (const o of g.offers) {
@@ -603,9 +612,10 @@ let aliases = {};
   }
   const now = new Set(catalog.map((g) => g.id));
   const newByUrl = new Map(catalog.flatMap((g) => g.offers.map((o) => [o.url, g.id])));
+  const newByCurated = new Map(catalog.filter((g) => g.curatedId).map((g) => [g.curatedId, g.id]));
   for (const i of prev?.items ?? []) {
     if (now.has(i.id)) continue;
-    const to = i.offers.map((o) => newByUrl.get(o.url)).find(Boolean);
+    const to = i.offers.map((o) => newByUrl.get(o.url)).find(Boolean) ?? (i.curatedId && newByCurated.get(i.curatedId));
     if (to) aliases[i.id] = to;
   }
   // Older aliases stay, pointed at wherever their model is now.

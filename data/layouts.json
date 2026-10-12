@@ -1,4 +1,67 @@
 {
+  "fiio--btr17": {
+    "status": "draft",
+    "by": "Claude (draft, not checked by a person)",
+    "at": "2026-10-13",
+    "faces": [
+      {
+        "face": "top",
+        "src": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20250210150651/29a2a211fcbccc2ba51b294588d4d6a3.jpg",
+        "page": "https://hifigo.com/products/fiio-btr17",
+        "credit": "maker image, via hifigo.com",
+        "w": 790,
+        "h": 1143,
+        "crop": [
+          10,
+          16,
+          48,
+          30
+        ],
+        "pins": [
+          {
+            "p": "hp:4.4",
+            "x": 19.5,
+            "y": 24.5,
+            "label": "4.4 mm balanced"
+          },
+          {
+            "p": "hp:3.5",
+            "x": 26.5,
+            "y": 24.5,
+            "label": "3.5 mm"
+          }
+        ]
+      },
+      {
+        "face": "bottom",
+        "src": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20250210150651/29a2a211fcbccc2ba51b294588d4d6a3.jpg",
+        "page": "https://hifigo.com/products/fiio-btr17",
+        "credit": "maker image, via hifigo.com",
+        "w": 790,
+        "h": 1143,
+        "crop": [
+          10,
+          77,
+          48,
+          90
+        ],
+        "pins": [
+          {
+            "p": "in:usb",
+            "x": 23,
+            "y": 84.5,
+            "label": "USB-C (charging + USB audio)"
+          },
+          {
+            "p": "in:dc",
+            "x": 33,
+            "y": 84.5,
+            "label": "USB-C POWER IN (desktop mode)"
+          }
+        ]
+      }
+    ]
+  },
   "fiio--ka17": {
     "status": "draft",
     "by": "Claude (draft, not checked by a person)",

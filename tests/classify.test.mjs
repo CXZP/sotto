@@ -102,3 +102,10 @@ test("wireless: \"for ASMR\" is the ASMR model; ear loops are accessories", () =
   assert.equal(k("Final Audio", "Final Audio ZE500 for ASMR True Wireless"), k("Final Audio", "Final Audio ZE500 ASMR True Wireless"));
   assert.equal(cat("iFi GO pod Ear Loops"), "accessory");
 });
+
+test("power supplies: one model whatever the store's description", () => {
+  const k = (v, t) => looseKey(modelKey(v, t).key, "power");
+  assert.equal(k("FiiO", "FiiO Darkside Pro Linear Power Supply"), k("FiiO", "Fiio Darkside Pro low-noise regulated linear power supply"));
+  assert.equal(k("FiiO", "FiiO Darkside Mini Noise Reduction Power Supply"), k("FiiO", "Fiio Darkside Mini Active purification & Noise Cancelling Power Supply (UK plug version)"));
+  assert.notEqual(k("FiiO", "FiiO Darkside Pro Linear Power Supply"), k("FiiO", "FiiO Darkside Mini Noise Reduction Power Supply"));
+});

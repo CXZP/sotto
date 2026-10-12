@@ -44,6 +44,8 @@ const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|aud
 // Makers no store lists as a vendor, so only a title names them.
 const MAKERS = ["Little Dot", "SABAJ", "LOXJIE", "COZOY", "ELAC"];
 // House lines that don't repeat the store's name: Kitsune Tuned Edition, Moon Audio's Dragon.
+// Sub-brands a parent company sells under its own name too: sub-brand -> parent brandKey.
+const SUB_BRANDS = { Audalytic: "gustard" };
 const HOUSE_LINE = /^(?:kte|dragon)\b/i;
 // One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
 // "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
@@ -86,11 +88,15 @@ function realVendor(p) {
     const title = p.title.toLowerCase();
     v = brandsLongestFirst.find((b) => b.length > 2 && title.startsWith(`${b.toLowerCase()} `)) ?? v;
   }
+  // A maker's own sub-brand named in the title is the brand ("Gustard Audalytic DR70").
+  const sub = Object.keys(SUB_BRANDS).find((b) => SUB_BRANDS[b] === brandKey(v) && new RegExp(`\\b${b}\\b`, "i").test(p.title));
+  if (sub) v = sub;
   return canonical.get(brandKey(v)) ?? v;
 }
 /** Remove every spelling of the brand from a title, not only the canonical one. */
 function stripBrand(vendor, title) {
-  const spellings = [...(spellingCount.get(brandKey(vendor))?.keys() ?? [vendor])].sort((a, b) => b.length - a.length);
+  const parent = Object.entries(SUB_BRANDS).find(([b]) => brandKey(b) === brandKey(vendor))?.[1];
+  const spellings = [...(spellingCount.get(brandKey(vendor))?.keys() ?? [vendor]), ...(parent ? spellingCount.get(parent)?.keys() ?? [] : [])].sort((a, b) => b.length - a.length);
   let t = ` ${title} `;
   for (const sp of spellings) t = t.replace(new RegExp(`(^|[^a-z0-9])${sp.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=[^a-z0-9]|$)`, "gi"), "$1 ");
   return t.trim();

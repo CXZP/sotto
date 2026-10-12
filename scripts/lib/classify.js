@@ -238,6 +238,8 @@ const FINISH = new Set(["black", "white", "silver", "grey", "gray", "blue", "red
 // Words stores add to wireless earphones that never name the model
 // ("WF-1000XM5 Truly Wireless Noise Canceling" == "WF-1000XM5 TWS").
 const WIRELESS_WORDS = new Set(["for", "true", "truly", "ture", "tws", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
+// And power supplies: "Darkside Pro Linear Power Supply" == "Darkside Pro | Low-Noise Regulated ...".
+const POWER_WORDS = new Set(["linear", "power", "supply", "supplies", "psu", "lps", "low", "noise", "regulated", "reduction", "active", "purification", "cancelling", "canceling", "uk", "eu", "us", "plug", "version", "dc"]);
 
 /**
  * Grouping key across stores: groupKey without finish words. A wireless version
@@ -248,7 +250,7 @@ export function looseKey(key, category) {
   const [brand, model = ""] = key.split("--");
   const words = model.replace(/(^|-)collector-?s(?=-|$)/g, "$1").split("-").filter(Boolean);
   const keep = words.filter((w) =>
-    category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)),
+    category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)) && !(category === "power" && POWER_WORDS.has(w)),
   );
   const k = groupKey(`${brand}--${(keep.length ? keep : words).join("-")}`);
   // A phono stage named like another box ("ZEN Air Phono" vs "ZEN Air DAC") stays apart too.

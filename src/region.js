@@ -37,7 +37,7 @@ export const REGIONS = {
   uk: { th: "สหราชอาณาจักร", en: "United Kingdom", currency: "GBP", codes: false, stores: [amazon("www.amazon.co.uk"), ebay("www.ebay.co.uk")], local: [] },
   eu: { th: "ยุโรป", en: "Europe", currency: "EUR", codes: false, stores: [amazon("www.amazon.de"), ["Thomann", (n) => `https://www.thomann.de/intl/search_dir.html?sw=${q(n)}`], ebay("www.ebay.de")], local: [] },
   au: { th: "ออสเตรเลีย", en: "Australia", currency: "AUD", codes: false, stores: [amazon("www.amazon.com.au"), ebay("www.ebay.com.au")], local: [] },
-  jp: { th: "ญี่ปุ่น", en: "Japan", currency: "JPY", codes: false, stores: [amazon("www.amazon.co.jp"), ["Rakuten", (n) => `https://search.rakuten.co.jp/search/mall/${q(n)}/`]], local: [["レビュー", "{n} レビュー"], ["価格.com", "{n} site:kakaku.com"]] },
+  jp: { th: "ญี่ปุ่น", en: "Japan", currency: "JPY", codes: false, stores: [amazon("www.amazon.co.jp"), ["e☆イヤホン", (n) => `https://www.e-earphone.jp/search?q=${q(n)}`], ["Rakuten", (n) => `https://search.rakuten.co.jp/search/mall/${q(n)}/`]], local: [["レビュー", "{n} レビュー"], ["価格.com", "{n} site:kakaku.com"]] },
   kr: { th: "เกาหลีใต้", en: "South Korea", currency: "KRW", codes: false, stores: [["Coupang", (n) => `https://www.coupang.com/np/search?q=${q(n)}`]], local: [["후기", "{n} 후기"]] },
   other: { th: "ที่อื่น", en: "Elsewhere", currency: "USD", codes: false, stores: [ali, amazon("www.amazon.com"), ebay("www.ebay.com")], local: [] },
 };

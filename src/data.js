@@ -1,17 +1,17 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv54a6sx";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv556516";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "portable", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos, rates] = await Promise.all([
-    fetch("data/catalog.json?v=mv54a6sx").then((r) => r.json()),
-    fetch("data/devices.json?v=mv54a6sx").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mv54a6sx").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mv54a6sx").then((r) => r.json()).catch(() => ({})),
-    fetch("data/fx.json?v=mv54a6sx").then((r) => r.json()).catch(() => null),
+    fetch("data/catalog.json?v=mv556516").then((r) => r.json()),
+    fetch("data/devices.json?v=mv556516").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mv556516").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mv556516").then((r) => r.json()).catch(() => ({})),
+    fetch("data/fx.json?v=mv556516").then((r) => r.json()).catch(() => null),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   // Old ids (merged or renamed models) → the current id, and the reverse.
@@ -24,7 +24,7 @@ export async function loadData() {
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mv54a6sx").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mv556516").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 

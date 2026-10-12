@@ -1,25 +1,25 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5wtpsp";
-import { loadData, loadPhotos, loadLayouts, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5wtpsp";
-import { renderChart } from "./chart.js?v=mv5wtpsp";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5wtpsp";
-import { makeT } from "./i18n.js?v=mv5wtpsp";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5wtpsp";
-import { LEGAL } from "./legal.js?v=mv5wtpsp";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5wtpsp";
-import * as community from "./community.js?v=mv5wtpsp";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5wtpsp";
-import { redactImage } from "./redact.js?v=mv5wtpsp";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5wtpsp";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5wtpsp";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5wtpsp";
-import { gearKind, gearSvg } from "./gear.js?v=mv5wtpsp";
-import { checkPage, wireCheck } from "./check.js?v=mv5wtpsp";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5wtpsp";
-import { chainLinks } from "./chain.js?v=mv5wtpsp";
-import { fits } from "./dcfit.js?v=mv5wtpsp";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5wtpsp";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5wtpsp";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5wtpsp";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5wxx47";
+import { loadData, loadPhotos, loadLayouts, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5wxx47";
+import { renderChart } from "./chart.js?v=mv5wxx47";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5wxx47";
+import { makeT } from "./i18n.js?v=mv5wxx47";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5wxx47";
+import { LEGAL } from "./legal.js?v=mv5wxx47";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5wxx47";
+import * as community from "./community.js?v=mv5wxx47";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5wxx47";
+import { redactImage } from "./redact.js?v=mv5wxx47";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5wxx47";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5wxx47";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5wxx47";
+import { gearKind, gearSvg } from "./gear.js?v=mv5wxx47";
+import { checkPage, wireCheck } from "./check.js?v=mv5wxx47";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5wxx47";
+import { chainLinks } from "./chain.js?v=mv5wxx47";
+import { fits } from "./dcfit.js?v=mv5wxx47";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5wxx47";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5wxx47";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5wxx47";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1286,7 +1286,7 @@ function itemPage(id) {
       <section class="card pad"><div class="card-head"><h3>${esc(t("it_offers"))}</h3>${fxSelect()}</div><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
     </div>
     ${missingAsks(i)}
-    ${isSrc ? `<section class="card pad looks" id="looks" hidden></section><section class="card pad ports" id="ports"></section>` : ""}
+    ${isSrc ? `<section class="card pad realthing" id="looks" hidden></section><section class="card pad ports" id="ports"></section>` : ""}
     ${isHp ? `<section class="card pad fr-links" id="fr-links"></section>` : ""}
     ${i.category !== "power" ? `<section class="card pad owners" id="owners"></section>` : ""}
     <section class="card pad paid" id="paid"></section>
@@ -1305,7 +1305,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5wtpsp").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5wxx47").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2605,7 +2605,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5wtpsp" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5wxx47" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2764,35 +2764,17 @@ function rearSearch(i) {
   return `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(`${displayName(i)} rear panel`)}`;
 }
 
-// The real thing (#looks): a maker's or store's photo with a pin on each socket,
-// placed by a person or drafted by Claude for a person to check (data/layouts.json).
-// No drawn stand-ins: what isn't pinned yet is listed in the ports card below.
-const PIN_NAME = { usb: "USB", coax: "Coaxial", optical: "Optical", aes: "AES/EBU", i2s: "I2S", bt: "Bluetooth", rca: "RCA", xlr: "XLR", line: "Line", phono: "Phono", dc: "DC", spk: "Speaker" };
-function pinLabel(pin) {
-  if (pin.label) return pin.label;
-  const [kind, k] = pin.p.split(":");
-  return kind === "hp" ? JACK_LABEL[k] ?? k : `${PIN_NAME[k] ?? k} ${kind === "in" ? "in" : "out"}`;
-}
+// The real thing (#looks): the maker's own image of the box, the one that shows
+// and names the sockets, picked per model (data/layouts.json). Shown as it is.
 function faceHtml(f) {
-  const [x0, y0, x1, y1] = f.crop ?? [0, 0, 100, 100];
-  const cw = x1 - x0;
-  const ch = y1 - y0;
-  const ratio = f.w && f.h ? (f.w * cw) / (f.h * ch) : 1;
-  const pins = f.pins
-    .map((p, n) => `<span class="pin" style="left:${(((p.x - x0) / cw) * 100).toFixed(2)}%;top:${(((p.y - y0) / ch) * 100).toFixed(2)}%" title="${esc(pinLabel(p))}" data-n="${n + 1}">${n + 1}</span>`)
-    .join("");
-  // Never blown up past twice the photo's own pixels (a small crop goes soft).
-  const maxW = f.w ? Math.round((f.w * cw) / 100) * 2 : null;
-  return `<figure class="look"><div class="look-img" style="aspect-ratio:${ratio.toFixed(4)}${maxW ? `;max-width:${maxW}px` : ""}"><img src="${esc(f.src)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:${(10000 / cw).toFixed(2)}%;left:${((-x0 / cw) * 100).toFixed(2)}%;top:${((-y0 / ch) * 100).toFixed(2)}%">${pins}</div>
-    <figcaption><ol class="small">${f.pins.map((p) => `<li>${esc(pinLabel(p))}</li>`).join("")}</ol>
-    <p class="muted small">${esc(t("lk_photo"))} ${esc(f.credit ?? "")} ${f.page ? `<a href="${esc(f.page)}" target="_blank" rel="noopener">${esc(new URL(f.page).hostname.replace(/^www\./, ""))} ↗</a>` : ""}</p></figcaption></figure>`;
+  return `<figure class="look"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img src="${esc(f.src)}" alt="" loading="lazy" referrerpolicy="no-referrer"${f.w ? ` width="${f.w}" height="${f.h}"` : ""}></a>
+    <figcaption class="muted small">${esc(t("lk_photo"))} ${esc(f.credit ?? "")} ${f.page ? `<a href="${esc(f.page)}" target="_blank" rel="noopener">${esc(new URL(f.page).hostname.replace(/^www\./, ""))} ↗</a>` : ""}</figcaption></figure>`;
 }
 async function renderLooks(el, item) {
   if (!el) return;
   const lay = (await loadLayouts())[item.id];
   if (!el.isConnected || !lay?.faces?.length) return;
-  const checked = lay.status === "checked";
-  el.innerHTML = `<h3>${esc(t("lk_title"))} <span class="tag ${checked ? "ok" : "warn"}">${esc(t(checked ? "lk_checked" : "lk_draft"))}</span></h3>${lay.faces.map(faceHtml).join("")}`;
+  el.innerHTML = `<h3>${esc(t("lk_title"))}</h3>${lay.faces.map(faceHtml).join("")}`;
   el.hidden = false;
 }
 
@@ -3152,7 +3134,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5wtpsp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5wxx47" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

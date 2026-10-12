@@ -596,7 +596,7 @@ select option { background: var(--surface); color: var(--text); }
 .dk-head { display: grid; grid-template-columns: 36px 1fr auto; gap: 8px; align-items: center; cursor: grab; touch-action: none; user-select: none; }
 .dk-head:active { cursor: grabbing; }
 .dk-head img, .dk-dev { width: 36px; height: 36px; border-radius: 8px; background: #fff; object-fit: contain; }
-.dk-dev { background: var(--surface-2); }
+.dk-dev { background: var(--surface-2); display: grid; place-items: center; font-weight: 700; color: var(--text-2); }
 .dk-head b { font-size: 13px; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .dk-del { border: 0; background: none; color: var(--text-2); font-size: 18px; cursor: pointer; padding: 0 4px; }
 .dk-ports { display: flex; justify-content: space-between; gap: 6px; }
@@ -612,4 +612,31 @@ select option { background: var(--surface); color: var(--text); }
 .dk-parts li { display: flex; justify-content: space-between; gap: 8px; }
 .dk-total { display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0 0; padding-top: 8px; border-top: 1px solid var(--line); }
 .dk-total b { font-size: 20px; }
-@media (max-width: 900px) { .desk-layout { grid-template-columns: minmax(0, 1fr); } .desk-rail { position: static; } }
+@media (max-width: 900px) { .desk-layout { grid-template-columns: minmax(0, 1fr); } .desk-rail { display: contents; } .desk-palette { order: -1; } }
+.dk-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.dk-bar-gap { flex: 1; }
+.seg-links button { padding: 6px 12px; border: 0; border-radius: 999px; background: none; color: var(--text-2); font: inherit; font-size: 13px; cursor: pointer; }
+.seg-links button.on { background: var(--surface); color: var(--text); }
+.dk-stage { position: relative; padding: 16px; overflow: hidden; }
+.desk-board.flow { min-width: 0; margin: 0 auto; transform-origin: top left; background: none; }
+.desk-board.flow:empty, .desk-board.flow:has(.dk-empty) { min-height: 320px; }
+.dk-card { position: absolute; width: 180px; height: 172px; border: 1px solid var(--line-strong); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+.dk-card > a, .dk-card > div { display: grid; justify-items: center; align-content: start; gap: 4px; height: 100%; padding: 10px 10px 8px; color: var(--text); text-align: center; box-sizing: border-box; }
+.dk-card > a:hover { text-decoration: none; }
+.dk-card > a:hover b { text-decoration: underline; }
+.dk-photo { width: 96px; height: 96px; border-radius: 10px; background: #fff; display: grid; place-items: center; overflow: hidden; }
+.dk-photo img { width: 100%; height: 100%; object-fit: contain; }
+.dk-photo .dk-dev { width: 100%; height: 100%; display: grid; place-items: center; font-size: 48px; font-weight: 700; color: var(--text-2); background: var(--surface-2); }
+.dk-card b { font-size: 13px; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.dk-card small { font-size: 12px; }
+.dk-card .dk-del { position: absolute; top: 4px; right: 4px; }
+.dk-card.side { width: 150px; height: 110px; display: grid; justify-items: center; align-content: start; gap: 4px; padding: 10px; box-sizing: border-box; border-style: dashed; text-align: center; }
+.dk-card.side .dk-photo { width: 48px; height: 48px; }
+.dk-card.side b { font-size: 12px; }
+.dk-tag { position: absolute; transform: translate(-50%, -50%); padding: 2px 9px; border-radius: 999px; border: 1.5px solid var(--st-good); background: var(--surface); color: var(--text); font: inherit; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: pointer; z-index: 1; }
+.dk-tag.adapter, .dk-tag.check, .dk-tag.unknown { border-color: var(--st-warn); }
+.dk-tag.no { border-color: #e5484d; }
+.dk-tag:hover { background: var(--surface-2); }
+.desk-board.flow .dk-wires { pointer-events: none; }
+.desk-board.flow .dk-wire { pointer-events: stroke; }
+.dk-mount { fill: none; stroke: var(--line-strong); stroke-width: 2; stroke-dasharray: 4 5; }

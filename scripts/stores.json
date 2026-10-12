@@ -17,7 +17,7 @@
   { "id": "headphonezone", "host": "headphonezone.in", "delay": 3, "specPage": true },
   { "id": "a2a", "host": "addictedtoaudio.com.au", "delay": 3, "specPage": true },
   { "id": "moon", "host": "moon-audio.com", "delay": 3, "specPage": true },
-  { "id": "eearphone", "host": "www.e-earphone.jp", "delay": 4, "matchOnly": true },
+  { "id": "eearphone", "host": "www.e-earphone.jp", "delay": 4, "matchOnly": true, "maxPages": 200 },
   { "id": "stereo-sg", "host": "www.stereo.com.sg", "delay": 3 },
   { "id": "jaben-th", "host": "www.jaben.co.th", "kind": "woo", "name": "Jaben Thailand", "delay": 4 }
 ]

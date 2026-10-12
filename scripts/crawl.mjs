@@ -60,7 +60,7 @@ for (const store of stores) {
   const meta = (await getJson(`https://${store.host}/meta.json`))?.data;
   const products = [];
   const currencies = new Set();
-  for (let page = 1; page <= 100; page++) {
+  for (let page = 1; page <= (store.maxPages ?? 100); page++) {
     await pause(store);
     const res = await getJson(`https://${store.host}/products.json?limit=250&page=${page}`);
     const batch = res?.data?.products ?? [];
@@ -240,7 +240,11 @@ async function getJson(url) {
         await slowDown(res, attempt);
         continue;
       }
-      if (!res.ok) return null;
+      if (!res.ok) {
+        // Say why a store came back empty (a 403 here is usually its bot protection, which we respect).
+        console.log(`${res.status} from ${url}`);
+        return null;
+      }
       const currency = res.headers.get("set-cookie")?.match(/cart_currency=(\w+)/)?.[1] ?? null;
       return { data: await res.json(), currency };
     } catch {

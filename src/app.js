@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52zoj8";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52zoj8";
-import { renderChart } from "./chart.js?v=mv52zoj8";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52zoj8";
-import { makeT } from "./i18n.js?v=mv52zoj8";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv52zoj8";
-import { LEGAL } from "./legal.js?v=mv52zoj8";
-import { track, stats, trackingOff } from "./analytics.js?v=mv52zoj8";
-import * as community from "./community.js?v=mv52zoj8";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52zoj8";
-import { redactImage } from "./redact.js?v=mv52zoj8";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52zoj8";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52zoj8";
-import { chainLinks } from "./chain.js?v=mv52zoj8";
-import { fits } from "./dcfit.js?v=mv52zoj8";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv52zoj8";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52zoj8";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52zoj8";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv534bta";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv534bta";
+import { renderChart } from "./chart.js?v=mv534bta";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv534bta";
+import { makeT } from "./i18n.js?v=mv534bta";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv534bta";
+import { LEGAL } from "./legal.js?v=mv534bta";
+import { track, stats, trackingOff } from "./analytics.js?v=mv534bta";
+import * as community from "./community.js?v=mv534bta";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv534bta";
+import { redactImage } from "./redact.js?v=mv534bta";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv534bta";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv534bta";
+import { chainLinks } from "./chain.js?v=mv534bta";
+import { fits } from "./dcfit.js?v=mv534bta";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv534bta";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv534bta";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv534bta";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1013,11 +1013,13 @@ function catalogPage() {
   const brand = p.get("brand") ?? "";
   const mat = p.get("mat") ?? "";
   const role = cat === "desktop" ? p.get("role") ?? "" : "";
+  const bt = p.get("bt") === "1";
   const cats = ["all", "iem", "headphone", "wireless", "dongle", "portable", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
       (!role || i.role === role) &&
+      (!bt || isBtReceiver(i)) &&
       (!brand || i.brand === brand) &&
       (!mat || i.materials?.[mat] || i.styles?.[mat]) &&
       (!q || matches(i, q)) &&
@@ -1058,6 +1060,7 @@ function catalogPage() {
         <div class="seg-links">${["grid", "table"].map((v) => `<a class="${v === view ? "on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
       </div>
       <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
+      ${cat === "dongle" ? `<div class="chips sub-chips"><a class="chip${bt ? "" : " on"}" href="${link({ bt: null, n: null })}">${esc(t("role_all"))}</a><a class="chip${bt ? " on" : ""}" href="${link({ bt: "1", n: null })}">${esc(t("bt_chip"))}</a></div>` : ""}
       ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp", "preamp", "streamer", "integrated", "poweramp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
       <div class="filter-more">
         <label class="check small"><input type="checkbox" data-toggle="specs"${specsOnly ? " checked" : ""}> ${esc(t("only_specs"))}</label>
@@ -1124,6 +1127,14 @@ function brandsPage() {
 }
 
 /** Material / look tags, each with the store sentence it came from. */
+// Bluetooth receivers (FiiO BTR, ear-hooks, iFi GO blu): a phone sends them
+// audio over Bluetooth and they drive wired earphones, so the codec matters
+// as much as for wireless earphones. Many people use them with both.
+const BT_RX = /\b(bluetooth|btr\d+\w*|ear[- ]?hooks?|ldac|aptx|wireless)\b/i;
+function isBtReceiver(i) {
+  return ["dongle", "portable"].includes(i.category) && i.offers.some((o) => BT_RX.test(o.title));
+}
+
 function looksLine(i) {
   const tags = [...Object.entries(i.materials ?? {}), ...Object.entries(i.styles ?? {})];
   if (!tags.length) return "";
@@ -1239,7 +1250,8 @@ function itemPage(id) {
       ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
       ${i.phonoIn ? `<p class="small role-note">${esc(t("phono_takes", { kinds: i.phonoIn.split("+").map((k) => t(`cart_${k}`)).join(" + ") }))}</p>` : ""}
       ${["preamp", "streamer", ...NOT_HP_ROLES].includes(i.role) ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))}</p>` : ""}
-      ${i.category === "wireless" ? `<p class="small role-note">${esc(t("wl_note"))} <a href="#learn/bluetooth">${esc(t("wl_codecs"))}</a></p>` : ""}
+      ${i.category === "wireless" ? `<p class="small role-note">${esc(t("wl_note"))} <a href="#learn/bluetooth">${esc(t("wl_codecs"))}</a> · <a href="#catalog?cat=dongle&bt=1">${esc(t("wl_keep_wired"))}</a></p>` : ""}
+      ${isBtReceiver(i) ? `<p class="small role-note">${esc(t("bt_note"))} <a href="#learn/bluetooth">${esc(t("wl_codecs"))}</a></p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${priceTag(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span> <a class="price-deal" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))} →</a></p>` : ""}
@@ -1273,7 +1285,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv52zoj8").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv534bta").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2437,7 +2449,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52zoj8" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv534bta" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2924,7 +2936,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52zoj8" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv534bta" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

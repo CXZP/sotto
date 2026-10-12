@@ -134,3 +134,17 @@ test("near names that are different products stay apart", () => {
   assert.notEqual(k("Sennheiser", "Sennheiser Momentum 4 Wireless Headphones", "wireless"), k("Sennheiser", "Sennheiser MOMENTUM True Wireless 4", "wireless"));
   assert.equal(k("Sony", "Sony WF-1000XM5 Truly Wireless Noise Canceling", "wireless"), k("Sony", "Sony WF-1000XM5 Noise Cancellation True Wireless", "wireless"));
 });
+
+test("a bundle of two products is skipped; Warmer R2R Tube DAC is the Warmer R2R; QR65 is speakers", () => {
+  assert.equal(classify({ title: "Moondrop - Chu III + FiiO - BTR11" }), "skip");
+  assert.equal(looseKey(modelKey("FiiO", "FiiO WARMER R2R Tube DAC").key, "desktop"), looseKey(modelKey("FiiO", "FiiO Warmer R2R | Desktop R2R DAC and Tube Buffer").key, "desktop"));
+  assert.notEqual(looseKey("pro-ject--tube-box-ds3-b", "desktop"), looseKey("pro-ject--box-ds3-b", "desktop"));
+  assert.equal(classify({ title: "Edifier QR65 Active Wireless Speakers with GaN Charger" }), "speaker");
+  assert.equal(modelKey("Edifier", "Edifier QR65 Active Wireless Speakers with GaN Charger").model, "QR65");
+});
+
+test("not bundles, not merged: iFi iDSD GR 2 MT is one product; Little Dot I+ Tube is not the DAC I", () => {
+  assert.equal(classify({ title: "iFi iDSD GR 2 MT - Ultra-Res Portable DAC + Headphone Amp - Master Tuned Series" }) === "skip", false);
+  assert.notEqual(looseKey(modelKey("Little Dot", "LITTLEDOT I+ Tube Headphone Amplifier").key, "desktop"), looseKey("little-dot--dac-i", "desktop"));
+  assert.equal(looseKey(modelKey("Cayin", "Cayin HA-1A MK3 Tube Headphone Amplifier").key, "desktop"), looseKey("cayin--ha-1a-mk3", "desktop"));
+});

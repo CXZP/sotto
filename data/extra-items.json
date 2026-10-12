@@ -237,5 +237,39 @@
         }
       }
     }
+  },
+  {
+    "id": "fiio--warmer-r2r",
+    "brand": "FiiO",
+    "model": "Warmer R2R",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://www.fiio.com/WARMERR2R_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB*1 (data transmission)",
+          "url": "https://www.fiio.com/WARMERR2R_parameters"
+        },
+        "optical": {
+          "quote": "Digital optical input port",
+          "url": "https://www.fiio.com/WARMERR2R_parameters"
+        },
+        "coax": {
+          "quote": "Digital coaxial input port",
+          "url": "https://www.fiio.com/WARMERR2R_parameters"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Single-ended line output port",
+          "url": "https://www.fiio.com/WARMERR2R_parameters"
+        },
+        "xlr": {
+          "quote": "Balanced line output port",
+          "url": "https://www.fiio.com/WARMERR2R_parameters"
+        }
+      }
+    }
   }
 ]

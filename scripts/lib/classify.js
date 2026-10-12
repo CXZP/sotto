@@ -55,6 +55,9 @@ const RULES = [
   ["adapter", /\b(adapters?|adaptors?|converters?|converter plugs?|jack converters?)\b/i],
   // CD players and transports (a "CD speaker" or a ripper is not one).
   ["skip", /\b(cd speakers?|cd[- ]rippers?|rippers?|cassettes?)\b/i],
+  // Two products sold together ("Moondrop - Chu III + FiiO - BTR11"): not one
+  // model. "Portable DAC + Headphone Amp - Master Tuned" is one product.
+  ["skip", /\s-\s[^+]+\s\+\s(?!(?:headphone|dac|amp|preamp|portable|usb)\b)[^+]+\s-\s/i],
   // Speakers for a desk or a room. Portable Bluetooth/party speakers, speakerphones,
   // grilles, STAX "earspeakers" and speaker amps are not.
   ["skip", /^(?=.*speaker)(?:.*\b(?:portable|waterproof|party ?box|bluetooth (?:wireless )?speaker|compact|speakerphones?|grilles?|earspeakers?|conference|power ?bank)\b|.*\bspeaker amp)/i],
@@ -208,7 +211,7 @@ const NOISE = [
   // CD player descriptors ("SMSL PL200 MQA CD Player" == "SMSL PL200 MKII All-in-One CD Player").
   /\b((?:sa)?cd[- ]?(?:players?|transports?|drives?)|cd (?:digital )?transport|digital transport|mqa|chips?|all[- ]in[- ]one|top[- ]loading|compact|rca|optical|portable stereo|stereo)\b/gi,
   // Desktop descriptors that don't name the model ("Warmer R2R Fully Balanced DAC" == "Warmer R2R Tube Buffer").
-  /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
+  /\b(fully balanced|fully differential|fully discrete|fully|discrete|tube buffer|with gan charger|digital[- ]to[- ]analog conver[st][eo]r|decoder|network streaming|network streamng|streaming|streamer|remote control)\b/gi,
 ];
 
 /**
@@ -259,6 +262,9 @@ function deskWords(words, brand) {
     if (DESK_WORDS.has(w) || CHIP.test(w) || (w === "r2r" && ALL_R2R.has(brand))) continue;
     if (w === "bit" || (/^\d+$/.test(w) && words[n + 1] === "bit")) continue; // "26 bit"
     if (/^bt\d$/.test(w) || (/^\d$/.test(w) && /^bt\d$/.test(words[n - 1] ?? ""))) continue; // "BT5.1"
+    // "Warmer R2R Tube (DAC)": what it uses, not the model. Not when little is
+    // left: Little Dot "I+ Tube" is not the "DAC I".
+    if (w === "tube" && n === words.length - 1 && out.join("").length >= 3) continue;
     out.push(w);
   }
   return out;

@@ -150,6 +150,8 @@ for (const file of files) {
       { id: key, brand: vendor || null, model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
     // A model listed as "headphone" at one store and "iem" at another keeps the first;
     // the conflict is recorded so a person can look.
+    // The shortest name in the group names it ("Warmer R2R" over "WARMER R2R Tube").
+    if (groups.has(gk) && key.length < g.id.length) Object.assign(g, { id: key, model });
     if (g.category !== category) g.categoryConflict = [...new Set([...(g.categoryConflict ?? [g.category]), category])];
     const { price, priceMax, available } = mainPrice(p.variants);
     if (price == null) continue;
@@ -446,7 +448,7 @@ for (const g of catalog) {
 {
   const extra = JSON.parse(await readFile(new URL("data/extra-items.json", root), "utf8"));
   for (const e of extra) {
-    const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id));
+    const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id) || (g.category === e.category && looseKey(g.id, g.category) === looseKey(e.id, e.category)));
     if (hit) {
       for (const k of ["dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
       // The role read off the maker's page beats the one guessed from store titles.

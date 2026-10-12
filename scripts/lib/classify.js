@@ -40,7 +40,7 @@ const RULES = [
   // headphone chain or a desk. "Matrix Audio" is a brand, so only "matrix" with
   // a switch/distribution word counts.
   ["skip", /\b(home theat(?:er|re)|\d+[- ]channel|multi[- ]?channel|in[- ]wall|in[- ]ceiling|on[- ]wall|outdoor|center channel|lcr|floor[- ]?standing|tower speakers?|av receivers?|tuners?|distribution|matrix (?:switch|distribution)|service kit|soundbars?|network (?:audio )?(?:player|transport)|music server|multi-?room|(?:preamp|power|rectifier|output) (?:vacuum )?tubes?|integrated (?:class|stereo)|streaming media players?|pre-?(?:amp\w* )?processors?|pre-?amp\w*\s*\/\s*processors?|av ?\d{1,5}\w*|\d+\.\d+[- ]?ch)\b/i],
-  ["accessory", /\b(ear ?tips?|eartip|for (?:tws|true wireless|airpods)|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|ear ?loops?|for (?:tws|true wireless|airpods)|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   // Parts and care items sold under a product's name ("64 Audio Apex Modules",
   // "Audeze Maxwell Replacement Dongle", "Cayin C201 Module (For N6III)").
   // A player or amp that merely mentions its modules is still the product.
@@ -237,7 +237,7 @@ export function groupKey(key) {
 const FINISH = new Set(["black", "white", "silver", "grey", "gray", "blue", "red", "green", "gold", "matte", "edition", "wireless"]);
 // Words stores add to wireless earphones that never name the model
 // ("WF-1000XM5 Truly Wireless Noise Canceling" == "WF-1000XM5 TWS").
-const WIRELESS_WORDS = new Set(["true", "truly", "ture", "tws", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
+const WIRELESS_WORDS = new Set(["for", "true", "truly", "ture", "tws", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
 
 /**
  * Grouping key across stores: groupKey without finish words. A wireless version

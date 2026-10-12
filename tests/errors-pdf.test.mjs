@@ -36,12 +36,12 @@ const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // Checked on the built catalog: the title alone may pass while the store's
 // product type still pulls the listing into a main category.
 for (const title of ACCESSORIES)
-  test(`accessory, not a product: ${title}`, { todo }, () => {
+  test(`accessory, not a product: ${title}`, () => {
     assert.deepEqual(byTitle(new RegExp(`^${esc(title)}$`)).map((i) => `${i.id} (${i.category})`), []);
   });
 
 // A radio is a source (tuner + headphone/line out), like a portable player.
-test("FiiO RR13 radio is a source from FiiO, not a headphone or dongle", { todo }, () => {
+test("FiiO RR13 radio is a source from FiiO, not a headphone or dongle", () => {
   const found = byTitle(/FiiO RR13/);
   assert.ok(found.length, "listing missing");
   assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
@@ -63,13 +63,13 @@ const STORE_NAMES = new Set([
   "addsoap", "addictedtoaudio", "audio46", "headphonescom",
 ]);
 const HOUSE = /^(moon-audio--dragon|kitsunehifi--kte)/;
-test("no model is filed under a store's name unless the store makes it", { todo }, () => {
+test("no model is filed under a store's name unless the store makes it", () => {
   const bad = db.items
     .filter((i) => STORE_NAMES.has(norm(i.brand)) && !HOUSE.test(i.id) && !i.offers.some((o) => norm(o.title).includes(norm(i.brand))))
     .map((i) => `${i.id} (${i.brand})`);
   assert.deepEqual(bad, []);
 });
-test("store merchandise is not a product (gift cards, tees, desk mats, lucky bags, mystery boxes)", { todo }, () => {
+test("store merchandise is not a product (gift cards, tees, desk mats, lucky bags, mystery boxes)", () => {
   const bad = byTitle(/gift cards?|\btee\b|t-shirt|desk mat|lucky bag|mystery box/i).map((i) => `${i.id} (${i.category})`);
   assert.deepEqual(bad, []);
 });
@@ -82,7 +82,7 @@ for (const [re, brand] of [
   [/Little Dot MK9/, /^little dot$/i],
   [/COZOY TAKT C/, /^cozoy$/i],
 ])
-  test(`brand from the title: ${re.source}`, { todo }, () => {
+  test(`brand from the title: ${re.source}`, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.match(i.brand ?? "", brand);
@@ -108,7 +108,7 @@ const SPEAKER_AMPS = [
   /Klipsch KA-1000-THX Amplifier/, // subwoofer amp for the THX Ultra2 home theatre system
 ];
 for (const re of SPEAKER_AMPS)
-  test(`speaker power amp, kept out of headphone maths: ${re.source}`, { todo }, () => {
+  test(`speaker power amp, kept out of headphone maths: ${re.source}`, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.ok(!hpAmp(i), `${i.id} is desktop/${i.role}`);
@@ -117,7 +117,7 @@ for (const re of SPEAKER_AMPS)
 // The same over the whole catalog: a title that says power / stereo / mono amp,
 // watts, home cinema or custom install, and never says headphone.
 const SPEAKER_WORDS = /\b(power amp(lifier)?|stereo amp(lifier)?|mono(block|aural)? amp(lifier)?|dual mono amp(lifier)?|\d{2,4}\s?watts?\b|\d\s?x\s?\d{2,4}\s?w\b|home cinema|custom install(ation)?)\b/i;
-test("no speaker power amp anywhere is filed as a headphone amp", { todo }, () => {
+test("no speaker power amp anywhere is filed as a headphone amp", () => {
   const bad = db.items
     .filter((i) => hpAmp(i) && i.offers.some((o) => SPEAKER_WORDS.test(o.title)) && !i.offers.some((o) => /headphone/i.test(o.title)))
     .map((i) => `${i.id} (${i.role})`);
@@ -135,12 +135,12 @@ for (const re of [
   // Streaming integrated amps: streamer + amp with speaker terminals (e.g. FiiO AIR AMP).
   /M33 BluOS Streaming DAC Amplifier/, /NAD M33 V2 BluOS/, /WiiM - Amp Ultra/,
 ])
-  test(`integrated / streaming amp: ${re.source}`, { todo }, () => {
+  test(`integrated / streaming amp: ${re.source}`, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.equal(i.role, "integrated", `${i.id} is ${i.category}/${i.role ?? ""}`);
   });
-test("every integrated or streaming amp in the catalog has the integrated role", { todo }, () => {
+test("every integrated or streaming amp in the catalog has the integrated role", () => {
   const bad = db.items.filter((i) => i.offers.some((o) => INTEGRATED.test(o.title)) && i.role !== "integrated").map((i) => `${i.id} (${i.category}/${i.role ?? ""})`);
   assert.deepEqual(bad, []);
 });
@@ -150,14 +150,14 @@ test("every integrated or streaming amp in the catalog has the integrated role",
 // (e.g. FiiO SR11, WiiM Pro, iFi NEO Stream). "Streaming DAC" stays a DAC.
 const STREAMER = /\b(streamer|wi-?fi (audio )?transport|network (player|transport|streamer)|music server)\b/i;
 for (const re of [/iFi NEO Stream High-resolution Wi-Fi Audio Transport/, /iFi NEO Stream 3 High-resolution Wi-Fi Audio Transport/, /Weiss MAN301R/])
-  test(`streamer, a source without an amp: ${re.source}`, { todo }, () => {
+  test(`streamer, a source without an amp: ${re.source}`, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.equal(i.role, "streamer", `${i.id} is ${i.category}/${i.role ?? ""}`);
   });
 // Not counted: earphones named "Streamer" (KBEAR Streamer) and all-in-one music
 // centres with a headphone amp (Shanling EA5 Plus is a DAC/amp).
-test("every streamer in the catalog (not a CD player, portable or amp) has the streamer role", { todo }, () => {
+test("every streamer in the catalog (not a CD player, portable or amp) has the streamer role", () => {
   const bad = db.items
     .filter((i) => !["cd", "dap", "speaker", "iem", "headphone"].includes(i.category) && i.offers.some((o) => STREAMER.test(o.title) && !/amp(lifier)?\b|cd|sacd|all-in-one/i.test(o.title)))
     .filter((i) => i.role !== "streamer")
@@ -167,7 +167,7 @@ test("every streamer in the catalog (not a CD player, portable or amp) has the s
 
 // Line-level preamps drive a power amp, not headphones: role "preamp".
 for (const re of [/^XP-12 Line Level Preamplifier/, /^XP-22 Line Level Preamplifier/, /^ULTIMA PRE 2 Preamplifier/, /Goldmund MIMESIS .*Pre Amplifier/, /Benchmark LA4 Line Amplifier/])
-  test(`line preamp, not a headphone amp: ${re.source}`, { todo }, () => {
+  test(`line preamp, not a headphone amp: ${re.source}`, () => {
     const found = byTitle(re);
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.equal(i.role, "preamp", i.id);
@@ -175,49 +175,49 @@ for (const re of [/^XP-12 Line Level Preamplifier/, /^XP-22 Line Level Preamplif
 
 // Not amplifiers at all, yet filed as one.
 for (const re of [/Master Clock/i, /Reference Clock/, /Network Isolator|Network Conditioner|Galvanic Isolator|USB Optical Isolator/, /Kanto DM[12G] .*(Mount|Arm)/])
-  test(`not an amplifier: ${re.source}`, { todo }, () => {
+  test(`not an amplifier: ${re.source}`, () => {
     assert.deepEqual(byTitle(re).filter(hpAmp).map((i) => `${i.id} (${i.role})`), []);
   });
 
 // ---------------------------------------------------------------- 4. sources in the right box
 
-test("a CD player that also has a DAC is a CD player: Audio Research CD9", { todo }, () => {
+test("a CD player that also has a DAC is a CD player: Audio Research CD9", () => {
   for (const i of byTitle(/Audio Research Reference CD9/)) assert.equal(i.category, "cd");
 });
 test("ARCAM Radia CD5 and CD25 are CD players", () => {
   for (const i of byTitle(/ARCAM Radia CD5|Arcam CD25/i)) assert.equal(i.category, "cd");
 });
-test("a mains-powered streamer is not a portable player: ARCAM Radia ST5", { todo }, () => {
+test("a mains-powered streamer is not a portable player: ARCAM Radia ST5", () => {
   for (const i of byTitle(/ARCAM Radia ST5/)) assert.notEqual(i.category, "dap");
 });
-test("DAC & headphone amp is dacamp: AUDALYTIC AH90", { todo }, () => {
+test("DAC & headphone amp is dacamp: AUDALYTIC AH90", () => {
   for (const i of byTitle(/AUDALYTIC AH90/)) assert.equal(i.role, "dacamp");
 });
 
 // ---------------------------------------------------------------- 5. home theatre stays out
 
 for (const re of [/Anthem AVM 70/, /Anthem AVM 90/])
-  test(`home theatre processor kept out: ${re.source}`, { todo }, () => {
+  test(`home theatre processor kept out: ${re.source}`, () => {
     assert.deepEqual(byTitle(re).map((i) => i.id), []);
   });
 
 // ---------------------------------------------------------------- 6. one model, right form factor
 
 // astellnkern.com: "The First Class-A Portable AMP" — analog in (3.5/4.4 mm), battery, no DAC.
-test("Astell&Kern PA10 is one model, a portable amp (not a dongle, not desktop)", { todo }, () => {
+test("Astell&Kern PA10 is one model, a portable amp (not a dongle, not desktop)", () => {
   const found = byTitle(/PA10/).filter((i) => /astell/i.test(i.brand ?? ""));
   assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
   assert.ok(!["dongle", "desktop"].includes(found[0].category), `${found[0].id} is ${found[0].category}`);
   assert.equal(found[0].role ?? "amp", "amp");
 });
 // aloaudio.com: USB-C dongle, ESS 9281AC Pro DAC, 3.5 + 4.4 mm out.
-test("ALO Audio Pilot II is one model, a USB dongle DAC", { todo }, () => {
+test("ALO Audio Pilot II is one model, a USB dongle DAC", () => {
   const found = byTitle(/ALO Audio Pilot II/);
   assert.equal(found.length, 1, found.map((i) => i.id).join(", "));
   assert.equal(found[0].category, "dongle");
 });
 // acoustune.jp/as2002: USB-C dongle with an AK4493S DAC.
-test("Acoustune AS2000 and AS2002 are portable DACs, not desktop units", { todo }, () => {
+test("Acoustune AS2000 and AS2002 are portable DACs, not desktop units", () => {
   const found = byTitle(/Acoustune AS200[02]/);
   assert.ok(found.length);
   for (const i of found) assert.equal(i.category, "dongle", i.id);
@@ -257,15 +257,15 @@ test("no model is split across several entries (whole catalog)", { todo }, () =>
 
 // ---------------------------------------------------------------- 7. pre-owned is used stock of the same model
 
-test("PREOWNED (one word) is used stock, not a new model", { todo }, () => {
+test("PREOWNED (one word) is used stock, not a new model", () => {
   const bad = db.items.filter((i) => /preowned/.test(i.id)).map((i) => i.id);
   assert.deepEqual(bad, []);
 });
-test("no model id carries a stock-condition word (pre-owned, open box, demo, discontinued...)", { todo }, () => {
+test("no model id carries a stock-condition word (pre-owned, open box, demo, discontinued...)", () => {
   const bad = db.items.filter((i) => /(^|-)(pre-?owned|preowned|pre-?sale|pre-?order|open-box|b-stock|refurbished|demo|clearance|used|discontinued)(-|$)/.test(i.id)).map((i) => i.id);
   assert.deepEqual(bad, []);
 });
-test("'Pre Sale' is not part of a model name", { todo }, () => {
+test("'Pre Sale' is not part of a model name", () => {
   const bad = db.items.filter((i) => /pre-?sale|pre-?order/.test(i.id)).map((i) => i.id);
   assert.deepEqual(bad, []);
 });
@@ -275,7 +275,7 @@ test("'Pre Sale' is not part of a model name", { todo }, () => {
 test("every model has a photo (whole catalog)", { todo }, () => {
   assert.deepEqual(db.items.filter((i) => !i.image && !i.offers.some((o) => o.image)).map((i) => `${i.id} (${i.category})`), []);
 });
-test("Apple USB-C to 3.5 mm adapter has an image", { todo }, () => {
+test("Apple USB-C to 3.5 mm adapter has an image", () => {
   const i = db.items.find((x) => x.id === "apple--c-to-adapter");
   assert.ok(i, "missing");
   assert.ok(i.image || i.offers.some((o) => o.image), "no image");

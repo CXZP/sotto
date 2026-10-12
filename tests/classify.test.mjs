@@ -96,3 +96,9 @@ test("wireless earphones: one model whatever the store adds, tips for them are a
   assert.equal(cat("AZLA SednaEarfit Crystal for TWS"), "accessory");
   assert.equal(cat("Moondrop EVO II / EVO 2 Wireless Ear-hook DAC & AMP"), "dongle");
 });
+
+test("wireless: \"for ASMR\" is the ASMR model; ear loops are accessories", () => {
+  const k = (v, t) => looseKey(modelKey(v, t).key, "wireless");
+  assert.equal(k("Final Audio", "Final Audio ZE500 for ASMR True Wireless"), k("Final Audio", "Final Audio ZE500 ASMR True Wireless"));
+  assert.equal(cat("iFi GO pod Ear Loops"), "accessory");
+});

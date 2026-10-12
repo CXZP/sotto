@@ -21,10 +21,11 @@ const stores = JSON.parse(await readFile(new URL("scripts/stores.json", root), "
 const only = process.argv.slice(2);
 const sleep = (s) => new Promise((r) => setTimeout(r, s * 1000));
 
-// Shopify counts requests per visitor IP across every Shopify store, so all
-// stores share one budget. Go one request at a time, and the first time any
-// store says "slow down" (429), double the gap for the rest of the run and
-// wait as long as it asks (Retry-After) before trying again.
+// Shopify counts requests per visitor IP across every Shopify store. Go one
+// request at a time, and when a store says "slow down" (429), double the gap
+// and wait as long as it asks (Retry-After) before trying again. The longer
+// gap lasts until that store is done: carried over to every later store it
+// once made a run take hours.
 let slow = 1;
 const pause = (store) => sleep(store.delay * slow);
 async function slowDown(res, attempt) {
@@ -38,11 +39,20 @@ async function slowDown(res, attempt) {
 // (see scripts/lib/specpage.js). The rest wait for the next run; pages already
 // read are remembered in cache/pages/ until the product changes.
 const PAGE_BUDGET = Number(process.env.SPEC_PAGES ?? 400);
+// The job has a time limit, and a cut-off job keeps nothing. Every store's
+// feed is read first; product pages only fill the time left before this
+// deadline, and the rest wait for next week.
+const started = Date.now();
+const DEADLINE = started + Number(process.env.CRAWL_MINUTES ?? 100) * 60_000;
+const timeLeft = () => Date.now() < DEADLINE;
+const elapsed = () => `${Math.round((Date.now() - started) / 60_000)} min`;
 
 await mkdir(new URL("cache/raw/", root), { recursive: true });
 
+const withPages = [];
 for (const store of stores) {
   if (only.length && !only.includes(store.id)) continue;
+  slow = 1;
   if (store.kind === "woo") {
     await writeSnapshot(store, await wooProducts(store));
     continue;
@@ -62,15 +72,29 @@ for (const store of stores) {
     products.push(...batch.map(slim).map((p) => (store.matchOnly ? { ...p, body: "", images: [] } : p)));
     if (batch.length < 250) break;
   }
-  if (store.specPage) await addSpecPages(store, products);
   if (currencies.size > 1) throw new Error(`${store.id}: mixed currencies ${[...currencies]}`);
-  await writeSnapshot(store, { name: meta?.name, currency: [...currencies][0] ?? meta?.currency ?? null, products });
+  const snap = { name: meta?.name, currency: [...currencies][0] ?? meta?.currency ?? null, products };
+  await writeSnapshot(store, snap);
+  if (store.specPage) withPages.push([store, snap]);
 }
+console.log(`feeds done after ${elapsed()}`);
+
+// Second pass: spec boxes from product pages, while time allows.
+for (const [store, snap] of withPages) {
+  if (!timeLeft()) {
+    console.log(`${store.id.padEnd(16)} product pages skipped: out of time (${elapsed()})`);
+    continue;
+  }
+  slow = 1;
+  await addSpecPages(store, snap.products);
+  await writeSnapshot(store, snap);
+}
+console.log(`crawl done after ${elapsed()}`);
 
 async function writeSnapshot(store, { name, currency, products }) {
   const snapshot = { store: store.id, host: store.host, name: name ?? store.host, currency, fetchedAt: new Date().toISOString(), products };
   await writeFile(new URL(`cache/raw/${store.id}.json`, root), JSON.stringify(snapshot));
-  console.log(`${store.id.padEnd(16)} ${String(products.length).padStart(5)} products  ${currency}`);
+  console.log(`${store.id.padEnd(16)} ${String(products.length).padStart(5)} products  ${currency}  (${elapsed()})`);
 }
 
 // WooCommerce stores (Jaben) publish the same facts through the public Store
@@ -166,7 +190,7 @@ async function addSpecPages(store, products) {
     if (hit?.updatedAt !== p.updatedAt) {
       // Stop for this run when out of budget or when the store keeps saying
       // "slow down": the pages left are picked up next week.
-      if (fetched >= PAGE_BUDGET || failedInRow >= 5) continue;
+      if (fetched >= PAGE_BUDGET || failedInRow >= 5 || !timeLeft()) continue;
       await pause(store);
       fetched++;
       const html = await getText(`https://${store.host}/products/${p.handle}`);
@@ -185,7 +209,7 @@ async function addSpecPages(store, products) {
     }
   }
   await save();
-  const stopped = failedInRow >= 5 ? ", stopped early: store asked to slow down" : "";
+  const stopped = failedInRow >= 5 ? ", stopped early: store asked to slow down" : !timeLeft() ? ", stopped: out of time" : "";
   console.log(`${store.id.padEnd(16)} spec boxes from product pages: ${found} (${fetched} pages fetched${stopped})`);
 }
 

@@ -150,9 +150,23 @@
           "url": "https://hifigo.com/products/topping-a70pro"
         }
       },
-      "out": {}
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: 1 x BAL (XLR)",
+          "url": "https://dl.topping.audio/usermanual/a70p_en.pdf#page=4"
+        },
+        "rca": {
+          "quote": "Line Out output: 1 x SE (RCA)",
+          "url": "https://dl.topping.audio/usermanual/a70p_en.pdf#page=4"
+        }
+      }
     },
-    "addedFrom": "https://hifigo.com/products/topping-a70pro"
+    "addedFrom": "https://hifigo.com/products/topping-a70pro",
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ]
   },
   {
     "id": "topping--d900",
@@ -242,12 +256,20 @@
         "rca": {
           "quote": "1x Single-ended stereo RCA",
           "url": "https://www.audiophonics.fr/en/desktop-headphone-amplifiers/topping-l50-balanced-headphone-amplifier-nfca-black-p-15586.html"
+        },
+        "xlr": {
+          "quote": "⑦Right channel 6.35mm TRS Balanced input",
+          "url": "https://dl.topping.audio/usermanual/l50.pdf#page=2"
         }
       },
       "out": {
         "rca": {
           "quote": "1x Single-ended stereo RCA",
           "url": "https://www.audiophonics.fr/en/desktop-headphone-amplifiers/topping-l50-balanced-headphone-amplifier-nfca-black-p-15586.html"
+        },
+        "xlr": {
+          "quote": "⑬Right channel 6.35mm TRS Balanced passthrough output",
+          "url": "https://dl.topping.audio/usermanual/l50.pdf#page=2"
         }
       }
     },
@@ -817,5 +839,1751 @@
       },
       "out": {}
     }
+  },
+  {
+    "id": "topping--e30ii",
+    "brand": "TOPPING",
+    "model": "E30II",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-3 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-4 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2",
+          "conn": "usbB"
+        },
+        "dc": {
+          "quote": "2-6 Power input (DC5V/1A)",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e30-ii-2",
+    "brand": "TOPPING",
+    "model": "E30 II 2×",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-3 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-4 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2",
+          "conn": "usbB"
+        },
+        "dc": {
+          "quote": "2-6 Power input (DC5V/1A)",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e30ii.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--dx1",
+    "brand": "TOPPING",
+    "model": "DX1",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx1.pdf#page=2",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB",
+          "url": "https://dl.topping.audio/usermanual/dx1.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Line Out output: RCA",
+          "url": "https://dl.topping.audio/usermanual/dx1.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 1 x 3.5mm headphone output jack / 1 x 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 3.5mm headphone output jack / 1 x 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx1.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--l30ii",
+    "brand": "TOPPING",
+    "model": "L30II",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/l30ii.pdf#page=2",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "Amplifier input: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/l30ii.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Line out output: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/l30ii.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amp output: 1 x 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amp output: 1 x 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/l30ii.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--nx7",
+    "brand": "TOPPING",
+    "model": "NX7",
+    "category": "portable",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/nx7.pdf#page=2",
+    "ports": {
+      "in": {
+        "line": {
+          "quote": "1-3 3.5mm signal input jack",
+          "url": "https://dl.topping.audio/usermanual/nx7.pdf#page=2",
+          "conn": "3.5"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-1 4.4mm headphone output jack / 1-2 3.5mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-1 4.4mm headphone output jack / 1-2 3.5mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/nx7.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--a30pro",
+    "brand": "TOPPING",
+    "model": "A30Pro",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/a30p.pdf#page=2",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Amplifier inputs: 1 x XLR (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        },
+        "rca": {
+          "quote": "Amplifier inputs: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Pass through outputs: 1 x 6.35mm TRS(L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        },
+        "rca": {
+          "quote": "Pass through outputs: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--a30pro-nfca",
+    "brand": "TOPPING",
+    "model": "A30Pro NFCA",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/a30p.pdf#page=2",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Amplifier inputs: 1 x XLR (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        },
+        "rca": {
+          "quote": "Amplifier inputs: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Pass through outputs: 1 x 6.35mm TRS(L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        },
+        "rca": {
+          "quote": "Pass through outputs: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--e50",
+    "brand": "TOPPING",
+    "model": "E50",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e50.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "3-5 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2"
+        },
+        "optical": {
+          "quote": "3-6 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2"
+        },
+        "usb": {
+          "quote": "3-7 USB input",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2",
+          "conn": "usbB"
+        },
+        "dc": {
+          "quote": "Power input: DC5V/1A",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "3-1 Right channel 6.35mm TRS balanced output",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2"
+        },
+        "rca": {
+          "quote": "3-3 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e50.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e70",
+    "brand": "TOPPING",
+    "model": "E70",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e70.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-5 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-6 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-8 USB input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e70v",
+    "brand": "TOPPING",
+    "model": "E70V",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e70.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-5 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-6 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-8 USB input",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e70.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e70-velvet",
+    "brand": "TOPPING",
+    "model": "E70 VELVET",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e70v.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-5 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-6 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-8 USB input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e70-velvet-xu316-decorder-support-ldac",
+    "brand": "TOPPING",
+    "model": "E70 Velvet XU316 Decorder Support LDAC",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e70v.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-5 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-6 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-8 USB input",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e70v.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--dx3-pro",
+    "brand": "TOPPING",
+    "model": "DX3 Pro",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-4 Coaxial SPDIF input 1",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-5 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-6 USB input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2",
+          "conn": "usbB"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "dc": {
+          "quote": "2-8 Power input (DC15V)",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone amp output: 3.5mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone amp output: 3.5mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--dx3pro-pre",
+    "brand": "TOPPING",
+    "model": "DX3pro Pre",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-4 Coaxial SPDIF input 1",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-5 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-6 USB input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2",
+          "conn": "usbB"
+        },
+        "bt": {
+          "quote": "2-7 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        },
+        "dc": {
+          "quote": "2-8 Power input (DC15V)",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "3.5"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone amp output: 3.5mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone amp output: 3.5mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--dx5-lite",
+    "brand": "TOPPING",
+    "model": "DX5 Lite",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2",
+    "ports": {
+      "in": {
+        "bt": {
+          "quote": "2-5 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-6 USB input",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2",
+          "conn": "usbB"
+        },
+        "coax": {
+          "quote": "2-7 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-8 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 6.35mm headphone output jack / 4-PIN-XLR headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 6.35mm headphone output jack / 4-PIN-XLR headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx5_dx5l.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--dx7-pro",
+    "brand": "TOPPING",
+    "model": "DX7 Pro",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2",
+    "ports": {
+      "in": {
+        "i2s": {
+          "quote": "2-5 IIS input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "coax": {
+          "quote": "2-6 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-7 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-8 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-9 USB input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2",
+          "conn": "usbB"
+        },
+        "aes": {
+          "quote": "2-10 AES input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-1 4-PIN-XLR headphone output jack / 1-2 4.4mm headphone output jack / 1-3 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-1 4-PIN-XLR headphone output jack / 1-2 4.4mm headphone output jack / 1-3 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--dx7pro-plus",
+    "brand": "TOPPING",
+    "model": "DX7Pro Plus",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2",
+    "ports": {
+      "in": {
+        "i2s": {
+          "quote": "2-5 IIS input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "coax": {
+          "quote": "2-6 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-7 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "bt": {
+          "quote": "2-8 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-9 USB input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2",
+          "conn": "usbB"
+        },
+        "aes": {
+          "quote": "2-10 AES input",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-1 4-PIN-XLR headphone output jack / 1-2 4.4mm headphone output jack / 1-3 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-1 4-PIN-XLR headphone output jack / 1-2 4.4mm headphone output jack / 1-3 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/dx7pp.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--d90se",
+    "brand": "TOPPING",
+    "model": "D90SE",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2",
+    "ports": {
+      "in": {
+        "i2s": {
+          "quote": "3-5 IIS input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "coax": {
+          "quote": "3-6 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "optical": {
+          "quote": "3-7 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "bt": {
+          "quote": "3-8 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "usb": {
+          "quote": "3-9 USB input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2",
+          "conn": "usbB"
+        },
+        "aes": {
+          "quote": "3-10 AES input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "3-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "rca": {
+          "quote": "3-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d90le",
+    "brand": "TOPPING",
+    "model": "D90LE",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2",
+    "ports": {
+      "in": {
+        "i2s": {
+          "quote": "3-5 IIS input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "coax": {
+          "quote": "3-6 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "optical": {
+          "quote": "3-7 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "bt": {
+          "quote": "3-8 Bluetooth input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "usb": {
+          "quote": "3-9 USB input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2",
+          "conn": "usbB"
+        },
+        "aes": {
+          "quote": "3-10 AES input",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "3-1 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        },
+        "rca": {
+          "quote": "3-3 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/d90se_d90le.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--l70",
+    "brand": "TOPPING",
+    "model": "L70",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/l70.pdf#page=2",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR+6.35mm TRS combo input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-5 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "xlr": {
+          "quote": "2-7 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--l70-full-nfca",
+    "brand": "TOPPING",
+    "model": "L70 Full NFCA",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/l70.pdf#page=2",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR+6.35mm TRS combo input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-5 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "xlr": {
+          "quote": "2-7 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--l70-full-nfca-4pin-xlr-4-4-se-output",
+    "brand": "TOPPING",
+    "model": "L70 Full NFCA 4Pin XLR 4.4 SE Output",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/l70.pdf#page=2",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "2-1 Right channel balanced XLR+6.35mm TRS combo input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "rca": {
+          "quote": "2-3 Left channel single-ended RCA input",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-5 Left channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        },
+        "xlr": {
+          "quote": "2-7 Right channel balanced XLR output",
+          "url": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: 1-4 4-PIN-XLR headphone output jack / 1-5 4.4mm balanced headphone output jack / 1-6 6.35mm headphone output jack",
+        "source": "https://dl.topping.audio/usermanual/l70.pdf#page=2"
+      }
+    ]
+  },
+  {
+    "id": "topping--eha5-electrostatic",
+    "brand": "TOPPING",
+    "model": "EHA5 Electrostatic",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/usermanual/eha5.pdf#page=2",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "Signal input: 1 x SE (RCA L+R)",
+          "url": "https://dl.topping.audio/usermanual/eha5.pdf#page=2"
+        },
+        "xlr": {
+          "quote": "Signal input: 1 x BAL (Combo L+R)",
+          "url": "https://dl.topping.audio/usermanual/eha5.pdf#page=2"
+        },
+        "dc": {
+          "quote": "2-12 Power input (DC15V/2A)",
+          "url": "https://dl.topping.audio/usermanual/eha5.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Analog bypass output: 1 x SE (RCA L+R)",
+          "url": "https://dl.topping.audio/usermanual/eha5.pdf#page=2"
+        },
+        "xlr": {
+          "quote": "Analog bypass output: 1 x BAL (XLR L+R)",
+          "url": "https://dl.topping.audio/usermanual/eha5.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--e30-ii-lite",
+    "brand": "TOPPING",
+    "model": "E30 II Lite",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-3 Coaxial SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-4 Optical SPDIF input",
+          "url": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2",
+          "conn": "usbB"
+        },
+        "dc": {
+          "quote": "2-6 Power input (DC5V/1A)",
+          "url": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 Right channel single-ended RCA output",
+          "url": "https://dl.topping.audio/usermanual/e30ii_e30iil.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d70-pro-sabre",
+    "brand": "TOPPING",
+    "model": "D70 Pro SABRE",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d70pro-sabre-xu316-ldac-aptx-adaptive",
+    "brand": "TOPPING",
+    "model": "D70Pro SABRE XU316 LDAC Aptx-Adaptive",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf#page=3"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--a50-iii",
+    "brand": "TOPPING",
+    "model": "A50 III",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/um/a50_iii.pdf#page=9",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Signal input: 1 x TRS (L+R)",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        },
+        "rca": {
+          "quote": "Signal input: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        },
+        "dc": {
+          "quote": "Power input: DC 15V /1A @DC base 5.5*2.1",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+      }
+    ]
+  },
+  {
+    "id": "topping--a50-iii-a50iii-high-power",
+    "brand": "TOPPING",
+    "model": "A50 III A50III High-Power",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://dl.topping.audio/um/a50_iii.pdf#page=9",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Signal input: 1 x TRS (L+R)",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        },
+        "rca": {
+          "quote": "Signal input: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        },
+        "dc": {
+          "quote": "Power input: DC 15V /1A @DC base 5.5*2.1",
+          "url": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
+      }
+    ]
+  },
+  {
+    "id": "topping--d50-iii",
+    "brand": "TOPPING",
+    "model": "D50 III",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/d50_iii.pdf#page=12",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12",
+          "conn": "usbC"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: 1 x TRS (L+R)",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12"
+        },
+        "rca": {
+          "quote": "Line Out output: 1 x RCA (L+R)",
+          "url": "https://dl.topping.audio/um/d50_iii.pdf#page=12"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d90-iii-sabre",
+    "brand": "TOPPING",
+    "model": "D90 III Sabre",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d90iii-d90-iii-sabre-dual-ess9039spro",
+    "brand": "TOPPING",
+    "model": "D90III D90 III SABRE Dual ESS9039SPRO",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES/IIS",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/d90iii_sabre.pdf#page=15"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--centaurus",
+    "brand": "TOPPING",
+    "model": "Centaurus",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/centaurus.pdf#page=13",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--centaurus-r2r",
+    "brand": "TOPPING",
+    "model": "Centaurus R2R",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/centaurus.pdf#page=13",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/IIS/AES/COAX",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/centaurus.pdf#page=13"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--dx9",
+    "brand": "TOPPING",
+    "model": "DX9",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/um/dx9.pdf#page=17",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4-PIN-XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4-PIN-XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/um/dx9.pdf#page=17"
+      }
+    ]
+  },
+  {
+    "id": "topping--dx9-pre",
+    "brand": "TOPPING",
+    "model": "DX9 Pre",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://dl.topping.audio/um/dx9.pdf#page=17",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "i2s": {
+          "quote": "Signal input: USB/BT/OPT1/OPT2/COAX1/COAX2/AES/IIS",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/dx9.pdf#page=17"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ],
+    "notes": [
+      {
+        "th": "ช่องหูฟังตามคู่มือ TOPPING: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4-PIN-XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4-PIN-XLR headphone output jack / 1 x 4.4mm headphone output jack",
+        "source": "https://dl.topping.audio/um/dx9.pdf#page=17"
+      }
+    ]
+  },
+  {
+    "id": "topping--b200",
+    "brand": "TOPPING",
+    "model": "B200",
+    "category": "desktop",
+    "role": "poweramp",
+    "addedFrom": "https://dl.topping.audio/um/b200.pdf#page=9",
+    "ports": {
+      "in": {
+        "xlr": {
+          "quote": "Signal input: 3 x Mono (Combo: XLR + 6.35mm TRS)",
+          "url": "https://dl.topping.audio/um/b200.pdf#page=9"
+        },
+        "dc": {
+          "quote": "Power input: DC 64V /3.75A (3 pin aviation connector)",
+          "url": "https://dl.topping.audio/um/b200.pdf#page=9"
+        }
+      },
+      "out": {
+        "spk": {
+          "quote": "Signal output: Speaker terminal (BTL output)",
+          "url": "https://dl.topping.audio/um/b200.pdf#page=9"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d50s",
+    "brand": "TOPPING",
+    "model": "D50s",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/usermanual/d50s.pdf#page=2",
+    "ports": {
+      "in": {
+        "coax": {
+          "quote": "2-3 COAX input",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-4 OPT input",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2"
+        },
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2",
+          "conn": "usbB"
+        },
+        "bt": {
+          "quote": "2-6 Blutooth input",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2"
+        },
+        "dc": {
+          "quote": "2-7 Power input",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 R channel of AUX output",
+          "url": "https://dl.topping.audio/usermanual/d50s.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d10s",
+    "brand": "TOPPING",
+    "model": "D10s",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 R channel of analog output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-3 OPT output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        },
+        "coax": {
+          "quote": "2-4 COAX output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d10s-32bit-384khz-dsd256-xmos-xu208",
+    "brand": "TOPPING",
+    "model": "D10s 32Bit 384kHz DSD256 XMOS XU208",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "2-5 USB input",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2",
+          "conn": "usbB"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "2-1 R channel of analog output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        },
+        "optical": {
+          "quote": "2-3 OPT output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        },
+        "coax": {
+          "quote": "2-4 COAX output",
+          "url": "https://dl.topping.audio/um/D10s_%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf#page=2"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d70-pro-octo",
+    "brand": "TOPPING",
+    "model": "D70 Pro OCTO",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "topping--d70-pro-octo-eight",
+    "brand": "TOPPING",
+    "model": "D70 PRO OCTO Eight",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "bt": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "optical": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "coax": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "aes": {
+          "quote": "Signal input: USB/BT/OPT/COAX/AES",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        },
+        "rca": {
+          "quote": "Line Out output: XLR/RCA",
+          "url": "https://dl.topping.audio/um/D70_Pro_OCTO_V1.2.pdf#page=13"
+        }
+      }
+    },
+    "portsComplete": true
   }
 ]

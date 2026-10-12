@@ -87,3 +87,12 @@ test("a store category that names the kind wins, unless the title says part or c
   assert.equal(cat("FiiO QX11 DAC-Amp", { kind: "dongle" }), "dongle");
   assert.equal(cat("FiiO KA17 USB-C Cable", { kind: "dongle" }), "cable");
 });
+
+test("wireless earphones: one model whatever the store adds, tips for them are accessories", () => {
+  const k = (v, t) => looseKey(modelKey(v, t).key, "wireless");
+  assert.equal(k("Sony", "Sony WF-1000XM5 Truly Wireless Noise Canceling"), k("Sony", "Sony WF-1000XM5 Noise Cancellation True Wireless"));
+  assert.equal(k("Moondrop", "Moondrop Pudding TWS"), k("Moondrop", "Moondrop Pudding True Wireless"));
+  assert.equal(cat("HONKAI: STAR RAIL × MOONDROP Sparxie RT-Adaptive ANC Mini Hi-Fi TWS"), "wireless");
+  assert.equal(cat("AZLA SednaEarfit Crystal for TWS"), "accessory");
+  assert.equal(cat("Moondrop EVO II / EVO 2 Wireless Ear-hook DAC & AMP"), "dongle");
+});

@@ -16,7 +16,7 @@ import { preorder, listedAt } from "./lib/dates.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
-const KEEP = new Set(["iem", "headphone", "dongle", "portable", "desktop", "dap", "cd", "power", "speaker", "turntable", "phono", "cartridge"]);
+const KEEP = new Set(["iem", "headphone", "wireless", "dongle", "portable", "desktop", "dap", "cd", "power", "speaker", "turntable", "phono", "cartridge"]);
 // Roles for boxes that drive speakers or only stream: their watts are into
 // speakers and never enter the headphone maths.
 const NOT_HP_ROLES = new Set(["integrated", "poweramp", "streamer"]);

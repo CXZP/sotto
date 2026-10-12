@@ -17,7 +17,7 @@ const out = new URL(`${process.argv[2] ?? "_site"}/`, root);
 const SITE = (process.env.SITE_URL ?? "https://cxzp.github.io/sotto").replace(/\/$/, "");
 const catalog = JSON.parse(await readFile(new URL("data/catalog.json", root), "utf8"));
 
-const CAT = { iem: "IEM", headphone: "Headphones", dongle: "USB DAC/amp dongle", portable: "Portable headphone amp", desktop: "Desktop DAC/amp", dap: "Music player", cd: "CD player / transport", power: "DC power supply", speaker: "Speakers", turntable: "Turntable", phono: "Phono stage", cartridge: "Phono cartridge" };
+const CAT = { iem: "IEM", headphone: "Headphones", wireless: "Wireless earphones", dongle: "USB DAC/amp dongle", portable: "Portable headphone amp", desktop: "Desktop DAC/amp", dap: "Music player", cd: "CD player / transport", power: "DC power supply", speaker: "Speakers", turntable: "Turntable", phono: "Phono stage", cartridge: "Phono cartridge" };
 const ROLE = { dac: "Desktop DAC", amp: "Desktop headphone amp", dacamp: "Desktop DAC/amp", preamp: "Line preamp", integrated: "Integrated amp", streamer: "Streamer", poweramp: "Speaker power amp" };
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const name = (i) => (i.brand ? `${i.brand} ${i.model}` : i.model);

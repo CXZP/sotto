@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52cso2";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52cso2";
-import { renderChart } from "./chart.js?v=mv52cso2";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52cso2";
-import { makeT } from "./i18n.js?v=mv52cso2";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv52cso2";
-import { LEGAL } from "./legal.js?v=mv52cso2";
-import { track, stats, trackingOff } from "./analytics.js?v=mv52cso2";
-import * as community from "./community.js?v=mv52cso2";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52cso2";
-import { redactImage } from "./redact.js?v=mv52cso2";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52cso2";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52cso2";
-import { chainLinks } from "./chain.js?v=mv52cso2";
-import { fits } from "./dcfit.js?v=mv52cso2";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv52cso2";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52cso2";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52cso2";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52zoj8";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52zoj8";
+import { renderChart } from "./chart.js?v=mv52zoj8";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52zoj8";
+import { makeT } from "./i18n.js?v=mv52zoj8";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv52zoj8";
+import { LEGAL } from "./legal.js?v=mv52zoj8";
+import { track, stats, trackingOff } from "./analytics.js?v=mv52zoj8";
+import * as community from "./community.js?v=mv52zoj8";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52zoj8";
+import { redactImage } from "./redact.js?v=mv52zoj8";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52zoj8";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52zoj8";
+import { chainLinks } from "./chain.js?v=mv52zoj8";
+import { fits } from "./dcfit.js?v=mv52zoj8";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv52zoj8";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52zoj8";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52zoj8";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1013,7 +1013,7 @@ function catalogPage() {
   const brand = p.get("brand") ?? "";
   const mat = p.get("mat") ?? "";
   const role = cat === "desktop" ? p.get("role") ?? "" : "";
-  const cats = ["all", "iem", "headphone", "dongle", "portable", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
+  const cats = ["all", "iem", "headphone", "wireless", "dongle", "portable", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
@@ -1239,6 +1239,7 @@ function itemPage(id) {
       ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
       ${i.phonoIn ? `<p class="small role-note">${esc(t("phono_takes", { kinds: i.phonoIn.split("+").map((k) => t(`cart_${k}`)).join(" + ") }))}</p>` : ""}
       ${["preamp", "streamer", ...NOT_HP_ROLES].includes(i.role) ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))}</p>` : ""}
+      ${i.category === "wireless" ? `<p class="small role-note">${esc(t("wl_note"))} <a href="#learn/bluetooth">${esc(t("wl_codecs"))}</a></p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${priceTag(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span> <a class="price-deal" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))} →</a></p>` : ""}
@@ -1272,7 +1273,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv52cso2").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv52zoj8").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1427,7 +1428,7 @@ function openLightbox(set, start, name) {
 // Release calendar. Pre-orders are bars from when the store opened the page to
 // the date the store wrote; new listings are grouped by month. Every date comes
 // from a store page (scripts/lib/dates.js) and links back to it.
-const CAL_CATS = ["iem", "headphone", "dongle", "desktop", "dap", "speaker"];
+const CAL_CATS = ["iem", "headphone", "wireless", "dongle", "desktop", "dap", "speaker"];
 const DAY = 864e5;
 function calendarPage() {
   const cat = query().get("cat") ?? "";
@@ -2436,7 +2437,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52cso2" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52zoj8" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2923,7 +2924,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52cso2" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52zoj8" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

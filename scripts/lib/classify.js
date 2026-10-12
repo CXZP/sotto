@@ -40,7 +40,7 @@ const RULES = [
   // headphone chain or a desk. "Matrix Audio" is a brand, so only "matrix" with
   // a switch/distribution word counts.
   ["skip", /\b(home theat(?:er|re)|\d+[- ]channel|multi[- ]?channel|in[- ]wall|in[- ]ceiling|on[- ]wall|outdoor|center channel|lcr|floor[- ]?standing|tower speakers?|av receivers?|tuners?|distribution|matrix (?:switch|distribution)|service kit|soundbars?|network (?:audio )?(?:player|transport)|music server|multi-?room|(?:preamp|power|rectifier|output) (?:vacuum )?tubes?|integrated (?:class|stereo)|streaming media players?|pre-?(?:amp\w* )?processors?|pre-?amp\w*\s*\/\s*processors?|av ?\d{1,5}\w*|\d+\.\d+[- ]?ch)\b/i],
-  ["accessory", /\b(ear ?tips?|eartip|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
+  ["accessory", /\b(ear ?tips?|eartip|for (?:tws|true wireless|airpods)|(?:foam|silicone|memory foam|isolation) tips?|tips for|memory foam|ear ?pads?|earpads?|cushions?|case|pouch|stands?|hanger|filters?|nozzles?|screen protector|cleaning|headband|dust cap|carrying|straps?|cradles?|docking|ear ?hooks?|batter(y|ies)|faceplates?)\b/i],
   // Parts and care items sold under a product's name ("64 Audio Apex Modules",
   // "Audeze Maxwell Replacement Dongle", "Cayin C201 Module (For N6III)").
   // A player or amp that merely mentions its modules is still the product.
@@ -61,12 +61,12 @@ const RULES = [
   ["speaker", /\b(?:desktop|active|powered|bookshelf|studio|monitor|stereo|wireless|computer|pc|hi-?fi)\s+(?:loud)?speakers?\b|\bloudspeakers?\b/i],
   ["cd", /\b(?:sa)?cd[- ]?(?:players?|transports?|drives?)\b|\bcd (?:digital )?transport\b|\bcompact dis[ck] (?:players?|transports?)\b|\bdiscdream\b/i],
   ["skip", /\b(microphones?|turntables?|phono|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power conditioner|streamers?(?!.*\b(?:iems?|earphones?)\b)|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
-  ["wireless", /\b(tws|true wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
+  ["wireless", /\b(tws|truly? wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
   ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
   // A battery amp with an analog input only (no DAC): its own form factor.
   // One with a DAC is turned back into a dongle when the catalog is built.
   ["portable", /\bportable (?:(?!dac\b)[\w-]+ ){0,3}amp(?:lifier)?s?\b/i],
-  ["dongle", /\b(dongle|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable[- ](?:balanced[- ])?(usb[- ])?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac|bluetooth (?:dac|receiver|amp)\w*|portable (?:headphone )?amp\w*|btr\d+\w*)\b/i],
+  ["dongle", /\b(dongle|ear[- ]?hooks?|(?:type[- ]?c|usb[- ]?c|lightning) to (?:2\.5|3\.5|4\.4)(?:mm)?|portable[- ](?:balanced[- ])?(usb[- ])?dac|usb[- ]c dac|type[- ]c dac|dac cable|portable dac\/amp|mobile dac|bluetooth (?:dac|receiver|amp)\w*|portable (?:headphone )?amp\w*|btr\d+\w*)\b/i],
   ["desktop", /\b(desktop|headphone amp(lifier)?|dac\/amp|dac amp|dac & amp|dac and (headphone )?amp|tube amp|amplifier|preamp|dac)\b/i],
   // External DC supplies (linear or not) for DACs and amps; bundles with an amp stay amps.
   ["skip", /\b(chargers?|charging|power ?banks?|distribution block|power station|idefender|ground loop|bundle)\b/i],
@@ -235,6 +235,9 @@ export function groupKey(key) {
 // colour is the model (Ortofon 2M Red / Blue / Black), nor iFi's "Blue"
 // (ZEN Air Blue is the Bluetooth model).
 const FINISH = new Set(["black", "white", "silver", "grey", "gray", "blue", "red", "green", "gold", "matte", "edition", "wireless"]);
+// Words stores add to wireless earphones that never name the model
+// ("WF-1000XM5 Truly Wireless Noise Canceling" == "WF-1000XM5 TWS").
+const WIRELESS_WORDS = new Set(["true", "truly", "ture", "tws", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
 
 /**
  * Grouping key across stores: groupKey without finish words. A wireless version
@@ -244,7 +247,9 @@ const FINISH = new Set(["black", "white", "silver", "grey", "gray", "blue", "red
 export function looseKey(key, category) {
   const [brand, model = ""] = key.split("--");
   const words = model.replace(/(^|-)collector-?s(?=-|$)/g, "$1").split("-").filter(Boolean);
-  const keep = words.filter((w) => category === "cartridge" ? w !== "edition" : !FINISH.has(w) || (brand === "ifi" && w === "blue"));
+  const keep = words.filter((w) =>
+    category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)),
+  );
   const k = groupKey(`${brand}--${(keep.length ? keep : words).join("-")}`);
   // A phono stage named like another box ("ZEN Air Phono" vs "ZEN Air DAC") stays apart too.
   return category === "wireless" ? `${k}~w` : category === "phono" ? `${k}~p` : k;

@@ -62,16 +62,22 @@ for (const store of stores) {
   const meta = (await getJson(`https://${store.host}/meta.json`))?.data;
   const products = [];
   const currencies = new Set();
-  for (let page = 1; page <= (store.maxPages ?? 100); page++) {
+  // Shopify serves at most 25,000 products per feed (page × limit). A bigger
+  // store is read collection by collection ("collections" in stores.json),
+  // each with its own 25,000; a product in two of them is kept once.
+  const feeds = store.collections?.length ? store.collections.map((c) => `/collections/${encodeURIComponent(c)}/products.json`) : ["/products.json"];
+  const seenIds = new Set();
+  for (const feed of feeds)
+  for (let page = 1; page <= 100; page++) {
     await pause(store);
-    const res = await getJson(`https://${store.host}/products.json?limit=250&page=${page}`);
+    const res = await getJson(`https://${store.host}${feed}?limit=250&page=${page}`);
     const batch = res?.data?.products ?? [];
     // Shopify localises prices by visitor location. The currency actually used
     // is in the cart_currency cookie of each response, not in meta.json.
     if (res?.currency) currencies.add(res.currency);
     // Match-only stores are matched on title and brand alone: their
     // descriptions (page styles and scripts, mostly) are not kept.
-    products.push(...batch.map(slim).map((p) => (store.matchOnly ? { ...p, body: "", images: [] } : p)));
+    products.push(...batch.filter((p) => !seenIds.has(p.id) && seenIds.add(p.id)).map(slim).map((p) => (store.matchOnly ? { ...p, body: "", images: [] } : p)));
     if (batch.length < 250) break;
   }
   if (currencies.size > 1) throw new Error(`${store.id}: mixed currencies ${[...currencies]}`);

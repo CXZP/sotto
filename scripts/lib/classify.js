@@ -61,7 +61,7 @@ const RULES = [
   ["speaker", /\b(?:desktop|active|powered|bookshelf|studio|monitor|stereo|wireless|computer|pc|hi-?fi)\s+(?:loud)?speakers?\b|\bloudspeakers?\b/i],
   ["cd", /\b(?:sa)?cd[- ]?(?:players?|transports?|drives?)\b|\bcd (?:digital )?transport\b|\bcompact dis[ck] (?:players?|transports?)\b|\bdiscdream\b/i],
   ["skip", /\b(microphones?|turntables?|phono|speakers?|subwoofers?|soundbar|records?|vinyl|dj |mixer|network switch|power conditioner|streamers?(?!.*\b(?:iems?|earphones?)\b)|receivers?|bluetooth transmitter|power amp(lifier)?s?|integrated amp(lifier)?s?|monoblocks?)\b/i],
-  ["wireless", /\b(tws|truly? wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
+  ["wireless", /\b(tws|(?:true|truly) wireless|wireless earbuds|wireless headphones?|anc earbuds)\b/i],
   ["dap", /\b(dap|digital audio player|music player|audio player|walkman)\b/i],
   // A battery amp with an analog input only (no DAC): its own form factor.
   // One with a DAC is turned back into a dongle when the catalog is built.
@@ -237,7 +237,7 @@ export function groupKey(key) {
 const FINISH = new Set(["black", "white", "silver", "grey", "gray", "blue", "red", "green", "gold", "matte", "edition", "wireless"]);
 // Words stores add to wireless earphones that never name the model
 // ("WF-1000XM5 Truly Wireless Noise Canceling" == "WF-1000XM5 TWS").
-const WIRELESS_WORDS = new Set(["for", "true", "truly", "ture", "tws", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
+const WIRELESS_WORDS = new Set(["for", "anc", "bluetooth", "hybrid", "hi", "fi", "noise", "cancelling", "canceling", "cancellation", "active", "adaptive", "earbuds", "earphones", "headphones", "headset", "ipx4", "ipx5", "sports"]);
 // And power supplies: "Darkside Pro Linear Power Supply" == "Darkside Pro | Low-Noise Regulated ...".
 const POWER_WORDS = new Set(["linear", "power", "supply", "supplies", "psu", "lps", "low", "noise", "regulated", "reduction", "active", "purification", "cancelling", "canceling", "uk", "eu", "us", "plug", "version", "dc"]);
 
@@ -246,13 +246,37 @@ const POWER_WORDS = new Set(["linear", "power", "supply", "supplies", "psu", "lp
  * (filed under "wireless") stays apart from the wired one of the same name
  * (HiFiMAN Svanar vs Svanar Wireless).
  */
+// What stores add to DAC names: "R26 II / R26II Decoder 26 Bit Network Streaming
+// DAC Fully Discrete R2R BT5.1" and "X30 Quad ES9039SPRO*4" are the R26 II and X30.
+// "R2R" names a model at most brands (FiiO K11 vs K11 R2R); only lineups that are all R2R drop it.
+const ALL_R2R = new Set(["gustard", "denafrips", "holo", "musician"]);
+const DESK_WORDS = new Set(["renderer", "decoder", "network", "streaming", "streamer", "digital", "analog", "analogue", "convertor", "converter", "dac", "quad", "dual", "discrete", "fully", "with", "remote", "control", "certified", "apos", "desktop", "powerful"]);
+const CHIP = /^(?:\d+x)?(?:es9\d{3}|ak4\d{3}|cs43\d{3}|pcm\d{4}|ad\d{4})\w*$/;
+function deskWords(words, brand) {
+  const out = [];
+  for (let n = 0; n < words.length; n++) {
+    const w = words[n] === "il" ? "ii" : words[n]; // "R26 Il": a store's typo for II
+    if (DESK_WORDS.has(w) || CHIP.test(w) || (w === "r2r" && ALL_R2R.has(brand))) continue;
+    if (w === "bit" || (/^\d+$/.test(w) && words[n + 1] === "bit")) continue; // "26 bit"
+    if (/^bt\d$/.test(w) || (/^\d$/.test(w) && /^bt\d$/.test(words[n - 1] ?? ""))) continue; // "BT5.1"
+    out.push(w);
+  }
+  return out;
+}
+
 export function looseKey(key, category) {
   const [brand, model = ""] = key.split("--");
-  const words = model.replace(/(^|-)collector-?s(?=-|$)/g, "$1").split("-").filter(Boolean);
+  let words = model.replace(/(^|-)collector-?s(?=-|$)/g, "$1").split("-").filter(Boolean);
+  if (category === "desktop") words = deskWords(words, brand);
+  // "UltraSonic Bluetooth 5.3 Hybrid Hi-Fi ANC", "1BA+1DD": not the model
+  if (category === "wireless") words = words.filter((w, n) => !/^\d+(?:ba|dd)$/.test(w) && !(/^\d$/.test(w) && [words[n - 1], words[n - 2]].includes("bluetooth")));
   const keep = words.filter((w) =>
     category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)) && !(category === "power" && POWER_WORDS.has(w)),
   );
-  const k = groupKey(`${brand}--${(keep.length ? keep : words).join("-")}`);
+  // True wireless earbuds vs a wireless over-ear of the same name (Momentum 4 vs Momentum True Wireless 4).
+  const tws = category === "wireless" && words.some((w) => ["true", "truly", "ture", "tws"].includes(w));
+  const kept = keep.filter((w) => !(category === "wireless" && ["true", "truly", "ture", "tws"].includes(w)));
+  const k = groupKey(`${brand}--${(kept.length ? kept : words).join("-")}${tws ? "-tws" : ""}`);
   // A phono stage named like another box ("ZEN Air Phono" vs "ZEN Air DAC") stays apart too.
   return category === "wireless" ? `${k}~w` : category === "phono" ? `${k}~p` : k;
 }
@@ -266,6 +290,8 @@ export function compact(key) {
 export function modelKey(vendor, title) {
   // "Model | Description" (Bloom Audio): the part after the bar never names the model.
   let t = ` ${title.split(" | ")[0]} `;
+  // "ES9039SPRO*4": how many chips, not part of the model.
+  t = t.replace(/\*\s*\d+\b/g, " ");
   const v = (vendor ?? "").trim();
   if (v) t = t.replace(new RegExp(`\\b${escapeRe(v)}\\b`, "gi"), " ");
   // A model whose name starts with "Amp" ("WiiM Amp Pro") keeps it: it is not the noise word.

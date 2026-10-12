@@ -109,3 +109,28 @@ test("power supplies: one model whatever the store's description", () => {
   assert.equal(k("FiiO", "FiiO Darkside Mini Noise Reduction Power Supply"), k("FiiO", "Fiio Darkside Mini Active purification & Noise Cancelling Power Supply (UK plug version)"));
   assert.notEqual(k("FiiO", "FiiO Darkside Pro Linear Power Supply"), k("FiiO", "FiiO Darkside Mini Noise Reduction Power Supply"));
 });
+
+test("store words around DAC and TWS names don't split a model", () => {
+  const k = (v, t, c) => looseKey(modelKey(v, t).key, c);
+  const r26 = k("Gustard", "Gustard R26II", "desktop");
+  assert.equal(k("Gustard", "Gustard R26 II / R26II Decoder 26 Bit Network Streamng DAC Fully Discrete R2R BT5.1 with Remote Control", "desktop"), r26);
+  assert.equal(k("Gustard", "Gustard R26 Il Discrete R2R Network Streaming DAC", "desktop"), r26);
+  assert.notEqual(k("Gustard", "GUSTARD R26 R2R Digital to Analog Convertor (DAC)", "desktop"), r26);
+  assert.notEqual(k("FiiO", "FiiO K11 R2R", "desktop"), k("FiiO", "FiiO K11", "desktop"));
+  const x30 = k("Gustard", "GUSTARD DAC-X30", "desktop");
+  assert.equal(k("Gustard", "Gustard X30 Quad ES9039SPRO*4 Network Streaming Decoder Desktop DAC", "desktop"), x30);
+  assert.equal(k("Gustard", "GUSTARD X30 4xES9039SPRO Streamer Digital to Analog Convertor (DAC)", "desktop"), x30);
+  // A bare "Moondrop Ultrasonic" stays apart: without "true wireless" we can't tell earbuds from an over-ear.
+  const us = k("Moondrop", "Moondrop Ultrasonic TWS", "wireless");
+  assert.equal(k("Moondrop", "Moondrop UltraSonic Bluetooth 5.3 Hybrid Hi-Fi ANC True Wireless Earbuds", "wireless"), us);
+  assert.equal(k("Moondrop", "MOONDROP ULTRASONIC 1BA+1DD True Wireless Headphone (TWS)", "wireless"), us);
+  assert.equal(cat("MoonDrop ULTRASONIC True Wireless Earphones with Active Noise Cancellation"), "wireless");
+});
+
+test("near names that are different products stay apart", () => {
+  const k = (v, t, c) => looseKey(modelKey(v, t).key, c);
+  assert.notEqual(k("Mark Levinson", "Mark Levinson No. 585.5 Integrated Amplifier", "desktop"), k("Mark Levinson", "Mark Levinson No. 585 Integrated Amplifier", "desktop"));
+  assert.notEqual(k("Sennheiser", "Sennheiser ACCENTUM OPEN True Wireless Earbuds", "wireless"), k("Sennheiser", "Sennheiser Accentum True Wireless Earphones", "wireless"));
+  assert.notEqual(k("Sennheiser", "Sennheiser Momentum 4 Wireless Headphones", "wireless"), k("Sennheiser", "Sennheiser MOMENTUM True Wireless 4", "wireless"));
+  assert.equal(k("Sony", "Sony WF-1000XM5 Truly Wireless Noise Canceling", "wireless"), k("Sony", "Sony WF-1000XM5 Noise Cancellation True Wireless", "wireless"));
+});

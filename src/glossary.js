@@ -651,7 +651,8 @@ export const TERMS = [
 <li>หน้าสินค้าบอก "券后约฿…" (ประมาณหลังคูปอง) แต่หน้าชำระเงินสูงกว่านั้น ในสองตัวอย่างที่เราเห็นสูงกว่าราว 9.1% ส่วนหนึ่งคือ <b>ภาษี 7%</b>: หน้าข้อมูลขนส่งของ Taobao (12 ต.ค. 2026) บอกว่าของเข้าไทยต้องเสีย VAT 7% และอากร 10% ขึ้นไป แต่ถ้าใช้ขนส่งทางการของ Taobao ผู้ซื้อจ่าย 7% ของมูลค่าสินค้า ส่วนต่างแพลตฟอร์มจ่ายให้</li>
 <li>ขนส่ง: ส่งตรงทางบก (直邮) ฟรีเมื่อครบ ¥99 ราว 13–15 วัน หรือรวมกล่อง (集运) คิดตามน้ำหนัก (กรุงเทพฯ ¥15 กิโลแรก ¥14.5 กิโลต่อไป) ใช้น้ำหนักจริงหรือ กว้าง×ยาว×สูง/6000 แล้วแต่อันไหนมาก</li>
 <li>ช่องทางจ่ายก็มีผล: ในตัวอย่างของเรา เปลี่ยนเป็น PromptPay ลดอีกราว 1%</li>
-<li>ยอดที่ถูกต้องที่สุดคือยอดในหน้าชำระเงิน ไม่ใช่ราคาหน้าสินค้า</li>
+<li><b>ตั้งแอปเป็นภาษาจีน</b> โหมดภาษาอังกฤษซ่อนสินค้าบางชิ้น ("unavailable in the English interface") และบางชิ้นอยู่ในตะกร้าแต่จ่ายไม่ได้ ("Switch to Chinese version to checkout")</li>
+<li>ยอดที่ถูกต้องที่สุดคือยอดในหน้าชำระเงิน ไม่ใช่ราคาหน้าสินค้า สินค้าที่มีหลายตัวเลือกจะขึ้นเป็นช่วง เช่น "券后约฿8,028–10,484"</li>
 </ul>
 <h2>ถูกกว่าเสมอไหม</h2>
 <p>ไม่เสมอ ในวันเดียวกัน Moondrop DUSK บน Shopee ไทยหลังโค้ดอยู่ที่ ฿18,490 ส่วน Taobao ส่งไทยรวมภาษีอยู่ราว ฿13,956 แต่ Taobao ใช้เวลาส่งนานกว่าและประกันอาจไม่ใช่ศูนย์ไทย ราคาต้องดูคู่กับเวลารอและการรับประกัน</p>
@@ -674,7 +675,8 @@ export const TERMS = [
 <li>The product page shows "券后约฿…" (about this much after coupons); checkout came out higher, by about 9.1% in the two cases we saw. Part of that is <b>7% tax</b>: Taobao's own shipping page (12 Oct 2026) says imports into Thailand owe 7% VAT plus duty from 10%, and with Taobao's official logistics the buyer pays 7% of the goods' value while the platform covers the rest.</li>
 <li>Shipping: direct by land (直邮) is free over ¥99, about 13–15 days; consolidated (集运) is charged by weight (Bangkok ¥15 for the first kg, ¥14.5 per extra kg), using the larger of actual weight and L×W×H/6000.</li>
 <li>Payment method matters: in our example, paying by PromptPay took about 1% more off.</li>
-<li>The checkout total is the number to trust, not the product page.</li>
+<li><b>Use the app in Chinese.</b> The English interface hides some items ("unavailable in the English interface") and leaves others in the cart that won't check out ("Switch to Chinese version to checkout").</li>
+<li>The checkout total is the number to trust, not the product page. Items with several options show a range, e.g. "券后约฿8,028–10,484".</li>
 </ul>
 <h2>Is it always cheaper?</h2>
 <p>No. On the same day the Moondrop DUSK was ฿18,490 after codes on Shopee Thailand and about ฿13,956 from Taobao delivered with tax, but Taobao takes longer and the warranty may not be Thai. Weigh price against waiting time and warranty.</p>

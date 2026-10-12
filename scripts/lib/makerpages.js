@@ -93,7 +93,20 @@ export function fiioPairs(html) {
   }
   return pairs;
 }
-export const fiioSlug = (model) => model.toUpperCase().replace(/\bSNOWSKY\b|\bJADE ?AUDIO\b/g, "").replace(/[^A-Z0-9]/g, "");
+// Store names carry extras ("M27 Player Titanium Gold", "K15 *2 Powerful"):
+// the full name first, then shorter, never dropping a word that names
+// another model ("R2R", "Ultra", "BT", "Mini").
+const STEP = /^(?:R2R|ULTRA|PRO|BT|TUBE|MINI|NANO|MAX|PLUS|II|III|S|SE|LE|LITE|A|B|C|AKM|ESS|THX|SABRE)$/;
+export function fiioSlugs(model) {
+  const words = model.toUpperCase().replace(/\bSNOWSKY\b|\bJADE(?: ?AUDIO)?\b/g, " ").split(/[\s-]+/).map((w) => w.replace(/[^A-Z0-9]/g, "")).filter(Boolean);
+  const out = [];
+  for (let n = words.length; n > 0; n--) {
+    out.push(words.slice(0, n).join(""));
+    // Only straight after the model number ("KA5 Ultra", not "KA13 DACs Mini").
+    if (n === 2 && STEP.test(words[1])) break;
+  }
+  return [...new Set(out)];
+}
 
 // iFi: <tr class="spec-row"><td><strong>LABEL</strong></td><td>value</td>, values
 // split by "Line Section:" / "Headphone Section:" and by ";" or ",".

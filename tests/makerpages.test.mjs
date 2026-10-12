@@ -2,7 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readPair, fiioPairs, ifiPairs, toEntry, manualPairs, calloutPairs } from "../scripts/lib/makerpages.js";
+import { fiioSlugs, readPair, fiioPairs, ifiPairs, toEntry, manualPairs, calloutPairs } from "../scripts/lib/makerpages.js";
 
 const sockets = (label, value) => readPair(label, value).sockets.map((s) => `${s.dir}:${s.port}${s.conn ? `:${s.conn}` : ""}`);
 
@@ -55,4 +55,13 @@ test("Topping manuals: numbered lists and callouts", () => {
     "      Balanced XLR output         Coaxial SPDIF input", "      Power input (AC 100-277V 50Hz/60Hz)    Single-ended RCA output", "Display"].join(String.fromCharCode(10));
   const b = toEntry("u", calloutPairs(drawn));
   assert.deepEqual([Object.keys(b.ports.in), Object.keys(b.ports.out).sort(), b.jacks], [["coax"], ["rca", "xlr"], ["xlr4", "4.4"]]);
+});
+
+test("FiiO page names from store names", () => {
+  assert.deepEqual(fiioSlugs("M27 Player Titanium Gold"), ["M27PLAYERTITANIUMGOLD", "M27PLAYERTITANIUM", "M27PLAYER", "M27"]);
+  assert.deepEqual(fiioSlugs("K15 *2 Powerful"), ["K152POWERFUL", "K152", "K15"]);
+  assert.deepEqual(fiioSlugs("M25 R2R M25"), ["M25R2RM25", "M25R2R"]);
+  assert.deepEqual(fiioSlugs("Echo Mini 512MB"), ["ECHOMINI512MB", "ECHOMINI"]);
+  assert.deepEqual(fiioSlugs("KA13 DACs Mini -Class").at(-1), "KA13");
+  assert.deepEqual(fiioSlugs("KA5 Ultra"), ["KA5ULTRA"]);
 });

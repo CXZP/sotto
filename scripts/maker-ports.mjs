@@ -12,7 +12,7 @@ import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlug, manualPairs, calloutPairs } from "./lib/makerpages.js";
+import { toEntry, count, fiioPairs, ifiPairs, schiitEntry, fiioSlugs, manualPairs, calloutPairs } from "./lib/makerpages.js";
 
 const root = new URL("../", import.meta.url);
 const UA = "Mozilla/5.0 (compatible; SottoBot/1.0; +https://cxzp.github.io/sotto/)";
@@ -91,9 +91,13 @@ let done = 0;
 
 if (!only.length || only.includes("fiio")) {
   for (const i of models.filter((i) => i.brand === "FiiO")) {
-    const url = `https://www.fiio.com/${fiioSlug(i.model)}_parameters`;
-    const html = await get(url);
-    const pairs = html ? fiioPairs(html) : [];
+    let url, pairs = [];
+    for (const slug of fiioSlugs(i.model)) {
+      url = `https://www.fiio.com/${slug}_parameters`;
+      const html = await get(url);
+      pairs = html ? fiioPairs(html) : [];
+      if (pairs.length) break;
+    }
     if (!pairs.length) continue;
     // FiiO's table lists every socket on the box.
     const e = { ...toEntry(url, pairs), complete: true };

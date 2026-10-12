@@ -3128,5 +3128,871 @@
   },
   "jacks": [],
   "category": "desktop"
+ },
+ "fiio--btr15-daul-dsd256": {
+  "url": "https://www.fiio.com/BTR15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB2.0 (charging/data transfer)",
+     "url": "https://www.fiio.com/BTR15_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--btr15-high-fidelity": {
+  "url": "https://www.fiio.com/BTR15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB2.0 (charging/data transfer)",
+     "url": "https://www.fiio.com/BTR15_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--btr17-2": {
+  "url": "https://www.fiio.com/BTR17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB (Power supply/Data transfer)/Type-C USB POWER IN (Orange, Power supply)",
+     "url": "https://www.fiio.com/BTR17_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--disc-player": {
+  "url": "https://www.fiio.com/DISC_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Charging/Data transfer)",
+     "url": "https://www.fiio.com/DISC_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/DISC_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--echo-mini-512mb": {
+  "url": "https://www.fiio.com/ECHOMINI_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C port: Charging/Data transfer",
+     "url": "https://www.fiio.com/ECHOMINI_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--echo-mini-player-512mb": {
+  "url": "https://www.fiio.com/ECHOMINI_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C port: Charging/Data transfer",
+     "url": "https://www.fiio.com/ECHOMINI_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--echo-player": {
+  "url": "https://www.fiio.com/ECHO_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C port: Charging/Data transfer",
+     "url": "https://www.fiio.com/ECHO_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--k13-2": {
+  "url": "https://www.fiio.com/K13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*2 (Data transmission port)",
+     "url": "https://www.fiio.com/K13_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug (Input/Output)",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/K13_parameters"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Digital coaxial output port: RCA plug (Input/Output)",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA port*2",
+     "url": "https://www.fiio.com/K13_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k15-2-powerful": {
+  "url": "https://www.fiio.com/K15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1) USB-A*1 (Data transmission port)",
+     "url": "https://www.fiio.com/K15_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input port: Standard 4.4mm port",
+     "url": "https://www.fiio.com/K15_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line input port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k17-2": {
+  "url": "https://www.fiio.com/K17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1) USB-A*1 (Data transmission port)",
+     "url": "https://www.fiio.com/K17_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input port: Standard 4.4mm port",
+     "url": "https://www.fiio.com/K17_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line input port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Digital optical output port: Optical plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--m15s-5-inch": {
+  "url": "https://www.fiio.com/M15S_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB3.0 (charging/data transmission)",
+     "url": "https://www.fiio.com/M15S_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: 3.5 mm (shared with PO port)",
+     "url": "https://www.fiio.com/M15S_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced output: 2.5mm + 4.4mm balanced",
+     "url": "https://www.fiio.com/M15S_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "coaxial interface: 3.5 mm (shared with PO port, up to 384kHz-32bit/DSD128)",
+     "url": "https://www.fiio.com/M15S_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m21-4-mp3": {
+  "url": "https://www.fiio.com/M21_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm (shared PO)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL line output: Standard 4.4mm (shared BAL)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m21-player": {
+  "url": "https://www.fiio.com/M21_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm (shared PO)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL line output: Standard 4.4mm (shared BAL)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m27-player-aluminium-black": {
+  "url": "https://www.fiio.com/M27_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)+Type-C USB HOST*1 (data transmission)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Coaxial input port: RCA port (shared coaxial output port)",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: Standard 3.5mm port+Standard 6.35mm port (shared PO port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: Standard 4.4mm port (shared BAL port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Optical output port: Optical port",
+     "url": "https://www.fiio.com/M27_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial output port: RCA port",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m27-player-titanium-gold": {
+  "url": "https://www.fiio.com/M27_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)+Type-C USB HOST*1 (data transmission)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Coaxial input port: RCA port (shared coaxial output port)",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: Standard 3.5mm port+Standard 6.35mm port (shared PO port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: Standard 4.4mm port (shared BAL port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Optical output port: Optical port",
+     "url": "https://www.fiio.com/M27_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial output port: RCA port",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m33-r2r-player-dap": {
+  "url": "https://www.fiio.com/M33R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (Charging/Data transfer)+Type-C POWER IN*1 (Charging/Independent power supply interface)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/M33R2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port (shared BAL)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--q11-high-fidelity": {
+  "url": "https://www.fiio.com/Q11_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB interface: TYPE-C USB2.0 (charging/data)",
+     "url": "https://www.fiio.com/Q11_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--q7-high-fidelity": {
+  "url": "https://www.fiio.com/Q7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB2.0",
+     "url": "https://www.fiio.com/Q7_parameters"
+    },
+    "optical": {
+     "quote": "OPT IN: Toslink",
+     "url": "https://www.fiio.com/Q7_parameters"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "COAX OUT: RCA",
+     "url": "https://www.fiio.com/Q7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5",
+   "2.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--qx11-2": {
+  "url": "https://www.fiio.com/QX11_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0 (charging/data transfer/OTA updates)+Type-C USB POWER IN (orange, power supply)",
+     "url": "https://www.fiio.com/QX11_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Headphone output: Standard 3.5mm port + Supports CTIA-standard inline mic",
+     "url": "https://www.fiio.com/QX11_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared with PO)",
+     "url": "https://www.fiio.com/QX11_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--rr11-receiver": {
+  "url": "https://www.fiio.com/RR11_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--rr11-si4831": {
+  "url": "https://www.fiio.com/RR11_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--s15-music": {
+  "url": "https://www.fiio.com/S15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1+USB A*2 (data transfer)",
+     "url": "https://www.fiio.com/S15_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES input port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line-out port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line-out port: RCA port*2",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical output port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--s15-music-receiver": {
+  "url": "https://www.fiio.com/S15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1+USB A*2 (data transfer)",
+     "url": "https://www.fiio.com/S15_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES input port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line-out port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line-out port: RCA port*2",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical output port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--tt11-automatic": {
+  "url": "https://www.fiio.com/TT11_parameters",
+  "ports": {
+   "in": {},
+   "out": {
+    "rca": {
+     "quote": "Line output: sStandard RCA ports (white and red)",
+     "url": "https://www.fiio.com/TT11_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "turntable"
+ },
+ "fiio--tt13-automatic": {
+  "url": "https://www.fiio.com/TT13_parameters",
+  "ports": {
+   "in": {
+    "dc": {
+     "quote": "DC power in: &Phi;6.2mm DC port",
+     "url": "https://www.fiio.com/TT13_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "turntable"
+ },
+ "fiio--tt13-full-automatic-vinyl": {
+  "url": "https://www.fiio.com/TT13_parameters",
+  "ports": {
+   "in": {
+    "dc": {
+     "quote": "DC power in: &Phi;6.2mm DC port",
+     "url": "https://www.fiio.com/TT13_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "turntable"
+ },
+ "fiio--dm15-dual-akm": {
+  "url": "https://www.fiio.com/DM15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Data transfer) +Type-C POWER IN*1 (Charging/Dedicated power supply port)",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Linear Output Interface: Standard 3.5mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "coaxial output interface: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    },
+    "optical": {
+     "quote": "Optical output: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "cd"
+ },
+ "fiio--ka13-dacs-mini-class": {
+  "url": "https://www.fiio.com/KA13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB",
+     "url": "https://www.fiio.com/KA13_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "3.5mm plug: Single-ended/SPDIF output (shared)",
+     "url": "https://www.fiio.com/KA13_parameters",
+     "conn": "spdif35"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--m27-dual-ess-sabre-pro-dacs-dap": {
+  "url": "https://www.fiio.com/M27_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)+Type-C USB HOST*1 (data transmission)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Coaxial input port: RCA port (shared coaxial output port)",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: Standard 3.5mm port+Standard 6.35mm port (shared PO port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: Standard 4.4mm port (shared BAL port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Optical output port: Optical port",
+     "url": "https://www.fiio.com/M27_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial output port: RCA port",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--warmer-r2r-tube": {
+  "url": "https://www.fiio.com/WARMERR2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*1 (data transmission)",
+     "url": "https://www.fiio.com/WARMERR2R_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Single-ended line output port: RCA port*2",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port*2",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
  }
 }

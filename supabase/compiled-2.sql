@@ -25,7 +25,7 @@ select * from (values
   (
     'fiio--btr13', 'issue',
     'Start of playback cut off; pop on incoming calls after changing balance',
-    'FiiO''s notes for BTR13 firmware V13.2 (2026-05-22) list fixes for missing audio when playback starts, and for a popping sound when a call comes in after the channel balance was adjusted.',
+    'FiiO''s notes for BTR13 firmware V13.2 (2026-05-22) list fixes for missing audio when playback starts, and for a popping sound when a call comes in after the channel balance was adjusted. Owners on the same FiiO thread had reported on V12.8 a loud pop on one side after a balance change and a reboot, and that keeping the balance at 0 avoided it.',
     'https://forum.fiio.com/note/showNoteContent.do?id=202412181710544627982',
     'unknown', null::uuid, 'fixed', 'V13.2',
     '2. Fixed an issue of missing audio during initial playback.',

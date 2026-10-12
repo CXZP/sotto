@@ -78,6 +78,17 @@ async function writeSnapshot(store, { name, currency, products }) {
 // and then a Thai description in the title; the model is the part before the
 // first Thai letter, the whole title still goes to the category guess.
 const THAI = /[\u0E00-\u0E7F]/;
+// Store categories that say what a product is, where titles often don't
+// ("Allnic HPA-15000" under "TUBE HEADPHONES AMPLIFIERS"). Jaben's names.
+const WOO_KINDS = {
+  "in-ear": "iem", "custom iems": "iem", earbud: "iem",
+  "full-size": "headphone", "on-ear": "headphone",
+  "dac-amp \u0E2B\u0E32\u0E07\u0E2B\u0E19\u0E39": "dongle", "dac-amp portable": "dongle",
+  "dac-amp desktop": "desktop", "pure dac": "desktop", streamers: "desktop",
+  "tube headphones amplifiers": "desktop", "solid state headphones amplifiers": "desktop",
+  daps: "dap", "cd players": "cd", turntables: "turntable",
+  remote: "accessory", cases: "accessory", "stand ขาตั้ง": "accessory", "earpads / eartips": "accessory",
+};
 async function wooProducts(store) {
   const products = [];
   let currency = null;
@@ -97,6 +108,7 @@ async function wooProducts(store) {
         title: (cut > 0 ? name.slice(0, cut) : name).trim(),
         vendor: p.brands?.[0]?.name ?? "",
         type: (p.categories ?? []).map((c) => decode(c.name)).join(" "),
+        kind: (p.categories ?? []).map((c) => WOO_KINDS[decode(c.name).toLowerCase()]).find(Boolean),
         tags: [name, ...(p.tags ?? []).map((t) => decode(t.name))],
         updatedAt: null,
         publishedAt: null,

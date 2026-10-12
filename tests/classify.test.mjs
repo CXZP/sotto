@@ -81,3 +81,9 @@ test("Japanese store titles: the model name, or nothing for parts and incomplete
   assert.equal(condition("【中古】KA17 Black 【FIO-KA17-B】【秋葉原】"), "open-box/used");
   assert.equal(condition("DC-Tonfa"), "new");
 });
+
+test("a store category that names the kind wins, unless the title says part or cable", () => {
+  assert.equal(cat("Allnic HPA-15000", { kind: "desktop", type: "TUBE HEADPHONES AMPLIFIERS" }), "desktop");
+  assert.equal(cat("FiiO QX11 DAC-Amp", { kind: "dongle" }), "dongle");
+  assert.equal(cat("FiiO KA17 USB-C Cable", { kind: "dongle" }), "cable");
+});

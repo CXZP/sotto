@@ -79,6 +79,12 @@ const RULES = [
 export function classify(p) {
   const title = p.title ?? "";
   const tags = (Array.isArray(p.tags) ? p.tags.join(" ") : p.tags) ?? "";
+  // A store whose own categories are reliable sets p.kind (see crawl.mjs). The
+  // title still wins when it says the product is a part, a cable or not ours.
+  if (p.kind) {
+    const fromTitle = RULES.find(([, re]) => has(title, re))?.[0];
+    return ["accessory", "skip", "cable", "adapter", "power"].includes(fromTitle) ? fromTitle : p.kind;
+  }
   // Title first, then the store's product type, then tags (tags are noisy: "Desktop HiFi" on an IEM).
   for (const text of [title, p.type ?? "", tags]) {
     for (const [cat, re] of RULES) if (has(text, re)) return cat;

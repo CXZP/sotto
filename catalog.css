@@ -566,3 +566,6 @@ select option { background: var(--surface); color: var(--text); }
 /* A card title with a control on the right (currency menu on Prices by store). */
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .card-head h3 { margin: 0; }
+
+/* "New posts · show" when a section changed while someone was typing in it. */
+.new-posts { float: right; font-size: 13px; }

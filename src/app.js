@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52926r";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52926r";
-import { renderChart } from "./chart.js?v=mv52926r";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52926r";
-import { makeT } from "./i18n.js?v=mv52926r";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv52926r";
-import { LEGAL } from "./legal.js?v=mv52926r";
-import { track, stats, trackingOff } from "./analytics.js?v=mv52926r";
-import * as community from "./community.js?v=mv52926r";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52926r";
-import { redactImage } from "./redact.js?v=mv52926r";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52926r";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52926r";
-import { chainLinks } from "./chain.js?v=mv52926r";
-import { fits } from "./dcfit.js?v=mv52926r";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv52926r";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52926r";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52926r";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52cso2";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52cso2";
+import { renderChart } from "./chart.js?v=mv52cso2";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52cso2";
+import { makeT } from "./i18n.js?v=mv52cso2";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv52cso2";
+import { LEGAL } from "./legal.js?v=mv52cso2";
+import { track, stats, trackingOff } from "./analytics.js?v=mv52cso2";
+import * as community from "./community.js?v=mv52cso2";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52cso2";
+import { redactImage } from "./redact.js?v=mv52cso2";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52cso2";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52cso2";
+import { chainLinks } from "./chain.js?v=mv52cso2";
+import { fits } from "./dcfit.js?v=mv52cso2";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv52cso2";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52cso2";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52cso2";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1272,7 +1272,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv52926r").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv52cso2").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1574,6 +1574,10 @@ function wire(main, r) {
     const rev = main.querySelector("#item-rev");
     if (rev) rev.outerHTML = reverseCard(i, LEVELS.normal);
     if (i) renderCommunity(main.querySelector("#community"), i);
+    if (i) watchSection(main.querySelector("#community"), async () => {
+      const { ok, rows } = await community.reportsFor(idsOf(i));
+      return ok ? rows.map((r) => `${r.id}:${r.confirms}`).sort().join() : null;
+    }, () => renderCommunity(main.querySelector("#community"), i));
     if (i) renderPaid(main.querySelector("#paid"), i);
     if (i) renderPorts(main.querySelector("#ports"), i);
     // "Photo the back panel": jump to the ports card and open its form.
@@ -2432,7 +2436,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52926r" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52cso2" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2919,7 +2923,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52926r" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52cso2" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3594,6 +3598,10 @@ async function wireThread(main) {
     );
   };
   load();
+  watchSection(el, async () => {
+    const res = await community.getThread(id);
+    return res.ok ? `${res.thread?.id}:${res.comments.map((c) => c.id).join()}` : null;
+  }, load);
 }
 
 /** Threads linked to one item, on its page. */
@@ -4172,6 +4180,41 @@ function watchForUpdates() {
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) check();
   });
+}
+// New posts and comments while a page stays open: check every 90 seconds and
+// when the tab comes back. A section nobody is typing in refreshes itself;
+// one with a draft or an open form gets a "new posts" button instead.
+function watchSection(el, signature, rerender) {
+  if (!el) return;
+  let last;
+  const busy = () =>
+    el.contains(document.activeElement) && document.activeElement !== document.body ||
+    [...el.querySelectorAll("input, textarea")].some((x) => x.type !== "checkbox" && x.type !== "radio" && x.value !== x.defaultValue);
+  const tick = async () => {
+    if (!el.isConnected) return stop();
+    if (document.hidden) return;
+    const sig = await signature().catch(() => null);
+    if (sig == null || !el.isConnected) return;
+    if (last === undefined) return void (last = sig);
+    if (sig === last) return;
+    last = sig;
+    if (!busy()) return rerender();
+    if (el.querySelector(".new-posts")) return;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "pill new-posts";
+    b.textContent = t("cm_new_posts");
+    b.addEventListener("click", rerender);
+    el.prepend(b);
+  };
+  const onVis = () => !document.hidden && tick();
+  const timer = setInterval(tick, 90 * 1000);
+  document.addEventListener("visibilitychange", onVis);
+  function stop() {
+    clearInterval(timer);
+    document.removeEventListener("visibilitychange", onVis);
+  }
+  setTimeout(tick, 5000); // remember what the page showed
 }
 function money(n, currency) {
   if (n == null) return "";

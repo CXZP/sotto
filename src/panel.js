@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5jhzw7";
-import { gearSvg } from "./gear.js?v=mv5jhzw7";
+import { nodePorts } from "./desk.js?v=mv5jjehi";
+import { gearSvg } from "./gear.js?v=mv5jjehi";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -68,7 +68,7 @@ export function chassisOf(node) {
   if (i.category === "dongle") return { style: "dongle", finish: "black" };
   if (["portable", "dap", "wireless"].includes(i.category)) return { style: "pocket", finish: "black" };
   if (["iem", "headphone"].includes(i.category)) return { style: "plug", finish: "black" };
-  if (i.category === "speaker") return { style: "speaker", finish: "black" };
+  if (i.category === "speaker") return { style: "speaker", finish: "black", active: i.speaker !== "passive" };
   if (i.category === "turntable") return { style: "plinth", finish: "black" };
   const b = BRAND_CHASSIS[String(i.brand ?? "").toLowerCase()];
   if (b) return { style: b[0], finish: b[1] };
@@ -162,9 +162,9 @@ export function panelSpec(node) {
     x += w + 8;
   }
   // Mains inlet on boxes that plug into the wall (not a DC-only box or a pocket one).
-  const mains = ["full", "wood", "slim", "compact", "jewel", "zen", "plinth"].includes(chassis.style) && !ports.in.includes("dc");
+  const mains = (["full", "wood", "slim", "compact", "jewel", "zen", "plinth", "inset"].includes(chassis.style) || chassis.active) && !ports.in.includes("dc");
   // A power supply always takes mains: that is its job.
-  if (mains && (["full", "wood", "slim", "inset"].includes(chassis.style) || i?.category === "power")) {
+  if (mains && (["full", "wood", "slim", "inset"].includes(chassis.style) || i?.category === "power" || chassis.active)) {
     groups.push({ x, y: top, w: 74, h: cellH, label: "AC IN", deco: "iec" });
     x += 82;
   }
@@ -175,7 +175,11 @@ export function panelSpec(node) {
     for (const g of groups) g.x += shift;
     for (const s of sockets) s.x += shift;
   }
-  return { w, h: cellH + top * 2 + (chassis.style === "pocket" ? 0 : chassis.style === "inset" ? 20 : 6), chassis, groups, sockets };
+  // An active speaker: room above the inputs for the amp plate's fins.
+  const lift = chassis.active ? 52 : 0;
+  for (const g of groups) g.y += lift;
+  for (const s of sockets) s.y += lift;
+  return { w, h: cellH + top * 2 + lift + (chassis.style === "pocket" ? 0 : chassis.style === "inset" ? 20 : 6), chassis, groups, sockets };
 }
 
 // ---------------------------------------------------------------------------
@@ -321,7 +325,8 @@ export function panelSvg(spec, name = "") {
       case "plinth":
         return `<rect x="0" y="8" width="${w}" height="${h - 16}" rx="4" fill="#1a1a1a" stroke="#000" stroke-width="2"/>${[0.1, 0.9].map((k) => `<rect x="${w * k - 14}" y="${h - 10}" width="28" height="10" rx="4" fill="#111"/>`).join("")}`;
       case "speaker":
-        return `<rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#wood)" stroke="#3b2414" stroke-width="2"/><rect x="${w / 2 - 80}" y="10" width="160" height="${h - 20}" rx="8" fill="#151515"/>`;
+        // An active speaker: an amp plate with cooling fins above its inputs.
+        return `<rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#wood)" stroke="#3b2414" stroke-width="2"/><rect x="12" y="8" width="${w - 24}" height="${h - 16}" rx="8" fill="#1b1c1f"/>${chassis.active ? Array.from({ length: Math.floor((w - 40) / 10) }, (_, k) => `<rect x="${22 + k * 10}" y="14" width="5" height="40" rx="2" fill="#2c2e33"/>`).join("") : ""}`;
       case "device":
         return `<rect x="0" y="0" width="${w}" height="${h}" rx="16" fill="#202124" stroke="#0b0b0c" stroke-width="2"/>`;
       case "dongle":

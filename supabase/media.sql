@@ -36,6 +36,11 @@ alter table public.comments drop constraint if exists comments_body_check;
 alter table public.comments add constraint comments_body_check check (char_length(body) <= 5000 and (char_length(body) >= 1 or cardinality(images) >= 1));
 
 -- Feeds gain the images column (appended, so the views can be replaced in place).
+-- brands.sql adds columns to this view, and Postgres can't take columns away
+-- from a view: when they are there already, re-running this file leaves it alone.
+do $guard$ begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'thread_feed' and column_name = 'author_brand') then
+    execute $v$
 create or replace view public.thread_feed with (security_invoker = true) as
 select t.id, t.author, p.display_name as author_name, t.category, t.title, t.body, t.item_ids, t.created_at, t.edited_at,
        coalesce((select sum(v.value) from public.thread_votes v where v.thread_id = t.id), 0)::int as score,
@@ -44,14 +49,25 @@ select t.id, t.author, p.display_name as author_name, t.category, t.title, t.bod
        t.images
 from public.threads t
 left join public.profiles p on p.id = t.author
-where t.status = 'visible';
+where t.status = 'visible'
+    $v$;
+  end if;
+end $guard$;
 
+-- brands.sql adds columns to this view, and Postgres can't take columns away
+-- from a view: when they are there already, re-running this file leaves it alone.
+do $guard$ begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'comment_feed' and column_name = 'author_brand') then
+    execute $v$
 create or replace view public.comment_feed with (security_invoker = true) as
 select c.id, c.thread_id, c.parent_id, c.author, p.display_name as author_name, c.body, c.created_at, c.edited_at,
        coalesce((select sum(v.value) from public.comment_votes v where v.comment_id = c.id), 0)::int as score,
        c.images
 from public.comments c
 left join public.profiles p on p.id = c.author
-where c.status = 'visible';
+where c.status = 'visible'
+    $v$;
+  end if;
+end $guard$;
 
 grant select on public.thread_feed, public.comment_feed to anon, authenticated;

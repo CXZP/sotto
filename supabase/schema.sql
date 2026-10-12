@@ -101,13 +101,21 @@ create policy "own flag insert" on public.flags for insert to authenticated with
 -- ---------------------------------------------------------------- read model
 
 -- Posts with their "me too" count and the author's display name, in one query.
+-- i18n.sql adds columns to this view, and Postgres can't take columns away
+-- from a view: when they are there already, re-running this file leaves it alone.
+do $guard$ begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'report_feed' and column_name = 'i18n') then
+    execute $v$
 create or replace view public.report_feed with (security_invoker = true) as
 select r.id, r.item_id, r.kind, r.title, r.body, r.evidence_url, r.purchase, r.created_at, r.author,
        p.display_name as author_name,
        (select count(*) from public.confirms c where c.report_id = r.id)::int as confirms
 from public.reports r
 left join public.profiles p on p.id = r.author
-where r.status = 'visible';
+where r.status = 'visible'
+    $v$;
+  end if;
+end $guard$;
 
 -- ---------------------------------------------------------------- grants
 

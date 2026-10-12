@@ -125,6 +125,11 @@ create trigger comments_rate_limit before insert on public.comments for each row
 
 -- ---------------------------------------------------------------- read models
 
+-- media.sql adds columns to this view, and Postgres can't take columns away
+-- from a view: when they are there already, re-running this file leaves it alone.
+do $guard$ begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'thread_feed' and column_name = 'images') then
+    execute $v$
 create or replace view public.thread_feed with (security_invoker = true) as
 select t.id, t.author, p.display_name as author_name, t.category, t.title, t.body, t.item_ids, t.created_at, t.edited_at,
        coalesce((select sum(v.value) from public.thread_votes v where v.thread_id = t.id), 0)::int as score,
@@ -132,14 +137,25 @@ select t.id, t.author, p.display_name as author_name, t.category, t.title, t.bod
        greatest(t.created_at, coalesce((select max(c.created_at) from public.comments c where c.thread_id = t.id), t.created_at)) as last_activity
 from public.threads t
 left join public.profiles p on p.id = t.author
-where t.status = 'visible';
+where t.status = 'visible'
+    $v$;
+  end if;
+end $guard$;
 
+-- media.sql adds columns to this view, and Postgres can't take columns away
+-- from a view: when they are there already, re-running this file leaves it alone.
+do $guard$ begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'comment_feed' and column_name = 'images') then
+    execute $v$
 create or replace view public.comment_feed with (security_invoker = true) as
 select c.id, c.thread_id, c.parent_id, c.author, p.display_name as author_name, c.body, c.created_at, c.edited_at,
        coalesce((select sum(v.value) from public.comment_votes v where v.comment_id = c.id), 0)::int as score
 from public.comments c
 left join public.profiles p on p.id = c.author
-where c.status = 'visible';
+where c.status = 'visible'
+    $v$;
+  end if;
+end $guard$;
 
 -- ---------------------------------------------------------------- account deletion (PDPA)
 

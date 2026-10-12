@@ -390,6 +390,7 @@ export const STRINGS = {
     n_results: "{n} รุ่น",
     more: "แสดงเพิ่ม",
     unit_unknown: "?",
+    unit_dB_unknown: "dB (ร้านไม่บอกว่า /mW หรือ /V)",
 
     it_specs: "สเปก",
     it_offers: "ราคาแต่ละร้าน",
@@ -1246,6 +1247,7 @@ export const STRINGS = {
     n_results: "{n} models",
     more: "Show more",
     unit_unknown: "?",
+    unit_dB_unknown: "dB (unit not given: /mW or /V)",
 
     it_specs: "Specs",
     it_offers: "Prices by store",

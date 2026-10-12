@@ -58,3 +58,8 @@ test("definition-list spec boxes (Linsoul's theme since Oct 2026)", () => {
   assert.deepEqual(specs.impedance.map((e) => e.value), [7.7]);
   assert.equal(specs.sensitivity[0].value, 119);
 });
+
+test("Maximum SPL is not sensitivity", () => {
+  const { specs } = extractSpecs("<p>Maximum SPL: Greater than 130 dB SPL</p><p>Sensitivity: 98dB SPL/mW at 1kHz</p>");
+  assert.deepEqual(specs.sensitivity.map((e) => e.value), [98]);
+});

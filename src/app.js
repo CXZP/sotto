@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv55n3oc";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv55n3oc";
-import { renderChart } from "./chart.js?v=mv55n3oc";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv55n3oc";
-import { makeT } from "./i18n.js?v=mv55n3oc";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv55n3oc";
-import { LEGAL } from "./legal.js?v=mv55n3oc";
-import { track, stats, trackingOff } from "./analytics.js?v=mv55n3oc";
-import * as community from "./community.js?v=mv55n3oc";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv55n3oc";
-import { redactImage } from "./redact.js?v=mv55n3oc";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv55n3oc";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv55n3oc";
-import { chainLinks } from "./chain.js?v=mv55n3oc";
-import { fits } from "./dcfit.js?v=mv55n3oc";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv55n3oc";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv55n3oc";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv55n3oc";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv55v193";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv55v193";
+import { renderChart } from "./chart.js?v=mv55v193";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv55v193";
+import { makeT } from "./i18n.js?v=mv55v193";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv55v193";
+import { LEGAL } from "./legal.js?v=mv55v193";
+import { track, stats, trackingOff } from "./analytics.js?v=mv55v193";
+import * as community from "./community.js?v=mv55v193";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv55v193";
+import { redactImage } from "./redact.js?v=mv55v193";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv55v193";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv55v193";
+import { chainLinks } from "./chain.js?v=mv55v193";
+import { fits } from "./dcfit.js?v=mv55v193";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv55v193";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv55v193";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv55v193";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1285,7 +1285,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv55n3oc").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv55v193").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1535,7 +1535,9 @@ function sheetRows(i) {
  */
 function prices(item) {
   const all = allPrices(item);
-  const reach = all.offers.filter((o) => !o.suspect && shipsTo(db.stores[o.store], state.region) !== false);
+  // Match-only stores (e-earphone) list used units for buyers in their own country.
+  const home = REGIONS[state.region]?.iso ?? [];
+  const reach = all.offers.filter((o) => !o.suspect && shipsTo(db.stores[o.store], state.region) !== false && !(MATCH_ONLY_STORES.has(o.store) && !home.includes(db.stores[o.store]?.country ?? "JP")));
   const cheapest = reach.find((o) => o.condition === "new" && o.available) ?? reach.find((o) => o.condition === "new") ?? all.cheapest;
   return { offers: all.offers, cheapest };
 }
@@ -2478,7 +2480,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv55n3oc" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv55v193" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2965,7 +2967,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv55n3oc" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv55v193" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4159,7 +4161,7 @@ function sized(src, w) {
 function specLine(i) {
   const z = i.specs?.impedance?.[0];
   const s = i.specs?.sensitivity?.[0];
-  if (HEADPHONE_CATS.has(i.category)) return [z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? "dB?"}`].filter(Boolean).join(" · ");
+  if (HEADPHONE_CATS.has(i.category)) return [z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? t("unit_dB_unknown")}`].filter(Boolean).join(" · ");
   const o = sourceOutputs(i)[0];
   const p = o?.power?.find((x) => x.load === 32) ?? o?.power?.[0];
   return p ? `${fmt(p.mw, 0)} mW @ ${p.load} Ω` : o?.vmax ? `${o.vmax} Vrms` : "";

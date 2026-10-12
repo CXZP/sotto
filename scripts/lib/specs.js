@@ -50,7 +50,8 @@ const PATTERNS = {
   // Not a line/RCA/pre output: that feeds an amp, not headphones.
   zout: new RegExp(`^(?!.*\\b(?:line|rca|pre-?outs?|pre-?amp\\w*)\\b[^:]*:?[^:]*output\\s+impedance)(?!.*\\b(?:line|rca)\\s+output\\s+impedance).*?\\boutput\\s+impedance\\b[^\\d]{0,24}?[:：]?\\s*[<≤]?\\s*${NUM}${OHM}`, "i"),
   sensitivity: new RegExp(
-    `\\b(?:sensitivity|SPL)\\b[^\\d]{0,24}?[:：]?\\s*${NUM}\\s*(?:±\\s*\\d+(?:\\.\\d+)?\\s*)?dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`,
+    // "Maximum SPL: >130 dB" is how loud it can go, not its sensitivity.
+    `\\b(?:sensitivity|(?<!\\bmax(?:imum)?\\.?\\s{0,3})SPL)\\b[^\\d]{0,24}?[:：]?\\s*${NUM}\\s*(?:±\\s*\\d+(?:\\.\\d+)?\\s*)?dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`,
     "i",
   ),
 };

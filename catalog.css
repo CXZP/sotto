@@ -569,3 +569,8 @@ select option { background: var(--surface); color: var(--text); }
 
 /* "New posts · show" when a section changed while someone was typing in it. */
 .new-posts { float: right; font-size: 13px; }
+
+/* Whether a store ships to the reader's region (its own Shopify shipping zones). */
+.ship { font-weight: 400; font-size: 11px; white-space: nowrap; }
+.ship.yes { color: var(--st-good); }
+.ship.no { color: var(--text-2); }

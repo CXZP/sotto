@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv556516";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv556516";
-import { renderChart } from "./chart.js?v=mv556516";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv556516";
-import { makeT } from "./i18n.js?v=mv556516";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv556516";
-import { LEGAL } from "./legal.js?v=mv556516";
-import { track, stats, trackingOff } from "./analytics.js?v=mv556516";
-import * as community from "./community.js?v=mv556516";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv556516";
-import { redactImage } from "./redact.js?v=mv556516";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv556516";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv556516";
-import { chainLinks } from "./chain.js?v=mv556516";
-import { fits } from "./dcfit.js?v=mv556516";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv556516";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv556516";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv556516";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv55n3oc";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv55n3oc";
+import { renderChart } from "./chart.js?v=mv55n3oc";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv55n3oc";
+import { makeT } from "./i18n.js?v=mv55n3oc";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv55n3oc";
+import { LEGAL } from "./legal.js?v=mv55n3oc";
+import { track, stats, trackingOff } from "./analytics.js?v=mv55n3oc";
+import * as community from "./community.js?v=mv55n3oc";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv55n3oc";
+import { redactImage } from "./redact.js?v=mv55n3oc";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv55n3oc";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv55n3oc";
+import { chainLinks } from "./chain.js?v=mv55n3oc";
+import { fits } from "./dcfit.js?v=mv55n3oc";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv55n3oc";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv55n3oc";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv55n3oc";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -937,7 +937,7 @@ function openPicker(slot) {
   const kinds = [["", t("role_all")], ...(kindsBySlot[slot] ?? [])];
   const kindOf = (i) => [i.category, i.role, i.cart].filter(Boolean);
   let kind = "";
-  const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
+  const priceOf = (i) => usdOf(prices(i).cheapest);
   const dlg = document.createElement("div");
   dlg.className = "modal";
   dlg.innerHTML = `<div class="sheet card" role="dialog" aria-modal="true" aria-label="${esc(t(`picker_title_${slot}`))}">
@@ -1028,7 +1028,7 @@ function catalogPage() {
   );
   const sort = p.get("sort") ?? "popular";
   const view = p.get("view") ?? "grid";
-  const priceOf = (i) => prices(i).cheapest?.price ?? Infinity;
+  const priceOf = (i) => usdOf(prices(i).cheapest);
   if (sort === "price") res.sort((a, b) => priceOf(a) - priceOf(b));
   else if (sort === "price-desc") res.sort((a, b) => (priceOf(b) === Infinity ? -1 : priceOf(b)) - (priceOf(a) === Infinity ? -1 : priceOf(a)));
   // "Most stocked": how many of the tracked stores carry it. We have no sales or
@@ -1285,7 +1285,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv556516").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv55n3oc").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1528,13 +1528,35 @@ function sheetRows(i) {
   return rows.length ? `<dl class="sheet">${rows.join("")}</dl>` : "";
 }
 
+/**
+ * Offers and the "from" price for this reader: a store whose own shipping zones
+ * leave out the reader's region doesn't set the headline (e-earphone's yen
+ * price is no use in Bangkok). Every offer is still listed.
+ */
+function prices(item) {
+  const all = allPrices(item);
+  const reach = all.offers.filter((o) => !o.suspect && shipsTo(db.stores[o.store], state.region) !== false);
+  const cheapest = reach.find((o) => o.condition === "new" && o.available) ?? reach.find((o) => o.condition === "new") ?? all.cheapest;
+  return { offers: all.offers, cheapest };
+}
+/** A price in US dollars, only to sort items listed in different currencies. */
+const usdOf = (o) => (o ? convert(o.price, o.currency, "USD") ?? o.price : Infinity);
+
+/** "Ships to Thailand" / "Doesn't ship to Thailand" from the store's own shipping zones. */
+const MATCH_ONLY_STORES = new Set(["eearphone"]);
+function shipTag(storeId) {
+  const ok = shipsTo(db.stores[storeId], state.region);
+  if (ok == null) return "";
+  return `<br><small class="ship ${ok ? "yes" : "no"}">${esc(t(ok ? "ship_yes" : "ship_no", { where: L(REGIONS[state.region]) }))}</small>`;
+}
+
 function offersTable(offers) {
   if (!offers.length) return `<p class="muted">—</p>`;
   return `<ul class="offers">${offers
     .map(
       (o) => `<li><a href="${esc(o.url)}" target="_blank" rel="noopener" class="strong">${esc(db.stores[o.store]?.name ?? o.store)}</a>
       <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}${o.seenAt ? ` · ${esc(t("pr_seen", { date: day(o.seenAt) }))}` : ""}${o.preorder ? ` <span class="tag warn" title="${esc(o.preorder.quote)}">${esc(o.preorder.until ? t("cal_pre_until", { date: day(o.preorder.until) }) : t("cal_pre"))}</span>` : ""}</span>
-      <span class="price">${priceTag(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}</span></li>`,
+      <span class="price">${priceTag(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}${shipTag(o.store)}</span></li>`,
     )
     .join("")}</ul>`;
 }
@@ -2237,6 +2259,12 @@ function channelsCard(i) {
   const q = encodeURIComponent;
   const reg = REGIONS[state.region] ?? REGIONS.other;
   const th = storeLinks(state.region, name);
+  // Stores Sotto tracks in other countries that ship here (their own shipping
+  // zones), as search links: many readers order from abroad.
+  const local = new Set(th.map(([l]) => l.toLowerCase()));
+  const shippers = Object.entries(db.stores)
+    .filter(([id, s]) => s.products > 0 && !MATCH_ONLY_STORES.has(id) && shipsTo(s, state.region) && !(reg.iso ?? []).includes(s.country) && !local.has(String(s.name).toLowerCase()))
+    .map(([, s]) => [s.name, `https://${s.host}/search?q=${q(name)}`]);
   // Only Taobao has been tried by a person so far; the others are marked untested.
   const flagship = zh ? `${zh}官方旗舰店` : null;
   const cn = [
@@ -2252,7 +2280,8 @@ function channelsCard(i) {
   return `<section class="card pad channels"><h3>${esc(t("ch_title"))}</h3>
     <div class="ch-grid">
       <div><h4>${esc(t("ch_th", { region: L(reg) }))}</h4><p class="small"><label>${esc(t("rg_label"))} ${regionSelect()}</label></p><p class="muted small">${esc(t(reg.codes ? "ch_th_note" : "ch_local_note"))}</p>
-        <div class="row-inline">${links(th)}${reg.codes ? `<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a>` : ""}</div></div>
+        <div class="row-inline">${links(th)}${reg.codes ? `<a class="pill primary" href="#deal?item=${q(i.id)}">${esc(t("it_deal"))}</a>` : ""}</div>
+        ${shippers.length ? `<p class="small muted">${esc(t("ship_from_abroad", { where: L(reg) }))}</p><div class="row-inline">${links(shippers)}</div>` : ""}</div>
       <div><h4>${esc(t("ch_cn"))}</h4><p class="muted small">${esc(t("ch_cn_note"))}</p>
         <p class="small">${esc(t("ch_cn_query"))} <code>${esc(cnQuery)}</code> <button type="button" class="link small" data-copy="${esc(cnQuery)}">${esc(t("copy"))}</button>${zh ? "" : ` <span class="muted">· ${esc(t("ch_cn_no_zh"))}</span>`}</p>
         <p class="small warn-text">${esc(t("ch_cn_login"))}</p>
@@ -2449,7 +2478,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv556516" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv55n3oc" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2936,7 +2965,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv556516" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv55n3oc" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3948,12 +3977,12 @@ async function wireCompare(main) {
   };
   const anyHp = items.some((i) => HEADPHONE_CATS.has(i.category));
   const anySrc = items.some((i) => SOURCE_CATS.has(i.category));
-  const cheapest = Math.min(...items.map((i) => prices(i).cheapest?.price ?? Infinity));
+  const cheapest = Math.min(...items.map((i) => usdOf(prices(i).cheapest)));
   const rows = [
     row(t("cmp_type"), (i) => esc(catLabel(i))),
     row(t("col_price"), (i) => {
       const p = prices(i).cheapest;
-      return p ? `<b class="${p.price === cheapest ? "best" : ""}">${money(p.price, p.currency)}</b> <span class="muted small">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span>` : null;
+      return p ? `<b class="${usdOf(p) === cheapest ? "best" : ""}">${priceTag(p.price, p.currency)}</b> <span class="muted small">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span>` : null;
     }),
     row(t("mat_label"), (i) => [...Object.keys(i.materials ?? {}), ...Object.keys(i.styles ?? {})].map((k) => esc(t(`mat_${k}`))).join(", ") || null),
   ];

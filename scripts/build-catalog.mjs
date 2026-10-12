@@ -99,7 +99,7 @@ function stripBrand(vendor, title) {
 for (const file of files) {
   if (isMatchOnly(file)) continue; // added after the hand-checked entries, below
   const snap = await readSnap(file);
-  stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
+  stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt, ...(snap.ships ? { ships: snap.ships, country: snap.country } : {}) };
   for (const p of snap.products) {
     stats.products++;
     let category = classify(p);
@@ -332,7 +332,7 @@ function matchVendor(p, name) {
 }
 for (const file of files.filter(isMatchOnly)) {
   const snap = await readSnap(file);
-  stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
+  stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt, ...(snap.ships ? { ships: snap.ships, country: snap.country } : {}) };
   const best = new Map();
   for (const p of snap.products) {
     stats.products++;

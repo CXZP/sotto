@@ -75,7 +75,8 @@ for (const store of stores) {
     if (batch.length < 250) break;
   }
   if (currencies.size > 1) throw new Error(`${store.id}: mixed currencies ${[...currencies]}`);
-  const snap = { name: meta?.name, currency: [...currencies][0] ?? meta?.currency ?? null, products };
+  // Where the store ships (its own Shopify shipping zones, ISO country codes) and where it is.
+  const snap = { name: meta?.name, currency: [...currencies][0] ?? meta?.currency ?? null, products, ships: meta?.ships_to_countries ?? null, country: meta?.country ?? null };
   await writeSnapshot(store, snap);
   if (store.specPage) withPages.push([store, snap]);
 }
@@ -93,8 +94,8 @@ for (const [store, snap] of withPages) {
 }
 console.log(`crawl done after ${elapsed()}`);
 
-async function writeSnapshot(store, { name, currency, products }) {
-  const snapshot = { store: store.id, host: store.host, name: name ?? store.host, currency, fetchedAt: new Date().toISOString(), products };
+async function writeSnapshot(store, { name, currency, products, ships = null, country = null }) {
+  const snapshot = { store: store.id, host: store.host, name: name ?? store.host, currency, ships, country, fetchedAt: new Date().toISOString(), products };
   await writeFile(new URL(`cache/raw/${store.id}.json`, root), JSON.stringify(snapshot));
   console.log(`${store.id.padEnd(16)} ${String(products.length).padStart(5)} products  ${currency}  (${elapsed()})`);
 }

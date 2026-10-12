@@ -162,7 +162,14 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .pill:disabled { opacity: 0.55; cursor: default; }
 .composer { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
 .cm-form { display: grid; gap: 10px; }
-.cm-form textarea.search { border-radius: 16px; resize: vertical; font: inherit; }
+/* Text boxes match the single-line fields: same fill, border and inner spacing. */
+textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-height: 1.5; color: var(--text); background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px; resize: vertical; }
+.cm-evidence { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.cm-evidence .search { flex: 1 1 260px; }
+.cm-unit { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.cm-unit .mini-select { width: auto; }
+.cm-send { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cm-send .link { padding: 0; }
 .row-inline { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .row-inline .search { flex: 1; min-width: 200px; }
 .mini-select { font: inherit; color: var(--text); background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
@@ -468,9 +475,11 @@ select option { background: var(--surface); color: var(--text); }
 .ow-add > summary::-webkit-details-marker { display: none; }
 
 /* Summariser box */
-.bot-box { border: 1px dashed var(--surface-2); border-radius: 12px; padding: 8px 12px; margin: 8px 0; display: grid; gap: 8px; }
+.bot-box { border: 1px dashed var(--line); border-radius: 12px; padding: 8px 12px; margin: 8px 0; display: grid; gap: 8px; }
 .bot-box > summary { cursor: pointer; font-size: 14px; color: var(--accent); }
 .bot-box[open] { border-style: solid; }
+/* <details> ignores grid gap in some browsers: space its children directly. */
+.bot-box > :not(summary) { margin-top: 8px; }
 .bot-quotes ul { margin: 4px 0 0; padding-left: 18px; color: var(--text-2); }
 
 .asks { padding: 10px 16px; }

@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4iukkh";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4iukkh";
-import { renderChart } from "./chart.js?v=mv4iukkh";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4iukkh";
-import { makeT } from "./i18n.js?v=mv4iukkh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4iukkh";
-import { LEGAL } from "./legal.js?v=mv4iukkh";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4iukkh";
-import * as community from "./community.js?v=mv4iukkh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4iukkh";
-import { redactImage } from "./redact.js?v=mv4iukkh";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4iukkh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4iukkh";
-import { chainLinks } from "./chain.js?v=mv4iukkh";
-import { fits } from "./dcfit.js?v=mv4iukkh";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4iukkh";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4iukkh";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4iukkh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4jg9mt";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4jg9mt";
+import { renderChart } from "./chart.js?v=mv4jg9mt";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4jg9mt";
+import { makeT } from "./i18n.js?v=mv4jg9mt";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4jg9mt";
+import { LEGAL } from "./legal.js?v=mv4jg9mt";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4jg9mt";
+import * as community from "./community.js?v=mv4jg9mt";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4jg9mt";
+import { redactImage } from "./redact.js?v=mv4jg9mt";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4jg9mt";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4jg9mt";
+import { chainLinks } from "./chain.js?v=mv4jg9mt";
+import { fits } from "./dcfit.js?v=mv4jg9mt";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4jg9mt";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4jg9mt";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4jg9mt";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1254,7 +1254,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4iukkh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv4jg9mt").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1809,12 +1809,14 @@ async function renderCommunity(el, item) {
       ${botBox("issue")}
       <input class="search" name="title" required minlength="5" maxlength="140" placeholder="${esc(t("cm_ph_title"))}">
       <textarea class="search" name="body" maxlength="2000" rows="3" placeholder="${esc(t("cm_ph_body"))}"></textarea>
-      <input class="search" name="evidence_url" type="url" pattern="https://.+" placeholder="${esc(t("cm_ph_evidence"))}" required>
-      <label class="check"><select name="purchase" class="mini-select">
-        <option value="bought">${esc(t("cm_bought"))}</option><option value="free_sample">${esc(t("cm_free_sample"))}</option><option value="loan">${esc(t("cm_loan"))}</option><option value="unknown">${esc(t("cm_unknown"))}</option>
-      </select></label>
+      <div class="cm-evidence">
+        <input class="search" name="evidence_url" type="url" pattern="https://.+" placeholder="${esc(t("cm_ph_evidence"))}" required>
+        <label class="cm-unit small muted">${esc(t("cm_unit"))}<select name="purchase" class="mini-select">
+          <option value="bought">${esc(t("cm_bought"))}</option><option value="free_sample">${esc(t("cm_free_sample"))}</option><option value="loan">${esc(t("cm_loan"))}</option><option value="unknown">${esc(t("cm_unknown"))}</option>
+        </select></label>
+      </div>
+      <div class="cm-send"><button class="pill primary">${esc(t("cm_post"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))} · <button type="button" class="link small" data-signout>${esc(t("cm_signout"))}</button></span></div>
       <p class="muted small">${esc(t("cm_rules"))}</p>
-      <div class="row-inline"><button class="pill primary">${esc(t("cm_post"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span><button type="button" class="link small" data-signout>${esc(t("cm_signout"))}</button></div>
     </form>`;
   }
 
@@ -2412,7 +2414,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4iukkh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4jg9mt" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2899,7 +2901,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4iukkh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4jg9mt" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

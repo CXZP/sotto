@@ -1,0 +1,49 @@
+{
+  "fiio--ka17": {
+    "status": "draft",
+    "by": "Claude (draft, not checked by a person)",
+    "at": "2026-10-13",
+    "faces": [
+      {
+        "face": "angled",
+        "src": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240126153428/9aa0fb4661126988a971078eb72880d1.jpg",
+        "page": "https://hifigo.com/products/fiio-ka17",
+        "credit": "FiiO, via HiFiGo",
+        "crop": [
+          0,
+          0,
+          100,
+          50
+        ],
+        "pins": [
+          {
+            "p": "in:usb",
+            "label": "USB-C (data + power)",
+            "x": 16,
+            "y": 37
+          },
+          {
+            "p": "in:dc",
+            "label": "USB-C POWER IN (external power)",
+            "x": 30,
+            "y": 38.5
+          },
+          {
+            "p": "hp:3.5",
+            "label": "3.5 mm (also coaxial S/PDIF out)",
+            "x": 87,
+            "y": 29.5
+          },
+          {
+            "p": "hp:4.4",
+            "label": "4.4 mm balanced",
+            "x": 86.5,
+            "y": 34.5
+          }
+        ],
+        "w": 790,
+        "h": 1083
+      }
+    ]
+  }
+}

@@ -686,3 +686,15 @@ select option { background: var(--surface); color: var(--text); }
 .ck-n input { width: 52px; font: inherit; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); }
 @media (max-width: 860px) { .ck-grid { grid-template-columns: 1fr; } }
 .ck-entry { display: block; margin-bottom: 12px; color: var(--text); }
+
+/* The real thing: a photo with a numbered pin on each socket. */
+.look { margin: 0; display: grid; grid-template-columns: minmax(0, 3fr) minmax(180px, 2fr); gap: 16px; align-items: start; }
+.look + .look { margin-top: 16px; }
+.look-img { position: relative; overflow: hidden; border-radius: 14px; background: #111; }
+.look-img img { position: absolute; display: block; max-width: none; height: auto; }
+.card.looks { display: block; }
+.pin { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; border: 2.5px solid var(--accent); box-shadow: 0 0 0 1.5px rgb(255 255 255 / .9), inset 0 0 0 1.5px rgb(255 255 255 / .9); color: transparent; font-size: 0; }
+.pin::after { content: attr(data-n); position: absolute; left: 70%; bottom: 70%; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--accent); color: var(--on-accent); font: 700 11px/18px system-ui, sans-serif; text-align: center; box-shadow: 0 0 0 1.5px #fff; }
+.look figcaption ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.tag.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+@media (max-width: 760px) { .look { grid-template-columns: 1fr; } }

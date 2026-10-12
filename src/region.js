@@ -15,11 +15,13 @@ const soundproof = ["Soundproof Bros", (n) => `https://www.soundproofbrosaudio.c
 const piyanas = ["Piyanas", (n) => `https://www.piyanas.com/th/search?q=${q(n)}`];
 const progadgets = ["Pro Gadgets", (n) => `https://www.progadgets.co.th/search/${q(n)}`];
 const thevolume = ["The Volume", (n) => `https://www.thevolume.store/th/search/product?s=${q(n)}`];
+// ProPlugin: its robots.txt bars the per_page and category queries a feed crawl would need.
+const proplugin = ["ProPlugin", (n) => `https://proplugin.com/?s=${q(n)}&post_type=product`];
 const ali = ["AliExpress", (n) => `https://www.aliexpress.com/wholesale?SearchText=${q(n)}`];
 
 // codes: the market runs on stacked shop + platform vouchers (the #deal calculator).
 export const REGIONS = {
-  th: { th: "ไทย", en: "Thailand", currency: "THB", codes: true, stores: [shopee("shopee.co.th"), lazada("www.lazada.co.th"), munkong, soundproof, piyanas, progadgets, thevolume], local: [["ดีไหม", "{n} ดีไหม"], ["Pantip", "{n} site:pantip.com"]] },
+  th: { th: "ไทย", en: "Thailand", currency: "THB", codes: true, stores: [shopee("shopee.co.th"), lazada("www.lazada.co.th"), munkong, soundproof, piyanas, progadgets, thevolume, proplugin], local: [["ดีไหม", "{n} ดีไหม"], ["Pantip", "{n} site:pantip.com"]] },
   sg: { th: "สิงคโปร์", en: "Singapore", currency: "SGD", codes: true, stores: [shopee("shopee.sg"), lazada("www.lazada.sg"), amazon("www.amazon.sg")], local: [["HardwareZone", "{n} site:hardwarezone.com.sg"]] },
   my: { th: "มาเลเซีย", en: "Malaysia", currency: "MYR", codes: true, stores: [shopee("shopee.com.my"), lazada("www.lazada.com.my")], local: [["Lowyat", "{n} site:lowyat.net"]] },
   ph: { th: "ฟิลิปปินส์", en: "Philippines", currency: "PHP", codes: true, stores: [shopee("shopee.ph"), lazada("www.lazada.com.ph")], local: [] },

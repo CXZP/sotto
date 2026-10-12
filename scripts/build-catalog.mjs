@@ -17,6 +17,7 @@ import { preorder, listedAt } from "./lib/dates.js";
 import { jackOutputs } from "./lib/jacks.js";
 import { isMakerUrl } from "./lib/sources.js";
 import { settle } from "./lib/conflicts.js";
+import { socketsOf, sameSockets } from "../src/sockets.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
@@ -625,6 +626,36 @@ let aliases = {};
   }
   catalog.sort((a, b) => a.id.localeCompare(b.id));
   stats.aliases = Object.keys(aliases).length;
+}
+
+// People's checks (supabase/checks.sql → data/checks.json, scripts/fetch-checks.mjs).
+// A person's word is the last word: a fix replaces the sockets every other
+// source gave; an "ok" marks the entry checked while it still shows what the
+// person saw, and asks for a new look when the data has moved since.
+{
+  const file = new URL("data/checks.json", root);
+  const checks = existsSync(file) ? JSON.parse(await readFile(file, "utf8")) : [];
+  const byId = new Map(catalog.map((g) => [g.id, g]));
+  const latest = new Map();
+  for (const c of checks) {
+    const id = byId.has(c.item_id) ? c.item_id : aliases[c.item_id];
+    if (id && c.field === "sockets") latest.set(id, { ...c, item_id: id });
+  }
+  for (const [id, c] of latest) {
+    const g = byId.get(id);
+    if (c.verdict === "fixed" && c.data) {
+      const src = { quote: "Checked by a person", url: c.evidence_url || "https://cxzp.github.io/sotto/#check", checked: true };
+      const side = (o) => Object.fromEntries(Object.entries(o ?? {}).map(([k, n]) => [k, { ...src, n }]));
+      g.ports = { in: side(c.data.in), out: side(c.data.out) };
+      g.jacks = c.data.jacks ?? [];
+      if (!c.data.in?.dc && g.dcIn && !g.dcIn.usb) delete g.dcIn;
+      if (c.data.in?.dc && g.dcIn) g.dcIn.barrel = true;
+      g.checked = { state: "fixed", at: c.created_at };
+    } else if (c.verdict === "ok") {
+      g.checked = sameSockets(c.shown, socketsOf(g)) ? { state: "checked", at: c.created_at } : { state: "changed", at: c.created_at };
+    }
+  }
+  stats.checked = latest.size;
 }
 
 // Price history: catalog.json is rebuilt each week, so changes are appended to

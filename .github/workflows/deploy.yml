@@ -81,6 +81,8 @@ jobs:
       - name: Catch up with main
         run: git pull --ff-only origin main
       - run: npm ci
+      - name: People's checks (supabase/checks.sql) into data/checks.json
+        run: node scripts/fetch-checks.mjs
       - name: Rebuild catalog
         run: node scripts/build-catalog.mjs
       - name: Audit (contradictions and gaps; warns when a count jumps)
@@ -105,7 +107,7 @@ jobs:
           node scripts/stamp.mjs
           git config user.name "sotto-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/catalog.json data/audit.json data/photos.json data/prices.json data/logos.json data/squig.json src index.html
+          git add data/catalog.json data/audit.json data/checks.json data/photos.json data/prices.json data/logos.json data/squig.json src index.html
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git commit -m "data: weekly store crawl $(date -u +%F)"
           # Someone pushed in the last minute: replay on top, the fresh data wins.

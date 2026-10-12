@@ -643,7 +643,7 @@ export const TERMS = [
 <li><b>โค้ดแพลตฟอร์มใช้ได้ใบเดียวต่อคำสั่งซื้อ</b> แอปเลือกใบที่ "แนะนำ" ให้ตามของที่ติ๊กในตะกร้า ติ๊กของชิ้นอื่นแล้วโค้ดที่ดีที่สุดก็เปลี่ยน</li>
 <li><b>โค้ดเป็นของเฉพาะคนและหมดเร็ว</b> มีโค้ด VIP โค้ดลูกค้าใหม่ โค้ดบัตรเครดิต บางใบใช้ได้แค่ 1 ชั่วโมงหลังเก็บ ราคาที่คนอื่นเห็นจึงไม่ใช่ราคาของคุณ</li>
 <li><b>ไม่ใช่ทุกสินค้าใช้โค้ดได้</b> สินค้าใหม่หรือของหายากที่แบรนด์กำหนดอาจถูกยกเว้น</li>
-<li><b>เทียบยอดสุดท้าย ไม่ใช่ราคาตั้ง</b> ร้านบางร้านแจ้งว่าค่าธรรมเนียมแพลตฟอร์มขึ้นมากในปี 2026 จึงตั้งราคาบนแพลตฟอร์มสูงกว่าเว็บของตัวเอง (ประกาศของ HolySai บน Facebook 31 ก.ค. 2026) แต่ราคาตั้งที่สูงขึ้นนั้นถูกโค้ดหักกลับ ตัวอย่างวันที่ 12 ต.ค. 2026: FiiO WARMER บนเว็บ holysai.com ฿11,990 (ราคาเต็ม ไม่มีโค้ด) บน Shopee ราคาในตะกร้า ฿16,490 แต่หลังโค้ดเหลือ ฿9,234 เว็บร้านจึงไม่ได้ถูกกว่าเสมอ ต้องดูยอดหลังส่วนลดของแต่ละทาง</li>
+<li><b>เทียบยอดสุดท้าย ไม่ใช่ราคาตั้ง</b> ร้านบางร้านแจ้งว่าค่าธรรมเนียมแพลตฟอร์มขึ้นมากในปี 2026 จึงตั้งราคาบนแพลตฟอร์มสูงกว่าเว็บของตัวเอง (ประกาศของ HolySai บน Facebook 31 ก.ค. 2026) แต่ราคาตั้งที่สูงขึ้นนั้นถูกโค้ดหักกลับ ตัวอย่างวันที่ 12 ต.ค. 2026: FiiO WARMER บนเว็บ holysai.com ฿11,990 (ราคาเต็ม ไม่มีโค้ด) บน Shopee ราคาในตะกร้า ฿16,490 แต่หลังโค้ดเหลือ ฿9,234 แต่โค้ด 30% ลดสูงสุด ฿4,000 เป็นโค้ดระดับสูงสุดที่ไม่ได้มีทุกวัน ถ้าใช้โค้ดที่เจอบ่อยกว่า: 25% สูงสุด ฿3,500 → ฿9,894, 15% สูงสุด ฿2,000 → ฿11,213, ไม่มีโค้ด Shopee เลย → ฿13,192 แพงกว่าเว็บ ทางไหนถูกกว่าจึงขึ้นกับโค้ดที่คุณมีวันนั้น</li>
 </ul>
 <p>คิดเองได้ที่ <a href="#deal">คิดราคาจริง</a>: ใส่ราคาที่เห็นกับโค้ดที่มี แล้วดูว่าคู่ไหนคุ้มสุด</p>
 <h2>Taobao ส่งไทย: ราคาหน้าสินค้าไม่ใช่ยอดตอนจ่าย</h2>
@@ -667,7 +667,7 @@ export const TERMS = [
 <li><b>One platform code per order.</b> The app picks a "recommended" code for whatever is ticked in the cart; tick another item and the best code changes.</li>
 <li><b>Codes are personal and short-lived.</b> VIP codes, new-user codes, card codes; some last one hour after you collect them. The price someone else sees is not yours.</li>
 <li><b>Not everything takes codes.</b> New or rare items set by the brand can be excluded.</li>
-<li><b>Compare final totals, not list prices.</b> Some shops say platform fees rose sharply in 2026, so they list higher on marketplaces than on their own site (HolySai's Facebook notice, 31 Jul 2026), but codes take that back. On 12 Oct 2026 the FiiO WARMER was ฿11,990 on holysai.com (full price, no codes) and ฿16,490 in a Shopee cart, which came to ฿9,234 after codes. The shop's own site isn't always cheaper: compare what each way costs after discounts.</li>
+<li><b>Compare final totals, not list prices.</b> Some shops say platform fees rose sharply in 2026, so they list higher on marketplaces than on their own site (HolySai's Facebook notice, 31 Jul 2026), but codes take that back. On 12 Oct 2026 the FiiO WARMER was ฿11,990 on holysai.com (full price, no codes) and ฿16,490 in a Shopee cart, which came to ฿9,234 after codes. But the 30% / ฿4,000 code is the top tier and not around every day. With commoner codes: 25% capped at ฿3,500 → ฿9,894; 15% capped at ฿2,000 → ฿11,213; no Shopee code at all → ฿13,192, above the shop's site. Which way is cheaper depends on the codes you hold that day.</li>
 </ul>
 <p>Work it out with <a href="#deal">Real price</a>: enter the price you see and the codes you hold to see which pair wins.</p>
 <h2>Taobao to Thailand: the product page isn't the checkout total</h2>

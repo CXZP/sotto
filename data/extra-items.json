@@ -2848,5 +2848,419 @@
         "source": "https://fiio-instruction.fiio.net/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2025/JIEZI%20EN.pdf#page=3"
       }
     ]
+  },
+  {
+    "id": "smsl--ao10",
+    "brand": "SMSL",
+    "model": "AO10",
+    "category": "desktop",
+    "role": "integrated",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/AO10Manual.pdf#page=12",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "4 Line input",
+          "url": "https://www.smsl-audio.com/upload/portal/download/AO10Manual.pdf#page=12"
+        },
+        "bt": {
+          "quote": "3 Built-in Bluetooth antenna",
+          "url": "https://www.smsl-audio.com/upload/portal/download/AO10Manual.pdf#page=12"
+        }
+      },
+      "out": {
+        "spk": {
+          "quote": "6 Right speaker output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/AO10Manual.pdf#page=12"
+        }
+      }
+    },
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
+  },
+  {
+    "id": "smsl--d-6s",
+    "brand": "SMSL",
+    "model": "D-6S D6S",
+    "category": "desktop",
+    "role": "dac",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Input....USB/Optical/Coaxial/Bluetooth",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        },
+        "optical": {
+          "quote": "Input....USB/Optical/Coaxial/Bluetooth",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        },
+        "coax": {
+          "quote": "Input....USB/Optical/Coaxial/Bluetooth",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        },
+        "bt": {
+          "quote": "Input....USB/Optical/Coaxial/Bluetooth",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "Output....RCA/XLR",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        },
+        "xlr": {
+          "quote": "Output....RCA/XLR",
+          "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15"
+        }
+      }
+    },
+    "portsComplete": true,
+    "specs": {
+      "zout": [
+        {
+          "value": 100,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/D6SManual.pdf#page=15",
+              "quote": "Output Impedance....100Ω"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "smsl--ds20",
+    "brand": "SMSL",
+    "model": "DS20",
+    "category": "dongle",
+    "role": "dacamp",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=15",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "3 USB Input(5V=3A, 9V=2A, 12V=1.5A)",
+          "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=15",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "specs": {
+      "power": [
+        {
+          "load": 16,
+          "mw": 500,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 32,
+          "mw": 500,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 64,
+          "mw": 350,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 150,
+          "mw": 240,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 300,
+          "mw": 120,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 600,
+          "mw": 60,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "smsl--ds20-4",
+    "brand": "SMSL",
+    "model": "DS20 *4",
+    "category": "dongle",
+    "role": "dacamp",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=15",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "3 USB Input(5V=3A, 9V=2A, 12V=1.5A)",
+          "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=15",
+          "conn": "usbC"
+        }
+      },
+      "out": {}
+    },
+    "portsComplete": true,
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "specs": {
+      "power": [
+        {
+          "load": 16,
+          "mw": 500,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 32,
+          "mw": 500,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 64,
+          "mw": 350,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 150,
+          "mw": 240,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 300,
+          "mw": 120,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        },
+        {
+          "load": 600,
+          "mw": 60,
+          "sources": [
+            {
+              "url": "https://www.smsl-audio.com/upload/portal/download/DS20Manual.pdf#page=13",
+              "quote": "Output Power 16Ω 500mW×2 / 32Ω 500mW×2 / 64Ω 350mW×2 / 150Ω 240mW×2 / 300Ω 120mW×2 / 600Ω 60mW×2"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "smsl--pa200",
+    "brand": "SMSL",
+    "model": "PA200",
+    "category": "desktop",
+    "role": "poweramp",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/PA200Manual.pdf#page=12",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "5 Line inputs(RCA)",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PA200Manual.pdf#page=12"
+        },
+        "xlr": {
+          "quote": "6 MONO input(XLR)",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PA200Manual.pdf#page=12"
+        }
+      },
+      "out": {
+        "spk": {
+          "quote": "10 Speaker Right output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PA200Manual.pdf#page=12"
+        }
+      }
+    },
+    "portsComplete": true,
+    "look": {
+      "finish": "silver"
+    }
+  },
+  {
+    "id": "smsl--ph-1",
+    "brand": "SMSL",
+    "model": "PH-1",
+    "category": "phono",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8",
+    "ports": {
+      "in": {
+        "phono": {
+          "quote": "5 RCA Input",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        },
+        "dc": {
+          "quote": "8 Power Input Connector",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "7 RCA Output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "style": "compact"
+    }
+  },
+  {
+    "id": "smsl--ph-1-ph1-high-fidelity-mm-phono",
+    "brand": "SMSL",
+    "model": "PH-1 PH1 High Fidelity MM Phono",
+    "category": "phono",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8",
+    "ports": {
+      "in": {
+        "phono": {
+          "quote": "5 RCA Input",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        },
+        "dc": {
+          "quote": "8 Power Input Connector",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "7 RCA Output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "style": "compact"
+    }
+  },
+  {
+    "id": "smsl--ph-1-phono",
+    "brand": "SMSL",
+    "model": "PH-1 Phono",
+    "category": "phono",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8",
+    "ports": {
+      "in": {
+        "phono": {
+          "quote": "5 RCA Input",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        },
+        "dc": {
+          "quote": "8 Power Input Connector",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "7 RCA Output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "style": "compact"
+    }
+  },
+  {
+    "id": "smsl--ph1-mm-phono",
+    "brand": "SMSL",
+    "model": "PH1 MM Phono",
+    "category": "phono",
+    "addedFrom": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8",
+    "ports": {
+      "in": {
+        "phono": {
+          "quote": "5 RCA Input",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        },
+        "dc": {
+          "quote": "8 Power Input Connector",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      },
+      "out": {
+        "rca": {
+          "quote": "7 RCA Output",
+          "url": "https://www.smsl-audio.com/upload/portal/download/PH1Manual.pdf#page=8"
+        }
+      }
+    },
+    "portsComplete": true,
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "style": "compact"
+    }
   }
 ]

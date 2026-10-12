@@ -463,6 +463,12 @@ const handPorts = new Map();
     const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id) || (g.category === e.category && looseKey(g.id, g.category) === looseKey(e.id, e.category)));
     if (hit) {
       for (const k of ["dcIn", "notes", "addedFrom", "jacks", "look"]) if (e[k] && !hit[k]) hit[k] = e[k];
+      // Figures from the maker's manual go first; a store's same figure isn't repeated.
+      for (const [k, list] of Object.entries(e.specs ?? {})) {
+        const same = (a, b) => (a.load ?? null) === (b.load ?? null) && (a.mw ?? a.value) === (b.mw ?? b.value);
+        hit.specs ??= {};
+        hit.specs[k] = [...list.map((x) => ({ kind: "claimed", ...x })), ...(hit.specs[k] ?? []).filter((x) => !list.some((y) => same(x, y)))];
+      }
       // The role read off the maker's page beats the one guessed from store titles.
       if (e.role) hit.role = e.role;
       // So does the kind of box (a dongle a store filed as a desktop DAC/amp).

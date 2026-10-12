@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4mt936";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4mt936";
-import { renderChart } from "./chart.js?v=mv4mt936";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4mt936";
-import { makeT } from "./i18n.js?v=mv4mt936";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4mt936";
-import { LEGAL } from "./legal.js?v=mv4mt936";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4mt936";
-import * as community from "./community.js?v=mv4mt936";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4mt936";
-import { redactImage } from "./redact.js?v=mv4mt936";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4mt936";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4mt936";
-import { chainLinks } from "./chain.js?v=mv4mt936";
-import { fits } from "./dcfit.js?v=mv4mt936";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4mt936";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4mt936";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4mt936";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv52926r";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv52926r";
+import { renderChart } from "./chart.js?v=mv52926r";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv52926r";
+import { makeT } from "./i18n.js?v=mv52926r";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv52926r";
+import { LEGAL } from "./legal.js?v=mv52926r";
+import { track, stats, trackingOff } from "./analytics.js?v=mv52926r";
+import * as community from "./community.js?v=mv52926r";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv52926r";
+import { redactImage } from "./redact.js?v=mv52926r";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv52926r";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv52926r";
+import { chainLinks } from "./chain.js?v=mv52926r";
+import { fits } from "./dcfit.js?v=mv52926r";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv52926r";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv52926r";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv52926r";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1272,7 +1272,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4mt936").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv52926r").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2432,7 +2432,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4mt936" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv52926r" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2919,7 +2919,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4mt936" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv52926r" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4136,6 +4136,43 @@ function priceTag(n, currency) {
   const conv = c === to ? null : convert(n, c, to);
   return `${money(n, c)}${conv == null ? "" : ` <span class="fx" title="${esc(t("fx_note", { date: db.fx?.date ?? "" }))}">≈ ${money(conv, to)}</span>`}`;
 }
+// Auto-refresh, like GitHub's: every deploy (new prices or fixes) changes the
+// ?v= stamp in index.html. Check it every few minutes and when the tab comes
+// back. A tab nobody is looking at, with nothing typed in it, just reloads;
+// otherwise a bar offers the reload, so no one loses what they typed.
+const BUILD = new URL(import.meta.url).searchParams.get("v");
+function watchForUpdates() {
+  if (!BUILD) return;
+  let newer = false;
+  const typed = () => [...document.querySelectorAll("input, textarea")].some((el) => el.type !== "checkbox" && el.type !== "radio" && el.value !== el.defaultValue);
+  const act = () => {
+    if (!newer) return;
+    if (document.hidden && !typed()) return location.reload();
+    if (document.getElementById("update-bar")) return;
+    const bar = document.createElement("div");
+    bar.id = "update-bar";
+    bar.setAttribute("role", "status");
+    bar.innerHTML = `<span>${esc(t("upd_msg"))}</span><button type="button" class="pill primary">${esc(t("upd_btn"))}</button><button type="button" class="link" aria-label="${esc(t("upd_close"))}">×</button>`;
+    bar.querySelector(".primary").addEventListener("click", () => location.reload());
+    bar.querySelector(".link").addEventListener("click", () => bar.remove());
+    document.body.append(bar);
+  };
+  const check = async () => {
+    if (newer) return act();
+    try {
+      const html = await (await fetch(`index.html?check=${Date.now()}`, { cache: "no-store" })).text();
+      const live = html.match(/src\/app\.js\?v=(\w+)/)?.[1];
+      if (live && live !== BUILD) newer = true;
+    } catch {
+      /* offline: try again later */
+    }
+    act();
+  };
+  setInterval(check, 5 * 60 * 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) check();
+  });
+}
 function money(n, currency) {
   if (n == null) return "";
   try {
@@ -4166,6 +4203,7 @@ bindChrome();
 render();
 updateBell();
 setInterval(updateBell, 3 * 60 * 1000);
+watchForUpdates();
 addEventListener("hashchange", () => {
   readHash();
   render();

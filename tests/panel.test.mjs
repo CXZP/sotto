@@ -2,7 +2,8 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { panelSpec, chassisOf, hpPlug, frontSpec, hasFront, countOf } from "../src/panel.js";
+import { panelSpec, chassisOf, hpPlug, frontSpec, hasFront, countOf, finishesOf } from "../src/panel.js";
+import { encodeDesk, decodeDesk } from "../src/desk.js";
 import { nodePorts } from "../src/desk.js";
 
 const boxes = [
@@ -60,4 +61,14 @@ test("a desk box: headphone jacks on its front, counts from the maker", () => {
   assert.equal(panelSpec(amp).sockets.filter((s) => s.port === "xlr").length, 2);
   assert.ok(!panelSpec(amp).sockets.some((s) => s.port === "hp"));
   assert.equal(countOf({ ports: { in: { rca: { quote: "Single-ended line input: RCA port*4", n: 4 } } } }, "in", "rca"), 4);
+});
+
+test("a box's colour: the person's pick wins and travels in the desk link", () => {
+  const item = { id: "topping--l50", brand: "TOPPING", category: "desktop", role: "amp" };
+  assert.equal(chassisOf({ item }).finish, "silver");
+  assert.deepEqual(finishesOf({ item }), ["silver", "black", "white"]);
+  assert.equal(chassisOf({ item, finish: "white" }).finish, "white");
+  assert.equal(chassisOf({ item, finish: "nope" }).finish, "silver");
+  const back = decodeDesk(encodeDesk({ nodes: [{ ref: item.id, x: 0, y: 0, finish: "black" }], cables: [] }));
+  assert.equal(back.nodes[0].finish, "black");
 });

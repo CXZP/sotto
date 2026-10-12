@@ -5,7 +5,7 @@
 // reports, category facts). A box whose ports nobody has stated gets a "?"
 // socket: a cable to it is "unknown", never "wrong".
 
-import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5q8z47";
+import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5qh507";
 
 /** Things on a desk that aren't catalog items. */
 export const DESK_DEVICES = {
@@ -63,7 +63,7 @@ export function cableCheck(a, b) {
 
 /** Desk state <-> a short string for links: nodes [[ref, x, y]], cables [[from, port, to, port]]. */
 export function encodeDesk(desk) {
-  const json = JSON.stringify({ n: desk.nodes.map((n) => [n.ref, Math.round(n.x), Math.round(n.y)]), c: desk.cables.map((c) => [c.from, c.out, c.to, c.in]) });
+  const json = JSON.stringify({ n: desk.nodes.map((n) => (n.finish ? [n.ref, Math.round(n.x), Math.round(n.y), n.finish] : [n.ref, Math.round(n.x), Math.round(n.y)])), c: desk.cables.map((c) => [c.from, c.out, c.to, c.in]) });
   return btoa(unescape(encodeURIComponent(json))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 export function decodeDesk(str) {
@@ -71,7 +71,7 @@ export function decodeDesk(str) {
     const json = decodeURIComponent(escape(atob(String(str).replace(/-/g, "+").replace(/_/g, "/"))));
     const d = JSON.parse(json);
     return {
-      nodes: (d.n ?? []).filter((n) => Array.isArray(n) && typeof n[0] === "string").map(([ref, x, y]) => ({ ref, x: Number(x) || 0, y: Number(y) || 0 })),
+      nodes: (d.n ?? []).filter((n) => Array.isArray(n) && typeof n[0] === "string").map(([ref, x, y, finish]) => ({ ref, x: Number(x) || 0, y: Number(y) || 0, ...(typeof finish === "string" && /^[a-z]{3,12}$/.test(finish) ? { finish } : {}) })),
       cables: (d.c ?? []).filter((c) => Array.isArray(c) && c.length === 4).map(([from, out, to, inp]) => ({ from: Number(from), out: String(out), to: Number(to), in: String(inp) })),
     };
   } catch {

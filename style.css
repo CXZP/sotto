@@ -547,3 +547,5 @@ nav a { white-space: nowrap; }
 /* "Sotto has been updated" bar (auto-refresh check in app.js). */
 #update-bar { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 12px; max-width: calc(100% - 32px); padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow); font-size: 14px; }
 #update-bar .link { font-size: 18px; padding: 0 8px; }
+.pt-finish { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0; }
+.pt-finish .pill { padding: 3px 10px; }

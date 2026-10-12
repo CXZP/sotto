@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5q8z47";
-import { gearSvg } from "./gear.js?v=mv5q8z47";
+import { nodePorts } from "./desk.js?v=mv5qh507";
+import { gearSvg } from "./gear.js?v=mv5qh507";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -60,10 +60,33 @@ const FINISH = {
   navy: { face: "#2c3444", edge: "#161b24", ink: "#d9dde6", frame: "#5d6878" },
   silver: { face: "#cfd2d6", edge: "#9fa3a8", ink: "#2b2d30", frame: "#7f8388" },
   champagne: { face: "#d8cdb6", edge: "#a99c80", ink: "#3a3326", frame: "#8a7e66" },
+  white: { face: "#eceef0", edge: "#c3c6ca", ink: "#2b2d30", frame: "#8d9196" },
 };
 
-/** {style, finish} for a node. */
+// Colours a maker sells its boxes in, where it's more than one; stores rarely say
+// which colour a listing is, so the person picks theirs on the desk.
+const BRAND_FINISHES = {
+  topping: ["black", "silver", "white"],
+  smsl: ["black", "silver"],
+  fiio: ["black", "silver"],
+  "fosi audio": ["black", "silver"],
+  "schiit audio": ["silver", "black"],
+};
+
+/** Colours a person can pick for this box (the drawn one first). */
+export function finishesOf(node) {
+  if (!node.item || ["plug", "device"].includes(chassisOf({ ...node, finish: undefined }).style)) return [];
+  const base = chassisOf({ ...node, finish: undefined }).finish;
+  const list = BRAND_FINISHES[String(node.item.brand ?? "").toLowerCase()] ?? ["black", "silver"];
+  return [...new Set([base, ...list])];
+}
+
+/** {style, finish} for a node; a colour the person picked wins. */
 export function chassisOf(node) {
+  const base = baseChassis(node);
+  return node.finish && FINISH[node.finish] && base.style !== "device" ? { ...base, finish: node.finish } : base;
+}
+function baseChassis(node) {
   if (node.device) return { style: "device", finish: "black" };
   const i = node.item;
   if (i.look?.style && ["dongle", "portable", "dap"].includes(i.category)) return { style: i.look.style, finish: i.look.finish ?? "black" };

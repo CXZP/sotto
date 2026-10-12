@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5jpis5";
-import { gearSvg } from "./gear.js?v=mv5jpis5";
+import { nodePorts } from "./desk.js?v=mv5k12vn";
+import { gearSvg } from "./gear.js?v=mv5k12vn";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -126,8 +126,9 @@ export function panelSpec(node) {
   // Order on the panel: digital in, analog in, analog out, digital out, power.
   const order = ["usb", "optical", "coax", "aes", "i2s", "bt", "phono", "rca", "line", "xlr", "spk", "hp", "dc", "?"];
   const cells = [];
+  // A store's bare "line" is the RCA (or XLR) socket when those are listed too.
   for (const dir of ["in", "out"])
-    for (const p of ports[dir]) cells.push({ port: p, dir, rank: order.indexOf(p) + (dir === "out" ? (["usb", "optical", "coax", "aes", "i2s", "bt", "dc"].includes(p) ? 40 : 15) : 0) });
+    for (const p of ports[dir]) if (!(p === "line" && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) cells.push({ port: p, dir, rank: order.indexOf(p) + (dir === "out" ? (["usb", "optical", "coax", "aes", "i2s", "bt", "dc"].includes(p) ? 40 : 15) : 0) });
   cells.sort((a, b) => a.rank - b.rank);
   const pad = 22;
   const top = chassis.style === "pocket" || chassis.style === "device" ? 16 : 24;

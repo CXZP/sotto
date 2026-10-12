@@ -20,7 +20,7 @@ test("every socket a box has is on its panel, inside it, and frames don't overla
     const spec = panelSpec(n);
     const ports = nodePorts(n);
     for (const dir of ["in", "out"])
-      for (const p of ports[dir]) assert.ok(spec.sockets.some((s) => s.port === p && s.dir === dir), `${JSON.stringify(n).slice(0, 60)} ${dir} ${p}`);
+      for (const p of ports[dir]) if (!(p === "line" && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) assert.ok(spec.sockets.some((s) => s.port === p && s.dir === dir), `${JSON.stringify(n).slice(0, 60)} ${dir} ${p}`);
     for (const s of spec.sockets) assert.ok(s.x > 0 && s.x < spec.w && s.y > 0 && s.y < spec.h);
     const g = [...spec.groups].sort((a, b) => a.x - b.x);
     for (let k = 1; k < g.length; k++) assert.ok(g[k].x >= g[k - 1].x + g[k - 1].w);

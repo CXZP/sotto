@@ -85,3 +85,24 @@ test("a store's bare 'line' socket is a check, not an adapter", () => {
   assert.equal(cableCheck("line", "rca").status, "check");
   assert.equal(cableCheck("rca", "line").why, "dk_line_generic");
 });
+
+test("a phone feeds one box: a second DAC/amp stays unplugged, not a second USB cable", () => {
+  const phone = { device: "phone" };
+  const dacamp = () => ({ item: { category: "desktop", role: "dacamp", offers: [], ports: { in: { usb: {}, bt: {} }, out: { rca: {} } } } });
+  const hp = { item: { category: "headphone", offers: [] } };
+  const nodes = [phone, dacamp(), dacamp(), hp];
+  const cables = [];
+  for (let k = 0; k < nodes.length; k++) cables.push(...wireNew(nodes.slice(0, k + 1), cables, k));
+  assert.equal(cables.filter((c) => c.from === 0).length, 1);
+  assert.equal(cables.filter((c) => c.to === 3).length, 1);
+});
+
+test("a DAC/amp drives headphones and feeds active speakers at once", () => {
+  const dacamp = { item: { category: "desktop", role: "dacamp", offers: [], ports: { in: { usb: {} }, out: { rca: {} } } } };
+  const hp = { item: { category: "headphone", offers: [] } };
+  const spk = { item: { category: "speaker", speaker: "active", offers: [] } };
+  const nodes = [dacamp, hp, spk];
+  const cables = [];
+  for (let k = 0; k < nodes.length; k++) cables.push(...wireNew(nodes.slice(0, k + 1), cables, k));
+  assert.deepEqual(cables, [{ from: 0, out: "hp", to: 1, in: "hp" }, { from: 0, out: "rca", to: 2, in: "rca" }]);
+});

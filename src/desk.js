@@ -5,7 +5,7 @@
 // reports, category facts). A box whose ports nobody has stated gets a "?"
 // socket: a cable to it is "unknown", never "wrong".
 
-import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5jpis5";
+import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5k12vn";
 
 /** Things on a desk that aren't catalog items. */
 export const DESK_DEVICES = {
@@ -117,6 +117,7 @@ export function stageOf(node) {
 }
 
 const RANK = { ok: 0, check: 1, adapter: 2, unknown: 3 };
+const outKind = (p) => (["hp", "spk", "dc", "?"].includes(p) ? p : ANALOG.includes(p) ? "line" : "digital");
 
 /** Boxes with several inputs that usually all get used: DACs, preamps, amps. */
 const HUB_ROLES = new Set(["dac", "dacamp", "preamp", "amp", "integrated"]);
@@ -128,7 +129,9 @@ const isHub = (n) => n?.item?.category === "desktop" && HUB_ROLES.has(n.item.rol
  * last); a DAC or amp also takes every other upstream box that feeds nothing
  * yet. Its output: the best box downstream that nothing feeds yet (or a DAC or
  * amp). A power supply goes to the first box with a free DC input. Existing
- * cables stay.
+ * cables stay. A box sends one cable per kind of output (digital, line,
+ * headphones, speakers): a phone has one USB port, but a DAC/amp can drive
+ * headphones and feed active speakers at once.
  */
 export function wireNew(nodes, cables, k) {
   const ports = nodes.map((n) => (n ? nodePorts(n) : { in: [], out: [] }));
@@ -137,10 +140,12 @@ export function wireNew(nodes, cables, k) {
   const fed = (j) => all.some((c) => c.to === j);
   const used = (j) => all.some((c) => c.from === j);
   const linked = (a, b) => all.some((c) => c.from === a && c.to === b);
+  const sends = (j, kind) => all.some((c) => c.from === j && outKind(c.out) === kind);
   const best = (a, b) => {
     let top = null;
     for (const o of ports[a].out)
       for (const i of ports[b].in) {
+        if (sends(a, outKind(o))) continue;
         const s = cableCheck(o, i).status;
         if (s in RANK && (!top || RANK[s] < top.r)) top = { r: RANK[s], from: a, out: o, to: b, in: i };
       }
@@ -184,7 +189,7 @@ export function wireNew(nodes, cables, k) {
     const score = b.r * 10 + (stage[j] - stage[k]) + (fed(j) ? 3 : 0);
     if (!down || score < down.score) down = { ...b, score };
   });
-  if (down && !used(k)) put(down);
+  if (down) put(down);
   return add;
 }
 

@@ -57,7 +57,9 @@ for (const store of stores) {
     // Shopify localises prices by visitor location. The currency actually used
     // is in the cart_currency cookie of each response, not in meta.json.
     if (res?.currency) currencies.add(res.currency);
-    products.push(...batch.map(slim));
+    // Match-only stores are matched on title and brand alone: their
+    // descriptions (page styles and scripts, mostly) are not kept.
+    products.push(...batch.map(slim).map((p) => (store.matchOnly ? { ...p, body: "", images: [] } : p)));
     if (batch.length < 250) break;
   }
   if (store.specPage) await addSpecPages(store, products);

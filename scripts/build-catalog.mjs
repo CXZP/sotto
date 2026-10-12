@@ -7,7 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact, groupKey, looseKey, deskRole, titleRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
+import { classify, condition, jpModelTitle, modelKey, compact, groupKey, looseKey, deskRole, titleRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
 import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
@@ -24,6 +24,10 @@ const FIELDS = ["impedance", "sensitivity", "zout", "power"];
 const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
 const files = (await readdir(new URL("cache/raw/", root))).filter((f) => f.endsWith(".json"));
+// Stores whose titles don't say what a product is (e-earphone: "【中古】M8T【秋葉原】")
+// only add offers to models other stores already list. They never start a model.
+const MATCH_ONLY = new Set(JSON.parse(await readFile(new URL("scripts/stores.json", root), "utf8")).filter((s) => s.matchOnly).map((s) => s.id));
+const isMatchOnly = (file) => MATCH_ONLY.has(file.replace(/\.json$/, ""));
 // Titles with non-breaking or doubled spaces ("DAC&nbsp;& Headphone Amp") read as plain words.
 async function readSnap(file) {
   const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
@@ -49,6 +53,7 @@ const brandKey = (b) => {
 };
 const spellingCount = new Map();
 for (const file of files) {
+  if (isMatchOnly(file)) continue; // "水月雨 (MOONDROP)" is not a spelling to show
   const snap = await readSnap(file);
   for (const p of snap.products) {
     const v = p.vendor?.trim();
@@ -92,6 +97,7 @@ function stripBrand(vendor, title) {
 }
 
 for (const file of files) {
+  if (isMatchOnly(file)) continue; // added after the hand-checked entries, below
   const snap = await readSnap(file);
   stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
   for (const p of snap.products) {
@@ -310,6 +316,45 @@ for (const amp of curatedAmps) {
   // Every hand-checked amp takes a digital (USB) input, so it is a DAC and amp in one.
   // A maker's photo (a link, like store photos) for models no tracked store sells.
   attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}), ...(amp.image ? { image: amp.image } : {}) }));
+}
+
+// Match-only stores: a listing joins a model already in the catalog when its
+// brand and model name give exactly one match. Anything less is left out; a
+// missing offer costs less than a wrong one. Each model gets the store's
+// cheapest unit in stock, new and used apart (used units are one listing each).
+function matchVendor(p, name) {
+  const k = brandKey(p.vendor ?? "");
+  if (canonical.has(k)) return canonical.get(k);
+  // "HiBy Digital" is HiBy; "その他ブランド" ("other brands") puts the brand in the title.
+  const prefix = k && [...canonical.keys()].filter((c) => c.length >= 4 && k.startsWith(c)).sort((a, b) => b.length - a.length)[0];
+  if (prefix) return canonical.get(prefix);
+  return brandsLongestFirst.find((b) => b.length > 2 && name.toLowerCase().startsWith(`${b.toLowerCase()} `)) ?? null;
+}
+for (const file of files.filter(isMatchOnly)) {
+  const snap = await readSnap(file);
+  stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
+  const best = new Map();
+  for (const p of snap.products) {
+    stats.products++;
+    const name = jpModelTitle(p.title);
+    const vendor = name && matchVendor(p, name);
+    if (!vendor) continue;
+    const { key } = modelKey(vendor, stripBrand(vendor, name));
+    // Model keys drop "Earbuds" / "Headphones", so "QuietComfort Earbuds" and
+    // "QuietComfort Headphones" share a key: the word must agree with the model's type.
+    const fits = (g) => !(/\b(?:ear ?buds?|buds|true wireless|in-ear)\b/i.test(name) && g.category === "headphone") && !(/\bheadphones?\b/i.test(name) && ["iem", "wireless"].includes(g.category));
+    const hits = [...new Set([looseKey(key, "iem"), looseKey(key, "wireless"), looseKey(key, "phono"), groupKey(key)])].filter((k) => groups.has(k) && fits(groups.get(k)));
+    if (hits.length !== 1) continue;
+    const { price, available } = mainPrice(p.variants);
+    if (price == null || !available) continue;
+    const cond = p.type === "中古" ? "open-box/used" : condition(p.title);
+    const slot = `${hits[0]}|${cond}`;
+    if (best.get(slot)?.offer.price <= price) continue;
+    const url = `https://${snap.host}/products/${p.handle}`;
+    best.set(slot, { key: hits[0], offer: { store: snap.store, title: p.title, url, price, currency: snap.currency, available, condition: cond, seenAt: snap.fetchedAt } });
+  }
+  for (const { key, offer } of best.values()) groups.get(key).offers.push(offer);
+  stats.stores[snap.store].matched = best.size;
 }
 
 const KIND_RANK = { measured: 0, claimed: 1 };

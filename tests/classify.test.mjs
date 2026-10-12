@@ -2,7 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classify, titleRole, deskRole, modelKey, looseKey } from "../scripts/lib/classify.js";
+import { classify, titleRole, deskRole, modelKey, looseKey, jpModelTitle, condition } from "../scripts/lib/classify.js";
 
 const cat = (title, extra = {}) => classify({ title, ...extra });
 
@@ -69,4 +69,15 @@ test("one model, one key: finishes, editions, stock words and store descriptions
   assert.notEqual(k("WiiM", "WiiM Amp Pro Wireless Streaming Amplifier", "desktop"), k("WiiM", "WiiM Pro Wireless Audio Streamer", "desktop"));
   assert.notEqual(k("DCS", "Lina DAC X Streaming Music Player", "desktop"), k("DCS", "Lina Headphone Amplifier", "desktop"));
   assert.notEqual(k("iFi", "iFi ZEN Air Phono Preamplifier", "phono"), k("iFi", "iFi ZEN Air DAC", "desktop"));
+});
+
+test("Japanese store titles: the model name, or nothing for parts and incomplete units", () => {
+  assert.equal(jpModelTitle("【中古】SE846+UNI ブラック 【SE846BABK+UNI-A】【名古屋】"), "SE846+UNI");
+  assert.equal(jpModelTitle("【中古】Px7 S3 アンスラサイト・ブラック【PX7S3/AB】【日本橋】"), "Px7 S3");
+  assert.equal(jpModelTitle("【中古】RU9 ポータブルNutube USB DAC/アンプ【日本橋】"), "RU9 Nutube USB DAC/");
+  assert.equal(jpModelTitle("【中古】Lotoo ICS-PG1 PAW Gold用レザーケース【秋葉原】"), null);
+  assert.equal(jpModelTitle("DT 880 32Ohm用ドライバー 1個【980287】"), null);
+  assert.equal(jpModelTitle("【中古】MDR-7506(イヤーパッド欠品)【日本橋】"), null);
+  assert.equal(condition("【中古】KA17 Black 【FIO-KA17-B】【秋葉原】"), "open-box/used");
+  assert.equal(condition("DC-Tonfa"), "new");
 });

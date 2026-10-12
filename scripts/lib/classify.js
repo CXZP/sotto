@@ -143,7 +143,23 @@ export function speakerKind(p) {
   return /\b(built-?in (?:class[- ]?d )?amp\w*|powered|active speakers?|amplifier built in)\b/i.test(t) ? "active" : "passive";
 }
 
+/**
+ * The model name in a Japanese store title, or null for parts and add-ons.
+ * "【中古】SE846+UNI ブラック 【SE846BABK+UNI-A】【名古屋】" -> "SE846+UNI": the
+ * bracketed notes (condition, part number, branch) and Japanese words (colours,
+ * notes) go. "PAW Gold用レザーケース" (a case "for" the PAW Gold) is not the PAW Gold.
+ */
+export function jpModelTitle(title) {
+  // 欠品: a used unit missing parts (pads, cable) doesn't price the whole product.
+  if (/欠品/.test(title)) return null;
+  const t = title.replace(/【[^】]*】/g, " ").replace(/[(（][^)）]*[^\x00-\x7f][^)）]*[)）]/g, " ");
+  if (/用|ケース|ケーブル|イヤーピース|イヤーパッド|イヤパッド|ドライバー|交換|アダプタ|プラグ|充電|スタンド|ポーチ|フィルム|セット|ジャンク/.test(t)) return null;
+  const name = t.replace(/[^\x00-\x7f]+/g, " ").replace(/\s+/g, " ").trim();
+  return /[a-z0-9]/i.test(name) ? name : null;
+}
+
 export function condition(title) {
+  if (/中古|展示品|アウトレット/.test(title)) return "open-box/used";
   if (/\b(open[- ]box|b[- ]stock|refurbished|certified|pre[- ]?owned|used|demo|scratch|dent|display unit)\b/i.test(title)) return "open-box/used";
   return "new";
 }

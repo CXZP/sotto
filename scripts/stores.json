@@ -16,5 +16,6 @@
   { "id": "kitsune", "host": "kitsunehifi.com", "delay": 3, "specPage": true },
   { "id": "headphonezone", "host": "headphonezone.in", "delay": 3, "specPage": true },
   { "id": "a2a", "host": "addictedtoaudio.com.au", "delay": 3, "specPage": true },
-  { "id": "moon", "host": "moon-audio.com", "delay": 3, "specPage": true }
+  { "id": "moon", "host": "moon-audio.com", "delay": 3, "specPage": true },
+  { "id": "eearphone", "host": "www.e-earphone.jp", "delay": 4, "matchOnly": true }
 ]

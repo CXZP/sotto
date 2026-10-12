@@ -7,6 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { classify, condition, jpModelTitle, modelKey, compact, groupKey, looseKey, deskRole, titleRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
 import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
@@ -479,6 +480,30 @@ for (const g of catalog) {
     } else catalog.push({ offers: [], specs: {}, ...e });
   }
   catalog.sort((a, b) => a.id.localeCompare(b.id));
+}
+
+// Sockets read off makers' spec pages (data/maker-ports.json, scripts/maker-ports.mjs),
+// each with its line and URL. A full ports table (FiiO's) replaces what was read off
+// store pages; a partial one fills gaps. Hand-checked entries above win over both.
+{
+  const file = new URL("data/maker-ports.json", root);
+  const maker = existsSync(file) ? JSON.parse(await readFile(file, "utf8")) : {};
+  const hand = new Set(JSON.parse(await readFile(new URL("data/extra-items.json", root), "utf8")).filter((e) => e.portsComplete).map((e) => groupKey(e.id)));
+  // Entries are filed under the ids of the catalog they were read against: follow
+  // that catalog's aliases and the loose key when models have merged since.
+  const before = await readFile(new URL("data/catalog.json", root), "utf8").then((t) => JSON.parse(t).aliases ?? {}, () => ({}));
+  const byKey = new Map(catalog.map((g) => [groupKey(g.id), g]));
+  const byLoose = new Map(catalog.map((g) => [looseKey(g.id, g.category), g]));
+  for (const [id, m] of Object.entries(maker)) {
+    const g = byKey.get(groupKey(id)) ?? byKey.get(groupKey(before[id] ?? "")) ?? (m.category ? byLoose.get(looseKey(id, m.category)) : null);
+    if (!g || hand.has(groupKey(g.id))) continue;
+    if (m.jacks?.length && !g.jacks) g.jacks = m.jacks;
+    if (m.complete) g.ports = structuredClone(m.ports);
+    else {
+      g.ports ??= { in: {}, out: {} };
+      for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;
+    }
+  }
 }
 
 // Stores spell brands differently (MoonDrop / Moondrop / MOONDROP). Use one

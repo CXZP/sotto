@@ -1,0 +1,2993 @@
+{
+ "ifi--go-bar": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-10th-anniversary-gold": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-gold-bar-ultraportable-c-pre": {
+  "url": "https://ifi-audio.com/products/go-bar",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB C",
+     "url": "https://ifi-audio.com/products/go-bar"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei": {
+  "url": "https://ifi-audio.com/products/go-bar-kensei",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-bar-kensei",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei-ultraportable": {
+  "url": "https://ifi-audio.com/products/go-bar-kensei",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-bar-kensei",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--go-bar-kensei-ultraportable-c-pre": {
+  "url": "https://ifi-audio.com/products/go-bar-kensei",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-bar-kensei",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-bar-kensei-ultraportable-k2hd-technology": {
+  "url": "https://ifi-audio.com/products/go-bar-kensei",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-bar-kensei",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--go-blu": {
+  "url": "https://ifi-audio.com/products/go-blu",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
+     "url": "https://ifi-audio.com/products/go-blu"
+    },
+    "usb": {
+     "quote": "input: Wired: USB-C (24/96)",
+     "url": "https://ifi-audio.com/products/go-blu",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-air": {
+  "url": "https://ifi-audio.com/products/go-blu-air",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.2",
+     "url": "https://ifi-audio.com/products/go-blu-air"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-air-hd": {
+  "url": "https://ifi-audio.com/products/go-blu-air",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.2",
+     "url": "https://ifi-audio.com/products/go-blu-air"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-blu-hd": {
+  "url": "https://ifi-audio.com/products/go-blu",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Wireless: Bluetooth 5.1 ( AAC",
+     "url": "https://ifi-audio.com/products/go-blu"
+    },
+    "usb": {
+     "quote": "input: Wired: USB-C (24/96)",
+     "url": "https://ifi-audio.com/products/go-blu",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link": {
+  "url": "https://ifi-audio.com/products/go-link",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-link-2": {
+  "url": "https://ifi-audio.com/products/go-link-2",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-c": {
+  "url": "https://ifi-audio.com/products/go-link-2",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-max": {
+  "url": "https://ifi-audio.com/products/go-link-2-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-2-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-2-max-c": {
+  "url": "https://ifi-audio.com/products/go-link-2-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-2-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-c": {
+  "url": "https://ifi-audio.com/products/go-link",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--go-link-max": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--go-link-max-3-5-output": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--go-link-max-c": {
+  "url": "https://ifi-audio.com/products/go-link-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/go-link-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--hip-dac3": {
+  "url": "https://ifi-audio.com/products/hip-dac-3",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/hip-dac-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-diablo-2": {
+  "url": "https://ifi-audio.com/products/idsd-diablo-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4™",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-diablo-2-ultra-res-wireless": {
+  "url": "https://ifi-audio.com/products/idsd-diablo-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4™",
+     "url": "https://ifi-audio.com/products/idsd-diablo-2"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-gr-2": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2-mt": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2-mt-ultra-res-master-tuned-series": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-gr-2-ultra-res": {
+  "url": "https://ifi-audio.com/products/idsd-gr-2",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-C;<br)",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (optical/coaxial);",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-gr-2"
+    },
+    "xlr": {
+     "quote": "Analogue input: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1 x Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 1 x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-gr-2",
+     "conn": "3.5"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-phantom": {
+  "url": "https://ifi-audio.com/products/idsd-phantom",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-B 3.0",
+     "url": "https://ifi-audio.com/products/idsd-phantom",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "aes": {
+     "quote": "Digital input: 1x AES3 (XLR);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "optical": {
+     "quote": "Digital input: 1x Optical (SC);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1x Balanced XLR (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "rca": {
+     "quote": "Line output: 1x RCA (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-phantom-class-pre": {
+  "url": "https://ifi-audio.com/products/idsd-phantom",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Digital input: 1x USB-B 3.0",
+     "url": "https://ifi-audio.com/products/idsd-phantom",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: 1x S/PDIF (coaxial)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "aes": {
+     "quote": "Digital input: 1x AES3 (XLR);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "optical": {
+     "quote": "Digital input: 1x Optical (SC);",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 1x Balanced XLR (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    },
+    "rca": {
+     "quote": "Line output: 1x RCA (L/R)",
+     "url": "https://ifi-audio.com/products/idsd-phantom"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--idsd-valkyrie": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-valkyrie-mastering-black": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--idsd-valkyrie-transportable": {
+  "url": "https://ifi-audio.com/products/idsd-valkyrie",
+  "ports": {
+   "in": {
+    "xlr": {
+     "quote": "Analogue input: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Analogue input: Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF (Coaxial/Optical)",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "spdif35"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced 4.4mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "4.4"
+    },
+    "line": {
+     "quote": "Line output: 2x Single-Ended 3.5mm",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Line output: RCA",
+     "url": "https://ifi-audio.com/products/idsd-valkyrie"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-idsd-2": {
+  "url": "https://ifi-audio.com/products/neo-idsd-2",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "input: S/PDIF (coaxial up to 192kHz, optical up to 96kHz)",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "spdif35"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR: 19.5V max. (variable) 4.4V­ fixed",
+     "url": "https://ifi-audio.com/products/neo-idsd-2",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: UnBAL RCA: 10.5V max. (variable) 2.2V ­fixed",
+     "url": "https://ifi-audio.com/products/neo-idsd-2"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-idsd-3": {
+  "url": "https://ifi-audio.com/products/neo-idsd-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: Single-Ended RCA (L/R)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-B 3.0;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF Coaxial;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF Optical;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-idsd-3-ultra-res": {
+  "url": "https://ifi-audio.com/products/neo-idsd-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: Single-Ended RCA (L/R)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.4;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-B 3.0;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "usbB"
+    },
+    "coax": {
+     "quote": "Digital input: S/PDIF Coaxial;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    },
+    "optical": {
+     "quote": "Digital input: S/PDIF Optical;",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: Balanced XLR (L/R): ≤19.5V (variable); 4.4V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: Single-Ended RCA (L/R): ≤10.5V (variable); 2.2V (fixed)",
+     "url": "https://ifi-audio.com/products/neo-idsd-3"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-network": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-ultra-res-network-integrated": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--neo-stream-3-wi-fi-transport": {
+  "url": "https://ifi-audio.com/products/neo-stream-3",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "Digital input: Optical)",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "usb": {
+     "quote": "Digital input: USB-C (front)",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Line output: 4.4mm Balanced",
+     "url": "https://ifi-audio.com/products/neo-stream-3",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Line output: SE RCA",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "optical": {
+     "quote": "Output: S/PDIF Optical",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "aes": {
+     "quote": "Output: AES/EBU",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    },
+    "i2s": {
+     "quote": "Output: I2S",
+     "url": "https://ifi-audio.com/products/neo-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--pro-idsd-signature-class-interface-controller": {
+  "url": "https://ifi-audio.com/products/pro-idsd-signature",
+  "ports": {
+   "in": {
+    "optical": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature",
+     "conn": "spdif35"
+    },
+    "coax": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature",
+     "conn": "spdif35"
+    },
+    "usb": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature"
+    },
+    "aes": {
+     "quote": "input: USB/AES3 (XLR)/S/PDIF (coaxial/optical combo)/BNC",
+     "url": "https://ifi-audio.com/products/pro-idsd-signature"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--uno": {
+  "url": "https://ifi-audio.com/products/uno",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/uno",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "dongle"
+ },
+ "ifi--up-play-up-play-max-c-transmitters": {
+  "url": "https://ifi-audio.com/products/up-play-max",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/up-play-max",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--xcan": {
+  "url": "https://ifi-audio.com/products/xcan",
+  "ports": {
+   "in": {
+    "line": {
+     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
+     "url": "https://ifi-audio.com/products/xcan",
+     "conn": "3.5"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "portable"
+ },
+ "ifi--xcan-dual-mono": {
+  "url": "https://ifi-audio.com/products/xcan",
+  "ports": {
+   "in": {
+    "line": {
+     "quote": "input: Wired: 3.5mm (TRS or TRRS S-Balanced*) and 2.5mm (TRRS)",
+     "url": "https://ifi-audio.com/products/xcan",
+     "conn": "3.5"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--xdsd-gryphon-black": {
+  "url": "https://ifi-audio.com/products/xdsd-gryphon",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon"
+    },
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "usbC"
+    },
+    "xlr": {
+     "quote": "input: Balanced: 4.4mm",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "dongle"
+ },
+ "ifi--xdsd-gryphon-pro-pack-ultra-res-wireless-belt-pack-system": {
+  "url": "https://ifi-audio.com/products/xdsd-gryphon",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon"
+    },
+    "usb": {
+     "quote": "input: USB-C",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "usbC"
+    },
+    "xlr": {
+     "quote": "input: Balanced: 4.4mm",
+     "url": "https://ifi-audio.com/products/xdsd-gryphon",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-air-blue": {
+  "url": "https://ifi-audio.com/products/zen-air-blue",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.0TM with SBC",
+     "url": "https://ifi-audio.com/products/zen-air-blue"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-air-blue"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-air-blue-2-car": {
+  "url": "https://ifi-audio.com/products/zen-air-blue-2",
+  "ports": {
+   "in": {},
+   "out": {
+    "rca": {
+     "quote": "Output: RCA L/R​",
+     "url": "https://ifi-audio.com/products/zen-air-blue-2"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-blue-3-wireless": {
+  "url": "https://ifi-audio.com/products/zen-blue-3",
+  "ports": {
+   "in": {
+    "bt": {
+     "quote": "input: Bluetooth 5.4 (aptX Lossless, aptX Adaptive, aptX",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "usb": {
+     "quote": "input: USB",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "optical": {
+     "quote": "input: Optical",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "coax": {
+     "quote": "input: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "rca": {
+     "quote": "input: RCA L/R (Analogue)",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    },
+    "dc": {
+     "quote": "Power supply: USB-C or DC 5V/≥0.5A (centre +ve)",
+     "url": "https://ifi-audio.com/products/zen-blue-3"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-can-3-analogue": {
+  "url": "https://ifi-audio.com/products/zen-can-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: SE RCA L/R:",
+     "url": "https://ifi-audio.com/products/zen-can-3"
+    },
+    "line": {
+     "quote": "Analogue input: SE 3.5mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Analogue input: BAL 4.4mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-3-pre": {
+  "url": "https://ifi-audio.com/products/zen-can-3",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Analogue input: SE RCA L/R:",
+     "url": "https://ifi-audio.com/products/zen-can-3"
+    },
+    "line": {
+     "quote": "Analogue input: SE 3.5mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Analogue input: BAL 4.4mm:",
+     "url": "https://ifi-audio.com/products/zen-can-3",
+     "conn": "4.4"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-6xx": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-hfm": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-mz99": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-can-signature-pre": {
+  "url": "https://ifi-audio.com/products/zen-can-signature",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "category": "desktop"
+ },
+ "ifi--zen-one-signature": {
+  "url": "https://ifi-audio.com/products/zen-one-signature",
+  "ports": {
+   "in": {
+    "coax": {
+     "quote": "Digital input: S/PDIF (coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "optical": {
+     "quote": "Digital input: TOSLINK optical)",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Line output: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "rca": {
+     "quote": "Line output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "xlr": {
+     "quote": "Line output: 4.4 Balanced Lineout",
+     "url": "https://ifi-audio.com/products/zen-one-signature",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-one-signature-hd-s-pdif": {
+  "url": "https://ifi-audio.com/products/zen-one-signature",
+  "ports": {
+   "in": {
+    "coax": {
+     "quote": "Digital input: S/PDIF (coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "optical": {
+     "quote": "Digital input: TOSLINK optical)",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "bt": {
+     "quote": "Digital input: Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Line output: Coaxial",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "rca": {
+     "quote": "Line output: Audio RCA L/R",
+     "url": "https://ifi-audio.com/products/zen-one-signature"
+    },
+    "xlr": {
+     "quote": "Line output: 4.4 Balanced Lineout",
+     "url": "https://ifi-audio.com/products/zen-one-signature",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3-network": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "ifi--zen-stream-3-wi-fi-transport": {
+  "url": "https://ifi-audio.com/products/zen-stream-3",
+  "ports": {
+   "in": {},
+   "out": {
+    "coax": {
+     "quote": "Output: S/PDIF Coaxial",
+     "url": "https://ifi-audio.com/products/zen-stream-3"
+    }
+   }
+  },
+  "jacks": [],
+  "category": "desktop"
+ },
+ "fiio--btr11": {
+  "url": "https://www.fiio.com/BTR11_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--btr13": {
+  "url": "https://www.fiio.com/BTR13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE-C USB (Charging/Data transmission)",
+     "url": "https://www.fiio.com/BTR13_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--btr15": {
+  "url": "https://www.fiio.com/BTR15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB2.0 (charging/data transfer)",
+     "url": "https://www.fiio.com/BTR15_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--btr17": {
+  "url": "https://www.fiio.com/BTR17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB (Power supply/Data transfer)/Type-C USB POWER IN (Orange, Power supply)",
+     "url": "https://www.fiio.com/BTR17_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--class-a": {
+  "url": "https://www.fiio.com/CLASSA_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (For firmware updates)",
+     "url": "https://www.fiio.com/CLASSA_parameters",
+     "conn": "usbC"
+    },
+    "line": {
+     "quote": "Single-ended line input: RCA port*1+Standard 3.5mm port*1",
+     "url": "https://www.fiio.com/CLASSA_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line input: XLR3 balanced port*1+Standard 4.4mm port*1",
+     "url": "https://www.fiio.com/CLASSA_parameters",
+     "conn": "4.4"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output: XLR3 balanced port",
+     "url": "https://www.fiio.com/CLASSA_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output: RCA port",
+     "url": "https://www.fiio.com/CLASSA_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--disc": {
+  "url": "https://www.fiio.com/DISC_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Charging/Data transfer)",
+     "url": "https://www.fiio.com/DISC_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/DISC_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--dm15": {
+  "url": "https://www.fiio.com/DM15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Data transfer) +Type-C POWER IN*1 (Charging/Dedicated power supply port)",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Linear Output Interface: Standard 3.5mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "coaxial output interface: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    },
+    "optical": {
+     "quote": "Optical output: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "cd"
+ },
+ "fiio--dm15-r2r": {
+  "url": "https://www.fiio.com/DM15R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0 * 1 (data transfer) + Type-C POWER IN * 1 (charging/independent power supply interface)",
+     "url": "https://www.fiio.com/DM15R2R_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm socket",
+     "url": "https://www.fiio.com/DM15R2R_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output: standard 4.4mm socket",
+     "url": "https://www.fiio.com/DM15R2R_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm socket (multiplexed with LO port)",
+     "url": "https://www.fiio.com/DM15R2R_parameters"
+    },
+    "optical": {
+     "quote": "Optical output: standard 3.5mm socket (multiplexed with LO port)",
+     "url": "https://www.fiio.com/DM15R2R_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "cd"
+ },
+ "fiio--ea13": {
+  "url": "https://www.fiio.com/EA13_parameters",
+  "ports": {
+   "in": {
+    "rca": {
+     "quote": "Single-ended line input: RCA port*4",
+     "url": "https://www.fiio.com/EA13_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--echo-nano": {
+  "url": "https://www.fiio.com/ECHONANO_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (charging/data transfer)",
+     "url": "https://www.fiio.com/ECHONANO_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--jm21": {
+  "url": "https://www.fiio.com/JM21_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Charging/Data transfer)",
+     "url": "https://www.fiio.com/JM21_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/JM21_parameters"
+    },
+    "line": {
+     "quote": "Line output: Shared 3.5mm+4.4mm ports",
+     "url": "https://www.fiio.com/JM21_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--k11": {
+  "url": "https://www.fiio.com/K11_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C (data transmission)",
+     "url": "https://www.fiio.com/K11_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical in: Optical port",
+     "url": "https://www.fiio.com/K11_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial in: RCA port",
+     "url": "https://www.fiio.com/K11_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Single-ended line-out: RCA port",
+     "url": "https://www.fiio.com/K11_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial out: RCA port (only works in USB mode)",
+     "url": "https://www.fiio.com/K11_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k11-r2r": {
+  "url": "https://www.fiio.com/K11R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C (data transmission)",
+     "url": "https://www.fiio.com/K11R2R_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical in: Optical port",
+     "url": "https://www.fiio.com/K11R2R_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial in: RCA port",
+     "url": "https://www.fiio.com/K11R2R_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Single-ended line-out: RCA port",
+     "url": "https://www.fiio.com/K11R2R_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial out: RCA port (only works in USB mode)",
+     "url": "https://www.fiio.com/K11R2R_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k13": {
+  "url": "https://www.fiio.com/K13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*2 (Data transmission port)",
+     "url": "https://www.fiio.com/K13_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug (Input/Output)",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/K13_parameters"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Digital coaxial output port: RCA plug (Input/Output)",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/K13_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA port*2",
+     "url": "https://www.fiio.com/K13_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k13-r2r": {
+  "url": "https://www.fiio.com/K13R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*2 (Data transmission port)",
+     "url": "https://www.fiio.com/K13R2R_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug",
+     "url": "https://www.fiio.com/K13R2R_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/K13R2R_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/K13R2R_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA port*2",
+     "url": "https://www.fiio.com/K13R2R_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k15": {
+  "url": "https://www.fiio.com/K15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1) USB-A*1 (Data transmission port)",
+     "url": "https://www.fiio.com/K15_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input port: Standard 4.4mm port",
+     "url": "https://www.fiio.com/K15_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line input port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/K15_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA port",
+     "url": "https://www.fiio.com/K15_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k17": {
+  "url": "https://www.fiio.com/K17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1) USB-A*1 (Data transmission port)",
+     "url": "https://www.fiio.com/K17_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input port: Standard 4.4mm port",
+     "url": "https://www.fiio.com/K17_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line input port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Digital optical output port: Optical plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA plug",
+     "url": "https://www.fiio.com/K17_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k17-r2r": {
+  "url": "https://www.fiio.com/K17R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1) USB-A*1 (Data transmission port)",
+     "url": "https://www.fiio.com/K17R2R_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input port: Standard 4.4mm port",
+     "url": "https://www.fiio.com/K17R2R_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line input port: RCA plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Digital optical output port: Optical plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output port: RCA plug",
+     "url": "https://www.fiio.com/K17R2R_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k19": {
+  "url": "https://www.fiio.com/K19_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB interface: Type-C USB (data transmission interface*2+RS232 DSP adjustment interface*1)",
+     "url": "https://www.fiio.com/K19_parameters",
+     "conn": "usbC"
+    },
+    "dc": {
+     "quote": "DC power input interface: &Phi;6.2mm DC socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input interface: fiber optic socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input interface: RCA socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    }
+   },
+   "out": {
+    "optical": {
+     "quote": "Digital optical output interface: fiber optic socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output interface: RCA socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output interface: XLR3 balanced socket",
+     "url": "https://www.fiio.com/K19_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output interface: RCA socket*2",
+     "url": "https://www.fiio.com/K19_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k7": {
+  "url": "https://www.fiio.com/K7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: USB B（data）",
+     "url": "https://www.fiio.com/K7_parameters"
+    },
+    "rca": {
+     "quote": "LINE IN: RCA sockets",
+     "url": "https://www.fiio.com/K7_parameters"
+    },
+    "optical": {
+     "quote": "OPT IN: TOSLINK",
+     "url": "https://www.fiio.com/K7_parameters"
+    },
+    "coax": {
+     "quote": "COAX IN: RCA sockets",
+     "url": "https://www.fiio.com/K7_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "LINE OUT: RCA sockets",
+     "url": "https://www.fiio.com/K7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k9-akm": {
+  "url": "https://www.fiio.com/K9AKM_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: USB B*1, Type-C*1",
+     "url": "https://www.fiio.com/K9AKM_parameters",
+     "conn": "usbC"
+    },
+    "rca": {
+     "quote": "Single-ended input interface: RCA Socket",
+     "url": "https://www.fiio.com/K9AKM_parameters"
+    },
+    "line": {
+     "quote": "Balancing Line Input Interface: 4.4mm balance socket",
+     "url": "https://www.fiio.com/K9AKM_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Digital Fiber Input Interface: optical fiber socket",
+     "url": "https://www.fiio.com/K9AKM_parameters"
+    },
+    "coax": {
+     "quote": "Digital Coaxial Input Interface: RCA socket",
+     "url": "https://www.fiio.com/K9AKM_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balancing output interface: 4.4mm socket, XLR4 balanced socket",
+     "url": "https://www.fiio.com/K9AKM_parameters",
+     "conn": "4.4"
+    },
+    "rca": {
+     "quote": "Single-ended line output interface: RCA Socket",
+     "url": "https://www.fiio.com/K9AKM_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k9-pro-ess": {
+  "url": "https://www.fiio.com/K9PROESS_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C, USB B (data transmission)",
+     "url": "https://www.fiio.com/K9PROESS_parameters",
+     "conn": "usbC"
+    },
+    "rca": {
+     "quote": "Single-ended line input interface: RCA socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input interface: 4.4mm balanced socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Spdif in: Optical fiber socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input interface: RCA socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output interface: XLR3 balanced socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output interface: RCA socket",
+     "url": "https://www.fiio.com/K9PROESS_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--ka13": {
+  "url": "https://www.fiio.com/KA13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB",
+     "url": "https://www.fiio.com/KA13_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "3.5mm plug: Single-ended/SPDIF output (shared)",
+     "url": "https://www.fiio.com/KA13_parameters",
+     "conn": "spdif35"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--ka15": {
+  "url": "https://www.fiio.com/KA15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB",
+     "url": "https://www.fiio.com/KA15_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "3.5mm plug: Single-ended/SPDIF output (shared)",
+     "url": "https://www.fiio.com/KA15_parameters",
+     "conn": "spdif35"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--ka17": {
+  "url": "https://www.fiio.com/KA17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0 (power supply/data transfer)/USB Type-C POWER IN (orange, powering)",
+     "url": "https://www.fiio.com/KA17_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Headphone output: Standard 3.5mm port (PO/coaxial out shared)",
+     "url": "https://www.fiio.com/KA17_parameters",
+     "conn": "spdif35"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--ka5": {
+  "url": "https://www.fiio.com/KA5_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB",
+     "url": "https://www.fiio.com/KA5_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--m11s": {
+  "url": "https://www.fiio.com/M11S_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Two-way TYPE C USB3.0（Charging/Data transmisson/USB DAC/USB Audio)",
+     "url": "https://www.fiio.com/M11S_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line out（LO): 3.5 mm port（shared PO）",
+     "url": "https://www.fiio.com/M11S_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "COAX Output: 3.5 mm port (shared with PO port. Supports up to 384kHz-32bit/DSD128)",
+     "url": "https://www.fiio.com/M11S_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line out: 4.4 mm port（shared with 4.4mm balanced PO） ）",
+     "url": "https://www.fiio.com/M11S_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m15s": {
+  "url": "https://www.fiio.com/M15S_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB3.0 (charging/data transmission)",
+     "url": "https://www.fiio.com/M15S_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: 3.5 mm (shared with PO port)",
+     "url": "https://www.fiio.com/M15S_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced output: 2.5mm + 4.4mm balanced",
+     "url": "https://www.fiio.com/M15S_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "coaxial interface: 3.5 mm (shared with PO port, up to 384kHz-32bit/DSD128)",
+     "url": "https://www.fiio.com/M15S_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m17": {
+  "url": "https://www.fiio.com/M17_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Two-way TYPE C USB3.0（Charging/Data transmisson)，USB HOST Type-C USB2.0",
+     "url": "https://www.fiio.com/M17_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line out（LO): 3.5 mm port（shared PO）",
+     "url": "https://www.fiio.com/M17_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "COAX Output: \"RCA socket (coaxial decoding, coaxial output multiplexing) Coaxial decoding supports up to 192kHz-24bit/DSD64 Coaxial output supports up to 384kHz-24bit/DSD128\"",
+     "url": "https://www.fiio.com/M17_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced Line out: 4.4 mm port（shared 4.4mm balanced PO）",
+     "url": "https://www.fiio.com/M17_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5",
+   "2.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m21": {
+  "url": "https://www.fiio.com/M21_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm (shared PO)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL line output: Standard 4.4mm (shared BAL)",
+     "url": "https://www.fiio.com/M21_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m23": {
+  "url": "https://www.fiio.com/M23_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (Charging/Independent power supply)",
+     "url": "https://www.fiio.com/M23_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: 3.5 mm (shared PO)",
+     "url": "https://www.fiio.com/M23_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL line output: 4.4 mm (shared BAL)",
+     "url": "https://www.fiio.com/M23_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m27": {
+  "url": "https://www.fiio.com/M27_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (charging/data transmission)+Type-C POWER IN*1 (charging/independent power supply port)+Type-C USB HOST*1 (data transmission)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Coaxial input port: RCA port (shared coaxial output port)",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output port: Standard 3.5mm port+Standard 6.35mm port (shared PO port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: Standard 4.4mm port (shared BAL port)",
+     "url": "https://www.fiio.com/M27_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Optical output port: Optical port",
+     "url": "https://www.fiio.com/M27_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial output port: RCA port",
+     "url": "https://www.fiio.com/M27_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--m33-r2r": {
+  "url": "https://www.fiio.com/M33R2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1 (Charging/Data transfer)+Type-C POWER IN*1 (Charging/Independent power supply interface)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/M33R2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port (shared BAL)",
+     "url": "https://www.fiio.com/M33R2R_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--q7": {
+  "url": "https://www.fiio.com/Q7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: TYPE C USB2.0",
+     "url": "https://www.fiio.com/Q7_parameters"
+    },
+    "optical": {
+     "quote": "OPT IN: Toslink",
+     "url": "https://www.fiio.com/Q7_parameters"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "COAX OUT: RCA",
+     "url": "https://www.fiio.com/Q7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4",
+   "3.5",
+   "2.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--qx11": {
+  "url": "https://www.fiio.com/QX11_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0 (charging/data transfer/OTA updates)+Type-C USB POWER IN (orange, power supply)",
+     "url": "https://www.fiio.com/QX11_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Headphone output: Standard 3.5mm port + Supports CTIA-standard inline mic",
+     "url": "https://www.fiio.com/QX11_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "Coaxial output: Standard 3.5mm port (shared with PO)",
+     "url": "https://www.fiio.com/QX11_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--qx13": {
+  "url": "https://www.fiio.com/QX13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0 (power supply/data transmission)+Type-C USB POWER IN (orange, power supply/OTA upgrade)",
+     "url": "https://www.fiio.com/QX13_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "coax": {
+     "quote": "Coaxial output port: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/QX13_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--r7": {
+  "url": "https://www.fiio.com/R7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C (USB3.0) * 1 USB A (USB2.0) * 1 (data transfer)",
+     "url": "https://www.fiio.com/R7_parameters",
+     "conn": "usbC"
+    },
+    "dc": {
+     "quote": "DC power in port: &Phi; 6.2mm DC socket",
+     "url": "https://www.fiio.com/R7_parameters"
+    },
+    "optical": {
+     "quote": "OPT input port: Standard TOSLINK",
+     "url": "https://www.fiio.com/R7_parameters"
+    },
+    "coax": {
+     "quote": "COAX input port: RCA",
+     "url": "https://www.fiio.com/R7_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line out ports: 3-cores XLR * 2",
+     "url": "https://www.fiio.com/R7_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line out ports: RCA* 2",
+     "url": "https://www.fiio.com/R7_parameters"
+    },
+    "optical": {
+     "quote": "OPT output port: Standard TOSLINK",
+     "url": "https://www.fiio.com/R7_parameters"
+    },
+    "coax": {
+     "quote": "COAX output port: RCA",
+     "url": "https://www.fiio.com/R7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--retro-nano": {
+  "url": "https://www.fiio.com/RETRONANO_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: USB Type-C (Charging/data transfer)",
+     "url": "https://www.fiio.com/RETRONANO_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--rr11": {
+  "url": "https://www.fiio.com/RR11_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--rr13": {
+  "url": "https://www.fiio.com/RR13_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--s15": {
+  "url": "https://www.fiio.com/S15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1+USB A*2 (data transfer)",
+     "url": "https://www.fiio.com/S15_parameters",
+     "conn": "usbC"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES input port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line-out port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line-out port: RCA port*2",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical output port: Optical port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output port: RCA port",
+     "url": "https://www.fiio.com/S15_parameters"
+    },
+    "aes": {
+     "quote": "AES output port: XLR3 balanced port",
+     "url": "https://www.fiio.com/S15_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--tt11": {
+  "url": "https://www.fiio.com/TT11_parameters",
+  "ports": {
+   "in": {},
+   "out": {
+    "rca": {
+     "quote": "Line output: sStandard RCA ports (white and red)",
+     "url": "https://www.fiio.com/TT11_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "turntable"
+ },
+ "fiio--warmer-r2r": {
+  "url": "https://www.fiio.com/WARMERR2R_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: Type-C USB*1 (data transmission)",
+     "url": "https://www.fiio.com/WARMERR2R_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input port: RCA port",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input port: Optical port",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "Single-ended line output port: RCA port*2",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line output port: XLR3 balanced port*2",
+     "url": "https://www.fiio.com/WARMERR2R_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--echo": {
+  "url": "https://www.fiio.com/ECHO_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C port: Charging/Data transfer",
+     "url": "https://www.fiio.com/ECHO_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ },
+ "fiio--echo-mini": {
+  "url": "https://www.fiio.com/ECHOMINI_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Type-C port: Charging/Data transfer",
+     "url": "https://www.fiio.com/ECHOMINI_parameters"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dap"
+ }
+}

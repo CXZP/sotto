@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5kalqh";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5kalqh";
-import { renderChart } from "./chart.js?v=mv5kalqh";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5kalqh";
-import { makeT } from "./i18n.js?v=mv5kalqh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5kalqh";
-import { LEGAL } from "./legal.js?v=mv5kalqh";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5kalqh";
-import * as community from "./community.js?v=mv5kalqh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5kalqh";
-import { redactImage } from "./redact.js?v=mv5kalqh";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5kalqh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5kalqh";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5kalqh";
-import { gearKind, gearSvg } from "./gear.js?v=mv5kalqh";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS } from "./panel.js?v=mv5kalqh";
-import { chainLinks } from "./chain.js?v=mv5kalqh";
-import { fits } from "./dcfit.js?v=mv5kalqh";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5kalqh";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5kalqh";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5kalqh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5kz7lr";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5kz7lr";
+import { renderChart } from "./chart.js?v=mv5kz7lr";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5kz7lr";
+import { makeT } from "./i18n.js?v=mv5kz7lr";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5kz7lr";
+import { LEGAL } from "./legal.js?v=mv5kz7lr";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5kz7lr";
+import * as community from "./community.js?v=mv5kz7lr";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5kz7lr";
+import { redactImage } from "./redact.js?v=mv5kz7lr";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5kz7lr";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5kz7lr";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5kz7lr";
+import { gearKind, gearSvg } from "./gear.js?v=mv5kz7lr";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront } from "./panel.js?v=mv5kz7lr";
+import { chainLinks } from "./chain.js?v=mv5kz7lr";
+import { fits } from "./dcfit.js?v=mv5kz7lr";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5kz7lr";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5kz7lr";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5kz7lr";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1292,7 +1292,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5kalqh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5kz7lr").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2582,7 +2582,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5kalqh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5kz7lr" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3069,7 +3069,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5kalqh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5kz7lr" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4646,7 +4646,8 @@ function wireDesk(main) {
     const all = nodes();
     const A = all[c0.from].node;
     const B = all[c0.to].node;
-    const sa = panelSpec(A);
+    // A headphone cable goes into the front; everything else into the back.
+    const sa = c0.out === "hp" && hasFront(A) ? frontSpec(A) : panelSpec(A);
     const sb = panelSpec(B);
     const GAP = 170;
     const W = Math.max(sa.w, sb.w) + 40;
@@ -4690,7 +4691,7 @@ function wireDesk(main) {
     const msg = dlg.querySelector(".pt-msg");
     const say = () => {
       const s = cableCheck(cable.out, cable.in);
-      const jackNote = hpJack && sockA.jack && sockA.jack !== hpJack ? ` ${t("pt_jack", { a: hpJack, b: sockA.jack })}` : "";
+      const jackNote = hpJack && sockA.jack && sockA.jack !== hpJack ? ` ${t("pt_jack", { a: hpJack, b: sockA.jack === "xlr4" ? "XLR 4-pin" : sockA.jack })}` : "";
       msg.className = `pt-msg small ${jackNote && s.status === "ok" ? "adapter" : s.status}`;
       msg.textContent = `${cableLabel(cable)} · ${t(s.why)}${jackNote}`;
     };
@@ -4748,7 +4749,7 @@ function wireDesk(main) {
       // A dongle's own cable ends in a USB-C plug: draw that at the other end.
       if (end === "a" && sockB.glyph === "tether") return `<g class="pt-plug${drag === end ? " held" : ""}" data-end="${end}" transform="translate(${plugs[end].x},${plugs[end].y})"><g class="pt-plug-in">${plugGlyph("usbC")}</g></g>`;
       if (s.glyph === "tether") return "";
-      const jack = end === "a" && hpJack ? hpJack : s.jack;
+      const jack = s.jack;
       return `<g class="pt-plug${drag === end ? " held" : ""}" data-end="${end}" transform="translate(${plugs[end].x},${plugs[end].y})"><g class="pt-plug-in">${plugGlyph(s.glyph, jack, s.horiz)}</g></g>`;
     };
     const drawPlugs = () => (gPlugs.innerHTML = plugHtml("a") + plugHtml("b"));

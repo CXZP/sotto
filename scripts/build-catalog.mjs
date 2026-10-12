@@ -450,7 +450,7 @@ for (const g of catalog) {
   for (const e of extra) {
     const hit = catalog.find((g) => groupKey(g.id) === groupKey(e.id) || (g.category === e.category && looseKey(g.id, g.category) === looseKey(e.id, e.category)));
     if (hit) {
-      for (const k of ["dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
+      for (const k of ["dcIn", "notes", "addedFrom", "jacks", "look"]) if (e[k] && !hit[k]) hit[k] = e[k];
       // The role read off the maker's page beats the one guessed from store titles.
       if (e.role) hit.role = e.role;
       // So does the kind of box (a dongle a store filed as a desktop DAC/amp).

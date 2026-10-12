@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5kalqh";
-import { gearSvg } from "./gear.js?v=mv5kalqh";
+import { nodePorts } from "./desk.js?v=mv5kz7lr";
+import { gearSvg } from "./gear.js?v=mv5kz7lr";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -71,6 +71,8 @@ export function chassisOf(node) {
   if (i.category === "speaker") return { style: "speaker", finish: "black", active: i.speaker !== "passive" };
   if (i.category === "turntable") return { style: "plinth", finish: "black" };
   const b = BRAND_CHASSIS[String(i.brand ?? "").toLowerCase()];
+  // A model whose look is checked against the maker's photos overrides its brand's.
+  if (i.look?.style || i.look?.finish) return { style: i.look.style ?? b?.[0] ?? "full", finish: i.look.finish ?? b?.[1] ?? "black" };
   if (b) return { style: b[0], finish: b[1] };
   return { style: ["integrated", "poweramp", "streamer"].includes(i.role) || i.category === "cd" ? "full" : "compact", finish: "black" };
 }
@@ -83,6 +85,58 @@ const LABEL = {
   in: { usb: "USB IN", optical: "OPTICAL IN", coax: "COAXIAL IN", aes: "AES/EBU", i2s: "I2S IN", bt: "BT", rca: "LINE IN", line: "LINE IN", xlr: "BALANCED IN", phono: "PHONO", dc: "DC IN", spk: "SPEAKER", hp: "", "?": "?" },
   out: { usb: "USB OUT", optical: "OPTICAL OUT", coax: "COAXIAL OUT", aes: "AES OUT", i2s: "I2S OUT", bt: "BT", rca: "LINE OUT", line: "LINE OUT", xlr: "BALANCED OUT", phono: "PHONO OUT", dc: "DC OUT", spk: "SPEAKERS", hp: "PHONES", "?": "?" },
 };
+
+/** How many of a socket a box has: the maker's count when stated, else one. */
+export function countOf(item, dir, port) {
+  const v = item?.ports?.[dir]?.[port];
+  if (!v) return 1;
+  if (Number.isInteger(v.n)) return Math.min(6, Math.max(1, v.n));
+  const m = String(v.quote ?? "").match(/^\s*(\d)\s*[x×]\s/i);
+  return m ? Math.min(6, Number(m[1])) : 1;
+}
+
+/** Headphone jacks on a box's front: the maker's list, else measured outputs, else the usual pair. */
+export function jacksOf(item) {
+  if (!item) return [];
+  if (Array.isArray(item.jacks)) return item.jacks;
+  const measured = [...new Set((item.outputs ?? []).map((o) => o.jack).filter(Boolean))];
+  if (measured.length) return measured.sort((a, b) => JACK_ORDER.indexOf(a) - JACK_ORDER.indexOf(b));
+  if (["dongle", "portable", "dap"].includes(item.category)) return ["3.5", "4.4"];
+  return ["6.35", "4.4"];
+}
+const JACK_ORDER = ["xlr4", "6.35", "4.4", "3.5", "2.5"];
+
+/** Whether a box has a front worth drawing (a desk box that drives headphones). */
+export function hasFront(node) {
+  return !!node.item && !["pocket", "dongle", "plug", "speaker", "device", "plinth"].includes(chassisOf(node).style) && nodePorts(node).out.includes("hp");
+}
+
+/**
+ * A desk box's front: its headphone jacks plus the look of the real thing
+ * (a screen and a volume knob, VU meters, tubes on top), as {w, h, chassis,
+ * groups: [], sockets, decor}.
+ */
+export function frontSpec(node) {
+  const chassis = chassisOf(node);
+  const i = node.item;
+  const look = i.look ?? {};
+  const titles = [i.model, ...(i.offers ?? []).map((o) => o.title)].join(" ");
+  const tubes = look.tubes ?? (/\btubes?\b|\bvalve\b/i.test(titles) && !/tube buffer/i.test(titles) ? 2 : 0);
+  const vu = look.vu ?? false;
+  const w = { full: 520, inset: 520, slim: 440, wood: 460, jewel: 300, zen: 320 }[chassis.style] ?? 380;
+  const lift = tubes ? 70 : 0;
+  const h = 150 + lift;
+  const sockets = [];
+  const jacks = nodePorts(node).out.includes("hp") ? jacksOf(i) : [];
+  let x = chassis.style === "wood" ? 60 : 40;
+  for (const j of jacks) {
+    const r = j === "xlr4" ? 26 : 22;
+    sockets.push({ port: "hp", dir: "out", glyph: "jack", jack: j, x: x + r - 6, y: lift + 76 });
+    x += r * 2 + 8;
+  }
+  const decor = { tubes, vu, lift, screenX: x + 10, knobX: w - (chassis.style === "wood" ? 80 : 60) };
+  return { w, h, chassis, groups: [], sockets, decor, face: "front" };
+}
 
 /** The plug a headphone ends in: what the store says, else the usual one. */
 export function hpPlug(item) {
@@ -137,7 +191,9 @@ export function panelSpec(node) {
   // Headphone outs are on the front: kept in their own dashed frame on the left.
   const hp = cells.filter((c) => c.port === "hp");
   const rest = cells.filter((c) => c.port !== "hp");
-  const jacks = hp.length ? (["pocket"].includes(chassis.style) ? ["3.5", "4.4"] : i?.category === "desktop" ? ["6.35", "4.4"] : ["3.5"]) : [];
+  // Headphone jacks are on the front of a desk box (frontSpec draws them);
+  // the rear only shows them on pocket gear, whose "panel" is its edge.
+  const jacks = hp.length && chassis.style === "pocket" ? jacksOf(i) : [];
   // Small boxes put an RCA pair side by side (R, L); bigger ones stack it (L over R).
   const horiz = ["compact", "zen", "pocket", "jewel"].includes(chassis.style);
   const place = (c, label, dashed, extra = {}) => {
@@ -147,7 +203,7 @@ export function panelSpec(node) {
     sockets.push({ port: c.port, dir: c.dir, glyph, x: x + w / 2, y: top + 42, pair: PAIR.has(c.port), horiz: horiz && ["rca", "line", "phono"].includes(c.port), ...extra });
     x += w + 8;
   };
-  if (hp.length) {
+  if (jacks.length) {
     const w = 40 * jacks.length + 12;
     groups.push({ x, y: top, w, h: cellH, label: "PHONES", dashed: true, front: true });
     jacks.forEach((j, k) => sockets.push({ port: "hp", dir: "out", glyph: "jack", jack: j, x: x + 26 + k * 40, y: top + 42, alt: k > 0 }));
@@ -155,7 +211,13 @@ export function panelSpec(node) {
   }
   // Sockets nobody has listed: one dashed frame, an IN and an OUT side.
   const unknown = rest.filter((c) => c.port === "?");
-  for (const c of rest) if (c.port !== "?") place(c, LABEL[c.dir][c.port] ?? c.port.toUpperCase(), false);
+  for (const c of rest) {
+    if (c.port === "?") continue;
+    // As many sockets as the maker lists ("2x Coaxial", "RCA port*4" inputs), numbered.
+    const n = countOf(i, c.dir, c.port);
+    const label = LABEL[c.dir][c.port] ?? c.port.toUpperCase();
+    for (let k = 1; k <= n; k++) place(c, n > 1 ? `${label} ${k}` : label, false);
+  }
   if (unknown.length) {
     const w = 52 * unknown.length + 12;
     groups.push({ x, y: top, w, h: cellH, label: "NOT LISTED", dashed: true });
@@ -244,6 +306,8 @@ export function socketGlyph(s, ink) {
         .join("") + `<text x="-40" y="40" font-size="8" text-anchor="middle" fill="${ink}">R</text><text x="40" y="40" font-size="8" text-anchor="middle" fill="${ink}">L</text>`;
     }
     case "jack": {
+      if (s.jack === "xlr4")
+        return `${ring(20, "#2a2a2c", "#8a8d92", 3)}${ring(16, "#141416", "none")}${[[-5, -5], [5, -5], [-5, 5], [5, 5]].map(([a, b]) => `<circle cx="${a}" cy="${b}" r="2.4" fill="#000" stroke="#555"/>`).join("")}<text y="38" font-size="8" text-anchor="middle" fill="${ink}">XLR4</text><circle cy="-30" r="2.6" fill="${BAL}"/>`;
       const r = { "2.5": 4, "3.5": 6, "4.4": 7.5, "6.35": 11 }[s.jack] ?? 6;
       // A 6.35 socket sits in a hex nut; the dot says balanced (4.4) or not.
       const hex = (n) => `<polygon points="${Array.from({ length: 6 }, (_, k) => `${(n * Math.cos((Math.PI / 3) * k)).toFixed(1)},${(n * Math.sin((Math.PI / 3) * k)).toFixed(1)}`).join(" ")}" fill="#a3a6ab" stroke="#00000066"/>`;
@@ -298,6 +362,7 @@ export function plugGlyph(glyph, jack, horiz = false) {
     }
     case "jack":
     case "hpplug": {
+      if (jack === "xlr4") return `${ring(23, "#202022", "#000", 1.5)}${ring(19, "#a7aab0", "none")}${ring(15, "#202022", "none")}`;
       const r = { "2.5": 7, "3.5": 9, "4.4": 11, "6.35": 15 }[jack] ?? 9;
       return `${ring(r + 4, "#2b2b2e", "#000", 1.5)}${ring(r, "#c9a24a", "none")}${ring(r - 4, "#2b2b2e", "none")}`;
     }
@@ -308,9 +373,13 @@ export function plugGlyph(glyph, jack, horiz = false) {
 
 /** The whole panel as an SVG fragment (no outer <svg>), at (0, 0). */
 export function panelSvg(spec, name = "") {
-  const { w, h, chassis } = spec;
+  const { w, chassis } = spec;
+  // A front with tubes on top: the box itself starts below them.
+  const lift = spec.face === "front" ? spec.decor.lift : 0;
+  const h = spec.h - lift;
   const f = FINISH[chassis.finish] ?? FINISH.black;
-  const ink = f.ink;
+  // An inset plate is dark whatever the frame: light print on it.
+  const ink = chassis.style === "inset" ? "#d9d9d9" : f.ink;
   const body = (() => {
     switch (chassis.style) {
       case "slim":
@@ -355,9 +424,10 @@ export function panelSvg(spec, name = "") {
         `<text x="${g.x + g.w / 2}" y="${g.y + g.h - 7}" font-size="8.5" letter-spacing=".04em" text-anchor="middle" fill="${ink}">${g.label}</text>`,
     )
     .join("");
+  const front = spec.face === "front" ? frontDecor(spec, f) : "";
   const sockets = spec.sockets.map((s) => `<g class="pn-sock" data-port="${s.port}" data-dir="${s.dir}"${s.jack ? ` data-jack="${s.jack}"` : ""} transform="translate(${s.x},${s.y})">${socketGlyph(s, ink)}</g>`).join("");
-  const title = name ? `<text x="${chassisInset(spec)}" y="${spec.chassis.style === "inset" ? 22 : 15}" font-size="9" font-weight="600" fill="${ink}" opacity=".75">${escXml(name)}</text>` : "";
-  return `${body}${groups}${sockets}${spec.chassis.style === "plug" ? "" : title}`;
+  const title = name ? `<text x="${chassisInset(spec)}" y="${(spec.chassis.style === "inset" ? 22 : 15) + (spec.face === "front" ? spec.decor.lift : 0)}" font-size="9" font-weight="600" fill="${ink}" opacity=".75">${escXml(name)}</text>` : "";
+  return `${front}<g transform="translate(0,${lift})">${body}</g>${spec.face === "front" ? frontOver(spec, f) : ""}${groups}${sockets}${spec.chassis.style === "plug" ? "" : title}`;
 }
 function chassisInset(spec) {
   return spec.chassis.style === "wood" ? 36 : ["slim", "zen", "inset"].includes(spec.chassis.style) ? 34 : 12;
@@ -367,4 +437,32 @@ function escXml(s) {
 }
 
 /** Gradients the panels use; put once inside the outer <svg>. */
-export const PANEL_DEFS = `<defs><linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#7a4426"/><stop offset=".5" stop-color="#5b3019"/><stop offset="1" stop-color="#83502d"/></linearGradient></defs>`;
+export const PANEL_DEFS = `<defs><linearGradient id="vuGlow" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff6d0" stop-opacity=".55"/><stop offset="1" stop-color="#e09a10" stop-opacity=".15"/></linearGradient><linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#7a4426"/><stop offset=".5" stop-color="#5b3019"/><stop offset="1" stop-color="#83502d"/></linearGradient></defs>`;
+
+// Front-panel details. Tubes stand on the top plate (drawn behind the box);
+// the face gets VU meters or a screen, and a volume knob.
+function frontDecor(spec, f) {
+  const { tubes, lift } = spec.decor;
+  if (!tubes) return "";
+  const gap = spec.w / (tubes + 1);
+  return Array.from({ length: tubes }, (_, k) => {
+    const x = gap * (k + 1);
+    return `<g transform="translate(${x},${lift})"><rect x="-14" y="-62" width="28" height="56" rx="13" fill="#e8d9b8" fill-opacity=".28" stroke="#c9b48a" stroke-opacity=".7"/><rect x="-8" y="-46" width="16" height="26" rx="3" fill="#7a4b2a" fill-opacity=".55"/><ellipse cy="-30" rx="6" ry="3" fill="#ff9a3c" opacity=".85"/><rect x="-16" y="-8" width="32" height="8" rx="2" fill="#2b2b2e"/></g>`;
+  }).join("");
+}
+function frontOver(spec, f) {
+  const { vu, lift, screenX, knobX } = spec.decor;
+  const cy = lift + 70;
+  const knob = `<g transform="translate(${knobX},${cy})">${ring(30, f.frame, "#00000066", 1.5)}${ring(25, f.face === "#cfd2d6" ? "#e6e8eb" : "#2e3034", "none")}<circle cx="0" cy="-17" r="2.5" fill="${f.ink}"/></g>`;
+  const room = knobX - 40 - screenX;
+  if (room < 60) return knob;
+  if (vu) {
+    const mw = Math.min(room, 260);
+    const mx = screenX + (room - mw) / 2;
+    const meter = (x0, w0) => `<path d="M${x0 + 14} ${cy + 8} Q${x0 + w0 / 2} ${cy - 22} ${x0 + w0 - 14} ${cy + 8}" stroke="#3a2a10" fill="none" stroke-width="1.2"/><path d="M${x0 + w0 * 0.72} ${cy - 10} L${x0 + w0 * 0.86} ${cy - 4}" stroke="#c0392b" stroke-width="2.2"/><line x1="${x0 + w0 / 2}" y1="${cy + 22}" x2="${x0 + w0 * 0.36}" y2="${cy - 14}" stroke="#222" stroke-width="1.4"/><text x="${x0 + w0 / 2}" y="${cy + 26}" font-size="7" text-anchor="middle" fill="#3a2a10">VU</text>`;
+    return `<rect x="${mx}" y="${cy - 32}" width="${mw}" height="62" rx="4" fill="#f2b632" stroke="#00000055"/><rect x="${mx}" y="${cy - 32}" width="${mw}" height="62" rx="4" fill="url(#vuGlow)"/>${meter(mx, mw / 2)}${meter(mx + mw / 2, mw / 2)}${knob}`;
+  }
+  const sw = Math.min(room, 200);
+  const sx = screenX + (room - sw) / 2;
+  return `<rect x="${sx}" y="${cy - 24}" width="${sw}" height="46" rx="6" fill="#0b0c0e" stroke="#00000088"/><text x="${sx + 12}" y="${cy - 6}" font-size="9" fill="#7fd1ff" font-family="ui-monospace,monospace">USB</text><text x="${sx + sw - 12}" y="${cy + 12}" font-size="16" text-anchor="end" fill="#e8eef5" font-family="ui-monospace,monospace">-30.0 dB</text>${knob}`;
+}

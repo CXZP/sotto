@@ -126,7 +126,12 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ]
   },
   {
     "id": "topping--a70-pro",
@@ -219,7 +224,12 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "6.35",
+      "4.4"
+    ]
   },
   {
     "id": "topping--l50",
@@ -240,7 +250,11 @@
           "url": "https://www.audiophonics.fr/en/desktop-headphone-amplifiers/topping-l50-balanced-headphone-amplifier-nfca-black-p-15586.html"
         }
       }
-    }
+    },
+    "jacks": [
+      "xlr4",
+      "6.35"
+    ]
   },
   {
     "id": "fiio--warmer-r2r",
@@ -275,7 +289,12 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "vu": true,
+      "style": "full",
+      "finish": "silver"
+    }
   },
   {
     "id": "fiio--k17-r2r",
@@ -322,7 +341,16 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "jacks": [
+      "xlr4",
+      "4.4",
+      "3.5"
+    ],
+    "look": {
+      "style": "wood",
+      "finish": "black"
+    }
   },
   {
     "id": "fiio--ka17",
@@ -383,10 +411,20 @@
       "in": {
         "rca": {
           "quote": "Single-ended line input: RCA port*4",
-          "url": "https://www.fiio.com/EA13_parameters"
+          "url": "https://www.fiio.com/EA13_parameters",
+          "n": 4
         }
       },
       "out": {}
+    },
+    "jacks": [
+      "6.35"
+    ],
+    "look": {
+      "vu": true,
+      "tubes": 6,
+      "style": "full",
+      "finish": "silver"
     }
   },
   {

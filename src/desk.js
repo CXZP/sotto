@@ -5,7 +5,7 @@
 // reports, category facts). A box whose ports nobody has stated gets a "?"
 // socket: a cable to it is "unknown", never "wrong".
 
-import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5kalqh";
+import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5kz7lr";
 
 /** Things on a desk that aren't catalog items. */
 export const DESK_DEVICES = {
@@ -28,7 +28,8 @@ export function nodePorts(node) {
   if (["iem", "headphone"].includes(i.category)) ins.push("hp");
   if (i.category === "wireless") ins.push("bt");
   const drives = HP_SOURCES.has(i.category) || (i.category === "desktop" && ["dacamp", "amp"].includes(i.role));
-  if (drives) outs.push("hp");
+  // A maker's jack list says so too (a speaker amp with a headphone out, FiiO EA13).
+  if (drives || i.jacks?.length) outs.push("hp");
   if (i.category === "desktop" && SPEAKER_ROLES.has(i.role)) outs.push("spk");
   if (i.category === "speaker") ins.push(i.speaker === "passive" ? "spk" : "rca");
   // DC power: a supply's output, and boxes that state a DC input.

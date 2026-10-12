@@ -2,7 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { panelSpec, chassisOf, hpPlug } from "../src/panel.js";
+import { panelSpec, chassisOf, hpPlug, frontSpec, hasFront, countOf } from "../src/panel.js";
 import { nodePorts } from "../src/desk.js";
 
 const boxes = [
@@ -20,7 +20,7 @@ test("every socket a box has is on its panel, inside it, and frames don't overla
     const spec = panelSpec(n);
     const ports = nodePorts(n);
     for (const dir of ["in", "out"])
-      for (const p of ports[dir]) if (!(p === "line" && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) assert.ok(spec.sockets.some((s) => s.port === p && s.dir === dir), `${JSON.stringify(n).slice(0, 60)} ${dir} ${p}`);
+      for (const p of ports[dir]) if (!(p === "hp" && hasFront(n)) && !(p === "line" && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) assert.ok(spec.sockets.some((s) => s.port === p && s.dir === dir), `${JSON.stringify(n).slice(0, 60)} ${dir} ${p}`);
     for (const s of spec.sockets) assert.ok(s.x > 0 && s.x < spec.w && s.y > 0 && s.y < spec.h);
     const g = [...spec.groups].sort((a, b) => a.x - b.x);
     for (let k = 1; k < g.length; k++) assert.ok(g[k].x >= g[k - 1].x + g[k - 1].w);
@@ -51,4 +51,13 @@ test("a power supply: mains in, DC out", () => {
   const spec = panelSpec({ item: { category: "power", brand: "FiiO", offers: [] } });
   assert.ok(spec.groups.some((g) => g.deco === "iec"));
   assert.ok(spec.sockets.some((s) => s.port === "dc" && s.dir === "out"));
+});
+
+test("a desk box: headphone jacks on its front, counts from the maker", () => {
+  const amp = { item: { category: "desktop", role: "amp", brand: "GUSTARD", offers: [], jacks: ["xlr4", "6.35", "4.4"], ports: { in: { xlr: { quote: "2x XLR balanced" }, rca: { quote: "1x RCA stereo" } }, out: {} } } };
+  assert.ok(hasFront(amp));
+  assert.deepEqual(frontSpec(amp).sockets.map((s) => s.jack), ["xlr4", "6.35", "4.4"]);
+  assert.equal(panelSpec(amp).sockets.filter((s) => s.port === "xlr").length, 2);
+  assert.ok(!panelSpec(amp).sockets.some((s) => s.port === "hp"));
+  assert.equal(countOf({ ports: { in: { rca: { quote: "Single-ended line input: RCA port*4", n: 4 } } } }, "in", "rca"), 4);
 });

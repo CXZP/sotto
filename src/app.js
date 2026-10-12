@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5texn1";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5texn1";
-import { renderChart } from "./chart.js?v=mv5texn1";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5texn1";
-import { makeT } from "./i18n.js?v=mv5texn1";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5texn1";
-import { LEGAL } from "./legal.js?v=mv5texn1";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5texn1";
-import * as community from "./community.js?v=mv5texn1";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5texn1";
-import { redactImage } from "./redact.js?v=mv5texn1";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5texn1";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5texn1";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5texn1";
-import { gearKind, gearSvg } from "./gear.js?v=mv5texn1";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5texn1";
-import { chainLinks } from "./chain.js?v=mv5texn1";
-import { fits } from "./dcfit.js?v=mv5texn1";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5texn1";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5texn1";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5texn1";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5ttrnq";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5ttrnq";
+import { renderChart } from "./chart.js?v=mv5ttrnq";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5ttrnq";
+import { makeT } from "./i18n.js?v=mv5ttrnq";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5ttrnq";
+import { LEGAL } from "./legal.js?v=mv5ttrnq";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5ttrnq";
+import * as community from "./community.js?v=mv5ttrnq";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5ttrnq";
+import { redactImage } from "./redact.js?v=mv5ttrnq";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5ttrnq";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5ttrnq";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5ttrnq";
+import { gearKind, gearSvg } from "./gear.js?v=mv5ttrnq";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5ttrnq";
+import { chainLinks } from "./chain.js?v=mv5ttrnq";
+import { fits } from "./dcfit.js?v=mv5ttrnq";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5ttrnq";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5ttrnq";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5ttrnq";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1303,7 +1303,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5texn1").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5ttrnq").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2595,7 +2595,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5texn1" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5ttrnq" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2741,6 +2741,11 @@ function wireBot(root, item, apply) {
 // who checked the back panel with a photo. Not listed ≠ not there.
 
 const PORT_KEYS = ["usb", "coax", "optical", "aes", "i2s", "bt", "rca", "xlr", "line"];
+// Shown on the item page; the user form keeps PORT_KEYS. Makers' manuals also name
+// phono inputs, speaker terminals and the DC inlet.
+const SHOW_PORT_KEYS = [...PORT_KEYS, "phono", "spk", "dc"];
+const PORT_CONN = { usbC: "USB-C", usbB: "USB-B", usbA: "USB-A", "4.4": "4.4 mm", "3.5": "3.5 mm", "6.35": "6.35 mm", spdif35: "3.5 mm (S/PDIF)" };
+const JACK_ORDER = ["6.35", "4.4", "3.5", "2.5", "xlr4"];
 const FEATURE_KEYS = ["uac1", "nos", "asio", "roon", "airplay", "spotify", "tidal", "upnp", "chromecast"];
 // Glossary page for each switch or protocol.
 const FEATURE_TERM = { uac1: "uac1", nos: "nos", asio: "wasapi", roon: "streaming", airplay: "streaming", spotify: "streaming", tidal: "streaming", upnp: "streaming", chromecast: "streaming" };
@@ -2759,19 +2764,31 @@ async function renderPorts(el, item) {
   if (!el.isConnected) return;
 
   const users = (dir, k) => reports.filter((r) => (dir === "f" ? r.features : r[dir])?.includes(k));
+  // Who said so: the maker (its own domain carries the brand: fiio.com,
+  // dl.topping.audio, ifi-audio.com), a tracked store, or another site by name.
+  const storeHosts = new Set(Object.values(db.stores).map((x) => x.host.replace(/^www\./, "")));
+  const brandWord = (item.brand ?? "").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8);
+  const from = (src) => {
+    const host = new URL(src.url).hostname.replace(/^www\./, "");
+    if (brandWord.length >= 3 && host.replace(/[^a-z0-9]/g, "").includes(brandWord)) return `${t("po_maker")} · ${host}`;
+    return storeHosts.has(host) ? t("po_store") : host;
+  };
   const chip = (dir, k) => {
     const store = dir === "f" ? item.features?.[k] : item.ports?.[dir]?.[k];
     const u = users(dir, k);
     if (!store && !u.length) return "";
-    const label = dir === "f" ? t(`po_f_${k}`) : t(`po_${k}`);
+    // The connector when the source names it: "USB (USB-C)", "XLR (line) · 4.4 mm".
+    const conn = store?.conn ? PORT_CONN[store.conn] ?? store.conn : "";
+    const base = dir === "f" ? t(`po_f_${k}`) : t(`po_${k}`);
+    const label = !conn ? base : k === "usb" ? conn : `${base} · ${conn}`;
     const bits = [];
-    if (store) bits.push(`<a href="${esc(store.url)}" target="_blank" rel="noopener" title="${esc(store.quote)}">${esc(t("po_store"))}</a>`);
+    if (store) bits.push(`<a href="${esc(store.url)}" target="_blank" rel="noopener" title="${esc(store.quote)}">${esc(from(store))}</a>`);
     if (u.length) bits.push(`<a href="${esc(u[0].evidence_url)}" target="_blank" rel="noopener">${esc(t("po_users", { n: u.length }))}</a>`);
     const learn = dir === "f" ? ` <a href="#learn/${FEATURE_TERM[k]}" title="${esc(t("nav_learn"))}">?</a>` : "";
     return `<span class="port-chip">${esc(label)}${learn} <span class="muted small">${bits.join(" · ")}</span></span>`;
   };
   const row = (dir, title) => {
-    const chips = (dir === "f" ? FEATURE_KEYS : PORT_KEYS).map((k) => chip(dir, k)).filter(Boolean).join("");
+    const chips = (dir === "f" ? FEATURE_KEYS : SHOW_PORT_KEYS).map((k) => chip(dir, k)).filter(Boolean).join("");
     return `<div class="port-row"><b class="small">${esc(title)}</b><div>${chips || `<span class="muted small">${esc(t("po_none"))}</span>`}</div></div>`;
   };
   const box = (name, keys, prefix) =>
@@ -2790,7 +2807,18 @@ async function renderPorts(el, item) {
           <input class="search" name="note" maxlength="300" placeholder="${esc(t("po_note_ph"))}">
           <button class="pill primary">${esc(t("ds_send"))}</button><p class="small status" role="status"></p>
         </form></details>`;
-  el.innerHTML = `${head}${row("in", t("po_in"))}${row("out", t("po_out"))}${row("f", t("po_switches"))}
+  // Headphone jacks: from the maker's sockets list, or from per-jack power figures.
+  const jacks = [...new Set([...(item.jacks ?? []), ...(item.outputs ?? []).map((o) => o.jack).filter(Boolean)])].sort((a, b) => JACK_ORDER.indexOf(a) - JACK_ORDER.indexOf(b));
+  const jackSrc = (j) => (item.outputs ?? []).find((o) => o.jack === j && o.source);
+  const jackRow = jacks.length
+    ? `<div class="port-row"><b class="small">${esc(t("po_jacks"))}</b><div>${jacks
+        .map((j) => {
+          const src = jackSrc(j);
+          return `<span class="port-chip">${esc(JACK_LABEL[j] ?? j)}${src ? ` <span class="muted small"><a href="${esc(src.source)}" target="_blank" rel="noopener">${esc(from({ url: src.source }))}</a></span>` : ""}</span>`;
+        })
+        .join("")}</div></div>`
+    : "";
+  el.innerHTML = `${head}${jackRow}${row("in", t("po_in"))}${row("out", t("po_out"))}${row("f", t("po_switches"))}
     <p class="small"><a href="${esc(rearSearch(item))}" target="_blank" rel="noopener">${esc(t("po_check_photos"))} ↗</a></p>${form}`;
 
   const f = el.querySelector('[data-form="ports"]');
@@ -3082,7 +3110,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5texn1" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5ttrnq" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

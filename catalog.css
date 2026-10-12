@@ -421,7 +421,7 @@ details.danger-zone > summary { cursor: pointer; }
 details.danger-zone[open] > summary { margin-bottom: 8px; }
 
 /* Ports card: one chip per port, with room between them */
-.port-row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--surface-2); }
+.port-row { display: grid; grid-template-columns: minmax(72px, max-content) 1fr; column-gap: 14px; gap: 8px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--surface-2); }
 .port-row > div { display: flex; flex-wrap: wrap; gap: 6px; }
 .port-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); font-size: 14px; }
 .port-chip .muted a { color: var(--text-2); }

@@ -40,7 +40,9 @@ export function readPair(label, value) {
     if (/line/.test(V)) add(/4\.4/.test(V) ? "xlr" : "line", "out", /4\.4/.test(V) ? "4.4" : "3.5");
     return found;
   }
-  if (FIGURE.test(V) && !CONNECTOR.test(V)) return found;
+  // "Optical Out: Up to 96kHz" names the socket in the label.
+  if (FIGURE.test(V) && !CONNECTOR.test(V) && !(dir && /optical|coax|usb/.test(L))) return found;
+  if (/^speaker (?:output|terminal|out)/.test(L)) return add("spk", "out"), found;
   if (/optical|toslink/.test(all)) add("optical");
   if (/coax/.test(all)) add("coax");
   if ((/\busb\b|type-?c/.test(L) || (dir === "in" && /\busb\b/.test(V))) && (/data|transfer|transmission|audio|dac/.test(all) || !/power|charg|host|upgrade|otg|usb-?a\b/.test(all))) add("usb", "in", /type-?b|usb-?b\b/.test(V) ? "usbB" : /type-?c|usb-?c/.test(V) ? "usbC" : undefined);
@@ -91,12 +93,19 @@ export function fiioPairs(html) {
     if (!inPorts) continue;
     for (let k = 0; k + 1 < cells.length; k += 2) if (cells[k].text && cells[k + 1].text) pairs.push([cells[k].text, cells[k + 1].text]);
   }
+  if (pairs.length) return pairs;
+  // Older pages (K3, R9, BTR7) run "Label : value : Label : value" lines.
+  for (const line of textify(html)) {
+    if (!/ : /.test(line) || line.length > 400) continue;
+    const parts = line.split(/\s+:\s+/);
+    for (let k = 0; k + 1 < parts.length; k += 2) pairs.push([parts[k].trim(), parts[k + 1].trim()]);
+  }
   return pairs;
 }
 // Store names carry extras ("M27 Player Titanium Gold", "K15 *2 Powerful"):
 // the full name first, then shorter, never dropping a word that names
 // another model ("R2R", "Ultra", "BT", "Mini").
-const STEP = /^(?:R2R|ULTRA|PRO|BT|TUBE|MINI|NANO|MAX|PLUS|II|III|S|SE|LE|LITE|A|B|C|AKM|ESS|THX|SABRE)$/;
+const STEP = /^(?:R2R|ULTRA|PRO|BT|TUBE|MINI|NANO|MAX|PLUS|II|III|S|SE|LE|LITE|A|B|C|ESS|THX|SABRE)$/;
 export function fiioSlugs(model) {
   const words = model.toUpperCase().replace(/\bSNOWSKY\b|\bJADE(?: ?AUDIO)?\b/g, " ").split(/[\s-]+/).map((w) => w.replace(/[^A-Z0-9]/g, "")).filter(Boolean);
   const out = [];

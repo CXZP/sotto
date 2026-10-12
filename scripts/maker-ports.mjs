@@ -89,10 +89,20 @@ function bestPage(item, pages) {
 const models = catalog.items.filter((i) => ELECTRONICS.has(i.category));
 let done = 0;
 
+// Store names no slug guess reaches: the K9 with dual ES9068AS and THX AAA is the
+// K9 Pro ESS; the K7 page covers the K7 BT; "AIR Power" is the AIR AMP.
+const FIIO_PAGE = [
+  [/^K9 THX/i, "k9proess"],
+  [/^K7 BT/i, "k7"],
+  [/^AIR Power/i, "AIRAMP"],
+];
+
 if (!only.length || only.includes("fiio")) {
   for (const i of models.filter((i) => i.brand === "FiiO")) {
     let url, pairs = [];
-    for (const slug of fiioSlugs(i.model)) {
+    // Older pages are lower case ("/btr7_parameters").
+    const named = FIIO_PAGE.find(([re]) => re.test(i.model))?.[1];
+    for (const slug of named ? [named] : fiioSlugs(i.model).flatMap((s) => [s, s.toLowerCase()])) {
       url = `https://www.fiio.com/${slug}_parameters`;
       const html = await get(url);
       pairs = html ? fiioPairs(html) : [];

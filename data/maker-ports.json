@@ -3994,5 +3994,440 @@
   "jacks": [],
   "complete": true,
   "category": "desktop"
+ },
+ "fiio--dm13": {
+  "url": "https://www.fiio.com/DM13_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB*2 (POWER IN*1+USB AUDIO*1, charging/data transfer)",
+     "url": "https://www.fiio.com/DM13_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Single-ended line output: Standard 3.5mm port",
+     "url": "https://www.fiio.com/DM13_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port",
+     "url": "https://www.fiio.com/DM13_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Coaxial/Optical output: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM13_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial/Optical output: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM13_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "cd"
+ },
+ "fiio--k3-dsd": {
+  "url": "https://www.fiio.com/K3_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "Audio Input: USB Type-C",
+     "url": "https://www.fiio.com/K3_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line Out: 3.5mm",
+     "url": "https://www.fiio.com/K3_parameters",
+     "conn": "3.5"
+    },
+    "coax": {
+     "quote": "Coaxial Out: RCA for 192kHz, support DSD64 DOP",
+     "url": "https://www.fiio.com/K3_parameters"
+    },
+    "optical": {
+     "quote": "Optical Out: Up to 96kHz",
+     "url": "https://www.fiio.com/K3_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "3.5",
+   "2.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--ka1-lightning": {
+  "url": "https://www.fiio.com/KA1_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--ka2-output": {
+  "url": "https://www.fiio.com/KA2_parameters",
+  "ports": {
+   "in": {},
+   "out": {}
+  },
+  "jacks": [
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--ka3": {
+  "url": "https://www.fiio.com/KA3_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB port: TypeC USB",
+     "url": "https://www.fiio.com/KA3_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {}
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--q15": {
+  "url": "https://www.fiio.com/Q15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*2 Black USB (charging/data transfer), orange POWER IN (charging)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input: RCA port",
+     "url": "https://www.fiio.com/Q15_parameters"
+    },
+    "bt": {
+     "quote": "Audio input: Bluetooth",
+     "url": "https://www.fiio.com/Q15_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line-out output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL Line-out output: Standard 4.4mm port (shared 4.4mm BAL headphone out)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "dongle"
+ },
+ "fiio--r9": {
+  "url": "https://www.fiio.com/R9_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB3.0*1+USB A*1 (data transmission)",
+     "url": "https://www.fiio.com/R9_parameters",
+     "conn": "usbC"
+    },
+    "dc": {
+     "quote": "DC power input: &Phi;6.2mm DC port",
+     "url": "https://www.fiio.com/R9_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical input: Optical port",
+     "url": "https://www.fiio.com/R9_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input: RCA port",
+     "url": "https://www.fiio.com/R9_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "BAL line output: XLR3 BAL port",
+     "url": "https://www.fiio.com/R9_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output: RCA port*2",
+     "url": "https://www.fiio.com/R9_parameters"
+    },
+    "optical": {
+     "quote": "Digital optical output Interface: Optical port",
+     "url": "https://www.fiio.com/R9_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial output: RCA port",
+     "url": "https://www.fiio.com/R9_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--air-power": {
+  "url": "https://www.fiio.com/AIRAMP_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB DAC*2 + USB A*1",
+     "url": "https://www.fiio.com/AIRAMP_parameters",
+     "conn": "usbC"
+    },
+    "rca": {
+     "quote": "Single-ended line input: RCA port",
+     "url": "https://www.fiio.com/AIRAMP_parameters"
+    },
+    "optical": {
+     "quote": "Optical digital input: Optical port",
+     "url": "https://www.fiio.com/AIRAMP_parameters"
+    },
+    "coax": {
+     "quote": "Coaxial digital input: RCA port",
+     "url": "https://www.fiio.com/AIRAMP_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Single-ended line output: Standard 3.5mm port",
+     "url": "https://www.fiio.com/AIRAMP_parameters",
+     "conn": "3.5"
+    },
+    "rca": {
+     "quote": "Subwoofer output: RCA port",
+     "url": "https://www.fiio.com/AIRAMP_parameters"
+    },
+    "spk": {
+     "quote": "Speaker output: 4mm banana jack (Supports direct bare wire connection)",
+     "url": "https://www.fiio.com/AIRAMP_parameters"
+    }
+   }
+  },
+  "jacks": [],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--dm15-akm": {
+  "url": "https://www.fiio.com/DM15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*1 (Data transfer) +Type-C POWER IN*1 (Charging/Dedicated power supply port)",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "usbC"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Linear Output Interface: Standard 3.5mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "Balanced line output: Standard 4.4mm port",
+     "url": "https://www.fiio.com/DM15_parameters",
+     "conn": "4.4"
+    },
+    "coax": {
+     "quote": "coaxial output interface: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    },
+    "optical": {
+     "quote": "Optical output: Standard 3.5mm port (shared LO)",
+     "url": "https://www.fiio.com/DM15_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "cd"
+ },
+ "fiio--k7-bt": {
+  "url": "https://www.fiio.com/k7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: USB B（data）",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "rca": {
+     "quote": "LINE IN: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "optical": {
+     "quote": "OPT IN: TOSLINK",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "coax": {
+     "quote": "COAX IN: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "LINE OUT: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k7-bt-decktop": {
+  "url": "https://www.fiio.com/k7_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: USB B（data）",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "rca": {
+     "quote": "LINE IN: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "optical": {
+     "quote": "OPT IN: TOSLINK",
+     "url": "https://www.fiio.com/k7_parameters"
+    },
+    "coax": {
+     "quote": "COAX IN: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    }
+   },
+   "out": {
+    "rca": {
+     "quote": "LINE OUT: RCA sockets",
+     "url": "https://www.fiio.com/k7_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--k9-thx-aaa-qcc5124": {
+  "url": "https://www.fiio.com/k9proess_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C, USB B (data transmission)",
+     "url": "https://www.fiio.com/k9proess_parameters",
+     "conn": "usbC"
+    },
+    "rca": {
+     "quote": "Single-ended line input interface: RCA socket",
+     "url": "https://www.fiio.com/k9proess_parameters"
+    },
+    "xlr": {
+     "quote": "Balanced line input interface: 4.4mm balanced socket",
+     "url": "https://www.fiio.com/k9proess_parameters",
+     "conn": "4.4"
+    },
+    "optical": {
+     "quote": "Spdif in: Optical fiber socket",
+     "url": "https://www.fiio.com/k9proess_parameters"
+    },
+    "coax": {
+     "quote": "Digital coaxial input interface: RCA socket",
+     "url": "https://www.fiio.com/k9proess_parameters"
+    }
+   },
+   "out": {
+    "xlr": {
+     "quote": "Balanced line output interface: XLR3 balanced socket",
+     "url": "https://www.fiio.com/k9proess_parameters"
+    },
+    "rca": {
+     "quote": "Single-ended line output interface: RCA socket",
+     "url": "https://www.fiio.com/k9proess_parameters"
+    }
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "6.35",
+   "4.4"
+  ],
+  "complete": true,
+  "category": "desktop"
+ },
+ "fiio--q15-akm-combo": {
+  "url": "https://www.fiio.com/Q15_parameters",
+  "ports": {
+   "in": {
+    "usb": {
+     "quote": "USB: Type-C USB2.0*2 Black USB (charging/data transfer), orange POWER IN (charging)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "usbC"
+    },
+    "coax": {
+     "quote": "Digital coaxial input: RCA port",
+     "url": "https://www.fiio.com/Q15_parameters"
+    },
+    "bt": {
+     "quote": "Audio input: Bluetooth",
+     "url": "https://www.fiio.com/Q15_parameters"
+    }
+   },
+   "out": {
+    "line": {
+     "quote": "Line-out output: Standard 3.5mm port (shared PO)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "3.5"
+    },
+    "xlr": {
+     "quote": "BAL Line-out output: Standard 4.4mm port (shared 4.4mm BAL headphone out)",
+     "url": "https://www.fiio.com/Q15_parameters",
+     "conn": "4.4"
+    }
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "complete": true,
+  "category": "desktop"
  }
 }

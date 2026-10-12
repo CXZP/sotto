@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5bfzie";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5bfzie";
-import { renderChart } from "./chart.js?v=mv5bfzie";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5bfzie";
-import { makeT } from "./i18n.js?v=mv5bfzie";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5bfzie";
-import { LEGAL } from "./legal.js?v=mv5bfzie";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5bfzie";
-import * as community from "./community.js?v=mv5bfzie";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5bfzie";
-import { redactImage } from "./redact.js?v=mv5bfzie";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5bfzie";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5bfzie";
-import { chainLinks } from "./chain.js?v=mv5bfzie";
-import { fits } from "./dcfit.js?v=mv5bfzie";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5bfzie";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5bfzie";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5bfzie";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5bqf7g";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5bqf7g";
+import { renderChart } from "./chart.js?v=mv5bqf7g";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5bqf7g";
+import { makeT } from "./i18n.js?v=mv5bqf7g";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5bqf7g";
+import { LEGAL } from "./legal.js?v=mv5bqf7g";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5bqf7g";
+import * as community from "./community.js?v=mv5bqf7g";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5bqf7g";
+import { redactImage } from "./redact.js?v=mv5bqf7g";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5bqf7g";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5bqf7g";
+import { chainLinks } from "./chain.js?v=mv5bqf7g";
+import { fits } from "./dcfit.js?v=mv5bqf7g";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5bqf7g";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5bqf7g";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5bqf7g";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1285,7 +1285,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5bfzie").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5bqf7g").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2090,21 +2090,22 @@ function dealPage() {
         : ""
     }
     <div class="deal-grid">
-      <section class="card pad deal-prices"><h3>${esc(t("dl_price_h"))}</h3>
-        ${field("d-p", t("dl_price"), "p", "1790")}
-        ${field("d-a", t("dl_anchor"), "a", t("optional"))}
-        ${field("d-s", t("dl_ship"), "s", "0")}
-      </section>
-      <section class="card pad"><h3>${esc(t("dl_codes_h"))}</h3><p class="muted small">${esc(t("dl_codes_help"))}</p>
+      <section class="card pad deal-codes"><h3>${esc(t("dl_codes_h"))}</h3>
         <div id="d-codes">${codesHtml(codes)}</div>
-        ${sampleCodesHtml()}
         <div class="row-inline paste"><input class="search" id="d-paste" placeholder="${esc(t("dl_paste_ph"))}">
-          <select id="d-kind" class="mini-select" autocomplete="off"><option value="platform">${esc(t("dl_kind_platform"))}</option><option value="shop">${esc(t("dl_kind_shop"))}</option></select>
+          <select id="d-kind" class="mini-select" autocomplete="off"><option value="platform">${esc(t("tk_platform"))}</option><option value="shop">${esc(t("tk_shop"))}</option></select>
           <button type="button" class="pill primary" id="d-add">${esc(t("dl_add"))}</button></div>
         <p class="small status" id="d-paste-status" role="status"></p>
+        ${sampleCodesHtml(!codes.length)}
       </section>
+      <aside class="deal-side">
+        <section class="card pad deal-prices">
+          ${field("d-p", t("dl_price"), "p", "1790")}
+          <div class="deal-row2">${field("d-s", t("dl_ship"), "s", "0")}${field("d-a", t("dl_anchor"), "a", t("optional"))}</div>
+        </section>
+        <section class="card pad" id="d-result" aria-live="polite"></section>
+      </aside>
     </div>
-    <section class="card pad" id="d-result" aria-live="polite"></section>
     <section class="card pad"><h3>${esc(t("dl_cn_h"))}</h3><p class="muted small">${esc(t("dl_cn_help"))}</p>
       <div class="deal-fields">
         ${field("d-cp", t("dl_cn_price"), "cp", "699.9")}
@@ -2145,15 +2146,28 @@ function codesHtml(codes) {
 
 // Tiers seen in the app on 12 Oct 2026, to try the maths without typing. Not
 // live codes: the app decides which ones each account gets.
+// The full list one account saw at 21:00 that day; with a 16,490 cart and a
+// 20% shop code the app picked 25% / 6,000 for 9,894, as this page does.
 const SAMPLE_CODES = [
-  { kind: "platform", pct: 30, min: 7915, cap: 4000 },
-  { kind: "platform", pct: 25, min: 6000, cap: 6000 },
-  { kind: "platform", pct: 25, min: 1000, cap: 2500 },
-  { kind: "platform", pct: 15, min: 199, cap: 1999 },
   { kind: "shop", pct: 20 },
+  { kind: "platform", pct: 25, min: 6000, cap: 6000 },
+  { kind: "platform", pct: 25, min: 500, cap: 3500 },
+  { kind: "platform", pct: 30, min: 1000, cap: 3000 },
+  { kind: "platform", pct: 27, min: 1000, cap: 3000 },
+  { kind: "platform", pct: 22, min: 500, cap: 6000 },
+  { kind: "platform", pct: 20, min: 500, cap: 6000 },
+  { kind: "platform", pct: 20, min: 500, cap: 3000 },
+  { kind: "platform", pct: 17, min: 300, cap: 6000 },
+  { kind: "platform", pct: 25, min: 1000, cap: 2500 },
+  { kind: "platform", pct: 27, min: 1000, cap: 2000 },
+  { kind: "platform", pct: 25, min: 2000, cap: 2000 },
+  { kind: "platform", pct: 20, min: 3000, cap: 2000 },
+  { kind: "platform", pct: 15, min: 10000, cap: 10000 },
+  { kind: "platform", pct: 15, min: 199, cap: 1999 },
+  { kind: "platform", pct: 30, min: 7915, cap: 4000 },
 ];
-function sampleCodesHtml() {
-  return `<details class="sample-codes"><summary>${esc(t("dl_samples"))}</summary><p class="small muted">${esc(t("dl_samples_note"))}</p><div class="vouchers">${SAMPLE_CODES.map(
+function sampleCodesHtml(open) {
+  return `<details class="sample-codes"${open ? " open" : ""}><summary>${esc(t("dl_samples"))}</summary><p class="small muted">${esc(t("dl_samples_note"))}</p><p><button type="button" class="pill small collect-all" data-collect-all>${esc(t("dl_collect_all"))}</button></p><div class="vouchers">${SAMPLE_CODES.map(
     (c) => `<div class="voucher ${c.kind === "shop" ? "shop" : "platform"}"><div class="voucher-side">${esc(t(c.kind === "shop" ? "tk_shop" : "tk_platform"))}</div><div class="voucher-body"><b>${esc(t("tk_pct", { pct: c.pct }))}</b><span class="small muted">${esc([c.cap ? t("tk_cap", { cap: baht(c.cap) }) : null, c.min ? t("tk_min", { min: baht(c.min) }) : null].filter(Boolean).join(" · ") || t("tk_no_terms"))}</span></div><button type="button" class="pill small collect" data-collect="${esc(encodeCode(c))}">${esc(t("dl_collect"))}</button></div>`,
   ).join("")}</div></details>`;
 }
@@ -2200,7 +2214,13 @@ function wireDeal(main) {
     const chosen = new Set([best?.shop, best?.platform].filter(Boolean).map(encodeCode));
     main.querySelectorAll(".code-row").forEach((row) => row.classList.toggle("chosen", chosen.has(row.dataset.code)));
     const held = new Set(codes.map(encodeCode));
-    main.querySelectorAll("[data-collect]").forEach((b) => {
+    main.querySelector("[data-collect-all]")?.addEventListener("click", () => {
+    const have = readCodes();
+    const keys = new Set(have.map(encodeCode));
+    if (!$("#d-p").value.trim()) $("#d-p").value = "16490";
+    redraw([...have, ...SAMPLE_CODES.filter((c) => !keys.has(encodeCode(c)))]);
+  });
+  main.querySelectorAll("[data-collect]").forEach((b) => {
       const got = held.has(b.dataset.collect);
       b.disabled = got;
       b.textContent = t(got ? "dl_collected" : "dl_collect");
@@ -2309,6 +2329,10 @@ function dealResult(price, anchor, shipping, codes) {
     .join("");
   return `<h3>${esc(t("dl_result_h"))}</h3>
     ${receiptHtml(price, shipping, best)}
+    ${(() => {
+      const ties = all.filter((c) => c !== best && c.valid && c.final === best.final && c.platform && best.platform && c.shop === best.shop);
+      return ties.length ? `<p class="small muted">${esc(t("dl_tie", { codes: ties.map((c) => codeLabel(c.platform)).join(", ") }))}</p>` : "";
+    })()}
     <div class="pay-bar"><span>${esc(t("rc_total"))} <b>${baht(best.final)}</b></span><span class="small">${esc(t("rc_saved", { off: baht(best.discount), pct: fmt(best.pct, 0) }))}</span></div>
     ${anchor && anchor > price ? `<p class="muted small">${esc(t("dl_anchor_note", { anchor: baht(anchor), pct: fmt(((anchor - (best.final - shipping)) / anchor) * 100, 0) }))}</p>` : ""}
     ${
@@ -2319,10 +2343,9 @@ function dealResult(price, anchor, shipping, codes) {
               return `<tr class="${c === best ? "best" : ""}${c.valid ? "" : " invalid"}"><td>${c.shop ? esc(codeLabel(c.shop)) : "—"}</td><td>${c.platform ? esc(codeLabel(c.platform)) : "—"}</td>
               <td>${c.valid ? `${baht(c.discount)} <span class="muted small">(${fmt(c.pct, 1)}%)</span>` : `<span class="small">${esc(t("dl_short", { v: baht(short.shortfall) }))}</span>`}</td><td>${c.valid ? baht(c.final) : "—"}</td></tr>`;
             })
-            .join("")}</tbody></table></div></details>`
+            .join("")}</tbody></table></div>${capNotes ? `<ul class="small cap-notes">${capNotes}</ul>` : ""}</details>`
         : ""
-    }
-    ${capNotes ? `<ul class="small cap-notes">${capNotes}</ul>` : ""}`;
+    }`;
 }
 
 function channelsCard(i) {
@@ -2551,7 +2574,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5bfzie" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5bqf7g" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3038,7 +3061,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5bfzie" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5bqf7g" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

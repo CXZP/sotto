@@ -4,7 +4,13 @@
 .deal-head h1 { margin: 0 0 6px; }
 .deal-head p { margin: 0; max-width: 70ch; }
 .deal-item img.thumb { width: 64px; height: 64px; }
-.deal-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 16px; align-items: start; }
+/* Codes on the left, the price and the total on the right and in view while you pick (like the app's bottom bar). */
+.deal-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr); gap: 16px; align-items: start; }
+.deal-side { position: sticky; top: 90px; display: grid; gap: 12px; }
+.deal-side .dfield { margin-bottom: 6px; }
+.deal-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.deal-side #d-result h3 { display: none; }
+.deal-side .receipt, .deal-side .pay-bar { max-width: none; margin-top: 0; }
 .deal h3 { margin-top: 0; }
 .dfield { display: grid; gap: 4px; margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
 .dfield .search, .dfield .mini-select { color: var(--text); }
@@ -62,6 +68,7 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 
 @media (max-width: 860px) {
   .deal-grid, .ch-grid { grid-template-columns: minmax(0, 1fr); }
+  .deal-side { position: static; order: -1; }
   .deal-big { font-size: 28px; }
 }
 
@@ -87,7 +94,7 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 /* Order summary laid out like the Shopee/Lazada apps: voucher tickets, then lines. */
 .receipt { display: grid; gap: 2px; max-width: 520px; margin: 8px 0 16px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); }
 .vouchers { display: grid; gap: 8px; margin-bottom: 10px; }
-.voucher { display: grid; grid-template-columns: 84px 1fr; min-height: 56px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.voucher { display: grid; grid-template-columns: 72px 1fr; min-height: 52px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .voucher-side { display: grid; place-items: center; padding: 6px; font-size: 12px; font-weight: 600; text-align: center; color: #fff; background: #ee4d2d; border-right: 2px dashed var(--surface); }
 .voucher.shop .voucher-side { background: var(--accent); }
 .voucher-body { display: grid; align-content: center; gap: 2px; padding: 6px 12px; }
@@ -98,8 +105,8 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 
 /* Voucher picker: tickets, the chosen one ticked; numbers under "edit". */
 .codes { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 10px; }
-.code-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 0; background: none; max-width: 560px; }
-.code-row .voucher { grid-template-columns: 84px 1fr 36px; }
+.code-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 0; background: none; }
+.code-row .voucher { grid-template-columns: 72px 1fr 36px; }
 .voucher-check { align-self: center; justify-self: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line-strong); }
 .code-row.chosen .voucher { border-color: #ee4d2d; }
 .code-row.chosen .voucher-check { border-color: #ee4d2d; background: #ee4d2d; box-shadow: inset 0 0 0 3px var(--surface); }
@@ -107,7 +114,9 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 .code-fields > select { grid-column: 1 / -1; }
 .sample-codes { margin: 8px 0 14px; }
 .sample-codes > summary { cursor: pointer; color: var(--accent); font-size: 14px; }
-.sample-codes .voucher { grid-template-columns: 84px 1fr auto; }
+.sample-codes .vouchers { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.sample-codes .voucher { grid-template-columns: 56px 1fr auto; min-height: 48px; }
+.sample-codes .voucher-side { font-size: 11px; }
 .sample-codes .collect { align-self: center; margin-right: 10px; padding: 4px 14px; font-size: 13px; color: #fff; background: #ee4d2d; border-color: #ee4d2d; }
 .sample-codes .collect:disabled { opacity: 0.5; }
 .pay-bar { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; max-width: 520px; padding: 12px 16px; border-radius: 14px; background: #ee4d2d; color: #fff; }

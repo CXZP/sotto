@@ -155,9 +155,11 @@ for (const re of [/iFi NEO Stream High-resolution Wi-Fi Audio Transport/, /iFi N
     assert.ok(found.length, "listing missing");
     for (const i of found) assert.equal(i.role, "streamer", `${i.id} is ${i.category}/${i.role ?? ""}`);
   });
+// Not counted: earphones named "Streamer" (KBEAR Streamer) and all-in-one music
+// centres with a headphone amp (Shanling EA5 Plus is a DAC/amp).
 test("every streamer in the catalog (not a CD player, portable or amp) has the streamer role", { todo }, () => {
   const bad = db.items
-    .filter((i) => !["cd", "dap", "speaker"].includes(i.category) && i.offers.some((o) => STREAMER.test(o.title) && !/amp(lifier)?\b|cd|sacd/i.test(o.title)))
+    .filter((i) => !["cd", "dap", "speaker", "iem", "headphone"].includes(i.category) && i.offers.some((o) => STREAMER.test(o.title) && !/amp(lifier)?\b|cd|sacd|all-in-one/i.test(o.title)))
     .filter((i) => i.role !== "streamer")
     .map((i) => `${i.id} (${i.category}/${i.role ?? ""})`);
   assert.deepEqual(bad, []);
@@ -224,9 +226,24 @@ test("Acoustune AS2000 and AS2002 are portable DACs, not desktop units", { todo 
 // Whole catalog: the same brand and model name once colours, "wireless",
 // "edition", "class-a", spacing and the like are ignored is one model.
 const SAME_NOISE = /\b(portable|desktop|headphones?|amplifier|amp|usb|dac|class[- ]?a|balanced|jack|4\.4mm|3\.5mm|with|and|the|for|in-?ear|iems?|earphones?|monitors?|universal|wireless|bluetooth|hifi|hi-fi|edition|version|new|black|silver|white|grey|gray|blue|red|open box|demo unit)\b/gi;
-const sameKey = (i) => `${(i.brand ?? "").toLowerCase()}|${(i.model ?? i.id.split("--")[1] ?? "").toLowerCase().replace(/[-_]/g, " ").replace(SAME_NOISE, " ").replace(/[^a-z0-9]+/g, "")}`;
+// A cartridge's colour is its model (Ortofon 2M Red / Blue / Black), and a
+// wireless model is not the wired one of the same name (HiFiMAN Svanar Wireless).
+const COLOUR = /^(black|silver|white|grey|gray|blue|red)$/i;
+const sameKey = (i) => {
+  const name = (i.model ?? i.id.split("--")[1] ?? "").toLowerCase().replace(/[-_]/g, " ");
+  // iFi's "Blue" models are its Bluetooth line (ZEN Blue, ZEN Air Blue), not a finish.
+  const kept = name.replace(SAME_NOISE, (w) => ((i.category === "cartridge" && COLOUR.test(w)) || (i.brand === "iFi" && /^blue$/i.test(w)) ? w : " "));
+  return `${(i.brand ?? "").toLowerCase()}|${kept.replace(/[^a-z0-9]+/g, "")}${i.category === "wireless" ? "~w" : ""}`;
+};
 // Pairs the rule above joins that really are different products.
-const DIFFERENT = new Set(["ifi--zen-3|ifi--zen-blue-3", "ifi--zen-3|ifi--zen-blue-3-wireless"]);
+const DIFFERENT = new Set([
+  "ifi--zen-3|ifi--zen-blue-3",
+  "ifi--zen-3|ifi--zen-blue-3-wireless",
+  "ifi--zen-air-blue-hi-resolution|ifi--zen-air-hi-resolution", // ZEN Air Blue: the Bluetooth receiver
+  "ifi--zen-air|ifi--zen-air-blue",
+  "ifi--zen-blue-v2|ifi--zen-v2", // ZEN Blue V2 (Bluetooth) vs ZEN DAC V2
+  "wiim--amp-pro-wireless|wiim--pro-wireless", // WiiM Amp Pro (streaming amp) vs WiiM Pro (streamer)
+]);
 test("no model is split across several entries (whole catalog)", { todo }, () => {
   const groups = new Map();
   for (const i of db.items) {

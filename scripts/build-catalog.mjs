@@ -7,7 +7,7 @@
 // Run: node scripts/build-catalog.mjs
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { classify, condition, modelKey, compact, groupKey, deskRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
+import { classify, condition, modelKey, compact, groupKey, looseKey, deskRole, titleRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
 import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
@@ -16,18 +16,31 @@ import { preorder, listedAt } from "./lib/dates.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
-const KEEP = new Set(["iem", "headphone", "dongle", "desktop", "dap", "cd", "power", "speaker", "turntable", "phono", "cartridge"]);
+const KEEP = new Set(["iem", "headphone", "dongle", "portable", "desktop", "dap", "cd", "power", "speaker", "turntable", "phono", "cartridge"]);
+// Roles for boxes that drive speakers or only stream: their watts are into
+// speakers and never enter the headphone maths.
+const NOT_HP_ROLES = new Set(["integrated", "poweramp", "streamer"]);
 const FIELDS = ["impedance", "sensitivity", "zout", "power"];
 const ACCESSORY_VARIANT = /\b(case|pouch|bag|cable|cord|tips?|eartips|earpads?|cushions?|pads?|filter|adapter|only|replacement|spare|accessor(y|ies)|strap|film|protector|tempered|screen|holster|sleeve|lanyard|dust|stand|cover|skin|sticker|no device|without)\b/i;
 
 const files = (await readdir(new URL("cache/raw/", root))).filter((f) => f.endsWith(".json"));
+// Titles with non-breaking or doubled spaces ("DAC&nbsp;& Headphone Amp") read as plain words.
+async function readSnap(file) {
+  const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
+  for (const p of snap.products) p.title = (p.title ?? "").replace(/\s+/g, " ").trim();
+  return snap;
+}
 const groups = new Map();
 const stats = { products: 0, kept: 0, byCategory: {}, withSpecs: {}, rejected: 0, stores: {} };
 
 // Stores list their own name as the vendor for products they resell
 // ("The Hangout by Crinacle" for "CrinEar Project Monolith"). For those, take
 // the real brand from the start of the title when it is a brand seen elsewhere.
-const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap|discontinued|silentpower|kitsunehifi|audio advice)$/i;
+const STORE_VENDOR = /^(the hangout by crinacle|hifigo|linsoul( audio)?|apos|audio46|bloom audio|shenzhenaudio|headphones.com|addsoap|discontinued|silentpower|kitsunehifi|audio advice|addicted to audio|turntablelab\.com)$/i;
+// Makers no store lists as a vendor, so only a title names them.
+const MAKERS = ["Little Dot", "SABAJ", "LOXJIE", "COZOY", "ELAC"];
+// House lines that don't repeat the store's name: Kitsune Tuned Edition, Moon Audio's Dragon.
+const HOUSE_LINE = /^(?:kte|dragon)\b/i;
 // One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
 // "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
 const brandKey = (b) => {
@@ -36,7 +49,7 @@ const brandKey = (b) => {
 };
 const spellingCount = new Map();
 for (const file of files) {
-  const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
+  const snap = await readSnap(file);
   for (const p of snap.products) {
     const v = p.vendor?.trim();
     if (!v || STORE_VENDOR.test(v)) continue;
@@ -45,6 +58,11 @@ for (const file of files) {
     spellingCount.set(brandKey(v), m);
   }
 }
+// Makers named only in titles use the maker's own spelling; short names stores
+// put before the model ("Astell & Kern AK PA10") count as the brand too.
+const ALIASES = { astellkern: ["AK"] };
+for (const m of MAKERS) spellingCount.set(brandKey(m), new Map([...(spellingCount.get(brandKey(m)) ?? []), [m, 1e6]]));
+for (const [k, list] of Object.entries(ALIASES)) for (const a of list) spellingCount.get(k)?.set(a, 0);
 const isMixed = (x) => x !== x.toUpperCase() && x !== x.toLowerCase();
 const canonical = new Map([...spellingCount].map(([k, m]) => [k, [...m].sort((a, b) => b[1] - a[1] || isMixed(b[0]) - isMixed(a[0]))[0][0]]));
 const knownBrands = new Set([...spellingCount.values()].flatMap((m) => [...m.keys()]));
@@ -53,7 +71,15 @@ function realVendor(p) {
   let v = (p.vendor ?? "").trim();
   if (STORE_VENDOR.test(v)) {
     const title = p.title.toLowerCase();
-    v = brandsLongestFirst.find((b) => title.startsWith(`${b.toLowerCase()} `)) ?? v;
+    const named = [...brandsLongestFirst, ...MAKERS].find((b) => title.startsWith(`${b.toLowerCase()} `));
+    // No brand in the title: the store's name is not one either, unless the
+    // title says it or it is a house line. Better no brand than a wrong one.
+    v = named ?? (title.includes(v.toLowerCase()) || HOUSE_LINE.test(p.title) ? v : "");
+  } else if (v && !brandKey(p.title).includes(brandKey(v))) {
+    // The store's vendor field names another maker than the title does
+    // ("Questyle CMA Eighteen" filed under iFi): the title wins.
+    const title = p.title.toLowerCase();
+    v = brandsLongestFirst.find((b) => b.length > 2 && title.startsWith(`${b.toLowerCase()} `)) ?? v;
   }
   return canonical.get(brandKey(v)) ?? v;
 }
@@ -66,7 +92,7 @@ function stripBrand(vendor, title) {
 }
 
 for (const file of files) {
-  const snap = JSON.parse(await readFile(new URL(`cache/raw/${file}`, root), "utf8"));
+  const snap = await readSnap(file);
   stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt };
   for (const p of snap.products) {
     stats.products++;
@@ -74,6 +100,8 @@ for (const file of files) {
     // Stores file small USB DACs under "AMP & DAC". A sub-$40 "desktop" unit that
     // doesn't call itself desktop/tube/preamp is a dongle.
     if (category === "desktop" && Math.max(...p.variants.map((v) => v.price || 0)) < 40 && !/desktop|tube|preamp/i.test(p.title)) category = "dongle";
+    // A "portable headphone amp" with a DAC inside (USB in, a decoder) is a dongle.
+    if (category === "portable" && deskRole(p) !== "amp") category = "dongle";
     stats.byCategory[category] = (stats.byCategory[category] ?? 0) + 1;
     if (!KEEP.has(category)) continue;
     stats.kept++;
@@ -85,7 +113,7 @@ for (const file of files) {
       verified[field] = [];
       // Output power and output impedance describe sources, not headphones
       // ("works with amps delivering 125 mW" is a requirement, not a rating).
-      const isSource = ["dongle", "desktop", "dap", "cd", "turntable", "phono", "cartridge"].includes(category);
+      const isSource = ["dongle", "portable", "desktop", "dap", "cd", "turntable", "phono", "cartridge"].includes(category);
       if ((field === "power" || field === "zout") && !isSource) continue;
       if (field === "impedance" && isSource) continue; // an amp's "impedance" is usually input impedance
       // "DT 990 PRO 250 ohm": the title names the impedance, so a description
@@ -104,7 +132,7 @@ for (const file of files) {
 
     const vendor = realVendor(p);
     const { key, model } = modelKey(vendor, stripBrand(vendor, p.title));
-    const gk = groupKey(key);
+    const gk = looseKey(key, category);
     const g =
       groups.get(gk) ??
       { id: key, brand: vendor || null, model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
@@ -130,7 +158,11 @@ for (const file of files) {
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
     // Photo set for the item page: the store with the most photos (links only).
     if ((p.images?.length ?? 0) > (g.photos?.src.length ?? 1)) g.photos = { store: snap.store, url, src: p.images };
-    if (category === "desktop") (g.roleVotes ??= []).push(deskRole(p));
+    if (category === "desktop") {
+      (g.roleVotes ??= []).push(deskRole(p));
+      // A role the title states outright beats roles guessed from descriptions.
+      g.roleStated ??= titleRole(p.title) ?? undefined;
+    }
     if (category === "speaker") g.speaker ??= speakerKind(p);
     // Vinyl: MM or MC cartridge, and which of them a phono stage takes (first store that says).
     if (category === "cartridge") g.cart ??= cartridgeKind(p) ?? undefined;
@@ -141,7 +173,7 @@ for (const file of files) {
       if (need) g.dcIn = { ...need, url };
     }
     // Ports and switches: the union over every store, first quote per port wins.
-    if (["desktop", "cd", "dap", "dongle", "speaker", "turntable", "phono"].includes(category)) {
+    if (["desktop", "cd", "dap", "dongle", "portable", "speaker", "turntable", "phono"].includes(category)) {
       const ports = extractPorts(p.body);
       if (ports)
         for (const dir of ["in", "out"])
@@ -234,7 +266,8 @@ let curatedMatched = 0;
 // Find the store listing a hand-checked entry refers to: same brand, and the
 // store's model name starts with the curated one once hyphens are ignored.
 // Among candidates prefer the shortest name (fewest extra words), then most offers.
-function findGroup(key) {
+function findGroup(key, category) {
+  if (groups.has(looseKey(key, category))) return looseKey(key, category);
   if (groups.has(groupKey(key))) return groupKey(key);
   const [brand, model] = key.split("--");
   const want = compact(model);
@@ -247,8 +280,11 @@ function findGroup(key) {
 }
 
 function attach(entry, category, extra) {
-  const { key: rawKey, model } = modelKey(entry.brand, `${entry.brand} ${entry.model}`);
-  const key = findGroup(rawKey);
+  // A collaboration ("Truthear × Crinacle Zero:RED") is filed by stores under the
+  // first brand, with the partner in the model name.
+  const [lead, ...partners] = entry.brand.split(/\s+[×x]\s+/);
+  const { key: rawKey, model } = modelKey(lead, `${lead} ${partners.join(" ")} ${entry.model}`);
+  const key = findGroup(rawKey, category);
   const existing = groups.get(key);
   if (existing) curatedMatched++;
   const g = existing ?? { id: rawKey, brand: entry.brand, model: entry.model, category, offers: [], specs: { impedance: [], sensitivity: [], zout: [], power: [] } };
@@ -272,7 +308,8 @@ for (const hp of curatedHp) {
 }
 for (const amp of curatedAmps) {
   // Every hand-checked amp takes a digital (USB) input, so it is a DAC and amp in one.
-  attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}) }));
+  // A maker's photo (a link, like store photos) for models no tracked store sells.
+  attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}), ...(amp.image ? { image: amp.image } : {}) }));
 }
 
 const KIND_RANK = { measured: 0, claimed: 1 };
@@ -285,7 +322,8 @@ const rank = (list) =>
       b.sources.length - a.sources.length,
   );
 
-const photoSets = {};
+// Keyed by the item itself: ids are settled further down.
+const photoSets = new Map();
 const catalog = [...groups.values()]
   .map((g) => {
     const specs = Object.fromEntries(Object.entries(g.specs).map(([k, v]) => [k, merge(v).map((e) => ({ ...e, kind: "claimed" }))]));
@@ -304,24 +342,39 @@ const catalog = [...groups.values()]
       rank(specs[k]);
       if (!specs[k].length) delete specs[k];
     }
-    const { curatedSpecs, roleVotes, photos, ...rest } = g;
-    if (photos) photoSets[rest.id] = photos;
+    const { curatedSpecs, roleVotes, roleStated, photos, ...rest } = g;
+
+    // Stores disagree on desktop vs dongle ("Pilot II USB DAC" vs "Pilot II | Portable
+    // Balanced USB DAC"): a title that says portable or dongle settles it.
+    const says = (re) => rest.offers.some((o) => re.test(o.title));
+    if (rest.category === "desktop" && rest.categoryConflict?.includes("dongle") && says(/\b(portable|dongle)\b/i) && !says(/\bdesktop\b/i)) rest.category = "dongle";
+    if (rest.category === "dongle" && rest.categoryConflict?.includes("desktop") && says(/\bdesktop\b/i) && !says(/\b(portable|dongle)\b/i)) rest.category = "desktop";
     // Any store calling it a DAC/amp, or a headphone output power rating, means it has both.
     if (rest.category === "desktop" && !rest.role) {
       const v = roleVotes ?? [];
       // Stores disagree ("DAC & Headphone Amp" vs "line outputs only"). A stated
       // headphone power rating settles it; otherwise the majority, and a tie stays DAC.
       const n = (r) => v.filter((x) => x === r).length;
-      rest.role = specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : n("preamp") > n("amp") ? "preamp" : "amp";
+      const top = ["integrated", "streamer", "poweramp"].find((r) => n(r) && n(r) >= v.length / 2);
+      rest.role = roleStated ?? top ?? (specs.power?.length && (n("dac") || n("dacamp")) ? "dacamp" : n("dacamp") > n("dac") ? "dacamp" : n("dac") ? "dac" : n("dacamp") ? "dacamp" : n("preamp") > n("amp") ? "preamp" : "amp");
     }
-    if (rest.category !== "desktop") delete rest.role;
+    // A portable amp has an analog input only, like a desktop amp-only box.
+    if (rest.category === "portable") rest.role = "amp";
+    if (!["desktop", "portable"].includes(rest.category)) delete rest.role;
+    if (NOT_HP_ROLES.has(rest.role)) {
+      delete specs.power;
+      delete specs.zout;
+    }
     // First time any store listed it: the release calendar's date for this model.
     const listed = rest.offers.map((o) => o.listedAt).filter(Boolean).sort()[0];
     if (listed) rest.listedAt = listed;
-    return { ...rest, specs };
+    const item = { ...rest, specs };
+    if (photos) photoSets.set(item, photos);
+    return item;
   })
   .sort((a, b) => a.id.localeCompare(b.id));
 stats.curatedMatched = curatedMatched;
+
 
 for (const g of catalog) {
   const c = g.category;
@@ -365,6 +418,63 @@ for (const g of catalog) {
   for (const i of catalog) if (i.brand) i.brand = pick.get(norm(i.brand));
 }
 
+// Ids are page addresses, and reviews, owner and port reports are filed under
+// them, so a model keeps the id its store listings had last week (when the brand
+// still matches). Ids that disappear (two entries merged, a brand corrected)
+// become aliases of the new id, so old links and old reports still find it.
+let aliases = {};
+{
+  const prev = await readFile(new URL("data/catalog.json", root), "utf8").then(JSON.parse, () => null);
+  const oldByUrl = new Map((prev?.items ?? []).flatMap((i) => i.offers.map((o) => [o.url, i.id])));
+  const brandOf = (id) => id.split("--")[0];
+  // Ids the owner flagged as wrong (stock words in a model name) are not kept, only aliased.
+  const STOCK = /(^|-)(pre-?owned|preowned|pre-?sale|pre-?order|open-box|b-stock|refurbished|demo|clearance|used|discontinued)(-|$)/;
+  const claims = [];
+  for (const g of catalog) {
+    const votes = new Map();
+    for (const o of g.offers) {
+      const old = oldByUrl.get(o.url);
+      if (old && brandOf(old) === brandOf(g.id) && !STOCK.test(old)) votes.set(old, (votes.get(old) ?? 0) + 1);
+    }
+    // Only an old id that still names this model (finish words aside) is kept;
+    // an old name that was wrong ("addsoap--sabaj-a30a", "wiim--pro-wireless" for
+    // the Amp Pro) becomes an alias instead.
+    for (const [old, n] of votes) if (looseKey(old, g.category) === looseKey(g.id, g.category)) claims.push({ g, old, n, same: old === g.id });
+  }
+  // When an old entry is split in two, the part whose new name is the old id
+  // keeps it; otherwise the part with more of its listings.
+  claims.sort((a, b) => b.same - a.same || b.n - a.n || a.old.localeCompare(b.old));
+  const taken = new Set();
+  const keep = new Map();
+  for (const c of claims) {
+    if (keep.has(c.g) || taken.has(c.old)) continue;
+    keep.set(c.g, c.old);
+    taken.add(c.old);
+  }
+  // The rest keep their new id; one that clashes gets its category appended.
+  for (const g of catalog) {
+    if (keep.has(g)) g.id = keep.get(g);
+    else {
+      if (taken.has(g.id)) g.id = `${g.id}-${g.category}`;
+      taken.add(g.id);
+    }
+  }
+  const now = new Set(catalog.map((g) => g.id));
+  const newByUrl = new Map(catalog.flatMap((g) => g.offers.map((o) => [o.url, g.id])));
+  for (const i of prev?.items ?? []) {
+    if (now.has(i.id)) continue;
+    const to = i.offers.map((o) => newByUrl.get(o.url)).find(Boolean);
+    if (to) aliases[i.id] = to;
+  }
+  // Older aliases stay, pointed at wherever their model is now.
+  for (const [from, to] of Object.entries(prev?.aliases ?? {})) {
+    const target = now.has(to) ? to : aliases[to];
+    if (target && !now.has(from) && !aliases[from]) aliases[from] = target;
+  }
+  catalog.sort((a, b) => a.id.localeCompare(b.id));
+  stats.aliases = Object.keys(aliases).length;
+}
+
 // Price history: catalog.json is rebuilt each week, so changes are appended to
 // their own file. A new point only when a store's price or stock changed.
 {
@@ -376,6 +486,6 @@ for (const g of catalog) {
 
 // Extra photos live in their own file so the main catalog stays small; the
 // item page loads it on demand.
-await writeFile(new URL("data/photos.json", root), JSON.stringify(photoSets));
-await writeFile(new URL("data/catalog.json", root), JSON.stringify({ builtAt: new Date().toISOString(), stores: stats.stores, items: catalog }));
+await writeFile(new URL("data/photos.json", root), JSON.stringify(Object.fromEntries([...photoSets].map(([i, p]) => [i.id, p]))));
+await writeFile(new URL("data/catalog.json", root), JSON.stringify({ builtAt: new Date().toISOString(), stores: stats.stores, items: catalog, aliases }));
 console.log(JSON.stringify({ ...stats, models: catalog.length }, null, 2));

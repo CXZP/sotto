@@ -1,0 +1,72 @@
+// Store-title rules from the ERRORS.pdf review, checked on titles alone (no crawl needed).
+
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { classify, titleRole, deskRole, modelKey, looseKey } from "../scripts/lib/classify.js";
+
+const cat = (title, extra = {}) => classify({ title, ...extra });
+
+test("parts, care items and merch are not products", () => {
+  for (const t of ["64 Audio Apex Modules", "Audeze Headphone Leather Care Kit", "Audeze Maxwell 2 ANC Replacement Dongle", "64 Audio High Fidelity Earplugs", "Rega Planar 6 Feet", "Cayin C201 Module (For N6III)"])
+    assert.equal(cat(t), "accessory", t);
+  for (const t of ["Headphones.com Unisex Tee", "HiFiGo Mystery Box", "TEAC CG-10M Master Clock Generator", "Matrix Audio SI-1 | Network Isolator", "Anthem AVM 70 Preamp/Processor"])
+    assert.equal(cat(t), "skip", t);
+});
+
+test("products that only mention a part stay products", () => {
+  assert.equal(cat("64 Audio Volür Universal In-Ear Monitor (Includes m12 Apex Module)"), "iem");
+  assert.equal(cat("TOPPING L50 Headphone Amp NFCA Modules"), "desktop");
+  assert.equal(cat("Cayin HA-1A MK3 Vacuum Tube Headphone Amplifier"), "desktop");
+  assert.equal(cat("QDC Anole VX Earplugs Custom Earphones High-end Flagship"), "iem");
+  assert.equal(cat("Etymotic MK5 Isolator Earphones"), "iem");
+});
+
+test("form factors: radio, portable amp, CD player, cartridge vs turntable", () => {
+  assert.equal(cat("FiiO RR13 Portable Radio"), "dap");
+  assert.equal(cat("Astell&Kern PA10 | Portable Class-A Headphone Amp"), "portable");
+  assert.equal(cat("iBasso PB6 Macaw | Balanced Portable Tube Amp"), "portable");
+  assert.equal(cat("Audio Research Reference CD9 Compact Disc Player/DAC"), "cd");
+  assert.equal(cat("Ortofon MC Cadenza Red Turntable Cartridge"), "cartridge");
+  assert.equal(cat("Music Hall MMF-1.5 Turntable With Music Hall Melody Cartridge"), "turntable");
+  assert.equal(cat("Acoustune AS2002", { tags: ["Portable-DAC-Amps"] }), "dongle");
+  assert.equal(cat("Audio-Technica ATH-M20x Studio Monitor Headphones"), "headphone");
+});
+
+test("speaker amps, streamers and preamps get their own role", () => {
+  assert.equal(titleRole("Cambridge Audio EVO 300 Streaming Amplifier"), "integrated");
+  assert.equal(titleRole("NAD C 3050 Stereophonic Amplifier with MDC2"), "integrated");
+  assert.equal(titleRole("WiiM - Amp Ultra"), "integrated");
+  assert.equal(titleRole("iFi NEO Stream High-resolution Wi-Fi Audio Transport and DAC"), "streamer");
+  assert.equal(titleRole("McIntosh MC152 150 Watt Stereo Amplifier"), "poweramp");
+  assert.equal(titleRole("Mark Levinson ML-50 Monaural Amplifier - Pair"), "poweramp");
+  assert.equal(titleRole("XP-12 Line Level Preamplifier"), "preamp");
+  assert.equal(titleRole("Benchmark LA4 Line Amplifier"), "preamp");
+  assert.equal(titleRole("AUDALYTIC AH90 AK4191+AK4499 Desktop DAC & Headphone Amplifier"), "dacamp");
+  // An amp that is also a preamp is still a headphone amp.
+  assert.notEqual(titleRole("Violectric HPA V550 Amp/Preamp"), "preamp");
+  assert.notEqual(titleRole("Woo Audio WA22 (2nd gen) Balanced Amp and Preamp"), "preamp");
+  // "KBEAR Streamer" is an IEM.
+  assert.equal(cat("【KBEAR Streamer——Clearance】Handmade Molded 1DD HiFi IEM Headphones"), "iem");
+});
+
+test("a bare 'Amplifier' title is a speaker amp only when the description says speakers", () => {
+  const body = "<p>Features KT150 vacuum tube to deliver power from the amplifier to your speakers.</p>";
+  assert.equal(deskRole({ title: "Audio Research Reference 75 SE Amplifier", body }), "poweramp");
+  assert.notEqual(deskRole({ title: "Burson Audio Soloist GT4 Headphone Amplifier", body: "<p>Speaker outputs on the back.</p>" }), "poweramp");
+});
+
+test("one model, one key: finishes, editions, stock words and store descriptions", () => {
+  const k = (v, t, c = "headphone") => looseKey(modelKey(v, t).key, c);
+  assert.equal(k("KEF", "KEF Q350 Black"), k("KEF", "KEF Q350"));
+  assert.equal(k("Final Audio", "Final Audio D8000 Pro Edition"), k("Final Audio", "Final Audio D8000 Pro"));
+  assert.equal(k("Topping", "Topping A900 PREOWNED | Desktop Headphone Amplifier", "desktop"), k("Topping", "Topping A900", "desktop"));
+  assert.equal(k("ALO Audio", "ALO Audio Pilot II | Portable Balanced USB DAC", "dongle"), k("ALO Audio", "ALO Audio Pilot II USB DAC with Balanced 4.4mm Jack", "dongle"));
+  assert.equal(k("iFi", "iFi ZEN DAC v3", "desktop"), k("iFi", "iFi ZEN DAC 3", "desktop"));
+  // Different products stay apart.
+  assert.notEqual(k("Ortofon", "Ortofon 2M Red Cartridge", "cartridge"), k("Ortofon", "Ortofon 2M Blue Cartridge", "cartridge"));
+  assert.notEqual(k("HIFIMAN", "HIFIMAN Svanar Wireless", "wireless"), k("HIFIMAN", "HIFIMAN Svanar", "iem"));
+  assert.notEqual(k("iFi", "iFi ZEN Air Blue", "desktop"), k("iFi", "iFi ZEN Air DAC", "desktop"));
+  assert.notEqual(k("WiiM", "WiiM Amp Pro Wireless Streaming Amplifier", "desktop"), k("WiiM", "WiiM Pro Wireless Audio Streamer", "desktop"));
+  assert.notEqual(k("DCS", "Lina DAC X Streaming Music Player", "desktop"), k("DCS", "Lina Headphone Amplifier", "desktop"));
+  assert.notEqual(k("iFi", "iFi ZEN Air Phono Preamplifier", "phono"), k("iFi", "iFi ZEN Air DAC", "desktop"));
+});

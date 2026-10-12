@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv4dgvlh";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv4hth3y";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -140,10 +140,10 @@ export async function flag(reportId, reason) {
 
 // ---------------------------------------------------------------- prices people paid
 
-export async function pricesFor(itemId) {
+export async function pricesFor(itemIds) {
   const sb = await client();
   if (!sb) return { ok: false, rows: [] };
-  const { data, error } = await sb.from("price_feed").select("*").eq("item_id", itemId).order("paid_on", { ascending: false }).limit(500);
+  const { data, error } = await sb.from("price_feed").select("*").in("item_id", itemIds).order("paid_on", { ascending: false }).limit(500);
   if (error) return { ok: false, rows: [] };
   return { ok: true, rows: data };
 }
@@ -187,11 +187,13 @@ export async function summarize(payload) {
 }
 
 /** Owner reports for one model, and my own if signed in. */
-export async function ownersFor(itemId) {
+/** Owner reports for an item (its current id first, then old ids); the summary is the current id's. */
+export async function ownersFor(itemIds) {
+  const itemId = itemIds[0];
   const sb = await client();
   if (!sb) return { ok: false, rows: [], summary: null };
   const [feed, sum] = await Promise.all([
-    sb.from("owner_feed").select("*").eq("item_id", itemId).order("created_at", { ascending: false }).limit(200),
+    sb.from("owner_feed").select("*").in("item_id", itemIds).order("created_at", { ascending: false }).limit(200),
     sb.from("owner_summary").select("*").eq("item_id", itemId).maybeSingle(),
   ]);
   if (feed.error) return { ok: false, rows: [], summary: null };

@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4dgvlh";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4dgvlh";
-import { renderChart } from "./chart.js?v=mv4dgvlh";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4dgvlh";
-import { makeT } from "./i18n.js?v=mv4dgvlh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4dgvlh";
-import { LEGAL } from "./legal.js?v=mv4dgvlh";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4dgvlh";
-import * as community from "./community.js?v=mv4dgvlh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4dgvlh";
-import { redactImage } from "./redact.js?v=mv4dgvlh";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4dgvlh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4dgvlh";
-import { chainLinks } from "./chain.js?v=mv4dgvlh";
-import { fits } from "./dcfit.js?v=mv4dgvlh";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4dgvlh";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4dgvlh";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4dgvlh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4hth3y";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4hth3y";
+import { renderChart } from "./chart.js?v=mv4hth3y";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4hth3y";
+import { makeT } from "./i18n.js?v=mv4hth3y";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4hth3y";
+import { LEGAL } from "./legal.js?v=mv4hth3y";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4hth3y";
+import * as community from "./community.js?v=mv4hth3y";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4hth3y";
+import { redactImage } from "./redact.js?v=mv4hth3y";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4hth3y";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4hth3y";
+import { chainLinks } from "./chain.js?v=mv4hth3y";
+import { fits } from "./dcfit.js?v=mv4hth3y";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4hth3y";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4hth3y";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4hth3y";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -226,7 +226,7 @@ function powerLine(i) {
 
 function catLabel(i) {
   if (i.speaker) return t(`spk_${i.speaker}`);
-  return i.role ? t(`role_${i.role}`) : t(`cat_${i.category}`);
+  return i.role && i.category === "desktop" ? t(`role_${i.role}`) : t(`cat_${i.category}`);
 }
 
 function setSeg(selector, key, value) {
@@ -444,7 +444,7 @@ function homePage() {
 }
 
 function reviewCard(r) {
-  const item = db.byId.get(r.item_id);
+  const item = findItem(r.item_id);
   const shown = r.i18n?.[state.lang] ?? r;
   const head = (shown.body ?? "").split("\n\n")[0];
   return `<a class="card pad home-review" href="#item/${encodeURIComponent(r.item_id)}">${item ? `<span class="small muted">${esc(displayName(item))}</span>` : ""}<b>${esc(shown.title)}</b><p class="small">${esc(head)}</p></a>`;
@@ -648,10 +648,14 @@ function buildResults(hp) {
   return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
 }
 
+// Desktop roles that never drive headphones in Sotto's maths: speaker amps (their
+// watts are into 4-8 Ω speakers) and streamers (no amp).
+const NOT_HP_ROLES = ["integrated", "poweramp", "streamer"];
+
 /** The box at the end of the chain has a headphone jack (its power may still be unknown). */
 function hasJack(driver) {
   if (!driver) return false;
-  return !["dac", "preamp"].includes(driver.role) && !["phono", "turntable", "cartridge", "speaker", "power"].includes(driver.category);
+  return !["dac", "preamp", ...NOT_HP_ROLES].includes(driver.role) && !["phono", "turntable", "cartridge", "speaker", "power"].includes(driver.category);
 }
 
 function connectionCard({ outputs, driver }, hp) {
@@ -904,14 +908,14 @@ function openPicker(slot) {
   const isSrcSlot = slot === "src";
   // The box between source and amp: a DAC, or a phono stage after a turntable.
   const forDac = (i) => i.role === "dac" || i.role === "dacamp" || i.category === "phono";
-  const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd", "turntable"].includes(i.category) || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter(forDac).map((i) => i.id) : slot === "cart" ? db.items.filter((i) => i.category === "cartridge" && i.cart).map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
-  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? forDac(i) : slot === "cart" ? i.category === "cartridge" : cats.has(i.category) && (slot !== "amp" || i.role !== "dac")));
+  const usable = new Set(isSrcSlot ? db.items.filter((i) => ["dap", "cd", "turntable"].includes(i.category) || i.role === "streamer" || (i.category === "desktop" && (i.features?.roon || i.features?.upnp))).map((i) => i.id) : slot === "dac" ? db.items.filter(forDac).map((i) => i.id) : slot === "cart" ? db.items.filter((i) => i.category === "cartridge" && i.cart).map((i) => i.id) : (slot === "hp" ? headphones : sources).map((i) => i.id));
+  const pool = db.items.filter((i) => (isSrcSlot ? usable.has(i.id) : slot === "dac" ? forDac(i) : slot === "cart" ? i.category === "cartridge" : cats.has(i.category) && (slot !== "amp" || !["dac", ...NOT_HP_ROLES].includes(i.role))));
   // Type chips inside the picker, so a long list can be narrowed in one tap.
   const kindsBySlot = {
     hp: [["iem", t("cat_iem")], ["headphone", t("cat_headphone")]],
-    amp: [["dongle", t("cat_dongle")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["preamp", t("role_preamp")], ["dap", t("cat_dap")]],
+    amp: [["dongle", t("cat_dongle")], ["portable", t("cat_portable")], ["dacamp", t("role_dacamp")], ["amp", t("role_amp")], ["preamp", t("role_preamp")], ["dap", t("cat_dap")]],
     dac: [["dac", t("role_dac")], ["dacamp", t("role_dacamp")], ["phono", t("cat_phono")]],
-    src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["turntable", t("cat_turntable")], ["desktop", t("pk_streamer")]],
+    src: [["dap", t("cat_dap")], ["cd", t("cat_cd")], ["turntable", t("cat_turntable")], ["streamer", t("pk_streamer")]],
     cart: [["mm", t("cart_mm")], ["mc", t("cart_mc")], ["homc", t("cart_homc")]],
   };
   const kinds = [["", t("role_all")], ...(kindsBySlot[slot] ?? [])];
@@ -993,7 +997,7 @@ function catalogPage() {
   const brand = p.get("brand") ?? "";
   const mat = p.get("mat") ?? "";
   const role = cat === "desktop" ? p.get("role") ?? "" : "";
-  const cats = ["all", "iem", "headphone", "dongle", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
+  const cats = ["all", "iem", "headphone", "dongle", "portable", "desktop", "dap", "cd", "turntable", "phono", "cartridge", "speaker", "power"];
   const res = db.items.filter(
     (i) =>
       (cat === "all" || i.category === cat) &&
@@ -1038,7 +1042,7 @@ function catalogPage() {
         <div class="seg-links">${["grid", "table"].map((v) => `<a class="${v === view ? "on" : ""}" href="${link({ view: v })}">${esc(t(`view_${v}`))}</a>`).join("")}</div>
       </div>
       <div class="chips">${cats.map((c) => `<a class="chip${c === cat ? " on" : ""}" href="${link({ cat: c, n: null, role: null })}">${esc(t(`cat_${c}`))}</a>`).join("")}</div>
-      ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp", "preamp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
+      ${cat === "desktop" ? `<div class="chips sub-chips">${["", "dacamp", "dac", "amp", "preamp", "streamer", "integrated", "poweramp"].map((r) => `<a class="chip${r === role ? " on" : ""}" href="${link({ role: r || null, n: null })}">${esc(t(r ? `role_${r}` : "role_all"))}</a>`).join("")}<span class="muted small" title="${esc(t("role_help"))}">ⓘ</span></div>` : ""}
       <div class="filter-more">
         <label class="check small"><input type="checkbox" data-toggle="specs"${specsOnly ? " checked" : ""}> ${esc(t("only_specs"))}</label>
         <label class="check small"><input type="checkbox" data-toggle="stock"${stockOnly ? " checked" : ""}> ${esc(t("only_stock"))}</label>
@@ -1162,12 +1166,19 @@ function searchRank(i, q) {
 /** Old links keep working after catalog ids change: match on brand + hyphen-free model, roman numerals as digits. */
 function findItem(id) {
   if (db.byId.has(id)) return db.byId.get(id);
+  // An id merged into another or renamed when the catalog was rebuilt.
+  if (db.aliases?.[id]) return db.byId.get(db.aliases[id]) ?? null;
   const norm = (k) => {
     const [b, m = ""] = k.split("--");
     return `${b}--${m.split("-").map((w) => ({ ii: "2", iii: "3", iv: "4" })[w] ?? w).join("")}`;
   };
   const want = norm(id);
   return db.items.find((x) => norm(x.id) === want) ?? null;
+}
+
+/** The item's id and its old ids: posts and reports filed under an old id still belong to it. */
+function idsOf(i) {
+  return [i.id, ...(db.aliasesTo?.get(i.id) ?? [])];
 }
 
 function itemPage(id) {
@@ -1211,11 +1222,11 @@ function itemPage(id) {
       ${powerLine(i)}
       ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
       ${i.phonoIn ? `<p class="small role-note">${esc(t("phono_takes", { kinds: i.phonoIn.split("+").map((k) => t(`cart_${k}`)).join(" + ") }))}</p>` : ""}
-      ${i.role === "preamp" ? `<p class="small role-note">${esc(t("role_note_preamp"))}</p>` : ""}
+      ${["preamp", "streamer", ...NOT_HP_ROLES].includes(i.role) ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))}</p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
       ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
-      <div class="item-actions">${isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
+      <div class="item-actions">${(isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category)) && !["integrated", "poweramp"].includes(i.role) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) || i.role === "streamer" ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
@@ -1243,7 +1254,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4dgvlh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv4hth3y").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1712,7 +1723,7 @@ function wirePostFilters(el) {
 async function renderCommunity(el, item) {
   if (!el) return;
   el.innerHTML = `<h3>${esc(t("cm_title"))}</h3><p class="muted small">${esc(t("cm_loading"))}</p>`;
-  const { ok, rows } = await community.reportsFor([item.id]);
+  const { ok, rows } = await community.reportsFor(idsOf(item));
   if (!el.isConnected) return;
   if (!ok) {
     el.innerHTML = `<h3>${esc(t("cm_title"))}</h3><p class="muted">${esc(t("cm_offline"))}</p>`;
@@ -2138,7 +2149,7 @@ function wireDeal(main) {
   const id = query().get("item");
   const slot = $("#deal-paid");
   if (id && slot)
-    community.pricesFor(id).then(({ ok, rows }) => {
+    community.pricesFor(findItem(id) ? idsOf(findItem(id)) : [id]).then(({ ok, rows }) => {
       if (!ok || !slot.isConnected) return;
       const th = summarize(rows.filter((r) => r.currency === cur() && !CHANNEL_CURRENCY[r.channel]));
       slot.innerHTML = th.length
@@ -2399,7 +2410,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4dgvlh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4hth3y" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2557,7 +2568,7 @@ async function renderPorts(el, item) {
   if (!el) return;
   const head = `<h3>${esc(t("po_title"))}</h3><p class="muted small">${esc(t("po_lead"))}</p>`;
   el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
-  const reports = (await community.portsFor([item.id]))[item.id] ?? [];
+  const reports = Object.values(await community.portsFor(idsOf(item))).flat();
   const s = await community.session();
   const profile = s ? await community.myProfile() : null;
   if (!el.isConnected) return;
@@ -2643,7 +2654,7 @@ async function renderOwners(el, item) {
   if (!el) return;
   const head = `<h3>${esc(t("ow_title"))}</h3><p class="muted small">${esc(t("ow_lead"))}</p>`;
   el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
-  const { ok, rows, summary } = await community.ownersFor(item.id);
+  const { ok, rows, summary } = await community.ownersFor(idsOf(item));
   const s = await community.session();
   const profile = s ? await community.myProfile() : null;
   if (!el.isConnected) return;
@@ -2737,7 +2748,7 @@ async function renderPaid(el, item) {
   if (!el) return;
   const head = `<h3>${esc(t("pr_title"))}</h3><p class="muted small">${esc(t("pr_disclaimer"))}</p>`;
   el.innerHTML = `${head}<p class="muted small">${esc(t("cm_loading"))}</p>`;
-  const { ok, rows } = await community.pricesFor(item.id);
+  const { ok, rows } = await community.pricesFor(idsOf(item));
   if (!el.isConnected) return;
   if (!ok) {
     el.innerHTML = `${head}<p class="muted">${esc(t("cm_offline"))}</p>`;
@@ -2886,7 +2897,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4dgvlh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4hth3y" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4065,7 +4076,9 @@ const PHOTO_LAST = new Set(["a2a", "audioadvice", "moon", "hifiheadphones", "hea
 function imageOf(i) {
   const offers = (i.offers ?? []).filter((x) => x.image && !x.suspect);
   const o = offers.find((x) => !PHOTO_LAST.has(x.store)) ?? offers[0];
-  return o ? { src: o.image, url: o.url, store: o.store } : null;
+  if (o) return { src: o.image, url: o.url, store: o.store };
+  // Hand-checked models no tracked store sells: the maker's own photo.
+  return i.image ? { src: i.image.src, url: i.image.page, store: i.image.site } : null;
 }
 /** Shopify CDN resizes on request; other hosts ignore the parameter. */
 function sized(src, w) {

@@ -17,8 +17,8 @@ const out = new URL(`${process.argv[2] ?? "_site"}/`, root);
 const SITE = (process.env.SITE_URL ?? "https://cxzp.github.io/sotto").replace(/\/$/, "");
 const catalog = JSON.parse(await readFile(new URL("data/catalog.json", root), "utf8"));
 
-const CAT = { iem: "IEM", headphone: "Headphones", dongle: "USB DAC/amp dongle", desktop: "Desktop DAC/amp", dap: "Music player", cd: "CD player / transport", power: "DC power supply", speaker: "Speakers", turntable: "Turntable", phono: "Phono stage", cartridge: "Phono cartridge" };
-const ROLE = { dac: "Desktop DAC", amp: "Desktop headphone amp", dacamp: "Desktop DAC/amp", preamp: "Line preamp" };
+const CAT = { iem: "IEM", headphone: "Headphones", dongle: "USB DAC/amp dongle", portable: "Portable headphone amp", desktop: "Desktop DAC/amp", dap: "Music player", cd: "CD player / transport", power: "DC power supply", speaker: "Speakers", turntable: "Turntable", phono: "Phono stage", cartridge: "Phono cartridge" };
+const ROLE = { dac: "Desktop DAC", amp: "Desktop headphone amp", dacamp: "Desktop DAC/amp", preamp: "Line preamp", integrated: "Integrated amp", streamer: "Streamer", poweramp: "Speaker power amp" };
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const name = (i) => (i.brand ? `${i.brand} ${i.model}` : i.model);
 const money = (n, c) => new Intl.NumberFormat("en-US", { style: "currency", currency: c || "USD", maximumFractionDigits: 0 }).format(n);
@@ -102,7 +102,7 @@ function page(i) {
   const pr = priceInfo(i);
   const url = `${SITE}/p/${i.id}/`;
   const app = `${SITE}/#item/${encodeURIComponent(i.id)}`;
-  const kind = (ROLE[i.role] ?? CAT[i.category]) ?? i.category;
+  const kind = ((i.category === "desktop" && ROLE[i.role]) || CAT[i.category]) ?? i.category;
   const desc = [kind, ...f, pr ? `from ${money(pr.low, pr.currency)} at ${pr.stores} store${pr.stores > 1 ? "s" : ""}` : null, "Sourced specs, real prices, and whether your phone or amp can drive it."]
     .filter(Boolean)
     .join(" · ");
@@ -178,12 +178,23 @@ for (const i of catalog.items) {
     new URL(`og/${i.id}.png`, out),
     png(
       cardSvg({
-        kicker: [i.brand, (ROLE[i.role] ?? CAT[i.category])].filter(Boolean).join(" · "),
+        kicker: [i.brand, (i.category === "desktop" && ROLE[i.role]) || CAT[i.category]].filter(Boolean).join(" · "),
         title: i.model,
         line1: facts(i).join("  ·  ") || "Specs, prices and compatibility",
         line2: pr ? `from ${money(pr.low, pr.currency)} · ${pr.stores} store${pr.stores > 1 ? "s" : ""}` : "Will your phone or amp drive it?",
       }),
     ),
+  );
+}
+// Old ids (models merged or renamed when the catalog was rebuilt) keep their
+// page address: a small page that sends the visitor on to the current one.
+for (const [from, to] of Object.entries(catalog.aliases ?? {})) {
+  if (!/^[a-z0-9-]+$/.test(from)) continue;
+  const dir = new URL(`p/${from}/`, out);
+  await mkdir(dir, { recursive: true });
+  await writeFile(
+    new URL("index.html", dir),
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Moved</title><link rel="canonical" href="${SITE}/p/${to}/"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=../${to}/"></head><body><p><a href="../${to}/">This model's page moved.</a></p></body></html>`,
   );
 }
 // Home card

@@ -6,6 +6,7 @@
     "kind": "dongle",
     "input": "usb-c",
     "price": null,
+    "image": { "src": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MU7E2?wid=720&hei=720&fmt=jpeg&qlt=90", "page": "https://www.apple.com/shop/product/MW2Q3AM/A/usb-c-to-35-mm-headphone-jack-adapter", "site": "apple.com" },
     "outputs": [
       {
         "jack": "3.5",
@@ -709,6 +710,7 @@
     "kind": "dongle",
     "input": "usb-c",
     "price": null,
+    "image": { "src": "https://cdn.prod.website-files.com/63bcdfa5158ffcd72a7a8d8e/66457fe9fb1a8c998607460f_SHIO.jpg", "page": "https://truthear.com/products/shio", "site": "truthear.com" },
     "outputs": [
       {
         "jack": "3.5",

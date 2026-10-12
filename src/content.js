@@ -11,7 +11,7 @@ export const LEARN = {
 <section>
 <h2>เสียงเดินทางยังไง</h2>
 <div class="chain-figure" aria-hidden="true"><span>ไฟล์เพลง</span><i></i><span>DAC</span><i></i><span>แอมป์</span><i></i><span>หูฟัง</span></div>
-<p><b>DAC</b> แปลงตัวเลขดิจิทัลเป็นสัญญาณไฟฟ้า <b>แอมป์</b> ขยายสัญญาณให้แรงพอจะขยับไดรเวอร์หูฟัง มือถือ คอม และ dongle ล้วนมีทั้งสองอย่างอยู่ในตัว — dongle คือ DAC + แอมป์ตัวจิ๋ว คำถามจริงจึงไม่ใช่ "ต้องมี DAC ไหม" แต่คือ "ตัวที่มีอยู่จ่ายแรงดันพอหรือเปล่า"</p>
+<p><b>DAC</b> แปลงตัวเลขดิจิทัลเป็นสัญญาณไฟฟ้า <b>แอมป์</b> ขยายสัญญาณให้แรงพอจะขยับไดรเวอร์หูฟัง มือถือ คอม และ dongle ล้วนมีทั้งสองอย่างอยู่ในตัว — dongle คือ DAC + แอมป์ตัวจิ๋ว คำถามจริงจึงไม่ใช่ "ต้องมี DAC ไหม" แต่คือ "ตัวที่มีอยู่จ่ายแรงดันพอหรือเปล่า" (และกับหูฟัง impedance ต่ำ คือจ่ายกระแสพอไหม) ถ้าฟังแผ่นเสียง จะมี <a href="#learn/phono">phono stage</a> คั่นก่อนแอมป์อีกขั้น</p>
 </section>
 
 <section>
@@ -19,7 +19,7 @@ export const LEARN = {
 <p>ต้องดู <b>sensitivity</b> คู่กันเสมอ sensitivity บอกว่าป้อนไฟเท่านี้แล้วดังเท่าไหร่ ส่วน impedance บอกว่าหูฟังจะดึงกระแสมากหรือน้อย</p>
 <ul>
 <li>HD 600: 300 Ω, 97 dB/V → ฟังดังระดับ 95 dB ต้องการแรงดันประมาณ 0.8 V แต่กระแสน้อยมาก</li>
-<li>Edition XS: 18 Ω, ~105 dB/V → ต้องการแรงดันแค่ ~0.3 V แต่ต้องดึงกระแสมากกว่า</li>
+<li>Edition XS: 18 Ω, ~105 dB/V (RTINGS วัด) → ต้องการแรงดันแค่ ~0.3 V แต่ดึงกระแสราว 17 mA มากกว่า HD 600 (~2.6 mA) หลายเท่า</li>
 </ul>
 <p class="formula">V = 10<sup>(SPL − S) / 20</sup> &nbsp;·&nbsp; I = V / Z &nbsp;·&nbsp; P = V² / Z</p>
 </section>
@@ -33,7 +33,7 @@ export const LEARN = {
 
 <section>
 <h2>Balanced (4.4 mm) คืออะไร</h2>
-<p>ช่อง balanced ขับหูฟังด้วยวงจรขยายสองชุดต่อข้าง ได้แรงดันสูงสุดราว 2 เท่าของช่องธรรมดา มีประโยชน์กับหูฟังที่ขับยาก แต่<b>ไม่ได้แปลว่าเสียงดีขึ้นเสมอ</b> ถ้าช่องธรรมดาก็ดังพออยู่แล้ว</p>
+<p>ช่อง balanced ขับหูฟังด้วยวงจรขยายสองชุดต่อข้าง มักได้แรงดันสูงสุดราว 2 เท่าของช่องธรรมดา (บางเครื่องไม่ถึง ดูตัวเลขของรุ่นนั้น) มีประโยชน์กับหูฟังที่ขับยาก แต่<b>ไม่ได้แปลว่าเสียงดีขึ้นเสมอ</b> ถ้าช่องธรรมดาก็ดังพออยู่แล้ว</p>
 <ul>
 <li><b>สาย balanced → ช่องธรรมดา</b> ผ่านหัวแปลง 4.4 → 3.5: ใช้ได้ ปลอดภัย</li>
 <li><b>สายธรรมดา → ช่อง balanced</b> ผ่านหัวแปลง 3.5 → 4.4: <b>อันตราย</b> ขั้วลบของแอมป์ทั้งสองข้างจะถูกต่อลงกราวด์ แอมป์ที่ไม่ได้ออกแบบรองรับอาจเสียหาย — ให้ซื้อสายใหม่แทน</li>
@@ -42,8 +42,13 @@ export const LEARN = {
 
 <section>
 <h2>Output impedance และกฎ 1/8</h2>
-<p>ทุกแอมป์มีความต้านทานขาออก (output impedance, Zout) ถ้า Zout สูงเมื่อเทียบกับ impedance ของหูฟัง แรงดันจะแบ่งไม่เท่ากันในแต่ละความถี่ กฎที่ใช้กันคือ <b>impedance หูฟัง ÷ Zout ควรมากกว่า 8</b></p>
-<p>หูฟังไดรเวอร์เดียวที่กราฟ impedance เกือบแบน แทบไม่มีผลนอกจากเบาลงนิดหน่อย แต่ IEM หลายไดรเวอร์ที่มี BA impedance จะเปลี่ยนตามความถี่ โทนเสียงจึงเพี้ยนได้ — บางคนชอบความเพี้ยนแบบนี้และเรียกว่า "แอมป์ตัวนี้เสียงอุ่น" ตัวอย่างที่ตั้งใจใช้ผลนี้คือ Truthear Zero:RED ที่แถมตัวต้านทาน 10 Ω มาเพื่อลดเบส</p>
+<p>ทุกแอมป์มีความต้านทานขาออก (output impedance, Zout) ถ้า Zout สูงเมื่อเทียบกับ impedance ของหูฟัง และ impedance ของหูฟังเปลี่ยนไปตามความถี่ แรงดันที่ถึงหูฟังจะไม่เท่ากันในแต่ละความถี่ กฎที่ใช้กันคือ <b>impedance หูฟัง ÷ Zout ควรมากกว่า 8</b></p>
+<p>หูฟังไดรเวอร์เดียวที่กราฟ impedance เกือบแบน แทบไม่มีผลนอกจากเบาลงนิดหน่อย แต่ IEM หลายไดรเวอร์ที่มี BA impedance จะเปลี่ยนตามความถี่ โทนเสียงจึงเพี้ยนได้ — บางคนชอบความเพี้ยนแบบนี้และเรียกว่า "แอมป์ตัวนี้เสียงอุ่น" ตัวอย่างที่ตั้งใจใช้ผลนี้คือ Truthear Zero:RED (ไดนามิกสองตัวพร้อมวงจรแบ่งความถี่) ที่แถมตัวต้านทาน 10 Ω มาเพื่อลดเบส</p>
+</section>
+
+<section>
+<h2>IEM ไวสูง: ห่วงเสียงซ่ามากกว่ากำลัง</h2>
+<p>IEM หลายรุ่นดังมากด้วยแรงดันแค่ไม่กี่สิบมิลลิโวลต์ ปัญหาจึงมักไม่ใช่ "ขับไม่ไหว" แต่เป็น <b>เสียงซ่า (hiss)</b> จากแหล่งเสียงที่ noise สูง และวอลุ่มที่ใช้ได้แค่ช่วงล่างๆ ดูค่า noise เป็นไมโครโวลต์ (µV) และใช้ <a href="#learn/gain">gain ต่ำ</a> ไว้ก่อน <a href="#learn/noise">อ่านเพิ่ม: Hiss และ SNR</a></p>
 </section>
 
 <section>
@@ -54,7 +59,7 @@ export const LEARN = {
 <section>
 <h2>ของที่ไม่ต้องจ่ายเพิ่ม</h2>
 <ul>
-<li><b>สาย LAN / network switch "audiophile"</b> — ข้อมูลเพลงวิ่งเป็นแพ็กเก็ตที่มีระบบตรวจความถูกต้อง ถ้าแพ็กเก็ตเสียจะถูกส่งใหม่ ข้อมูลที่ถึงปลายทางจึงเป็นตัวเลขชุดเดิมทุกบิต <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a></li>
+<li><b>สาย LAN / network switch "audiophile"</b> — ตอนสตรีมหรือโหลดไฟล์ ข้อมูลเพลงวิ่งเป็นแพ็กเก็ตที่มีระบบตรวจความถูกต้อง ถ้าแพ็กเก็ตเสียจะถูกส่งใหม่ ข้อมูลที่ถึงปลายทางจึงเป็นตัวเลขชุดเดิมทุกบิต <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a></li>
 <li><b>ไฟล์ความละเอียดเกิน 16-bit/44.1 kHz สำหรับฟังอย่างเดียว</b> — 44.1 kHz เก็บความถี่ได้ถึง ~22 kHz ซึ่งเกินช่วงการได้ยินของคนแล้ว ไฟล์ hi-res มีประโยชน์ในงานอัดและมิกซ์ <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem" target="_blank" rel="noopener">Nyquist–Shannon</a></li>
 <li><b>แอมป์ที่แรงเกินหูฟังหลายสิบเท่า</b> — ถ้าเว็บบอกว่า "ดังพอ" แล้ว แอมป์ที่แรงกว่านี้ไม่ได้ทำให้ดังได้มากขึ้นในการใช้งานจริง</li>
 </ul>
@@ -72,7 +77,7 @@ export const LEARN = {
 <section>
 <h2>How the signal travels</h2>
 <div class="chain-figure" aria-hidden="true"><span>Music file</span><i></i><span>DAC</span><i></i><span>Amp</span><i></i><span>Headphones</span></div>
-<p>The <b>DAC</b> turns digital numbers into an electrical signal. The <b>amp</b> makes it strong enough to move the drivers. Phones, computers and dongles all contain both — a dongle is a tiny DAC + amp. So the real question isn't "do I need a DAC" but "does what I have deliver enough voltage".</p>
+<p>The <b>DAC</b> turns digital numbers into an electrical signal. The <b>amp</b> makes it strong enough to move the drivers. Phones, computers and dongles all contain both — a dongle is a tiny DAC + amp. So the real question isn't "do I need a DAC" but "does what I have deliver enough voltage" (and, for low-impedance headphones, enough current). Vinyl adds one more box before the amp: a <a href="#learn/phono">phono stage</a>.</p>
 </section>
 
 <section>
@@ -80,7 +85,7 @@ export const LEARN = {
 <p>Always read <b>sensitivity</b> together with impedance. Sensitivity says how loud it gets for a given input; impedance says how much current it draws.</p>
 <ul>
 <li>HD 600: 300 Ω, 97 dB/V → 95 dB needs about 0.8 V, but very little current</li>
-<li>Edition XS: 18 Ω, ~105 dB/V → needs only ~0.3 V, but draws more current</li>
+<li>Edition XS: 18 Ω, ~105 dB/V (measured by RTINGS) → needs only ~0.3 V, but draws about 17 mA, several times the HD 600's ~2.6 mA</li>
 </ul>
 <p class="formula">V = 10<sup>(SPL − S) / 20</sup> &nbsp;·&nbsp; I = V / Z &nbsp;·&nbsp; P = V² / Z</p>
 </section>
@@ -94,7 +99,7 @@ export const LEARN = {
 
 <section>
 <h2>What balanced (4.4 mm) means</h2>
-<p>A balanced output drives each side with two amplifier halves and reaches roughly twice the voltage of a single-ended jack. Useful for hard-to-drive headphones, but <b>not automatically better sound</b> if single-ended is already loud enough.</p>
+<p>A balanced output drives each side with two amplifier halves and often reaches about twice the voltage of a single-ended jack (not every unit does; check its figures). Useful for hard-to-drive headphones, but <b>not automatically better sound</b> if single-ended is already loud enough.</p>
 <ul>
 <li><b>Balanced cable → single-ended jack</b> with a 4.4 → 3.5 adapter: works, safe</li>
 <li><b>Single-ended cable → balanced jack</b> with a 3.5 → 4.4 adapter: <b>dangerous</b>. Both negative amp outputs get tied to ground; amps not designed for it can be damaged. Buy a balanced cable instead.</li>
@@ -103,8 +108,13 @@ export const LEARN = {
 
 <section>
 <h2>Output impedance and the 1/8 rule</h2>
-<p>Every amp has an output impedance (Zout). If it's high relative to the headphone's impedance, the voltage divides unevenly across frequencies. Rule of thumb: <b>headphone impedance ÷ Zout should exceed 8</b>.</p>
-<p>Single-driver headphones with a flat impedance curve barely change except for a small level drop. Multi-driver IEMs with balanced armatures have impedance that varies with frequency, so their tonality can shift — some people like that and call the amp "warm". The Truthear Zero:RED uses this on purpose: it ships with a 10 Ω adapter to reduce bass.</p>
+<p>Every amp has an output impedance (Zout). If it's high relative to the headphone's impedance, and that impedance changes with frequency, the headphone gets a different voltage at different frequencies. Rule of thumb: <b>headphone impedance ÷ Zout should exceed 8</b>.</p>
+<p>Single-driver headphones with a flat impedance curve barely change except for a small level drop. Multi-driver IEMs with balanced armatures have impedance that varies with frequency, so their tonality can shift — some people like that and call the amp "warm". The Truthear Zero:RED (two dynamic drivers with a crossover) uses this on purpose: it ships with a 10 Ω adapter to reduce bass.</p>
+</section>
+
+<section>
+<h2>Sensitive IEMs: hiss matters more than power</h2>
+<p>Many IEMs get loud on a few tens of millivolts. The usual problem isn't "can it drive them" but <b>hiss</b> from a noisy source, and a volume knob that only works at the bottom of its range. Look at noise in microvolts (µV) and start on <a href="#learn/gain">low gain</a>. <a href="#learn/noise">More: hiss and SNR</a></p>
 </section>
 
 <section>
@@ -115,7 +125,7 @@ export const LEARN = {
 <section>
 <h2>Things you don't need to pay extra for</h2>
 <ul>
-<li><b>"Audiophile" LAN cables and network switches</b> — music data travels in checksummed packets; damaged packets are resent, so what arrives is the same bits. <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a></li>
+<li><b>"Audiophile" LAN cables and network switches</b> — when streaming or downloading, music data travels in checksummed packets; damaged packets are resent, so what arrives is the same bits. <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a></li>
 <li><b>Beyond 16-bit/44.1 kHz for playback</b> — 44.1 kHz captures up to ~22 kHz, past the range of human hearing. Hi-res matters when recording and mixing. <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem" target="_blank" rel="noopener">Nyquist–Shannon</a></li>
 <li><b>An amp many times stronger than needed</b> — once this site says "loud enough", more power doesn't make real listening louder.</li>
 </ul>

@@ -393,9 +393,10 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .brand-response > button { justify-self: start; padding: 0; }
 
 /* Learn guide: sections side by side on wide screens instead of one narrow column */
-.learn-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 16px; align-items: start; }
+.learn-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 16px; align-items: stretch; /* cards in a row share one height */ }
 .learn-guide > :not(section) { grid-column: 1 / -1; }
 .learn-guide > section { margin: 0; }
+.learn-guide > section:last-child { grid-column: 1 / -1; } /* the closing note, alone on its row */
 
 .region-pick select { width: auto; display: inline-block; margin-left: 6px; }
 

@@ -15,11 +15,6 @@ input.num { font-variant-numeric: tabular-nums; }
 .deal-fields .check { margin-bottom: 14px; }
 
 .codes { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
-.code-row { display: grid; grid-template-columns: auto minmax(110px, 1fr) minmax(90px, 1fr) minmax(90px, 1fr) auto; gap: 8px; align-items: end; padding: 10px; border-radius: 14px; background: var(--surface-2); }
-.code-row label { display: grid; gap: 2px; min-width: 0; }
-.code-row .code-val { display: flex; gap: 4px; align-items: center; }
-.code-row .search { padding: 7px 12px; min-width: 0; }
-.code-row .link { align-self: center; }
 .paste .search { min-width: 220px; }
 .paste .mini-select { padding: 10px 16px; } /* same height as the text box beside it */
 
@@ -67,8 +62,6 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 
 @media (max-width: 860px) {
   .deal-grid, .ch-grid { grid-template-columns: minmax(0, 1fr); }
-  .code-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .code-row > select { grid-column: 1 / -1; }
   .deal-big { font-size: 28px; }
 }
 
@@ -105,13 +98,11 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 
 /* Voucher picker: tickets, the chosen one ticked; numbers under "edit". */
 .codes { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 10px; }
-.code-row, .code-row:is(*) { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 0; background: none; max-width: 560px; }
+.code-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 0; background: none; max-width: 560px; }
 .code-row .voucher { grid-template-columns: 84px 1fr 36px; }
 .voucher-check { align-self: center; justify-self: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line-strong); }
 .code-row.chosen .voucher { border-color: #ee4d2d; }
 .code-row.chosen .voucher-check { border-color: #ee4d2d; background: #ee4d2d; box-shadow: inset 0 0 0 3px var(--surface); }
-.code-edit > summary { cursor: pointer; color: var(--text-2); list-style: none; padding-left: 4px; }
-.code-edit > summary::-webkit-details-marker { display: none; }
 .code-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; margin-top: 6px; align-items: end; }
 .code-fields > select { grid-column: 1 / -1; }
 .sample-codes { margin: 8px 0 14px; }
@@ -123,3 +114,12 @@ dialog.redact::backdrop { background: rgba(0, 0, 0, 0.55); }
 .pay-bar b { font-size: 20px; }
 .deal-all { margin-top: 14px; }
 .deal-all > summary { cursor: pointer; color: var(--text-2); }
+.voucher-actions { margin-top: 2px; color: var(--text-2); }
+.voucher-actions .link { color: var(--text-2); }
+.voucher-actions .link:hover { color: var(--accent); }
+.code-row .code-fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 2px 0 6px; padding: 10px; border-radius: 12px; background: var(--surface-2); }
+.code-row .code-fields[hidden] { display: none; }
+.code-fields label { display: grid; gap: 4px; font-size: 12px; color: var(--text-2); min-width: 0; }
+.code-fields .search, .code-fields .mini-select { padding: 8px 12px; width: 100%; min-width: 0; }
+.code-fields .code-val { display: grid; grid-template-columns: 1fr 64px; gap: 4px; }
+@media (max-width: 640px) { .code-row .code-fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }

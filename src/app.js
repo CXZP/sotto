@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5b4c6k";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5b4c6k";
-import { renderChart } from "./chart.js?v=mv5b4c6k";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5b4c6k";
-import { makeT } from "./i18n.js?v=mv5b4c6k";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5b4c6k";
-import { LEGAL } from "./legal.js?v=mv5b4c6k";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5b4c6k";
-import * as community from "./community.js?v=mv5b4c6k";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5b4c6k";
-import { redactImage } from "./redact.js?v=mv5b4c6k";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5b4c6k";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5b4c6k";
-import { chainLinks } from "./chain.js?v=mv5b4c6k";
-import { fits } from "./dcfit.js?v=mv5b4c6k";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5b4c6k";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5b4c6k";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5b4c6k";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5bfzie";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5bfzie";
+import { renderChart } from "./chart.js?v=mv5bfzie";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5bfzie";
+import { makeT } from "./i18n.js?v=mv5bfzie";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5bfzie";
+import { LEGAL } from "./legal.js?v=mv5bfzie";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5bfzie";
+import * as community from "./community.js?v=mv5bfzie";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5bfzie";
+import { redactImage } from "./redact.js?v=mv5bfzie";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5bfzie";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5bfzie";
+import { chainLinks } from "./chain.js?v=mv5bfzie";
+import { fits } from "./dcfit.js?v=mv5bfzie";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5bfzie";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5bfzie";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5bfzie";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1285,7 +1285,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5b4c6k").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5bfzie").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2078,7 +2078,7 @@ function dealPage() {
   const im = item ? imageOf(item) : null;
   const feed = item ? prices(item).cheapest : null;
   const field = (id, label, k, hint = "") =>
-    `<label class="dfield"><span>${esc(label)}</span><input class="search num" id="${id}" inputmode="decimal" value="${num(k)}" placeholder="${esc(hint)}"></label>`;
+    `<label class="dfield"><span>${esc(label)}</span><input class="search num" id="${id}" inputmode="decimal" autocomplete="off" value="${num(k)}" placeholder="${esc(hint)}"></label>`;
   return `<div class="deal">
     <header class="deal-head"><h1>${esc(t("dl_title"))}</h1><p class="muted">${esc(t("dl_lead"))}</p></header>
     ${
@@ -2099,7 +2099,7 @@ function dealPage() {
         <div id="d-codes">${codesHtml(codes)}</div>
         ${sampleCodesHtml()}
         <div class="row-inline paste"><input class="search" id="d-paste" placeholder="${esc(t("dl_paste_ph"))}">
-          <select id="d-kind" class="mini-select"><option value="platform">${esc(t("dl_kind_platform"))}</option><option value="shop">${esc(t("dl_kind_shop"))}</option></select>
+          <select id="d-kind" class="mini-select" autocomplete="off"><option value="platform">${esc(t("dl_kind_platform"))}</option><option value="shop">${esc(t("dl_kind_shop"))}</option></select>
           <button type="button" class="pill primary" id="d-add">${esc(t("dl_add"))}</button></div>
         <p class="small status" id="d-paste-status" role="status"></p>
       </section>
@@ -2123,19 +2123,22 @@ function dealPage() {
 // the best pair uses ticked. The numbers sit under "edit"; readCodes() reads them.
 function codesHtml(codes) {
   if (!codes.length) return `<p class="muted small">${esc(t("dl_no_codes"))}</p>`;
+  // autocomplete="off": otherwise the browser refills these fields by position
+  // after a reload, and a shop code can come back as a platform code.
+  const off = 'autocomplete="off"';
   return `<ul class="codes">${codes
     .map(
       (c, n) => `<li class="code-row" data-n="${n}" data-code="${esc(encodeCode(c))}">
       <div class="voucher ${c.kind === "shop" ? "shop" : "platform"}"><div class="voucher-side">${esc(t(c.kind === "shop" ? "tk_shop" : "tk_platform"))}</div>
-        <div class="voucher-body"><b>${esc(c.pct ? t("tk_pct", { pct: fmt(c.pct, 0) }) : t("tk_off", { off: baht(c.off) }))}</b><span class="small muted">${esc([c.cap != null && c.pct ? t("tk_cap", { cap: baht(c.cap) }) : null, c.min ? t("tk_min", { min: baht(c.min) }) : null].filter(Boolean).join(" · ") || t("tk_no_terms"))}</span></div>
+        <div class="voucher-body"><b>${esc(c.pct ? t("tk_pct", { pct: fmt(c.pct, 0) }) : t("tk_off", { off: baht(c.off) }))}</b><span class="small muted">${esc([c.cap != null && c.pct ? t("tk_cap", { cap: baht(c.cap) }) : null, c.min ? t("tk_min", { min: baht(c.min) }) : null].filter(Boolean).join(" · ") || t("tk_no_terms"))}</span>
+          <span class="voucher-actions"><button type="button" class="link small" data-edit="${n}">${esc(t("ds_edit"))}</button> · <button type="button" class="link small" data-rm="${n}">${esc(t("cm_delete"))}</button></span></div>
         <span class="voucher-check" aria-hidden="true"></span></div>
-      <details class="code-edit"><summary class="small">${esc(t("ds_edit"))}</summary>
-      <div class="code-fields">
-      <select class="mini-select" data-f="kind"><option value="platform"${c.kind !== "shop" ? " selected" : ""}>${esc(t("dl_kind_platform"))}</option><option value="shop"${c.kind === "shop" ? " selected" : ""}>${esc(t("dl_kind_shop"))}</option></select>
-      <label class="code-val"><input class="search num" data-f="val" inputmode="decimal" value="${c.pct ?? c.off ?? ""}"><select class="mini-select" data-f="unit"><option value="pct"${c.pct != null ? " selected" : ""}>%</option><option value="off"${c.pct == null ? " selected" : ""}>฿</option></select></label>
-      <label><span class="small muted">${esc(t("dl_min_l", { cur: cur() }))}</span><input class="search num" data-f="min" inputmode="decimal" value="${c.min ?? ""}"></label>
-      <label><span class="small muted">${esc(t("dl_cap_l", { cur: cur() }))}</span><input class="search num" data-f="cap" inputmode="decimal" value="${c.cap ?? ""}"></label>
-      <button type="button" class="link small" data-rm="${n}">${esc(t("cm_delete"))}</button></div></details></li>`,
+      <div class="code-fields" hidden>
+        <label><span>${esc(t("dl_kind"))}</span><select class="mini-select" data-f="kind" ${off}><option value="platform"${c.kind !== "shop" ? " selected" : ""}>${esc(t("tk_platform"))}</option><option value="shop"${c.kind === "shop" ? " selected" : ""}>${esc(t("tk_shop"))}</option></select></label>
+        <label><span>${esc(t("dl_off_l"))}</span><span class="code-val"><input class="search num" data-f="val" inputmode="decimal" value="${c.pct ?? c.off ?? ""}" ${off}><select class="mini-select" data-f="unit" ${off}><option value="pct"${c.pct != null ? " selected" : ""}>%</option><option value="off"${c.pct == null ? " selected" : ""}>฿</option></select></span></label>
+        <label><span>${esc(t("dl_min_l", { cur: cur() }))}</span><input class="search num" data-f="min" inputmode="decimal" value="${c.min ?? ""}" ${off}></label>
+        <label><span>${esc(t("dl_cap_l", { cur: cur() }))}</span><input class="search num" data-f="cap" inputmode="decimal" value="${c.cap ?? ""}" ${off}></label>
+      </div></li>`,
     )
     .join("")}</ul>`;
 }
@@ -2175,7 +2178,9 @@ function wireDeal(main) {
           c.off = v;
           delete c.cap;
         }
-        return Object.fromEntries(Object.entries(c).filter(([, x]) => x !== undefined));
+        const code = Object.fromEntries(Object.entries(c).filter(([, x]) => x !== undefined));
+        row.dataset.code = encodeCode(code); // the tick follows edits
+        return code;
       })
       .filter(Boolean);
 
@@ -2194,6 +2199,12 @@ function wireDeal(main) {
     const best = price ? combos(price, codes, { shipping: val($("#d-s")) ?? 0 })[0] : null;
     const chosen = new Set([best?.shop, best?.platform].filter(Boolean).map(encodeCode));
     main.querySelectorAll(".code-row").forEach((row) => row.classList.toggle("chosen", chosen.has(row.dataset.code)));
+    const held = new Set(codes.map(encodeCode));
+    main.querySelectorAll("[data-collect]").forEach((b) => {
+      const got = held.has(b.dataset.collect);
+      b.disabled = got;
+      b.textContent = t(got ? "dl_collected" : "dl_collect");
+    });
     const cn = landed({ price: val($("#d-cp")), shipping: val($("#d-cs")) ?? 0, rate: val($("#d-r")), extraPct: val($("#d-x")) ?? 0 });
     $("#d-cn").innerHTML = cn
       ? `<p class="deal-big">${baht(cn.total)}</p><p class="muted small">${esc(t("dl_cn_math", { base: baht(cn.base), extra: baht(cn.extra) }))}</p><p class="small">${esc(t("dl_cn_warn"))}</p>`
@@ -2206,6 +2217,12 @@ function wireDeal(main) {
   };
   const bindRows = () => {
     main.querySelectorAll(".code-row input, .code-row select").forEach((el) => el.addEventListener("input", update));
+    main.querySelectorAll("[data-edit]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const f = b.closest(".code-row").querySelector(".code-fields");
+        f.hidden = !f.hidden;
+      }),
+    );
     main.querySelectorAll("[data-rm]").forEach((b) =>
       b.addEventListener("click", () => {
         const codes = readCodes();
@@ -2225,16 +2242,20 @@ function wireDeal(main) {
     }
     status.textContent = text ? t("dl_parsed", { code: codeLabel(c) }) : "";
     $("#d-paste").value = "";
-    redraw([...readCodes(), c]);
+    const have = readCodes();
+    if (have.some((x) => encodeCode(x) === encodeCode(c))) {
+      status.textContent = t("dl_have");
+      return;
+    }
+    redraw([...have, c]);
   };
   $("#d-add").addEventListener("click", add);
   main.querySelectorAll("[data-collect]").forEach((b) =>
     b.addEventListener("click", () => {
-      const c = decodeCode(b.dataset.collect);
+      const have = readCodes();
+      if (have.some((x) => encodeCode(x) === b.dataset.collect)) return;
       if (!$("#d-p").value.trim()) $("#d-p").value = "16490";
-      redraw([...readCodes(), c]);
-      b.textContent = t("dl_collected");
-      b.disabled = true;
+      redraw([...have, decodeCode(b.dataset.collect)]);
     }),
   );
   $("#d-paste").addEventListener("keydown", (e) => {
@@ -2279,7 +2300,7 @@ function dealResult(price, anchor, shipping, codes) {
   const used = [best.shop, best.platform].filter(Boolean);
   const rows = all.filter((c) => c.shop || c.platform);
   const capNotes = codes
-    .filter((c) => capPoint(c))
+    .filter((c, n) => capPoint(c) && codes.findIndex((x) => encodeCode(x) === encodeCode(c)) === n)
     .map((c) => {
       const at = capPoint(c);
       const real = Math.min(c.pct, (c.cap / price) * 100);
@@ -2530,7 +2551,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5b4c6k" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5bfzie" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3017,7 +3038,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5b4c6k" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5bfzie" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

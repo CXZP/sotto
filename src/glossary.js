@@ -2,7 +2,7 @@
 // real headphone chain (with numbers), what people get wrong, and links out.
 // `tool` names an interactive calculator rendered on the page (see app.js).
 
-export const GLOSSARY_UPDATED = "2026-10-11";
+export const GLOSSARY_UPDATED = "2026-10-12";
 
 const W = (page) => ({ label: `Wikipedia: ${page.replace(/_/g, " ")}`, url: `https://en.wikipedia.org/wiki/${page}` });
 
@@ -627,6 +627,58 @@ export const TERMS = [
 <ul>
 <li>"LDAC = wired hi-res": it's still lossy, and in daily use rarely runs at its top bitrate</li>
 </ul>`,
+    },
+  },
+  {
+    id: "marketplace-prices",
+    tool: null,
+    related: [],
+    refs: [],
+    th: {
+      title: "ราคาบน Shopee / Lazada / Taobao ทำงานยังไง",
+      short: "ราคาที่จ่ายจริงขึ้นกับโค้ดที่คุณถือ ของในตะกร้า เวลา และช่องทางจ่าย ไม่มี \"ราคาเดียว\"",
+      body: `<h2>Shopee / Lazada: โค้ดซ้อนกัน</h2>
+<p>ตัวอย่างจากหน้าชำระเงินจริง (12 ต.ค. 2026): ราคาในตะกร้า ฿16,490 → โค้ดร้าน 20% (−฿3,298) ลดก่อน → โค้ด Shopee 30% ลดสูงสุด ฿4,000 ขั้นต่ำ ฿7,915 ซึ่งเช็คขั้นต่ำจากยอด<b>หลัง</b>โค้ดร้าน (−฿3,958) → จ่าย ฿9,234</p>
+<ul>
+<li><b>โค้ดแพลตฟอร์มใช้ได้ใบเดียวต่อคำสั่งซื้อ</b> แอปเลือกใบที่ "แนะนำ" ให้ตามของที่ติ๊กในตะกร้า ติ๊กของชิ้นอื่นแล้วโค้ดที่ดีที่สุดก็เปลี่ยน</li>
+<li><b>โค้ดเป็นของเฉพาะคนและหมดเร็ว</b> มีโค้ด VIP โค้ดลูกค้าใหม่ โค้ดบัตรเครดิต บางใบใช้ได้แค่ 1 ชั่วโมงหลังเก็บ ราคาที่คนอื่นเห็นจึงไม่ใช่ราคาของคุณ</li>
+<li><b>ไม่ใช่ทุกสินค้าใช้โค้ดได้</b> สินค้าใหม่หรือของหายากที่แบรนด์กำหนดอาจถูกยกเว้น</li>
+<li>ร้านบางร้านแจ้งว่าค่าธรรมเนียมแพลตฟอร์มขึ้นมากในปี 2026 จึงตั้งราคาบนแพลตฟอร์มสูงกว่าเว็บหรือหน้าร้านของตัวเอง (เช่นประกาศของ HolySai บน Facebook 31 ก.ค. 2026) ลองเทียบกับเว็บร้านด้วย</li>
+</ul>
+<p>คิดเองได้ที่ <a href="#deal">คิดราคาจริง</a>: ใส่ราคาที่เห็นกับโค้ดที่มี แล้วดูว่าคู่ไหนคุ้มสุด</p>
+<h2>Taobao ส่งไทย: ราคาหน้าสินค้าไม่ใช่ยอดตอนจ่าย</h2>
+<ul>
+<li>หน้าสินค้าบอก "券后约฿…" (ประมาณหลังคูปอง) แต่หน้าชำระเงินสูงกว่านั้น ในสองตัวอย่างที่เราเห็นสูงกว่าราว 9.1% ส่วนหนึ่งคือ <b>ภาษี 7%</b>: หน้าข้อมูลขนส่งของ Taobao (12 ต.ค. 2026) บอกว่าของเข้าไทยต้องเสีย VAT 7% และอากร 10% ขึ้นไป แต่ถ้าใช้ขนส่งทางการของ Taobao ผู้ซื้อจ่าย 7% ของมูลค่าสินค้า ส่วนต่างแพลตฟอร์มจ่ายให้</li>
+<li>ขนส่ง: ส่งตรงทางบก (直邮) ฟรีเมื่อครบ ¥99 ราว 13–15 วัน หรือรวมกล่อง (集运) คิดตามน้ำหนัก (กรุงเทพฯ ¥15 กิโลแรก ¥14.5 กิโลต่อไป) ใช้น้ำหนักจริงหรือ กว้าง×ยาว×สูง/6000 แล้วแต่อันไหนมาก</li>
+<li>ช่องทางจ่ายก็มีผล: ในตัวอย่างของเรา เปลี่ยนเป็น PromptPay ลดอีกราว 1%</li>
+<li>ยอดที่ถูกต้องที่สุดคือยอดในหน้าชำระเงิน ไม่ใช่ราคาหน้าสินค้า</li>
+</ul>
+<h2>ถูกกว่าเสมอไหม</h2>
+<p>ไม่เสมอ ในวันเดียวกัน Moondrop DUSK บน Shopee ไทยหลังโค้ดอยู่ที่ ฿18,490 ส่วน Taobao ส่งไทยรวมภาษีอยู่ราว ฿13,956 แต่ Taobao ใช้เวลาส่งนานกว่าและประกันอาจไม่ใช่ศูนย์ไทย ราคาต้องดูคู่กับเวลารอและการรับประกัน</p>
+<p class="small muted">ตัวเลขทั้งหมดมาจากหน้าจอแอปที่ผู้ใช้บันทึกไว้วันที่ 12 ต.ค. 2026 โค้ดและอัตราเปลี่ยนตลอด ใช้เป็นตัวอย่างวิธีคิด ไม่ใช่ราคาปัจจุบัน</p>`,
+    },
+    en: {
+      title: "How Shopee / Lazada / Taobao prices work",
+      short: "What you pay depends on your codes, your cart, the time and how you pay; there is no single price",
+      body: `<h2>Shopee / Lazada: stacked codes</h2>
+<p>From a real checkout (12 Oct 2026): cart price ฿16,490 → shop code 20% (−฿3,298) applies first → Shopee code 30%, capped at ฿4,000, minimum spend ฿7,915, checked on the price <b>after</b> the shop code (−฿3,958) → pay ฿9,234.</p>
+<ul>
+<li><b>One platform code per order.</b> The app picks a "recommended" code for whatever is ticked in the cart; tick another item and the best code changes.</li>
+<li><b>Codes are personal and short-lived.</b> VIP codes, new-user codes, card codes; some last one hour after you collect them. The price someone else sees is not yours.</li>
+<li><b>Not everything takes codes.</b> New or rare items set by the brand can be excluded.</li>
+<li>Some shops say platform fees rose sharply in 2026, so their marketplace prices sit above their own website or store (e.g. HolySai's Facebook notice of 31 Jul 2026). Check the shop's own site too.</li>
+</ul>
+<p>Work it out with <a href="#deal">Real price</a>: enter the price you see and the codes you hold to see which pair wins.</p>
+<h2>Taobao to Thailand: the product page isn't the checkout total</h2>
+<ul>
+<li>The product page shows "券后约฿…" (about this much after coupons); checkout came out higher, by about 9.1% in the two cases we saw. Part of that is <b>7% tax</b>: Taobao's own shipping page (12 Oct 2026) says imports into Thailand owe 7% VAT plus duty from 10%, and with Taobao's official logistics the buyer pays 7% of the goods' value while the platform covers the rest.</li>
+<li>Shipping: direct by land (直邮) is free over ¥99, about 13–15 days; consolidated (集运) is charged by weight (Bangkok ¥15 for the first kg, ¥14.5 per extra kg), using the larger of actual weight and L×W×H/6000.</li>
+<li>Payment method matters: in our example, paying by PromptPay took about 1% more off.</li>
+<li>The checkout total is the number to trust, not the product page.</li>
+</ul>
+<h2>Is it always cheaper?</h2>
+<p>No. On the same day the Moondrop DUSK was ฿18,490 after codes on Shopee Thailand and about ฿13,956 from Taobao delivered with tax, but Taobao takes longer and the warranty may not be Thai. Weigh price against waiting time and warranty.</p>
+<p class="small muted">All figures come from app screens a user recorded on 12 Oct 2026. Codes and rates change constantly: read them as a worked example, not current prices.</p>`,
     },
   },
   {

@@ -26,6 +26,8 @@ export function specBlock(html) {
   }
   // Linsoul: <div class="col-name">Impedance</div><div class="col-desc">18 Ohm</div>
   for (const m of html.matchAll(/<div class="col-name">([\s\S]{1,200}?)<\/div>\s*<div class="col-desc">([\s\S]{1,600}?)<\/div>/g)) pair(m[1], m[2]);
+  // Definition lists: <dt>Impedance</dt><dd>32Ω</dd> (Linsoul's theme since Oct 2026).
+  for (const m of html.matchAll(/<dt[^>]*>([\s\S]{1,200}?)<\/dt>\s*<dd[^>]*>([\s\S]{1,600}?)<\/dd>/gi)) pair(m[1], m[2]);
   // Impact theme feature chart (Headphone Zone, Kitsune HiFi).
   for (const m of html.matchAll(/class="feature-chart__heading[^"]*"[^>]*>([\s\S]{1,300}?)<\/div>\s*<div\s+class="feature-chart__value[^"]*"[^>]*>([\s\S]{1,1500}?)<\/div>\s*<\/div>/g)) pair(m[1], m[2]);
   // Kiwi Ears: <div class="pk-specrow..."><p>label</p><p>value</p></div>

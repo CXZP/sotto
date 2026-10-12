@@ -51,3 +51,10 @@ test("store page layouts: feature chart, spec rows, tables, spec lists", () => {
   assert.equal(specs.power[0].mw, 1513);
   assert.ok(verify("power", specs.power[0], lines).ok);
 });
+
+test("definition-list spec boxes (Linsoul's theme since Oct 2026)", () => {
+  const html = `<h2 class="lsp-h2">Technical details</h2><dl class="lsps-list"><div><dt>Sensitivity</dt><dd>119dB/Vrms (@1kHz)</dd></div><div><dt>Impedance</dt><dd>7.7Ω ±15% (@1kHz)</dd></div></dl>`;
+  const { specs } = extractSpecs(specBlock(html));
+  assert.deepEqual(specs.impedance.map((e) => e.value), [7.7]);
+  assert.equal(specs.sensitivity[0].value, 119);
+});

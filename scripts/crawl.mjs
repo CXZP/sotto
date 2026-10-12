@@ -38,6 +38,8 @@ async function slowDown(res, attempt) {
 // Product pages fetched per run for stores whose spec list lives on the page
 // (see scripts/lib/specpage.js). The rest wait for the next run; pages already
 // read are remembered in cache/pages/ until the product changes.
+// Bump when specpage.js learns a new layout, so pages it missed are read again.
+const SPEC_READER = 2;
 const PAGE_BUDGET = Number(process.env.SPEC_PAGES ?? 400);
 // The job has a time limit, and a cut-off job keeps nothing. Every store's
 // feed is read first; product pages only fill the time left before this
@@ -187,7 +189,9 @@ async function addSpecPages(store, products) {
   for (const p of products) {
     if (!noSheet(p.body) || ["other", "skip"].includes(classify(p))) continue;
     let hit = seen[p.id];
-    if (hit?.updatedAt !== p.updatedAt) {
+    // A page read with an older reader that found nothing is read again: the
+    // reader may know its layout now (Linsoul changed theme in Oct 2026).
+    if (hit?.updatedAt !== p.updatedAt || (!hit.spec && hit.v !== SPEC_READER)) {
       // Stop for this run when out of budget or when the store keeps saying
       // "slow down": the pages left are picked up next week.
       if (fetched >= PAGE_BUDGET || failedInRow >= 5 || !timeLeft()) continue;
@@ -199,7 +203,7 @@ async function addSpecPages(store, products) {
         continue;
       }
       failedInRow = 0;
-      hit = seen[p.id] = { updatedAt: p.updatedAt, spec: specBlock(html) };
+      hit = seen[p.id] = { updatedAt: p.updatedAt, spec: specBlock(html), v: SPEC_READER };
       if (fetched % 25 === 0) await save();
     }
     if (hit.spec) {

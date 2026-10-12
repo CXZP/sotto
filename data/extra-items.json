@@ -75,7 +75,8 @@
           "url": "https://www.audiophonics.fr/en/dac-with-volume/audalytic-dr70-black-p-22166.html"
         }
       }
-    }
+    },
+    "portsComplete": true
   },
   {
     "id": "fiio--k17",
@@ -124,7 +125,8 @@
           "url": "https://fiio.com/newsinfo/998789.html"
         }
       }
-    }
+    },
+    "portsComplete": true
   },
   {
     "id": "topping--a70-pro",
@@ -186,7 +188,8 @@
           "url": "https://www.audiophonics.fr/en/dac-with-volume/topping-d900-p-20876.html"
         }
       }
-    }
+    },
+    "portsComplete": true
   },
   {
     "id": "gustard--h26",
@@ -215,7 +218,8 @@
           "url": "https://www.audiophonics.fr/en/preamplifiers-volume-controllers/gustard-h26-black-p-18645.html"
         }
       }
-    }
+    },
+    "portsComplete": true
   },
   {
     "id": "topping--l50",
@@ -270,6 +274,142 @@
           "url": "https://www.fiio.com/WARMERR2R_parameters"
         }
       }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "fiio--k17-r2r",
+    "brand": "FiiO",
+    "model": "K17 R2R",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://www.fiio.com/K17R2R_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB*3 (Data transmission port*2+RS232 DSP regulating port*1)",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "optical": {
+          "quote": "Digital optical input port: Optical plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "coax": {
+          "quote": "Digital coaxial input port: RCA plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "rca": {
+          "quote": "Single-ended line input port: RCA plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        }
+      },
+      "out": {
+        "optical": {
+          "quote": "Digital optical output port: Optical plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "coax": {
+          "quote": "Digital coaxial output port: RCA plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "xlr": {
+          "quote": "Balanced line output port: XLR3 balanced plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        },
+        "rca": {
+          "quote": "Single-ended line output port: RCA plug",
+          "url": "https://www.fiio.com/K17R2R_parameters"
+        }
+      }
+    },
+    "portsComplete": true
+  },
+  {
+    "id": "fiio--ka17",
+    "brand": "FiiO",
+    "model": "KA17",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/KA17_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB2.0 (power supply/data transfer)/USB Type-C POWER IN (orange, powering)",
+          "url": "https://www.fiio.com/KA17_parameters"
+        }
+      },
+      "out": {}
     }
+  },
+  {
+    "id": "fiio--ka15",
+    "brand": "FiiO",
+    "model": "KA15",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/KA15_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "USB port: Type-C USB",
+          "url": "https://www.fiio.com/KA15_parameters"
+        }
+      },
+      "out": {}
+    }
+  },
+  {
+    "id": "fiio--qx13",
+    "brand": "FiiO",
+    "model": "QX13",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/QX13_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "Type-C USB2.0 (power supply/data transmission)+Type-C USB POWER IN",
+          "url": "https://www.fiio.com/QX13_parameters"
+        }
+      },
+      "out": {}
+    }
+  },
+  {
+    "id": "fiio--ea13",
+    "brand": "FiiO",
+    "model": "EA13",
+    "category": "desktop",
+    "role": "integrated",
+    "addedFrom": "https://www.fiio.com/EA13_parameters",
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "Single-ended line input: RCA port*4",
+          "url": "https://www.fiio.com/EA13_parameters"
+        }
+      },
+      "out": {}
+    }
+  },
+  {
+    "id": "fiio--ka5",
+    "brand": "FiiO",
+    "model": "KA5",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/KA5_parameters",
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "USB: Type-C USB",
+          "url": "https://www.fiio.com/KA5_parameters"
+        }
+      },
+      "out": {}
+    }
+  },
+  {
+    "id": "fiio--ka1-lightning",
+    "brand": "FiiO",
+    "model": "KA1 Lightning",
+    "category": "dongle",
+    "addedFrom": "https://www.fiio.com/KA1_parameters"
   }
 ]

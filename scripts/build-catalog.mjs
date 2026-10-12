@@ -453,8 +453,16 @@ for (const g of catalog) {
       for (const k of ["dcIn", "notes", "addedFrom"]) if (e[k] && !hit[k]) hit[k] = e[k];
       // The role read off the maker's page beats the one guessed from store titles.
       if (e.role) hit.role = e.role;
+      // So does the kind of box (a dongle a store filed as a desktop DAC/amp).
+      if (e.category && e.category !== hit.category) {
+        hit.category = e.category;
+        if (e.category !== "desktop" && !e.role) delete hit.role;
+      }
       // Sockets from the maker fill in what stores don't list; a store's own line stays.
-      if (e.ports) {
+      // A maker's full socket list (portsComplete) replaces what was read off store pages,
+      // which can be wrong ("line in" on a DAC that has none).
+      if (e.ports && e.portsComplete) hit.ports = structuredClone(e.ports);
+      else if (e.ports) {
         hit.ports ??= { in: {}, out: {} };
         for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(e.ports[dir] ?? {})) hit.ports[dir][p] ??= v;
       }

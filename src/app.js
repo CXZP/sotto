@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5k8f3m";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5k8f3m";
-import { renderChart } from "./chart.js?v=mv5k8f3m";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5k8f3m";
-import { makeT } from "./i18n.js?v=mv5k8f3m";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5k8f3m";
-import { LEGAL } from "./legal.js?v=mv5k8f3m";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5k8f3m";
-import * as community from "./community.js?v=mv5k8f3m";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5k8f3m";
-import { redactImage } from "./redact.js?v=mv5k8f3m";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5k8f3m";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5k8f3m";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5k8f3m";
-import { gearKind, gearSvg } from "./gear.js?v=mv5k8f3m";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS } from "./panel.js?v=mv5k8f3m";
-import { chainLinks } from "./chain.js?v=mv5k8f3m";
-import { fits } from "./dcfit.js?v=mv5k8f3m";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5k8f3m";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5k8f3m";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5k8f3m";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5kalqh";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5kalqh";
+import { renderChart } from "./chart.js?v=mv5kalqh";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5kalqh";
+import { makeT } from "./i18n.js?v=mv5kalqh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5kalqh";
+import { LEGAL } from "./legal.js?v=mv5kalqh";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5kalqh";
+import * as community from "./community.js?v=mv5kalqh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5kalqh";
+import { redactImage } from "./redact.js?v=mv5kalqh";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5kalqh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5kalqh";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5kalqh";
+import { gearKind, gearSvg } from "./gear.js?v=mv5kalqh";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS } from "./panel.js?v=mv5kalqh";
+import { chainLinks } from "./chain.js?v=mv5kalqh";
+import { fits } from "./dcfit.js?v=mv5kalqh";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5kalqh";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5kalqh";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5kalqh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1292,7 +1292,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5k8f3m").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5kalqh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2582,7 +2582,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5k8f3m" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5kalqh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3069,7 +3069,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5k8f3m" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5kalqh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

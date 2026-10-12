@@ -641,3 +641,27 @@ select option { background: var(--surface); color: var(--text); }
 .desk-board.flow .dk-wire { pointer-events: stroke; }
 .dk-mount { fill: none; stroke: var(--line-strong); stroke-width: 2; stroke-dasharray: 4 5; }
 .dk-dev .gear-ic { width: 80%; height: 80%; }
+/* Back panels (desk cable view) */
+.sheet.patch { width: min(760px, 100%); max-height: 92vh; overflow: auto; }
+.pt-svg { width: 100%; height: auto; touch-action: none; user-select: none; border-radius: 12px; background: radial-gradient(var(--line) 1px, transparent 1px) 0 0 / 18px 18px; }
+.pt-plug { cursor: grab; }
+.pt-plug.held { cursor: grabbing; }
+.pt-plug-in { transform-box: fill-box; transform-origin: center; transition: transform 0.15s var(--ease); }
+.pt-plug.held .pt-plug-in { transform: scale(1.12); filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45)); }
+.pt-plug.snap .pt-plug-in { animation: pt-snap 0.32s var(--ease); }
+.pt-plug.shake .pt-plug-in { animation: pt-shake 0.36s ease; }
+@keyframes pt-snap { 0% { transform: scale(1.25); } 55% { transform: scale(0.92); } 100% { transform: scale(1); } }
+@keyframes pt-shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.pt-target { fill: none; stroke-width: 3; stroke-dasharray: 6 5; }
+.pt-target.ok { stroke: var(--st-good); }
+.pt-target.check, .pt-target.adapter, .pt-target.unknown { stroke: var(--st-warn); }
+.pt-target.no { stroke: #e5484d; opacity: 0.35; }
+.pt-spark { fill: none; stroke: #ffd36b; stroke-width: 3; animation: pt-spark 0.45s ease-out forwards; }
+@keyframes pt-spark { to { r: 46; opacity: 0; } }
+.pt-msg { margin: 0; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); border-left: 3px solid var(--st-good); }
+.pt-msg.check, .pt-msg.adapter, .pt-msg.unknown { border-left-color: var(--st-warn); }
+.pt-msg.no { border-left-color: #e5484d; }
+@media (prefers-reduced-motion: reduce) { .pt-plug-in { transition: none; } .pt-plug.snap .pt-plug-in, .pt-plug.shake .pt-plug-in, .pt-spark { animation: none; } }
+.pt-actions { display: flex; justify-content: space-between; gap: 10px; }
+.pt-actions .pill { width: auto; padding-inline: 18px; }
+.pt-svg { display: block; margin: 0 auto; }

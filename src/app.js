@@ -1,23 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5iifgs";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5iifgs";
-import { renderChart } from "./chart.js?v=mv5iifgs";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5iifgs";
-import { makeT } from "./i18n.js?v=mv5iifgs";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5iifgs";
-import { LEGAL } from "./legal.js?v=mv5iifgs";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5iifgs";
-import * as community from "./community.js?v=mv5iifgs";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5iifgs";
-import { redactImage } from "./redact.js?v=mv5iifgs";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5iifgs";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5iifgs";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5iifgs";
-import { gearKind, gearSvg } from "./gear.js?v=mv5iifgs";
-import { chainLinks } from "./chain.js?v=mv5iifgs";
-import { fits } from "./dcfit.js?v=mv5iifgs";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5iifgs";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5iifgs";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5iifgs";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5jhzw7";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5jhzw7";
+import { renderChart } from "./chart.js?v=mv5jhzw7";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5jhzw7";
+import { makeT } from "./i18n.js?v=mv5jhzw7";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5jhzw7";
+import { LEGAL } from "./legal.js?v=mv5jhzw7";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5jhzw7";
+import * as community from "./community.js?v=mv5jhzw7";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5jhzw7";
+import { redactImage } from "./redact.js?v=mv5jhzw7";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5jhzw7";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5jhzw7";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5jhzw7";
+import { gearKind, gearSvg } from "./gear.js?v=mv5jhzw7";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS } from "./panel.js?v=mv5jhzw7";
+import { chainLinks } from "./chain.js?v=mv5jhzw7";
+import { fits } from "./dcfit.js?v=mv5jhzw7";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5jhzw7";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5jhzw7";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5jhzw7";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1291,7 +1292,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5iifgs").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5jhzw7").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2581,7 +2582,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5iifgs" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5jhzw7" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3068,7 +3069,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5iifgs" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5jhzw7" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4594,7 +4595,7 @@ function wireDesk(main) {
       board.innerHTML = `<svg class="dk-wires" width="${layout.width}" height="${layout.height}">${flowMounts().map((d) => `<path class="dk-mount" d="${d}"/>`).join("")}${wires
         .map((w) => `<path class="dk-wire ${w.s.status}" data-cable="${w.k}" d="${w.d}"><title>${esc(t(w.s.why))} · ${esc(t("dk_wire_remove"))}</title></path>`)
         .join("")}</svg>${all.map(flowNode).join("")}${wires
-        .map((w) => `<button type="button" class="dk-tag ${w.s.status}" data-cable="${w.k}" style="left:${w.mid.x}px;top:${w.mid.y}px" title="${esc(t(w.s.why))} · ${esc(t("dk_wire_remove"))}">${esc(cableLabel(w.c))}</button>`)
+        .map((w) => `<button type="button" class="dk-tag ${w.s.status}" data-cable="${w.k}" style="left:${w.mid.x}px;top:${w.mid.y}px" title="${esc(t(w.s.why))} · ${esc(t("pt_open"))}">${esc(cableLabel(w.c))}</button>`)
         .join("")}`;
       fit();
     } else if (mode === "flow") {
@@ -4636,6 +4637,233 @@ function wireDesk(main) {
     commit();
   };
 
+  // --- Back panels: one cable between two boxes, drawn on their real-looking
+  // rear panels. Drag a plug to another socket; it only goes in where the
+  // shape fits (or an adapter would), otherwise it springs back.
+  function openPatch(k) {
+    const c0 = desk.cables[k];
+    if (!c0) return;
+    const all = nodes();
+    const A = all[c0.from].node;
+    const B = all[c0.to].node;
+    const sa = panelSpec(A);
+    const sb = panelSpec(B);
+    const GAP = 170;
+    const W = Math.max(sa.w, sb.w) + 40;
+    const ax = (W - sa.w) / 2;
+    const bx = (W - sb.w) / 2;
+    const by = sa.h + GAP;
+    const H = by + sb.h + 30;
+    const hpJack = B.item && sb.chassis.style === "plug" ? hpPlug(B.item) : null;
+    // A socket's place on the whole drawing.
+    const at = (s, side) => ({ x: s.x + (side === "a" ? ax : bx), y: s.y + (side === "a" ? 0 : by) });
+    const pickA = (port) => sa.sockets.filter((s) => s.dir === "out" && s.port === port).sort((x, y) => (y.jack === hpJack) - (x.jack === hpJack))[0];
+    const pickB = (port) => sb.sockets.find((s) => s.dir === "in" && s.port === port);
+    let cable = { ...c0 };
+    let sockA = pickA(cable.out);
+    let sockB = pickB(cable.in);
+    if (!sockA || !sockB) return;
+    const plugs = { a: at(sockA, "a"), b: at(sockB, "b") };
+    let drag = null; // "a" | "b"
+    const dlg = document.createElement("div");
+    dlg.className = "modal";
+    dlg.innerHTML = `<div class="sheet card patch" role="dialog" aria-modal="true" aria-label="${esc(t("pt_title"))}">
+      <div class="sheet-head"><h2>${esc(deskName(A))} → ${esc(deskName(B))}</h2><button class="icon-btn" data-close aria-label="${esc(t("close"))}">✕</button></div>
+      <svg class="pt-svg" style="max-width:${Math.round(W * 1.35)}px" viewBox="0 0 ${W} ${H}" font-family="Inter, system-ui, sans-serif">${PANEL_DEFS}
+        <g transform="translate(${ax},0)">${panelSvg(sa, deskName(A))}</g>
+        <g transform="translate(${bx},${by})">${panelSvg(sb, deskName(B))}</g>
+        <g class="pt-glow"></g><g class="pt-rope"></g><g class="pt-plugs"></g>
+      </svg>
+      <p class="pt-msg small"></p>
+      <p class="small muted">${esc(t("pt_help"))}</p>
+      ${[A, B]
+        .filter((n) => n.item && nodePorts(n).in.concat(nodePorts(n).out).includes("?"))
+        .map((n) => `<a class="small" href="#item/${encodeURIComponent(n.item.id)}">${esc(t("pt_report", { name: deskName(n) }))}</a>`)
+        .join("")}
+      <div class="pt-actions"><button type="button" class="pill" id="pt-remove">${esc(t("pt_remove"))}</button><button type="button" class="pill primary" data-close>${esc(t("pt_done"))}</button></div>
+    </div>`;
+    document.body.append(dlg);
+    const svg = dlg.querySelector("svg");
+    const gRope = dlg.querySelector(".pt-rope");
+    const gPlugs = dlg.querySelector(".pt-plugs");
+    const gGlow = dlg.querySelector(".pt-glow");
+    const msg = dlg.querySelector(".pt-msg");
+    const say = () => {
+      const s = cableCheck(cable.out, cable.in);
+      const jackNote = hpJack && sockA.jack && sockA.jack !== hpJack ? ` ${t("pt_jack", { a: hpJack, b: sockA.jack })}` : "";
+      msg.className = `pt-msg small ${jackNote && s.status === "ok" ? "adapter" : s.status}`;
+      msg.textContent = `${cableLabel(cable)} · ${t(s.why)}${jackNote}`;
+    };
+
+    // Rope: a chain of points under gravity, ends held by the plugs.
+    const N = 22;
+    const ropeLen = () => Math.hypot(plugs.b.x - plugs.a.x, plugs.b.y - plugs.a.y) * 1.08 + 24;
+    let pts = Array.from({ length: N }, (_, j) => {
+      const f = j / (N - 1);
+      const x = plugs.a.x + (plugs.b.x - plugs.a.x) * f;
+      const y = plugs.a.y + (plugs.b.y - plugs.a.y) * f;
+      return { x, y, px: x, py: y };
+    });
+    const step = () => {
+      const seg = ropeLen() / (N - 1);
+      for (const p of pts) {
+        const vx = (p.x - p.px) * 0.96;
+        const vy = (p.y - p.py) * 0.96;
+        p.px = p.x;
+        p.py = p.y;
+        p.x += vx;
+        p.y += vy + 0.6;
+      }
+      for (let it = 0; it < 24; it++) {
+        Object.assign(pts[0], { x: plugs.a.x, y: plugs.a.y });
+        Object.assign(pts[N - 1], { x: plugs.b.x, y: plugs.b.y });
+        for (let j = 0; j < N - 1; j++) {
+          const p = pts[j];
+          const q = pts[j + 1];
+          const dx = q.x - p.x;
+          const dy = q.y - p.y;
+          const d = Math.hypot(dx, dy) || 0.001;
+          const diff = (d - seg) / d / 2;
+          if (j > 0) {
+            p.x += dx * diff;
+            p.y += dy * diff;
+          }
+          if (j + 1 < N - 1) {
+            q.x -= dx * diff;
+            q.y -= dy * diff;
+          }
+        }
+      }
+    };
+    const ropeColor = () => ({ ok: "#2f3033", check: "#3a3426", adapter: "#3a3426", unknown: "#3a3426", no: "#4a2222" })[cableCheck(cable.out, cable.in).status] ?? "#2f3033";
+    const drawRope = () => {
+      let d = `M${pts[0].x},${pts[0].y}`;
+      for (let j = 1; j < N - 1; j++) d += ` Q${pts[j].x},${pts[j].y} ${(pts[j].x + pts[j + 1].x) / 2},${(pts[j].y + pts[j + 1].y) / 2}`;
+      d += ` L${pts[N - 1].x},${pts[N - 1].y}`;
+      gRope.innerHTML = `<path d="${d}" stroke="#000" stroke-opacity=".35" stroke-width="11" fill="none" stroke-linecap="round" transform="translate(2,4)"/><path d="${d}" stroke="${ropeColor()}" stroke-width="9" fill="none" stroke-linecap="round"/><path d="${d}" stroke="#ffffff" stroke-opacity=".12" stroke-width="2.5" fill="none" stroke-linecap="round" transform="translate(-1.5,-1.5)"/>`;
+    };
+    const plugHtml = (end) => {
+      const s = end === "a" ? sockA : sockB;
+      if (s.glyph === "hpplug") return "";
+      // A dongle's own cable ends in a USB-C plug: draw that at the other end.
+      if (end === "a" && sockB.glyph === "tether") return `<g class="pt-plug${drag === end ? " held" : ""}" data-end="${end}" transform="translate(${plugs[end].x},${plugs[end].y})"><g class="pt-plug-in">${plugGlyph("usbC")}</g></g>`;
+      if (s.glyph === "tether") return "";
+      const jack = end === "a" && hpJack ? hpJack : s.jack;
+      return `<g class="pt-plug${drag === end ? " held" : ""}" data-end="${end}" transform="translate(${plugs[end].x},${plugs[end].y})"><g class="pt-plug-in">${plugGlyph(s.glyph, jack, s.horiz)}</g></g>`;
+    };
+    const drawPlugs = () => (gPlugs.innerHTML = plugHtml("a") + plugHtml("b"));
+    // While a plug is held: where it could go, coloured by what the cable would be.
+    const targets = (end) => (end === "a" ? sa.sockets.filter((s) => s.dir === "out") : sb.sockets.filter((s) => s.dir === "in"));
+    const verdict = (end, s) => cableCheck(end === "a" ? s.port : cable.out, end === "b" ? s.port : cable.in).status;
+    const drawGlow = () => {
+      gGlow.innerHTML = drag
+        ? targets(drag)
+            .map((s) => {
+              const p = at(s, drag);
+              return `<circle class="pt-target ${verdict(drag, s)}" cx="${p.x}" cy="${p.y}" r="${s.port === "xlr" || s.port === "spk" ? 62 : s.pair ? 34 : 24}"/>`;
+            })
+            .join("")
+        : "";
+    };
+    let live = true;
+    const loop = () => {
+      if (!live) return;
+      step();
+      drawRope();
+      requestAnimationFrame(loop);
+    };
+    for (let j = 0; j < 160; j++) step(); // settled before the first frame
+    drawRope();
+    drawPlugs();
+    say();
+    requestAnimationFrame(loop);
+
+    const toSvg = (e) => {
+      const p = svg.createSVGPoint();
+      p.x = e.clientX;
+      p.y = e.clientY;
+      return p.matrixTransform(svg.getScreenCTM().inverse());
+    };
+    const flash = (p) => {
+      gGlow.insertAdjacentHTML("beforeend", `<circle class="pt-spark" cx="${p.x}" cy="${p.y}" r="10"/>`);
+      setTimeout(() => gGlow.querySelector(".pt-spark")?.remove(), 450);
+    };
+    svg.addEventListener("pointerdown", (e) => {
+      const g = e.target.closest(".pt-plug");
+      if (!g) return;
+      e.preventDefault();
+      drag = g.dataset.end;
+      try {
+        svg.setPointerCapture(e.pointerId);
+      } catch {}
+      drawGlow();
+      drawPlugs();
+    });
+    svg.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const p = toSvg(e);
+      plugs[drag] = { x: p.x, y: p.y };
+      gPlugs.querySelector(`[data-end="${drag}"]`)?.setAttribute("transform", `translate(${p.x},${p.y})`);
+    });
+    const drop = () => {
+      if (!drag) return;
+      const end = drag;
+      drag = null;
+      const here = plugs[end];
+      const near = targets(end)
+        .map((s) => ({ s, d: Math.hypot(at(s, end).x - here.x, at(s, end).y - here.y) }))
+        .filter((x) => x.d < (x.s.port === "xlr" || x.s.port === "spk" ? 70 : 46))
+        .sort((x, y) => x.d - y.d)[0];
+      const back = () => {
+        plugs[end] = at(end === "a" ? sockA : sockB, end);
+        drawGlow();
+        drawPlugs();
+      };
+      if (!near) return back();
+      const v = verdict(end, near.s);
+      if (v === "no") {
+        back();
+        const g = gPlugs.querySelector(`[data-end="${end}"]`);
+        g?.classList.add("shake");
+        msg.className = "pt-msg small no";
+        msg.textContent = t("pt_no", { why: t(cableCheck(end === "a" ? near.s.port : cable.out, end === "b" ? near.s.port : cable.in).why) });
+        return;
+      }
+      if (end === "a") {
+        sockA = near.s;
+        cable = { ...cable, out: near.s.port };
+      } else {
+        sockB = near.s;
+        cable = { ...cable, in: near.s.port };
+      }
+      plugs[end] = at(near.s, end);
+      // One cable per input socket: another cable already there comes out.
+      desk.cables = desk.cables.filter((c) => c === c0 || !(c.to === cable.to && c.in === cable.in));
+      Object.assign(c0, cable);
+      drawGlow();
+      drawPlugs();
+      gPlugs.querySelector(`[data-end="${end}"]`)?.classList.add("snap");
+      flash(plugs[end]);
+      say();
+      commit();
+    };
+    svg.addEventListener("pointerup", drop);
+    svg.addEventListener("pointercancel", drop);
+    const close = () => {
+      live = false;
+      dlg.remove();
+    };
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg || e.target.closest("[data-close]")) close();
+    });
+    dlg.querySelector("#pt-remove").addEventListener("click", () => {
+      const j = desk.cables.indexOf(c0);
+      if (j >= 0) desk.cables.splice(j, 1);
+      close();
+      commit();
+    });
+  }
+
   // A photo that fails to load: the drawing of its kind instead.
   board.addEventListener(
     "error",
@@ -4656,6 +4884,7 @@ function wireDesk(main) {
       return commit();
     }
     const wire = e.target.closest("[data-cable]");
+    if (wire && mode === "flow") return openPatch(Number(wire.dataset.cable));
     if (wire) {
       desk.cables.splice(Number(wire.dataset.cable), 1);
       return commit();

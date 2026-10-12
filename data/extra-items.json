@@ -276,7 +276,10 @@
     "jacks": [
       "xlr4",
       "6.35"
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "fiio--warmer-r2r",
@@ -874,7 +877,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--e30-ii-2",
@@ -910,7 +916,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--dx1",
@@ -945,7 +954,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 3.5mm headphone output jack / 1 x 6.35mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/dx1.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--l30ii",
@@ -978,7 +990,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amp output: 1 x 6.35mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/l30ii.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--nx7",
@@ -1051,7 +1066,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--a30pro-nfca",
@@ -1094,7 +1112,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier outputs: 1 x 6.35mm headphone output jack / 1 x XLR headphone output jack / 1 x 4.4mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/a30p.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--e50",
@@ -1134,7 +1155,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--e70",
@@ -1344,7 +1368,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone amp output: 3.5mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--dx3pro-pre",
@@ -1394,7 +1421,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone amp output: 3.5mm headphone output jack",
         "source": "https://dl.topping.audio/usermanual/dx3pp.pdf#page=2"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--dx5-lite",
@@ -1825,7 +1855,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "full"
+    }
   },
   {
     "id": "topping--e30-ii-lite",
@@ -1861,7 +1894,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d70-pro-sabre",
@@ -1984,7 +2020,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
         "source": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--a50-iii-a50iii-high-power",
@@ -2021,7 +2060,10 @@
         "en": "Headphone jacks per TOPPING's manual: Headphone Amplifier output: 1 x 6.35mm headphone output jack / 1 x 4.4mm headphone output jack",
         "source": "https://dl.topping.audio/um/a50_iii.pdf#page=9"
       }
-    ]
+    ],
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d50-iii",
@@ -2061,7 +2103,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d90-iii-sabre",
@@ -2394,7 +2439,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "full"
+    }
   },
   {
     "id": "topping--d50s",
@@ -2434,7 +2482,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d10s",
@@ -2466,7 +2517,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d10s-32bit-384khz-dsd256-xmos-xu208",
@@ -2498,7 +2552,10 @@
         }
       }
     },
-    "portsComplete": true
+    "portsComplete": true,
+    "look": {
+      "style": "compact"
+    }
   },
   {
     "id": "topping--d70-pro-octo",

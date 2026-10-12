@@ -11,10 +11,12 @@ import { existsSync } from "node:fs";
 import { classify, condition, jpModelTitle, modelKey, compact, groupKey, looseKey, deskRole, titleRole, speakerKind, cartridgeKind, phonoInputs } from "./lib/classify.js";
 import { extractSpecs, extractSheet, verify } from "./lib/specs.js";
 import { detectLooks } from "./lib/materials.js";
-import { dcInput, dcOutputs } from "./lib/dcpower.js";
+import { dcInput, dcOutputs, dcFromSocket } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
 import { preorder, listedAt } from "./lib/dates.js";
 import { jackOutputs } from "./lib/jacks.js";
+import { isMakerUrl } from "./lib/sources.js";
+import { settle } from "./lib/conflicts.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
@@ -398,15 +400,19 @@ const catalog = [...groups.values()]
         const same = specs[k].find((e) => e.value === c.value && (e.unit ?? null) === (c.unit ?? null));
         if (same) {
           same.kind = c.kind;
+          same.curated = true;
           same.sources = [...c.sources, ...same.sources];
           if (c.note) same.note = c.note;
-        } else specs[k].push(c);
+        } else specs[k].push({ ...c, curated: true });
       }
     }
     for (const k of Object.keys(specs)) {
       rank(specs[k]);
       if (!specs[k].length) delete specs[k];
     }
+    // Sources that disagree: the maker's page or a hand-checked value decides;
+    // otherwise the field is marked and left out of the maths (scripts/lib/conflicts.js).
+    const conflicts = settle(specs, g.brand);
     const { curatedSpecs, roleVotes, roleStated, photos, catVotes, ...rest } = g;
     // Stores disagree on the kind of thing: one store filing "iFi Neo Stream"
     // under headphones doesn't make it headphones when most say otherwise.
@@ -442,7 +448,7 @@ const catalog = [...groups.values()]
     // First time any store listed it: the release calendar's date for this model.
     const listed = rest.offers.map((o) => o.listedAt).filter(Boolean).sort()[0];
     if (listed) rest.listedAt = listed;
-    const item = { ...rest, specs };
+    const item = { ...rest, specs, ...(conflicts.length ? { conflicts } : {}) };
     if (photos) photoSets.set(item, photos);
     return item;
   })
@@ -526,6 +532,16 @@ const handPorts = new Map();
       for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;
     }
   }
+}
+
+// The maker's DC inlet wins over a store's power sentence (iFi ZEN DAC 3: a
+// store wrote "powered by USB-C"; iFi lists "USB-C or DC 5V/0.5A", and the
+// photos show the barrel inlet).
+for (const g of catalog) {
+  const dc = g.ports?.in?.dc;
+  if (!dc?.quote || !isMakerUrl(dc.url, g.brand)) continue;
+  const d = dcFromSocket(dc.quote);
+  if (d) g.dcIn = { ...d, url: dc.url };
 }
 
 // Stores spell brands differently (MoonDrop / Moondrop / MOONDROP). Use one

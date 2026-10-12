@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5ttrnq";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5ttrnq";
-import { renderChart } from "./chart.js?v=mv5ttrnq";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5ttrnq";
-import { makeT } from "./i18n.js?v=mv5ttrnq";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5ttrnq";
-import { LEGAL } from "./legal.js?v=mv5ttrnq";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5ttrnq";
-import * as community from "./community.js?v=mv5ttrnq";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5ttrnq";
-import { redactImage } from "./redact.js?v=mv5ttrnq";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5ttrnq";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5ttrnq";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5ttrnq";
-import { gearKind, gearSvg } from "./gear.js?v=mv5ttrnq";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5ttrnq";
-import { chainLinks } from "./chain.js?v=mv5ttrnq";
-import { fits } from "./dcfit.js?v=mv5ttrnq";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5ttrnq";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5ttrnq";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5ttrnq";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5u4ysa";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5u4ysa";
+import { renderChart } from "./chart.js?v=mv5u4ysa";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5u4ysa";
+import { makeT } from "./i18n.js?v=mv5u4ysa";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5u4ysa";
+import { LEGAL } from "./legal.js?v=mv5u4ysa";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5u4ysa";
+import * as community from "./community.js?v=mv5u4ysa";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5u4ysa";
+import { redactImage } from "./redact.js?v=mv5u4ysa";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5u4ysa";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5u4ysa";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5u4ysa";
+import { gearKind, gearSvg } from "./gear.js?v=mv5u4ysa";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5u4ysa";
+import { chainLinks } from "./chain.js?v=mv5u4ysa";
+import { fits } from "./dcfit.js?v=mv5u4ysa";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5u4ysa";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5u4ysa";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5u4ysa";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -228,7 +228,7 @@ function powerLine(i) {
   if (!spec) return "";
   const vtxt = (x) => (x.range ? `${x.range[0]}–${x.range[1]} V` : (x.needs ?? x.outputs).map((p) => `${p.v} V${p.a ? ` ${fmt(p.a, 2)} A` : ""}`).join(" · "));
   // Powered over USB: a barrel-plug supply doesn't apply.
-  if (i.dcIn?.usb) return `<p class="small power-line"><b>${esc(t("pw_needs"))}</b> ${esc(vtxt(spec))} · ${esc(t("pw_usb"))} <a href="${esc(spec.url)}" target="_blank" rel="noopener" title="${esc(spec.quote)}">${esc(t("pw_source"))} ↗</a></p>`;
+  if (i.dcIn?.usb && !i.dcIn.barrel) return `<p class="small power-line"><b>${esc(t("pw_needs"))}</b> ${esc(vtxt(spec))} · ${esc(t("pw_usb"))} <a href="${esc(spec.url)}" target="_blank" rel="noopener" title="${esc(spec.quote)}">${esc(t("pw_source"))} ↗</a></p>`;
   const others = i.dcIn ? db.items.filter((x) => x.dcOut) : db.items.filter((x) => x.dcIn);
   const matches = others
     .map((x) => ({ x, f: i.dcIn ? fits(x.dcOut, i.dcIn) : fits(i.dcOut, x.dcIn) }))
@@ -238,7 +238,7 @@ function powerLine(i) {
     .slice(0, 8)
     .map((m) => `<a class="chip" href="#item/${encodeURIComponent(m.x.id)}">${esc(displayName(m.x))} · ${m.f.v} V${m.f.status === "ok" ? " ✓" : " ?"}</a>`)
     .join("");
-  return `<div class="small power-line"><p><b>${esc(t(i.dcIn ? "pw_needs" : "pw_gives"))}</b> ${esc(vtxt(spec))} <a href="${esc(spec.url)}" target="_blank" rel="noopener" title="${esc(spec.quote)}">${esc(t("pw_source"))} ↗</a></p>
+  return `<div class="small power-line"><p><b>${esc(t(i.dcIn ? "pw_needs" : "pw_gives"))}</b> ${esc(vtxt(spec))}${i.dcIn?.usb ? ` · ${esc(t("pw_usb_or_dc"))}` : ""} <a href="${esc(spec.url)}" target="_blank" rel="noopener" title="${esc(spec.quote)}">${esc(t("pw_source"))} ↗</a></p>
     ${matches.length ? `<p class="muted">${esc(t(i.dcIn ? "pw_supplies" : "pw_devices", { n: matches.length }))}</p><div class="chips">${list}</div>` : ""}
     <p class="muted">${esc(t("pw_note"))}</p></div>`;
 }
@@ -1229,7 +1229,7 @@ function itemPage(id) {
     .map((f) => {
       const list = i.specs[f];
       const conflict = new Set(list.map((e) => `${e.value}${e.unit ?? ""}`)).size > 1;
-      return `<div class="spec"><div class="spec-name">${esc(f === "zout" ? "Output impedance" : f[0].toUpperCase() + f.slice(1))}${conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
+      return `<div class="spec"><div class="spec-name">${esc(f === "zout" ? "Output impedance" : f[0].toUpperCase() + f.slice(1))}${i.conflicts?.includes(f) ? ` <span class="tag warn">${esc(t("it_conflict_open"))}</span>` : conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
         <ul>${list.map((e) => `<li><b>${fmt(e.value, 2)} ${f === "sensitivity" ? e.unit ?? `dB <span class="tag">${esc(t("unit_unknown"))}</span>` : "Ω"}</b> ${tag(e)} ${quoteLinks(e, true)}</li>`).join("")}</ul></div>`;
     })
     .join("");
@@ -1263,7 +1263,7 @@ function itemPage(id) {
       <div class="item-title"><p class="muted item-kicker">${i.brand ? `${brandMark(i.brand, 24)} <a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
-      ${i.addedFrom ? `<p class="small muted">${esc(t("added_from"))} <a href="${esc(i.addedFrom)}" target="_blank" rel="noopener">${esc(new URL(i.addedFrom).hostname)} ↗</a></p>` : ""}
+      ${i.addedFrom ? `<p class="small muted">${esc(t(i.offers.length ? "added_from_sold" : "added_from"))} <a href="${esc(i.addedFrom)}" target="_blank" rel="noopener">${esc(new URL(i.addedFrom).hostname)} ↗</a></p>` : ""}
       ${powerLine(i)}
       ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
       ${i.phonoIn ? `<p class="small role-note">${esc(t("phono_takes", { kinds: i.phonoIn.split("+").map((k) => t(`cart_${k}`)).join(" + ") }))}</p>` : ""}
@@ -1303,7 +1303,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5ttrnq").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5u4ysa").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2595,7 +2595,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5ttrnq" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5u4ysa" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3110,7 +3110,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5ttrnq" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5u4ysa" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

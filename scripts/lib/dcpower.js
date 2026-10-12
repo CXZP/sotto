@@ -26,6 +26,19 @@ function pairs(text) {
   return out;
 }
 
+const USB_POWER = /\busb\b|type[- ]?c/i;
+const BARREL = /\bor\s+dc\b|\bdc\s*(?:jack|inlet|input|socket|in\b)|\bbarrel\b|\b5\.5\s*(?:x|×|\*|\/)\s*2\.[15]|\bexternal power\b|\bpower (?:input|inlet|socket)\b/i;
+function powerPlugs(line) {
+  if (!USB_POWER.test(line)) return {};
+  return BARREL.test(line) ? { usb: true, barrel: true } : { usb: true };
+}
+
+/** A DC inlet the maker lists among the sockets ("USB-C or DC 5V/0.5A (centre +ve)"). */
+export function dcFromSocket(quote) {
+  const p = pairs(quote.replace(/\bac\s*\d+\s*[-–~]\s*\d+\s*v\S*/gi, " "));
+  return p.length ? { needs: p, quote, barrel: true, ...(USB_POWER.test(quote) ? { usb: true } : {}) } : null;
+}
+
 /** What a device needs. {volts:[...]} or {range:[lo,hi]}, with amps when stated. */
 export function dcInput(html) {
   for (const line of textify(html)) {
@@ -38,8 +51,9 @@ export function dcInput(html) {
     }
     if (NOT_DC.test(dcPart.replace(/\bdc\b.*$/i, "")) && !/\bdc\b/i.test(dcPart)) continue;
     const p = pairs(dcPart);
-    // USB-powered boxes take a USB cable, not a barrel-plug supply.
-    if (p.length) return { needs: p, quote: line, ...(/\busb\b|type[- ]?c/i.test(line) ? { usb: true } : {}) };
+    // USB-powered boxes take a USB cable, not a barrel-plug supply. "USB-C or DC 5V"
+    // (iFi ZEN DAC 3) takes either: the barrel inlet must not be hidden.
+    if (p.length) return { needs: p, quote: line, ...powerPlugs(line) };
   }
   return null;
 }

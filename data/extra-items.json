@@ -2616,7 +2616,8 @@
         "en": "Headphone jacks per FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
         "source": "https://www.fiio.com/btr7"
       }
-    ]
+    ],
+    "portsComplete": true
   },
   {
     "id": "fiio--btr7-high-fidelity",
@@ -2648,7 +2649,8 @@
         "en": "Headphone jacks per FiiO: \"a 4.4mm balanced headphone output in addition to the traditional 3.5mm single-ended headphone output\"",
         "source": "https://www.fiio.com/btr7"
       }
-    ]
+    ],
+    "portsComplete": true
   },
   {
     "id": "fiio--ka11",

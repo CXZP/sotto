@@ -112,6 +112,8 @@ jobs:
       - run: npm ci
       - name: Check (syntax, data, tests) before publishing
         run: npm run check
+      - name: Exchange rates (ECB daily reference rates; keeps data/fx.json if unreachable)
+        run: node scripts/fx.mjs
       - name: Assemble site
         run: |
           mkdir -p _site

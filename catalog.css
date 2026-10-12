@@ -139,6 +139,10 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .offers .strong { grid-area: s; color: var(--text); }
 .offers .small { grid-area: t; }
 .offers .price { grid-area: p; font-variant-numeric: tabular-nums; font-weight: 600; }
+/* About how much a store price is in the reader's currency (ECB rate). */
+.fx { font-weight: 400; font-size: .85em; color: var(--text-2); white-space: nowrap; }
+.fx-pick { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.fx-pick select { width: auto; min-width: 0; }
 .stock { grid-area: k; font-size: 12px; font-weight: 600; }
 .stock.in { color: var(--st-good); }
 .stock.out { color: var(--text-2); }

@@ -384,6 +384,8 @@ export const STRINGS = {
 
     it_specs: "สเปก",
     it_offers: "ราคาแต่ละร้าน",
+    fx_show: "แปลงราคาเป็น",
+    fx_note: "ประมาณการจากอัตราอ้างอิงของธนาคารกลางยุโรป (ECB) วันที่ {date} อัตราของบัตรหรือธนาคารจะต่างไปเล็กน้อย",
     it_quote: "ข้อความต้นฉบับ",
     it_sources: "{n} แหล่ง",
     it_conflict: "แหล่งข้อมูลไม่ตรงกัน",
@@ -1223,6 +1225,8 @@ export const STRINGS = {
 
     it_specs: "Specs",
     it_offers: "Prices by store",
+    fx_show: "Show prices in",
+    fx_note: "Approximate, at the European Central Bank reference rate of {date}. Your card or bank rate will differ a little.",
     it_quote: "Source text",
     it_sources: "{n} sources",
     it_conflict: "Sources disagree",

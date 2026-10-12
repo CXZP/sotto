@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4m9ny1";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4m9ny1";
-import { renderChart } from "./chart.js?v=mv4m9ny1";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4m9ny1";
-import { makeT } from "./i18n.js?v=mv4m9ny1";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv4m9ny1";
-import { LEGAL } from "./legal.js?v=mv4m9ny1";
-import { track, stats, trackingOff } from "./analytics.js?v=mv4m9ny1";
-import * as community from "./community.js?v=mv4m9ny1";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4m9ny1";
-import { redactImage } from "./redact.js?v=mv4m9ny1";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4m9ny1";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4m9ny1";
-import { chainLinks } from "./chain.js?v=mv4m9ny1";
-import { fits } from "./dcfit.js?v=mv4m9ny1";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv4m9ny1";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4m9ny1";
-import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4m9ny1";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv4mfn51";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv4mfn51";
+import { renderChart } from "./chart.js?v=mv4mfn51";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv4mfn51";
+import { makeT } from "./i18n.js?v=mv4mfn51";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv4mfn51";
+import { LEGAL } from "./legal.js?v=mv4mfn51";
+import { track, stats, trackingOff } from "./analytics.js?v=mv4mfn51";
+import * as community from "./community.js?v=mv4mfn51";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv4mfn51";
+import { redactImage } from "./redact.js?v=mv4mfn51";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv4mfn51";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv4mfn51";
+import { chainLinks } from "./chain.js?v=mv4mfn51";
+import { fits } from "./dcfit.js?v=mv4mfn51";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv4mfn51";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv4mfn51";
+import { REGIONS, guessRegion, storeLinks } from "./region.js?v=mv4mfn51";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -50,6 +50,9 @@ const loc = () => LOCALE[state.lang] ?? "en-GB";
 const L = (o) => o?.[state.lang] ?? o?.en ?? o?.th ?? "";
 /** Currency of the reader's region (code calculator, price reports). */
 const cur = () => REGIONS[state.region]?.currency ?? "USD";
+/** Currency the reader wants store prices converted to (like a shop's currency menu); defaults to the region's. */
+state.fxCur = load("fxCur", "");
+const viewCur = () => state.fxCur || cur();
 let db;
 let headphones = []; // catalog items we can calculate for
 let sources = []; // catalog items with output data
@@ -162,6 +165,19 @@ function regionSelect() {
     .map(([id, r]) => `<option value="${id}"${id === state.region ? " selected" : ""}>${esc(L(r))} · ${r.currency}</option>`)
     .join("")}</select>`;
 }
+function fxSelect() {
+  const codes = Object.keys(db.fx?.usdPer ?? {}).sort();
+  if (!codes.length) return "";
+  const v = viewCur();
+  return `<label class="small muted fx-pick">${esc(t("fx_show"))} <select class="mini-select" data-fx>${[...new Set([v, ...codes])].map((c) => `<option value="${c}"${c === v ? " selected" : ""}>${c}</option>`).join("")}</select></label>`;
+}
+document.addEventListener("change", (e) => {
+  const el = e.target.closest?.("select[data-fx]");
+  if (!el) return;
+  state.fxCur = el.value === cur() ? "" : el.value;
+  save("fxCur", state.fxCur);
+  render();
+});
 // One listener for every region picker on the page (footer, where-to-buy, code calculator).
 document.addEventListener("change", (e) => {
   const el = e.target.closest?.("select[data-region]");
@@ -616,7 +632,7 @@ function pickedOrButton(slot, item) {
   return `<div class="picked">
     ${im ? `<img class="picked-img" src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
     <a href="#item/${encodeURIComponent(item.id)}" class="picked-name">${esc(displayName(item))}</a>
-    <div class="picked-meta">${esc(specLine(item))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div>
+    <div class="picked-meta">${esc(specLine(item))}${pr ? ` · ${priceTag(pr.price, pr.currency)}` : ""}</div>
     <div class="picked-actions"><button class="link" data-pick="${slot}">${esc(t("slot_change"))}</button><button class="link" data-clear="${slot}">${esc(t("slot_remove"))}</button></div>
   </div>`;
 }
@@ -825,7 +841,7 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
     const tone = { ok: "good", overkill: "warn", tight: "warn", insufficient: "bad" }[p.status] ?? "muted";
     pickBox.innerHTML = `<div class="pick-card with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 120))}" alt="" referrerpolicy="no-referrer">` : ""}
       <div class="grow"><b>${esc(displayName(h))}</b>
-      <div class="small"><span class="badge ${tone}" aria-hidden="true"></span> ${esc(t(`st_${p.status}`))} · ${esc(t("chart_need"))} ${esc(vfmt(p.v))} @ ${esc(fmt(p.z, 1))} Ω${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div>
+      <div class="small"><span class="badge ${tone}" aria-hidden="true"></span> ${esc(t(`st_${p.status}`))} · ${esc(t("chart_need"))} ${esc(vfmt(p.v))} @ ${esc(fmt(p.z, 1))} Ω${pr ? ` · ${priceTag(pr.price, pr.currency)}` : ""}</div></div>
       <div class="row-inline"><a class="pill" href="#item/${encodeURIComponent(id)}">${esc(t("chart_open"))}</a>${opts.onUse ? `<button type="button" class="pill primary" data-pick-use>${esc(t("it_add_build"))}</button>` : ""}</div></div>`;
     pickBox.querySelector("[data-pick-use]")?.addEventListener("click", () => opts.onUse(id));
   };
@@ -1030,7 +1046,7 @@ function catalogPage() {
         <div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
         <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div>
         <div class="muted small">${esc(catLabel(i))}${specLine(i) ? ` · ${esc(specLine(i))}` : ""}</div>
-        <div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
+        <div class="tile-price">${pr ? priceTag(pr.price, pr.currency) : "—"}</div></div></a>`;
     })
     .join("")}</div>`;
   return `<div class="catalog">
@@ -1060,7 +1076,7 @@ function catalogPage() {
           return `<tr><td class="with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="thumb"></span>`}<div><a href="#item/${encodeURIComponent(i.id)}" class="strong">${esc(displayName(i))}</a><div class="muted small">${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}</div></div></td>
           <td>${i.specs?.impedance ? `${fmt(i.specs.impedance[0].value, 1)} Ω` : "—"}</td>
           <td>${sensOrPower(i)}</td>
-          <td>${pr.cheapest ? money(pr.cheapest.price, pr.cheapest.currency) : "—"}</td>
+          <td>${pr.cheapest ? priceTag(pr.cheapest.price, pr.cheapest.currency) : "—"}</td>
           <td>${stores || "—"}</td></tr>`;
         })
         .join("")}</tbody></table></div>`}
@@ -1225,14 +1241,14 @@ function itemPage(id) {
       ${["preamp", "streamer", ...NOT_HP_ROLES].includes(i.role) ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))}</p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
-      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${money(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
+      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${priceTag(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span></p>` : ""}
       <div class="item-actions">${(isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category)) && !["integrated", "poweramp"].includes(i.role) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) || i.role === "streamer" ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a><a class="pill" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))}</a><a class="pill" href="${report}" target="_blank" rel="noopener">${esc(t("it_report"))}</a></div>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
       <p class="issue-search small">${esc(t("it_issue_search"))} ${issueLinks.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join(" · ")}</p></div>
     </header>
     <div class="item-grid">
       <section class="card pad"><h3>${esc(t("it_specs"))}</h3>${specRows || powerRows || i.sheet ? specRows + powerRows + sheetRows(i) : `<p class="muted">${esc(t("it_no_specs"))}</p>`}${notes ? `<ul class="notes">${notes}</ul>` : ""}</section>
-      <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))}</p>${offersTable(pr.offers)}</section>
+      <section class="card pad"><h3>${esc(t("it_offers"))}</h3><p class="muted small">${esc(t("pr_feed_note"))} ${fxSelect()}</p>${offersTable(pr.offers)}</section>
     </div>
     ${missingAsks(i)}
     ${isSrc ? `<section class="card pad ports" id="ports"></section>` : ""}
@@ -1254,7 +1270,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv4m9ny1").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv4mfn51").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1457,7 +1473,7 @@ function calTimeline(rows, now) {
       const w = Math.max(pct(to) - l, 2);
       const im = imageOf(i);
       return `<li class="cal-row" style="--d:${Math.min(n, 12)}">
-        <a class="cal-name" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(db.stores[o.store]?.name ?? o.store)} · ${money(o.price, o.currency)}</small></span></a>
+        <a class="cal-name" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(db.stores[o.store]?.name ?? o.store)} · ${priceTag(o.price, o.currency)}</small></span></a>
         <div class="cal-track"><a class="cal-bar${to > now ? "" : " past"}${to > now + 200 * DAY ? " cut" : ""}${w < 40 ? (l + w > 65 ? " out left" : " out") : ""}" href="${esc(o.url)}" target="_blank" rel="noopener" title="${esc(o.preorder.quote)}" style="--l:${l.toFixed(2)}%;--w:${w.toFixed(2)}%"><span>${esc(t("cal_pre_until", { date: day(o.preorder.until) }))}</span></a></div></li>`;
     })
     .join("");
@@ -1482,7 +1498,7 @@ function calMonths(list) {
 function calCard(i, sub, offer) {
   const im = imageOf(i);
   const pr = prices(i).cheapest;
-  return `<a class="cal-card" href="${offer ? esc(offer.url) : `#item/${encodeURIComponent(i.id)}`}"${offer ? ` target="_blank" rel="noopener"` : ""}>${im ? `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(sub)}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</small></span></a>`;
+  return `<a class="cal-card" href="${offer ? esc(offer.url) : `#item/${encodeURIComponent(i.id)}`}"${offer ? ` target="_blank" rel="noopener"` : ""}>${im ? `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(sub)}${pr ? ` · ${priceTag(pr.price, pr.currency)}` : ""}</small></span></a>`;
 }
 
 // Spec-sheet lines as the store wrote them, each linked to that store's page.
@@ -1503,7 +1519,7 @@ function offersTable(offers) {
     .map(
       (o) => `<li><a href="${esc(o.url)}" target="_blank" rel="noopener" class="strong">${esc(db.stores[o.store]?.name ?? o.store)}</a>
       <span class="muted small">${esc(o.title)}${o.condition !== "new" ? ` · ${esc(t("cond_used"))}` : ""}${o.seenAt ? ` · ${esc(t("pr_seen", { date: day(o.seenAt) }))}` : ""}${o.preorder ? ` <span class="tag warn" title="${esc(o.preorder.quote)}">${esc(o.preorder.until ? t("cal_pre_until", { date: day(o.preorder.until) }) : t("cal_pre"))}</span>` : ""}</span>
-      <span class="price">${money(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}</span></li>`,
+      <span class="price">${priceTag(o.price, o.currency)}${o.suspect ? ` <span class="tag warn">${esc(t("suspect"))}</span>` : ""}</span><span class="stock ${o.available ? "in" : "out"}">${esc(t(o.available ? "in_stock" : "out_stock"))}</span></li>`,
     )
     .join("")}</ul>`;
 }
@@ -2414,7 +2430,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4m9ny1" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv4mfn51" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2901,7 +2917,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4m9ny1" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv4mfn51" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3371,7 +3387,7 @@ function asideProducts(ids, category) {
     .map((i) => {
       const im = imageOf(i);
       const pr = prices(i).cheapest;
-      return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(catLabel(i))}${pr ? ` · ${money(pr.price, pr.currency)}` : ""}</div></div></a>`;
+      return `<a class="aside-item" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : "<span></span>"}<div><b>${esc(displayName(i))}</b><div class="muted small">${esc(catLabel(i))}${pr ? ` · ${priceTag(pr.price, pr.currency)}` : ""}</div></div></a>`;
     })
     .join("")}${extra}</section>`;
 }
@@ -3738,7 +3754,7 @@ async function wireSaved(main) {
           const pr = prices(i).cheapest;
           const im = imageOf(i);
           return `<a class="tile card" href="#item/${encodeURIComponent(i.id)}"><div class="tile-img">${im ? `<img src="${esc(sized(im.src, 480))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}</div>
-            <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div><div class="muted small">${esc(catLabel(i))}</div><div class="tile-price">${pr ? money(pr.price, pr.currency) : "—"}</div></div></a>`;
+            <div class="tile-body"><div class="tile-name">${esc(displayName(i))}</div><div class="muted small">${esc(catLabel(i))}</div><div class="tile-price">${pr ? priceTag(pr.price, pr.currency) : "—"}</div></div></a>`;
         })
         .join("")}</div>`
     : `<p class="muted small">${esc(t("bm_none_items"))}</p>`;
@@ -4110,6 +4126,13 @@ function srcLink(url) {
   if (!url) return "";
   const host = new URL(url).hostname.replace(/^www\./, "");
   return `<a class="src" href="${esc(url)}" target="_blank" rel="noopener">${esc(host)}</a>`;
+}
+/** A store price in its own currency, then about how much that is in the reader's currency. */
+function priceTag(n, currency) {
+  const to = viewCur();
+  const c = currency || "USD";
+  const conv = c === to ? null : convert(n, c, to);
+  return `${money(n, c)}${conv == null ? "" : ` <span class="fx" title="${esc(t("fx_note", { date: db.fx?.date ?? "" }))}">≈ ${money(conv, to)}</span>`}`;
 }
 function money(n, currency) {
   if (n == null) return "";

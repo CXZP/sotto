@@ -428,6 +428,7 @@ export const STRINGS = {
     sh_cable: "สาย",
     sh_weight: "น้ำหนัก",
     it_power_title: "กำลังขับ (ค่าสูงสุดที่ร้านระบุ)",
+    it_power_jacks: "กำลังขับแยกตามช่องหูฟัง",
     est: "ประมาณจากจุดเดียว",
     suspect: "ราคาต่างจากร้านอื่นมาก",
 
@@ -1372,6 +1373,7 @@ export const STRINGS = {
     sh_cable: "Cable",
     sh_weight: "Weight",
     it_power_title: "Output power (highest figure listed)",
+    it_power_jacks: "Output power per headphone jack",
     est: "estimated from one point",
     suspect: "far from other stores",
 

@@ -14,6 +14,7 @@ import { detectLooks } from "./lib/materials.js";
 import { dcInput, dcOutputs } from "./lib/dcpower.js";
 import { extractPorts, extractFeatures } from "./lib/ports.js";
 import { preorder, listedAt } from "./lib/dates.js";
+import { jackOutputs } from "./lib/jacks.js";
 import { appendHistory } from "./lib/history.js";
 
 const root = new URL("..", import.meta.url);
@@ -172,6 +173,14 @@ for (const file of files) {
       preorder: preorder(p, snap.fetchedAt) ?? undefined,
     });
     for (const field of FIELDS) g.specs[field].push(...verified[field]);
+    // Figures per headphone jack (4.4 mm vs 3.5 mm). Without this, every figure
+    // lands on one unnamed jack and the highest wins, so a 3.5 mm user is told
+    // they get the 4.4 mm output. First store that ties every figure to a jack
+    // wins; hand-checked outputs (data/amps.json) replace these further down.
+    if (!g.outputs && ["dongle", "portable", "desktop", "dap"].includes(category)) {
+      const outs = jackOutputs(lines, category);
+      if (outs) g.outputs = outs.map(({ jack, power, voltage, zout, quotes }) => ({ jack, kind: "claimed", power, voltage, zout, source: url, quote: quotes.join(" / "), fromStore: true }));
+    }
     // Photo set for the item page: the store with the most photos (links only).
     if ((p.images?.length ?? 0) > (g.photos?.src.length ?? 1)) g.photos = { store: snap.store, url, src: p.images };
     if (category === "desktop") {
@@ -325,7 +334,8 @@ for (const hp of curatedHp) {
 for (const amp of curatedAmps) {
   // Every hand-checked amp takes a digital (USB) input, so it is a DAC and amp in one.
   // A maker's photo (a link, like store photos) for models no tracked store sells.
-  attach(amp, amp.kind, () => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}), ...(amp.image ? { image: amp.image } : {}) }));
+  // Spec-sheet lines from the maker's page replace the store's (a store may copy a sibling's text).
+  attach(amp, amp.kind, (g) => ({ category: amp.kind, input: amp.input, outputs: amp.outputs, ...(amp.kind === "desktop" ? { role: "dacamp" } : {}), ...(amp.image ? { image: amp.image } : {}), ...(amp.sheet ? { sheet: { ...g.sheet, ...amp.sheet } } : {}) }));
 }
 
 // Match-only stores: a listing joins a model already in the catalog when its

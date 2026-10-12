@@ -5,7 +5,7 @@
 // reports, category facts). A box whose ports nobody has stated gets a "?"
 // socket: a cable to it is "unknown", never "wrong".
 
-import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5rhpby";
+import { portsOf, DIGITAL, ANALOG } from "./chain.js?v=mv5texn1";
 
 /** Things on a desk that aren't catalog items. */
 export const DESK_DEVICES = {

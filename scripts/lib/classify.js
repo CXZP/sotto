@@ -200,7 +200,7 @@ const NOISE = [
   /\b(?:retro\s+)?(?:fm\s+)?radio\b|\bconnectivity\b|\bclass[- ]?a\b|\b(?:headphone\s+)?jacks?\b/gi,
   // Driver counts in words ("ZERO: RED Dual Dynamic Drivers" == "Zero:RED").
   /\b(?:single|dual|triple|quad)\s+dynamic(?:\s+drivers?)?\b/gi,
-  /\b(in[- ]ear monitors?|iems?|earphones?|earbuds?|headphones?|wired|universal|over[- ]ear|on[- ]ear|open[- ]back|planar magnetic|planar|dynamic drivers?|dynamic|drivers?|hybrid|portable|desktop|usb|dac\/amp|dac amp|headphone amp(lifier)?|amplifier|amp|dac|dongle|balanced|monitors?)\b/gi,
+  /\b(in[- ]ear monitors?|iems?|earphones?|earbuds?|headphones?|wired|universal|over[- ]ear|on[- ]ear|open[- ]back|planar magnetic|planar|dynamic drivers?|dynamic|drivers?|hybrid|portable|desktop|usb(?![- ]?c\b)|dac\/amp|dac amp|headphone amp(lifier)?|amplifier|amp|dac|dongle|balanced|monitors?)\b/gi,
   // Product-type phrases that don't name the model ("JM21 Music Player" == "JM21 Digital Audio Player").
   /\b\d+(?:\.\d+)?\s?mm\b|\b(?:type[- ]?c|usb[- ]?c)\b(?! to)/gi,
   // "RS8 II Flagship Digital Audio Player" == "RS8 II"; "D400 Pro High-Resolution USB DAC" == "D400 Pro".
@@ -331,7 +331,11 @@ export function modelKey(vendor, title) {
     .replace(/\b(\S+)(?: \1\b)+/gi, "$1")
     .replace(/\bAmpname\b/, "Amp")
     .replace(/\bXname\b/, "X")
-    // Leftover separators once noise words are gone ("PL200T -", "- Grand Tourer").
+    // Leftover separators once noise words are gone ("PL200T -", "- Grand Tourer",
+    // "GO link Max - -" after "- Portable ... USB-C DAC").
+    .replace(/(?:\s[-–—])+\s/g, " - ")
+    // "KA13 USB-C to 4.4mm" loses "4.4mm" above; a dangling "USB-C to" names nothing.
+    .replace(/\s(?:usb|type)[- ]?c\s+to\s*$/i, "")
     .replace(/^[-–—.\s]+|[-–—.\s]+$/g, "");
   const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return { key: `${slug(v) || "unknown"}--${slug(model) || "unknown"}`, model };

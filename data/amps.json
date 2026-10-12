@@ -6,7 +6,11 @@
     "kind": "dongle",
     "input": "usb-c",
     "price": null,
-    "image": { "src": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MU7E2?wid=720&hei=720&fmt=jpeg&qlt=90", "page": "https://www.apple.com/shop/product/MW2Q3AM/A/usb-c-to-35-mm-headphone-jack-adapter", "site": "apple.com" },
+    "image": {
+      "src": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MU7E2?wid=720&hei=720&fmt=jpeg&qlt=90",
+      "page": "https://www.apple.com/shop/product/MW2Q3AM/A/usb-c-to-35-mm-headphone-jack-adapter",
+      "site": "apple.com"
+    },
     "outputs": [
       {
         "jack": "3.5",
@@ -710,7 +714,11 @@
     "kind": "dongle",
     "input": "usb-c",
     "price": null,
-    "image": { "src": "https://cdn.prod.website-files.com/63bcdfa5158ffcd72a7a8d8e/66457fe9fb1a8c998607460f_SHIO.jpg", "page": "https://truthear.com/products/shio", "site": "truthear.com" },
+    "image": {
+      "src": "https://cdn.prod.website-files.com/63bcdfa5158ffcd72a7a8d8e/66457fe9fb1a8c998607460f_SHIO.jpg",
+      "page": "https://truthear.com/products/shio",
+      "site": "truthear.com"
+    },
     "outputs": [
       {
         "jack": "3.5",
@@ -757,5 +765,149 @@
         "zout": null
       }
     ]
+  },
+  {
+    "id": "ifi-go-link-max",
+    "brand": "iFi",
+    "model": "GO link Max",
+    "kind": "dongle",
+    "input": "usb-c",
+    "outputs": [
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://ifi-audio.com/products/go-link-max",
+        "quote": "RMS OUTPUT POWER 241mW @ 32Ω; 4V @ 300Ω via 4.4mm · OUTPUT IMPEDANCE 0.35Ω via 4.4mm",
+        "power": [
+          {
+            "load": 32,
+            "mw": 241
+          }
+        ],
+        "voltage": [
+          {
+            "load": 300,
+            "vrms": 4
+          }
+        ],
+        "zout": 0.35
+      },
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://ifi-audio.com/products/go-link-max",
+        "quote": "100mW @ 32Ω; 2V @ 300Ω via 3.5mm · OUTPUT IMPEDANCE 0.7Ω via 3.5mm",
+        "power": [
+          {
+            "load": 32,
+            "mw": 100
+          }
+        ],
+        "voltage": [
+          {
+            "load": 300,
+            "vrms": 2
+          }
+        ],
+        "zout": 0.7
+      }
+    ],
+    "sheet": {
+      "dac": {
+        "value": "ESS Sabre ES9219",
+        "url": "https://ifi-audio.com/products/go-link-max"
+      },
+      "thd": {
+        "value": "≤0.0016% @ 32Ω 2.4V via 4.4mm; ≤0.0015% @ 32Ω 1.27V via 3.5mm",
+        "url": "https://ifi-audio.com/products/go-link-max"
+      },
+      "snr": {
+        "value": "130dBA via 4.4mm; 125dBA via 3.5mm",
+        "url": "https://ifi-audio.com/products/go-link-max"
+      },
+      "plug": {
+        "value": "4.4mm Balanced; 3.5mm S-Balanced",
+        "url": "https://ifi-audio.com/products/go-link-max"
+      },
+      "weight": {
+        "value": "14.5g",
+        "url": "https://ifi-audio.com/products/go-link-max"
+      }
+    },
+    "issue": "https://github.com/CXZP/sotto/issues/2"
+  },
+  {
+    "id": "ifi-go-link-2-max",
+    "brand": "iFi",
+    "model": "GO Link 2 Max",
+    "kind": "dongle",
+    "input": "usb-c",
+    "outputs": [
+      {
+        "jack": "4.4",
+        "kind": "claimed",
+        "source": "https://ifi-audio.com/products/go-link-2-max",
+        "quote": "RMS OUTPUT POWER ≥241mW @ 32Ω; 4V @ 300Ω (Balanced) · OUTPUT IMPEDANCE <0.7Ω (Balanced)",
+        "power": [
+          {
+            "load": 32,
+            "mw": 241
+          }
+        ],
+        "voltage": [
+          {
+            "load": 300,
+            "vrms": 4
+          }
+        ],
+        "zout": 0.7
+      },
+      {
+        "jack": "3.5",
+        "kind": "claimed",
+        "source": "https://ifi-audio.com/products/go-link-2-max",
+        "quote": "≥100mW @ 32Ω; 2V @ 300Ω (S-Balanced*) · <0.35Ω (S-Balanced*)",
+        "power": [
+          {
+            "load": 32,
+            "mw": 100
+          }
+        ],
+        "voltage": [
+          {
+            "load": 300,
+            "vrms": 2
+          }
+        ],
+        "zout": 0.35
+      }
+    ],
+    "sheet": {
+      "dac": {
+        "value": "2x Bit-Perfect DSD & DXD DACs by ESS",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      },
+      "thd": {
+        "value": "≤0.0007% (Balanced 2.4V @ 32Ω); ≤0.001% (S-Balanced 1.27V @ 32Ω)",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      },
+      "snr": {
+        "value": "≥130dBA (Balanced @ 600Ω); ≥125dBA (S-Balanced @ 600Ω)",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      },
+      "freq": {
+        "value": "10Hz–80kHz (-3dB)",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      },
+      "plug": {
+        "value": "Balanced 4.4mm; S-Balanced 3.5mm",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      },
+      "weight": {
+        "value": "11.5g",
+        "url": "https://ifi-audio.com/products/go-link-2-max"
+      }
+    },
+    "issue": "https://github.com/CXZP/sotto/issues/3"
   }
 ]

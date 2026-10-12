@@ -188,3 +188,11 @@ test("FiiO Class A: named Class A, not 'Amplifier'", () => {
 test("a moving-coil preamplifier is a phono stage, not a cartridge", () => {
   assert.equal(classify({ title: "Rega Aos Moving Coil Preamplifier - Black" }), "phono");
 });
+
+test("model names keep no 'USB-C' leftovers (issue #2: 'GO link Max - -C')", async () => {
+  const { modelKey } = await import("../scripts/lib/classify.js");
+  assert.equal(modelKey("iFi", "iFi Audio GO link Max - Portable Hi-Res Balanced Headphone Amplifier & USB-C DAC").model, "GO link Max");
+  assert.equal(modelKey("Moondrop", "Moondrop Dawn Pro USB-C DAC").model, "Dawn Pro");
+  assert.equal(modelKey("FiiO", "FiiO KA13 USB-C to 4.4mm").model, "KA13");
+  assert.equal(modelKey("Apple", "Apple USB-C to 3.5 mm Headphone Jack Adapter").model, "USB-C to Adapter");
+});

@@ -57,7 +57,7 @@ const RULES = [
   ["skip", /\b(cd speakers?|cd[- ]rippers?|rippers?|cassettes?)\b/i],
   // Two products sold together ("Moondrop - Chu III + FiiO - BTR11"): not one
   // model. "Portable DAC + Headphone Amp - Master Tuned" is one product.
-  ["skip", /\s-\s[^+]+\s\+\s(?!(?:headphone|dac|amp|preamp|portable|usb)\b)[^+]+\s-\s/i],
+  ["skip", /\s-\s[^+]+\s\+\s(?!(?:headphone(?! zone)|dac|amp|preamp|portable|usb)\b)[^+]+\s-\s/i],
   // Speakers for a desk or a room. Portable Bluetooth/party speakers, speakerphones,
   // grilles, STAX "earspeakers" and speaker amps are not.
   ["skip", /^(?=.*speaker)(?:.*\b(?:portable|waterproof|party ?box|bluetooth (?:wireless )?speaker|compact|speakerphones?|grilles?|earspeakers?|conference|power ?bank)\b|.*\bspeaker amp)/i],

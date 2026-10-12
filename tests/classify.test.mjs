@@ -148,3 +148,8 @@ test("not bundles, not merged: iFi iDSD GR 2 MT is one product; Little Dot I+ Tu
   assert.notEqual(looseKey(modelKey("Little Dot", "LITTLEDOT I+ Tube Headphone Amplifier").key, "desktop"), looseKey("little-dot--dac-i", "desktop"));
   assert.equal(looseKey(modelKey("Cayin", "Cayin HA-1A MK3 Tube Headphone Amplifier").key, "desktop"), looseKey("cayin--ha-1a-mk3", "desktop"));
 });
+
+test("a store's own bundle with another brand's DAC is still a bundle", () => {
+  assert.equal(classify({ title: "Moondrop - Chu III + Headphone Zone X ddHiFi - Hi-Res DAC" }), "skip");
+  assert.notEqual(classify({ title: "iFi iDSD GR 2 MT - Ultra-Res Portable DAC + Headphone Amp - Master Tuned Series" }), "skip");
+});

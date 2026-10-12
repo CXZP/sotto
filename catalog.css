@@ -361,7 +361,7 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .stat-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .stat-table td { padding: 6px 0; border-top: 1px solid var(--line); }
 .stat-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
-.looks { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; } .small-chip { font-size: 12px; padding: 3px 10px; }
+.looks { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; } .small-chip { display: inline-flex; align-items: center; height: 26px; font-size: 12px; line-height: 1; padding: 2px 10px 0; } /* Thai and Latin both sit on the middle line */
 
 /* Compare */
 .cmp-table { width: 100%; border-collapse: collapse; font-size: 14px; }

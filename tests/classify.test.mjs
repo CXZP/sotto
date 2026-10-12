@@ -153,3 +153,15 @@ test("a store's own bundle with another brand's DAC is still a bundle", () => {
   assert.equal(classify({ title: "Moondrop - Chu III + Headphone Zone X ddHiFi - Hi-Res DAC" }), "skip");
   assert.notEqual(classify({ title: "iFi iDSD GR 2 MT - Ultra-Res Portable DAC + Headphone Amp - Master Tuned Series" }), "skip");
 });
+
+test("iFi ZEN listings: one model each", () => {
+  const p = (k) => looseKey(k, "phono");
+  assert.equal(p("ifi--zen-phono-3-mc-mm-phono"), p("ifi--zen-phono-v3"));
+  assert.equal(p("ifi--zen-phono-3-phono-preamp"), p("ifi--zen-phono-3-mm-mc-phono"));
+  assert.equal(p("ifi--zen-air-phono-phono-pre"), p("ifi--zen-air-phono"));
+  assert.notEqual(p("ifi--zen-air-phono-2-phono-pre"), p("ifi--zen-air-phono"));
+  const d = (k) => looseKey(k, "desktop");
+  assert.equal(d("ifi--zen-can-3-pre"), d("ifi--zen-can-3"));
+  assert.equal(d("ifi--zen-stream-3-wi-fi-transport"), d("ifi--zen-stream-3"));
+  assert.notEqual(d("ifi--zen-can-signature-mz99"), d("ifi--zen-can-signature"));
+});

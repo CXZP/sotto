@@ -253,12 +253,16 @@ const POWER_WORDS = new Set(["linear", "power", "supply", "supplies", "psu", "lp
 // DAC Fully Discrete R2R BT5.1" and "X30 Quad ES9039SPRO*4" are the R26 II and X30.
 // "R2R" names a model at most brands (FiiO K11 vs K11 R2R); only lineups that are all R2R drop it.
 const ALL_R2R = new Set(["gustard", "denafrips", "holo", "musician"]);
-const DESK_WORDS = new Set(["renderer", "decoder", "network", "streaming", "streamer", "digital", "analog", "analogue", "convertor", "converter", "dac", "quad", "dual", "discrete", "fully", "with", "remote", "control", "certified", "apos", "desktop", "powerful"]);
+const DESK_WORDS = new Set(["renderer", "decoder", "network", "streaming", "streamer", "digital", "analog", "analogue", "convertor", "converter", "dac", "quad", "dual", "discrete", "fully", "with", "remote", "control", "certified", "apos", "desktop", "powerful", "wi", "fi", "transport"]);
+// Phono stages: "ZEN Phono 3 MM/MC Phono Stage" == "ZEN Phono 3 - Phono Preamp" == "ZEN Phono v3".
+const PHONO_WORDS = new Set(["phono", "pre", "preamp", "preamplifier", "stage", "mm", "mc", "turntable", "desktop"]);
 const CHIP = /^(?:\d+x)?(?:es9\d{3}|ak4\d{3}|cs43\d{3}|pcm\d{4}|ad\d{4})\w*$/;
 function deskWords(words, brand) {
   const out = [];
   for (let n = 0; n < words.length; n++) {
     const w = words[n] === "il" ? "ii" : words[n]; // "R26 Il": a store's typo for II
+    // "ZEN CAN 3 Pre" (Headphone Amp/Pre-Amp): the same box.
+    if ((w === "pre" || w === "preamplifier") && n > 0) continue;
     if (DESK_WORDS.has(w) || CHIP.test(w) || (w === "r2r" && ALL_R2R.has(brand))) continue;
     if (w === "bit" || (/^\d+$/.test(w) && words[n + 1] === "bit")) continue; // "26 bit"
     if (/^bt\d$/.test(w) || (/^\d$/.test(w) && /^bt\d$/.test(words[n - 1] ?? ""))) continue; // "BT5.1"
@@ -277,7 +281,7 @@ export function looseKey(key, category) {
   // "UltraSonic Bluetooth 5.3 Hybrid Hi-Fi ANC", "1BA+1DD": not the model
   if (category === "wireless") words = words.filter((w, n) => !/^\d+(?:ba|dd)$/.test(w) && !(/^\d$/.test(w) && [words[n - 1], words[n - 2]].includes("bluetooth")));
   const keep = words.filter((w) =>
-    category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)) && !(category === "power" && POWER_WORDS.has(w)),
+    category === "cartridge" ? w !== "edition" : (!FINISH.has(w) || (brand === "ifi" && w === "blue")) && !(category === "wireless" && WIRELESS_WORDS.has(w)) && !(category === "power" && POWER_WORDS.has(w)) && !(category === "phono" && PHONO_WORDS.has(w)),
   );
   // True wireless earbuds vs a wireless over-ear of the same name (Momentum 4 vs Momentum True Wireless 4).
   const tws = category === "wireless" && words.some((w) => ["true", "truly", "ture", "tws"].includes(w));

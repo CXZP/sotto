@@ -17,6 +17,10 @@ on:
         description: Pull fresh store data before deploying
         type: boolean
         default: true
+      rebuild:
+        description: Rebuild the catalog from the last crawl's store feeds (no new crawl)
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -29,7 +33,7 @@ concurrency:
 
 jobs:
   crawl:
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.crawl)
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.crawl || inputs.rebuild))
     runs-on: ubuntu-latest
     # More stores (e-earphone alone is ~45 feed pages): 60 min was cut off on 2026-10-12.
     timeout-minutes: 150
@@ -46,7 +50,18 @@ jobs:
           path: cache/pages
           key: spec-pages-${{ github.run_id }}
           restore-keys: spec-pages-
+      # The last crawl's store feeds, so new catalog code or hand-checked data
+      # can go live without crawling every store again.
+      - name: Restore store feeds from the last crawl
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.crawl }}
+        uses: actions/cache/restore@v4
+        with:
+          path: cache/raw
+          key: store-feeds-${{ github.run_id }}
+          restore-keys: store-feeds-
+          fail-on-cache-miss: true
       - name: Pull store feeds, politely (delays from scripts/stores.json)
+        if: ${{ github.event_name == 'schedule' || inputs.crawl }}
         run: node scripts/crawl.mjs
       # Saved straight away, so pages read are kept even if a later step fails.
       - name: Save product pages read
@@ -55,6 +70,12 @@ jobs:
         with:
           path: cache/pages
           key: spec-pages-${{ github.run_id }}
+      - name: Save store feeds
+        if: ${{ always() && (github.event_name == 'schedule' || inputs.crawl) }}
+        uses: actions/cache/save@v4
+        with:
+          path: cache/raw
+          key: store-feeds-${{ github.run_id }}
       # The crawl takes a while and main may have moved on meanwhile: build
       # the catalog with the newest code, from the feeds just pulled.
       - name: Catch up with main

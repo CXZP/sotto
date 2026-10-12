@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5kz7lr";
-import { gearSvg } from "./gear.js?v=mv5kz7lr";
+import { nodePorts } from "./desk.js?v=mv5l76gk";
+import { gearSvg } from "./gear.js?v=mv5l76gk";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {
@@ -26,7 +26,7 @@ const BRAND_CHASSIS = {
   "schiit audio": ["compact", "silver"],
   "pro-ject": ["compact", "black"],
   rega: ["compact", "black"],
-  ifi: ["zen", "silver"],
+  ifi: ["zen", "navy"],
   "chord electronics": ["jewel", "silver"],
   gustard: ["inset", "silver"],
   audalytic: ["inset", "black"],
@@ -57,6 +57,7 @@ const FINISH = {
   black: { face: "#1c1d20", edge: "#0d0d0f", ink: "#d9d9d9", frame: "#5a5d63" },
   graphite: { face: "#2a2c30", edge: "#16171a", ink: "#d9d9d9", frame: "#62666d" },
   grey: { face: "#3a3d42", edge: "#232528", ink: "#e4e4e4", frame: "#70747b" },
+  navy: { face: "#2c3444", edge: "#161b24", ink: "#d9dde6", frame: "#5d6878" },
   silver: { face: "#cfd2d6", edge: "#9fa3a8", ink: "#2b2d30", frame: "#7f8388" },
   champagne: { face: "#d8cdb6", edge: "#a99c80", ink: "#3a3326", frame: "#8a7e66" },
 };
@@ -65,6 +66,7 @@ const FINISH = {
 export function chassisOf(node) {
   if (node.device) return { style: "device", finish: "black" };
   const i = node.item;
+  if (i.look?.style && ["dongle", "portable", "dap"].includes(i.category)) return { style: i.look.style, finish: i.look.finish ?? "black" };
   if (i.category === "dongle") return { style: "dongle", finish: "black" };
   if (["portable", "dap", "wireless"].includes(i.category)) return { style: "pocket", finish: "black" };
   if (["iem", "headphone"].includes(i.category)) return { style: "plug", finish: "black" };
@@ -123,7 +125,7 @@ export function frontSpec(node) {
   const titles = [i.model, ...(i.offers ?? []).map((o) => o.title)].join(" ");
   const tubes = look.tubes ?? (/\btubes?\b|\bvalve\b/i.test(titles) && !/tube buffer/i.test(titles) ? 2 : 0);
   const vu = look.vu ?? false;
-  const w = { full: 520, inset: 520, slim: 440, wood: 460, jewel: 300, zen: 320 }[chassis.style] ?? 380;
+  const w = { full: 520, inset: 520, slim: 440, wood: 460, jewel: 300, zen: 420 }[chassis.style] ?? 380;
   const lift = tubes ? 70 : 0;
   const h = 150 + lift;
   const sockets = [];
@@ -133,6 +135,14 @@ export function frontSpec(node) {
     const r = j === "xlr4" ? 26 : 22;
     sockets.push({ port: "hp", dir: "out", glyph: "jack", jack: j, x: x + r - 6, y: lift + 76 });
     x += r * 2 + 8;
+  }
+  if (chassis.style === "zen") {
+    let jx = w / 2 + 70;
+    for (const s of sockets) {
+      s.x = jx;
+      jx += 56;
+    }
+    return { w, h, chassis, groups: [], sockets, decor: { tubes, vu, lift, knobX: w / 2, screenX: w, zen: true }, face: "front" };
   }
   const decor = { tubes, vu, lift, screenX: x + 10, knobX: w - (chassis.style === "wood" ? 80 : 60) };
   return { w, h, chassis, groups: [], sockets, decor, face: "front" };
@@ -182,7 +192,7 @@ export function panelSpec(node) {
   const cells = [];
   // A store's bare "line" is the RCA (or XLR) socket when those are listed too.
   for (const dir of ["in", "out"])
-    for (const p of ports[dir]) if (!(p === "line" && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) cells.push({ port: p, dir, rank: order.indexOf(p) + (dir === "out" ? (["usb", "optical", "coax", "aes", "i2s", "bt", "dc"].includes(p) ? 40 : 15) : 0) });
+    for (const p of ports[dir]) if (!(p === "line" && !i?.ports?.[dir]?.line?.conn && (ports[dir].includes("rca") || ports[dir].includes("xlr")))) cells.push({ port: p, dir, rank: order.indexOf(p) + (dir === "out" ? (["usb", "optical", "coax", "aes", "i2s", "bt", "dc"].includes(p) ? 40 : 15) : 0) });
   cells.sort((a, b) => a.rank - b.rank);
   const pad = 22;
   const top = chassis.style === "pocket" || chassis.style === "device" ? 16 : 24;
@@ -197,10 +207,10 @@ export function panelSpec(node) {
   // Small boxes put an RCA pair side by side (R, L); bigger ones stack it (L over R).
   const horiz = ["compact", "zen", "pocket", "jewel"].includes(chassis.style);
   const place = (c, label, dashed, extra = {}) => {
-    const w = (horiz && ["rca", "line", "phono"].includes(c.port) ? 30 : 0) + (CELL[c.port] ?? 56);
-    groups.push({ x, y: top, w, h: cellH, label, dashed, bal: ["xlr", "aes"].includes(c.port) ? true : ["rca", "line", "phono"].includes(c.port) ? false : null });
+    const w = extra.glyph === "jack" ? 56 : (horiz && ["rca", "line", "phono"].includes(c.port) ? 30 : 0) + (CELL[c.port] ?? 56);
+    groups.push({ x, y: top, w, h: cellH, label, dashed, bal: extra.glyph === "jack" ? null : ["xlr", "aes"].includes(c.port) ? true : ["rca", "line", "phono"].includes(c.port) ? false : null });
     const glyph = c.port === "usb" ? usbKind : c.port === "bt" ? btKind : c.port === "xlr" ? (c.dir === "in" ? "xlrF" : "xlrM") : c.port === "line" ? "rca" : c.port;
-    sockets.push({ port: c.port, dir: c.dir, glyph, x: x + w / 2, y: top + 42, pair: PAIR.has(c.port), horiz: horiz && ["rca", "line", "phono"].includes(c.port), ...extra });
+    sockets.push({ port: c.port, dir: c.dir, glyph, x: x + w / 2, y: top + 42, pair: PAIR.has(c.port) && extra.glyph !== "jack", horiz: horiz && ["rca", "line", "phono"].includes(c.port), ...extra });
     x += w + 8;
   };
   if (jacks.length) {
@@ -211,8 +221,24 @@ export function panelSpec(node) {
   }
   // Sockets nobody has listed: one dashed frame, an IN and an OUT side.
   const unknown = rest.filter((c) => c.port === "?");
+  const done = new Set();
   for (const c of rest) {
     if (c.port === "?") continue;
+    const conn = i?.ports?.[c.dir]?.[c.port]?.conn;
+    if (conn === "spdif35") {
+      // One hole for both: drawn once, takes either cable.
+      if (done.has(`${c.dir}:spdif`)) continue;
+      done.add(`${c.dir}:spdif`);
+      const both = ["optical", "coax"].filter((p) => i.ports[c.dir]?.[p]?.conn === "spdif35");
+      place(c, c.dir === "in" ? "S/PDIF IN" : "S/PDIF OUT", false, { glyph: "jack", jack: "3.5", ports: both, combo: true });
+      continue;
+    }
+    if (conn === "4.4" || conn === "3.5") {
+      const n = countOf(i, c.dir, c.port);
+      const name = c.port === "xlr" ? "BALANCED" : "LINE";
+      for (let k = 1; k <= n; k++) place(c, `${name} ${c.dir === "in" ? "IN" : "OUT"}${n > 1 ? ` ${k}` : ""}`, false, { glyph: "jack", jack: conn, conn });
+      continue;
+    }
     // As many sockets as the maker lists ("2x Coaxial", "RCA port*4" inputs), numbered.
     const n = countOf(i, c.dir, c.port);
     const label = LABEL[c.dir][c.port] ?? c.port.toUpperCase();
@@ -311,7 +337,9 @@ export function socketGlyph(s, ink) {
       const r = { "2.5": 4, "3.5": 6, "4.4": 7.5, "6.35": 11 }[s.jack] ?? 6;
       // A 6.35 socket sits in a hex nut; the dot says balanced (4.4) or not.
       const hex = (n) => `<polygon points="${Array.from({ length: 6 }, (_, k) => `${(n * Math.cos((Math.PI / 3) * k)).toFixed(1)},${(n * Math.sin((Math.PI / 3) * k)).toFixed(1)}`).join(" ")}" fill="#a3a6ab" stroke="#00000066"/>`;
-      return `${s.jack === "6.35" ? hex(r + 7) : ""}${ring(r + 4, "#8a8d92", "#00000066")}${ring(r, "#0b0b0b", "none")}${ring(r - 2.5, "#1d1d1d", "none")}<text y="${r + 20}" font-size="8" text-anchor="middle" fill="${ink}">${s.jack}</text><circle cy="${-r - 13}" r="2.6" fill="${s.jack === "4.4" ? BAL : UNBAL}"/>`;
+      // iFi and others gold-plate the 4.4 Pentaconn socket.
+      const rim = s.jack === "4.4" ? GOLD : "#8a8d92";
+      return `${s.jack === "6.35" ? hex(r + 7) : ""}${ring(r + 4, rim, "#00000066")}${ring(r, "#0b0b0b", "none")}${ring(r - 2.5, "#1d1d1d", "none")}${s.combo ? `<rect x="-2" y="-2" width="4" height="4" fill="#d33" opacity=".8"/>` : ""}<text y="${r + 20}" font-size="8" text-anchor="middle" fill="${ink}">${s.jack}</text><circle cy="${-r - 13}" r="2.6" fill="${s.jack === "4.4" ? BAL : UNBAL}"/>`;
     }
     case "hpplug":
     case "tether":
@@ -384,8 +412,10 @@ export function panelSvg(spec, name = "") {
     switch (chassis.style) {
       case "slim":
         return `<rect x="0" y="4" width="${w}" height="${h - 14}" rx="10" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/>${[0.13, 0.87].map((k) => `<path d="M${w * k - 16} ${h - 10} a16 9 0 0 0 32 0z" fill="#ededed" stroke="#b9bcc0"/>`).join("")}`;
-      case "zen":
-        return `<rect x="0" y="0" width="${w}" height="${h}" rx="${h / 2.4}" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/>`;
+      case "zen": {
+        const screw = (a, b) => `<g transform="translate(${a},${b})">${ring(4.5, "#0d0d0f", "#3a3d44")}<path d="M-2.5 0h5M0 -2.5v5" stroke="#555" stroke-width="1"/></g>`;
+        return `<rect x="0" y="0" width="${w}" height="${h}" rx="${h / 2.2}" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/><rect x="14" y="8" width="${w - 28}" height="${h - 16}" rx="${(h - 16) / 2.4}" fill="#121417" stroke="#00000088"/>${screw(w * 0.3, 14)}${screw(w * 0.3, h - 14)}${screw(w * 0.62, 14)}${screw(w * 0.62, h - 14)}`;
+      }
       case "jewel":
         return `<rect x="0" y="4" width="${w}" height="${h - 8}" rx="14" fill="${f.face}" stroke="${f.edge}" stroke-width="2"/><circle cx="${w - 20}" cy="20" r="6" fill="#7fb3ff" opacity=".7"/>`;
       case "wood":
@@ -453,6 +483,7 @@ function frontDecor(spec, f) {
 function frontOver(spec, f) {
   const { vu, lift, screenX, knobX } = spec.decor;
   const cy = lift + 70;
+  if (spec.decor.zen) return `<path d="M30 ${cy} H${spec.w - 30}" stroke="#6d5a45" stroke-width="10" stroke-linecap="round" opacity=".8"/><g transform="translate(${knobX},${cy})">${ring(34, "#6d5a45", "#00000066")}${ring(28, "#a99a86", "none")}${ring(16, "#bfb3a2", "none")}<circle cx="6" cy="14" r="2.2" fill="#222"/></g>${[0.12, 0.27].map((k) => `<g transform="translate(${spec.w * k},${cy})">${ring(12, "#6d5a45", "#00000066")}${ring(8, "#b9ad9c", "none")}</g>`).join("")}`;
   const knob = `<g transform="translate(${knobX},${cy})">${ring(30, f.frame, "#00000066", 1.5)}${ring(25, f.face === "#cfd2d6" ? "#e6e8eb" : "#2e3034", "none")}<circle cx="0" cy="-17" r="2.5" fill="${f.ink}"/></g>`;
   const room = knobX - 40 - screenX;
   if (room < 60) return knob;

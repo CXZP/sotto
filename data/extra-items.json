@@ -449,5 +449,234 @@
     "model": "KA1 Lightning",
     "category": "dongle",
     "addedFrom": "https://www.fiio.com/KA1_parameters"
+  },
+  {
+    "id": "ifi--zen-3",
+    "brand": "iFi",
+    "model": "ZEN DAC 3",
+    "category": "desktop",
+    "role": "dacamp",
+    "addedFrom": "https://ifi-audio.com/products/zen-dac-3",
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "4.4"
+    ],
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "USB Type-C",
+          "url": "https://ifi-audio.com/products/zen-dac-3"
+        },
+        "dc": {
+          "quote": "USB-C or DC 5V/0.5A (centre +ve)",
+          "url": "https://ifi-audio.com/products/zen-dac-3"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Section: Balanced 4.4mm ≤200Ω; Single-Ended RCA ≤100Ω",
+          "url": "https://ifi-audio.com/products/zen-dac-3",
+          "conn": "4.4"
+        },
+        "rca": {
+          "quote": "Line Section: Balanced 4.4mm ≤200Ω; Single-Ended RCA ≤100Ω",
+          "url": "https://ifi-audio.com/products/zen-dac-3"
+        }
+      }
+    }
+  },
+  {
+    "id": "ifi--zen-blue-3-wireless",
+    "brand": "iFi",
+    "model": "ZEN Blue 3",
+    "category": "desktop",
+    "role": "streamer",
+    "addedFrom": "https://ifi-audio.com/products/zen-blue-3",
+    "portsComplete": true,
+    "ports": {
+      "in": {
+        "bt": {
+          "quote": "Bluetooth 5.4 (aptX Lossless, aptX Adaptive, aptX, LDAC, LHDC/HWA, AAC, SBC)",
+          "url": "https://ifi-audio.com/products/zen-blue-3"
+        },
+        "usb": {
+          "quote": "USB, Optical, Coaxial, RCA L/R (Analogue)",
+          "url": "https://ifi-audio.com/products/zen-blue-3"
+        },
+        "optical": {
+          "quote": "USB, Optical, Coaxial, RCA L/R (Analogue)",
+          "url": "https://ifi-audio.com/products/zen-blue-3",
+          "conn": "spdif35"
+        },
+        "coax": {
+          "quote": "USB, Optical, Coaxial, RCA L/R (Analogue)",
+          "url": "https://ifi-audio.com/products/zen-blue-3",
+          "conn": "spdif35"
+        },
+        "rca": {
+          "quote": "USB, Optical, Coaxial, RCA L/R (Analogue)",
+          "url": "https://ifi-audio.com/products/zen-blue-3"
+        },
+        "dc": {
+          "quote": "USB-C or DC 5V/≥0.5A (centre +ve)",
+          "url": "https://ifi-audio.com/products/zen-blue-3"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Balanced 4.4mm: 4.1Vrms (0dBFS@1kHz)",
+          "url": "https://ifi-audio.com/products/zen-blue-3",
+          "conn": "4.4"
+        },
+        "rca": {
+          "quote": "Single-Ended RCA: 2.05Vrms (0dBFS@1kHz)",
+          "url": "https://ifi-audio.com/products/zen-blue-3"
+        }
+      }
+    }
+  },
+  {
+    "id": "ifi--zen-can-signature",
+    "brand": "iFi",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://ifi-audio.com/products/zen-can-signature",
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "4.4"
+    ],
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature"
+        },
+        "line": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "3.5"
+        },
+        "xlr": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "4.4"
+        },
+        "dc": {
+          "quote": "INPUT VOLTAGE: 5V/2.5A",
+          "url": "https://ifi-audio.com/products/zen-can-signature"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Section: BAL: 6.7V max. (variable)",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "4.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "ifi--zen-can-signature-mz99",
+    "brand": "iFi",
+    "category": "desktop",
+    "role": "amp",
+    "addedFrom": "https://ifi-audio.com/products/zen-can-signature",
+    "portsComplete": true,
+    "jacks": [
+      "6.35",
+      "4.4"
+    ],
+    "ports": {
+      "in": {
+        "rca": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature"
+        },
+        "line": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "3.5"
+        },
+        "xlr": {
+          "quote": "including stereo RCA, 3.5mm single-ended, and 4.4mm balanced inputs",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "4.4"
+        },
+        "dc": {
+          "quote": "INPUT VOLTAGE: 5V/2.5A",
+          "url": "https://ifi-audio.com/products/zen-can-signature"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Line Section: BAL: 6.7V max. (variable)",
+          "url": "https://ifi-audio.com/products/zen-can-signature",
+          "conn": "4.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "ifi--idsd-gr-2",
+    "brand": "iFi",
+    "model": "iDSD GR 2",
+    "category": "dongle",
+    "addedFrom": "https://ifi-audio.com/products/idsd-gr-2",
+    "portsComplete": true,
+    "jacks": [
+      "4.4",
+      "3.5"
+    ],
+    "look": {
+      "style": "compact",
+      "finish": "navy",
+      "front": true
+    },
+    "ports": {
+      "in": {
+        "usb": {
+          "quote": "1x USB-C; 1x S/PDIF (optical/coaxial);",
+          "url": "https://ifi-audio.com/products/idsd-gr-2"
+        },
+        "optical": {
+          "quote": "1x USB-C; 1x S/PDIF (optical/coaxial);",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "spdif35"
+        },
+        "coax": {
+          "quote": "1x USB-C; 1x S/PDIF (optical/coaxial);",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "spdif35"
+        },
+        "bt": {
+          "quote": "Bluetooth 5.4",
+          "url": "https://ifi-audio.com/products/idsd-gr-2"
+        },
+        "xlr": {
+          "quote": "Analogue inputs: 1 x Balanced 4.4mm, 1 x Single-Ended 3.5mm",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "4.4"
+        },
+        "line": {
+          "quote": "Analogue inputs: 1 x Balanced 4.4mm, 1 x Single-Ended 3.5mm",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "3.5"
+        }
+      },
+      "out": {
+        "xlr": {
+          "quote": "Analogue outputs: 1 x Balanced 4.4mm, 1 x Single-Ended 3.5mm",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "4.4"
+        },
+        "line": {
+          "quote": "Analogue outputs: 1 x Balanced 4.4mm, 1 x Single-Ended 3.5mm",
+          "url": "https://ifi-audio.com/products/idsd-gr-2",
+          "conn": "3.5"
+        }
+      }
+    }
   }
 ]

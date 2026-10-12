@@ -22,21 +22,23 @@ const holysai = ["HolySai", (n) => `https://www.holysai.com/search?q=${q(n)}`];
 // Thai IT chains that also sell headphones; search links from each site's own search box.
 const banana = ["Banana", (n) => `https://www.bnn.in.th/th/p?q=${q(n)}`];
 const itcity = ["IT City", (n) => `https://www.itcity.in.th/product-category?search=${q(n)}`];
+// Stores whose prices Sotto already tracks, as search links in their own country.
+const shop = (label, host) => [label, (n) => `https://${host}/search?q=${q(n)}`];
 const ali = ["AliExpress", (n) => `https://www.aliexpress.com/wholesale?SearchText=${q(n)}`];
 
 // codes: the market runs on stacked shop + platform vouchers (the #deal calculator).
 export const REGIONS = {
-  th: { th: "ไทย", en: "Thailand", currency: "THB", codes: true, stores: [shopee("shopee.co.th"), lazada("www.lazada.co.th"), munkong, soundproof, piyanas, progadgets, thevolume, proplugin, holysai, banana, itcity], local: [["ดีไหม", "{n} ดีไหม"], ["Pantip", "{n} site:pantip.com"]] },
-  sg: { th: "สิงคโปร์", en: "Singapore", currency: "SGD", codes: true, stores: [shopee("shopee.sg"), lazada("www.lazada.sg"), amazon("www.amazon.sg")], local: [["HardwareZone", "{n} site:hardwarezone.com.sg"]] },
+  th: { th: "ไทย", en: "Thailand", currency: "THB", codes: true, stores: [shopee("shopee.co.th"), lazada("www.lazada.co.th"), munkong, soundproof, piyanas, progadgets, thevolume, proplugin, holysai, banana, itcity, ["Jaben", (n) => `https://www.jaben.co.th/?s=${q(n)}&post_type=product`]], local: [["ดีไหม", "{n} ดีไหม"], ["Pantip", "{n} site:pantip.com"]] },
+  sg: { th: "สิงคโปร์", en: "Singapore", currency: "SGD", codes: true, stores: [shopee("shopee.sg"), lazada("www.lazada.sg"), shop("The Hangout", "hangout.audio"), shop("Stereo Electronics", "www.stereo.com.sg"), amazon("www.amazon.sg")], local: [["HardwareZone", "{n} site:hardwarezone.com.sg"]] },
   my: { th: "มาเลเซีย", en: "Malaysia", currency: "MYR", codes: true, stores: [shopee("shopee.com.my"), lazada("www.lazada.com.my")], local: [["Lowyat", "{n} site:lowyat.net"]] },
   ph: { th: "ฟิลิปปินส์", en: "Philippines", currency: "PHP", codes: true, stores: [shopee("shopee.ph"), lazada("www.lazada.com.ph")], local: [] },
   id: { th: "อินโดนีเซีย", en: "Indonesia", currency: "IDR", codes: true, stores: [shopee("shopee.co.id"), ["Tokopedia", (n) => `https://www.tokopedia.com/search?q=${q(n)}`]], local: [["Kaskus", "{n} site:kaskus.co.id"]] },
   vn: { th: "เวียดนาม", en: "Vietnam", currency: "VND", codes: true, stores: [shopee("shopee.vn"), lazada("www.lazada.vn")], local: [["Tinh tế", "{n} site:tinhte.vn"]] },
   us: { th: "สหรัฐฯ", en: "United States", currency: "USD", codes: false, stores: [amazon("www.amazon.com"), ebay("www.ebay.com")], local: [] },
   ca: { th: "แคนาดา", en: "Canada", currency: "CAD", codes: false, stores: [amazon("www.amazon.ca"), ebay("www.ebay.ca")], local: [] },
-  uk: { th: "สหราชอาณาจักร", en: "United Kingdom", currency: "GBP", codes: false, stores: [amazon("www.amazon.co.uk"), ebay("www.ebay.co.uk")], local: [] },
+  uk: { th: "สหราชอาณาจักร", en: "United Kingdom", currency: "GBP", codes: false, stores: [shop("hifiheadphones", "hifiheadphones.co.uk"), amazon("www.amazon.co.uk"), ebay("www.ebay.co.uk")], local: [] },
   eu: { th: "ยุโรป", en: "Europe", currency: "EUR", codes: false, stores: [amazon("www.amazon.de"), ["Thomann", (n) => `https://www.thomann.de/intl/search_dir.html?sw=${q(n)}`], ebay("www.ebay.de")], local: [] },
-  au: { th: "ออสเตรเลีย", en: "Australia", currency: "AUD", codes: false, stores: [amazon("www.amazon.com.au"), ebay("www.ebay.com.au")], local: [] },
+  au: { th: "ออสเตรเลีย", en: "Australia", currency: "AUD", codes: false, stores: [shop("Addicted To Audio", "addictedtoaudio.com.au"), amazon("www.amazon.com.au"), ebay("www.ebay.com.au")], local: [] },
   jp: { th: "ญี่ปุ่น", en: "Japan", currency: "JPY", codes: false, stores: [amazon("www.amazon.co.jp"), ["e☆イヤホン", (n) => `https://www.e-earphone.jp/search?q=${q(n)}`], ["Rakuten", (n) => `https://search.rakuten.co.jp/search/mall/${q(n)}/`]], local: [["レビュー", "{n} レビュー"], ["価格.com", "{n} site:kakaku.com"]] },
   kr: { th: "เกาหลีใต้", en: "South Korea", currency: "KRW", codes: false, stores: [["Coupang", (n) => `https://www.coupang.com/np/search?q=${q(n)}`]], local: [["후기", "{n} 후기"]] },
   other: { th: "ที่อื่น", en: "Elsewhere", currency: "USD", codes: false, stores: [ali, amazon("www.amazon.com"), ebay("www.ebay.com")], local: [] },

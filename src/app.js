@@ -1,21 +1,22 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5cwhed";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5cwhed";
-import { renderChart } from "./chart.js?v=mv5cwhed";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5cwhed";
-import { makeT } from "./i18n.js?v=mv5cwhed";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5cwhed";
-import { LEGAL } from "./legal.js?v=mv5cwhed";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5cwhed";
-import * as community from "./community.js?v=mv5cwhed";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5cwhed";
-import { redactImage } from "./redact.js?v=mv5cwhed";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5cwhed";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5cwhed";
-import { chainLinks } from "./chain.js?v=mv5cwhed";
-import { fits } from "./dcfit.js?v=mv5cwhed";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5cwhed";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5cwhed";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5cwhed";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5d3qx9";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5d3qx9";
+import { renderChart } from "./chart.js?v=mv5d3qx9";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5d3qx9";
+import { makeT } from "./i18n.js?v=mv5d3qx9";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5d3qx9";
+import { LEGAL } from "./legal.js?v=mv5d3qx9";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5d3qx9";
+import * as community from "./community.js?v=mv5d3qx9";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5d3qx9";
+import { redactImage } from "./redact.js?v=mv5d3qx9";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5d3qx9";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5d3qx9";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables } from "./desk.js?v=mv5d3qx9";
+import { chainLinks } from "./chain.js?v=mv5d3qx9";
+import { fits } from "./dcfit.js?v=mv5d3qx9";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5d3qx9";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5d3qx9";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5d3qx9";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -156,7 +157,7 @@ function renderChrome(r) {
   document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
   document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="#tools">${esc(t("tl_title"))}</a> · <a href="#fr">${esc(t("fr_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
+  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="#tools">${esc(t("tl_title"))}</a> · <a href="#fr">${esc(t("fr_title"))}</a> · <a href="#desk">${esc(t("dk_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
     <br><label class="region-pick">${esc(t("rg_label"))} ${regionSelect()}</label>`;
 }
 
@@ -276,6 +277,7 @@ function render() {
   else if (r.name === "about") main.innerHTML = `<article class="prose about">${aboutPage(state.lang, sourceSites(), db.stores)}</article>`;
   else if (r.name === "home") main.innerHTML = homePage();
   else if (r.name === "calendar") main.innerHTML = calendarPage();
+  else if (r.name === "desk") main.innerHTML = deskPage();
   else main.innerHTML = buildPage();
   wire(main, r);
   scrollTo({ top: 0 });
@@ -614,6 +616,7 @@ function buildPage() {
       ${hp ? slotRow(t("plug"), seg("plug", PLUGS.map((j) => [j, PLUG_SHORT[j]]), plugOf(hp)), !state.plug && !hp.stockPlug ? t("plug_guess") : "") : ""}
       ${slotRow(t("level"), seg("level", [["quiet", t("level_quiet")], ["normal", t("level_normal")], ["loud", t("level_loud")]], state.level), t("level_hint", { avg: lv, peak: lv + CREST }))}
       ${buildTotal(amp, hp, dac, src, cart)}
+      ${(src || dac || amp) && hp ? `<div class="slot"><a class="pill small" href="${deskFromBuild(device, src, dac, amp, hp)}">${esc(t("dk_open"))}</a></div>` : ""}
       ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[src?.id, dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
     <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
@@ -1286,7 +1289,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5cwhed").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5d3qx9").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -1630,6 +1633,7 @@ function wire(main, r) {
     main.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = t("copied")))));
   }
   if (r.name === "deal") wireDeal(main);
+  if (r.name === "desk") wireDesk(main);
   if (r.name === "chart") wireChartPage(main);
   if (r.name === "discuss") (r.sub === "new" ? wireNewThread : r.sub === "thread" ? wireThread : wireDiscuss)(main);
   if (r.name === "account") wireAccount(main);
@@ -2575,7 +2579,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5cwhed" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5d3qx9" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3062,7 +3066,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5cwhed" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5d3qx9" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4355,6 +4359,240 @@ function watchSection(el, signature, rerender) {
   }
   setTimeout(tick, 5000); // remember what the page showed
 }
+// ---------------------------------------------------------------------------
+// Desk blueprint (#desk): boxes on a grid, cables checked socket to socket,
+// a parts list with the total, and a link that rebuilds the desk.
+
+const DESK_KEY = "sotto.desk";
+let desk = null;
+function deskNode(ref) {
+  if (ref.startsWith("dev:")) return DESK_DEVICES[ref.slice(4)] ? { device: ref.slice(4) } : null;
+  const item = findItem(ref);
+  return item ? { item } : null;
+}
+function deskName(n) {
+  return n.device ? t(`dk_dev_${n.device}`) : displayName(n.item);
+}
+function portLabel(p) {
+  if (p === "hp") return t("dk_p_hp");
+  if (p === "spk") return t("dk_p_spk");
+  if (p === "dc") return t("dk_p_dc");
+  if (p === "?") return "?";
+  const s = t(`po_${p}`);
+  return s.startsWith("po_") ? p.toUpperCase() : s.replace(/ \(.*\)$/, "");
+}
+function loadDesk() {
+  const code = query().get("d");
+  if (code) return decodeDesk(code);
+  return decodeDesk(load(DESK_KEY, ""));
+}
+function saveDesk() {
+  const code = encodeDesk(desk);
+  history.replaceState(null, "", desk.nodes.length ? `#desk?d=${code}` : "#desk");
+  save(DESK_KEY, code);
+}
+
+/** The build page's chain as a desk link, cables chosen per pair. */
+function deskFromBuild(device, src, dac, amp, hp) {
+  const refs = [src ? src.id : /computer|macbook|laptop|pc/i.test(device?.id ?? "") ? "dev:computer" : "dev:phone", dac?.id, amp?.id, hp.id].filter(Boolean);
+  const nodes = refs.map((ref, k) => ({ ref, x: 20 + k * 230, y: 40 }));
+  return `#desk?d=${encodeDesk({ nodes, cables: autoCables(refs.map(deskNode)) })}`;
+}
+
+function deskPage() {
+  desk = loadDesk();
+  return `<div class="desk-page">
+    <header class="deal-head"><h1>${esc(t("dk_title"))}</h1><p class="muted">${esc(t("dk_lead"))}</p></header>
+    <div class="desk-layout">
+      <section class="card desk-board-wrap"><div class="desk-board" id="dk-board"></div></section>
+      <div class="desk-rail">
+      <aside class="card pad desk-palette">
+        <input class="search" id="dk-q" autocomplete="off" placeholder="${esc(t("dk_search"))}">
+        <div id="dk-results" class="dk-results"></div>
+        <p class="small muted">${esc(t("dk_devices"))}</p>
+        <div class="row-inline">${Object.keys(DESK_DEVICES).map((d) => `<button type="button" class="pill small" data-add="dev:${d}">${esc(t(`dk_dev_${d}`))}</button>`).join("")}</div>
+        <p class="small muted dk-help">${esc(t("dk_help"))}</p>
+        <button type="button" class="link small" id="dk-clear">${esc(t("dk_clear"))}</button>
+      </aside>
+      <aside class="card pad desk-side" id="dk-side"></aside>
+      </div>
+    </div>
+  </div>`;
+}
+
+function wireDesk(main) {
+  const board = main.querySelector("#dk-board");
+  const side = main.querySelector("#dk-side");
+  let pending = null; // {n, dir, p}
+  const nodes = () => desk.nodes.map((n) => ({ ...n, node: deskNode(n.ref) }));
+  const cableStatus = (c) => cableCheck(c.out, c.in);
+  // A cable whose socket isn't on the box (a link made before its ports were known) is dropped.
+  const prune = () => {
+    const ports = nodes().map((n) => (n.node ? nodePorts(n.node) : { in: [], out: [] }));
+    desk.cables = desk.cables.filter((c) => ports[c.from]?.out.includes(c.out) && ports[c.to]?.in.includes(c.in));
+  };
+
+  const nodeHtml = (n, idx) => {
+    if (!n.node) return "";
+    const ports = nodePorts(n.node);
+    const im = n.node.item ? imageOf(n.node.item) : null;
+    const pr = n.node.item ? prices(n.node.item).cheapest : null;
+    const sock = (dir, p) =>
+      `<button type="button" class="dk-port ${dir}${pending && pending.n === idx && pending.dir === dir && pending.p === p ? " on" : ""}" data-n="${idx}" data-dir="${dir}" data-p="${esc(p)}">${esc(portLabel(p))}</button>`;
+    return `<div class="dk-node" data-n="${idx}" style="left:${n.x}px;top:${n.y}px">
+      <div class="dk-head" data-drag="${idx}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer" draggable="false">` : `<span class="dk-dev"></span>`}<b>${esc(deskName(n.node))}</b><button type="button" class="dk-del" data-del="${idx}" aria-label="${esc(t("cm_delete"))}">×</button></div>
+      <div class="dk-ports"><div class="dk-col">${ports.in.map((p) => sock("in", p)).join("")}</div><div class="dk-col out">${ports.out.map((p) => sock("out", p)).join("")}</div></div>
+      ${pr ? `<div class="dk-price small">${priceTag(pr.price, pr.currency)}</div>` : ""}
+    </div>`;
+  };
+  const center = (el) => {
+    const a = el.getBoundingClientRect();
+    const b = board.getBoundingClientRect();
+    return { x: a.left - b.left + (el.classList.contains("out") ? a.width : 0), y: a.top - b.top + a.height / 2 };
+  };
+  const drawWires = () => {
+    const svg = board.querySelector("svg");
+    if (!svg) return;
+    svg.innerHTML = desk.cables
+      .map((c, k) => {
+        const a = board.querySelector(`.dk-port.out[data-n="${c.from}"][data-p="${CSS.escape(c.out)}"]`);
+        const b = board.querySelector(`.dk-port.in[data-n="${c.to}"][data-p="${CSS.escape(c.in)}"]`);
+        if (!a || !b) return "";
+        const p = center(a);
+        const q = center(b);
+        const dx = Math.max(40, Math.abs(q.x - p.x) / 2);
+        const s = cableStatus(c);
+        return `<path class="dk-wire ${s.status}" data-cable="${k}" d="M${p.x},${p.y} C${p.x + dx},${p.y} ${q.x - dx},${q.y} ${q.x},${q.y}"><title>${esc(t(s.why))} · ${esc(t("dk_wire_remove"))}</title></path>`;
+      })
+      .join("");
+  };
+  const drawSide = () => {
+    const all = nodes();
+    const to = viewCur();
+    let total = 0;
+    let missing = 0;
+    const rows = all
+      .filter((n) => n.node?.item)
+      .map((n) => {
+        const pr = prices(n.node.item).cheapest;
+        const v = pr ? convert(pr.price, pr.currency, to) : null;
+        if (v == null) missing++;
+        else total += v;
+        return `<li><a href="#item/${encodeURIComponent(n.node.item.id)}">${esc(displayName(n.node.item))}</a><span>${pr ? priceTag(pr.price, pr.currency) : "—"}</span></li>`;
+      })
+      .join("");
+    const issues = desk.cables
+      .map((c) => ({ c, s: cableStatus(c) }))
+      .filter(({ s }) => s.status !== "ok")
+      .map(({ c, s }) => `<li class="${s.status === "no" ? "danger" : "need"}">${esc(deskName(all[c.from].node))} → ${esc(deskName(all[c.to].node))}: ${esc(t(s.why))}</li>`)
+      .join("");
+    const lonely = all
+      .filter((n, k) => n.node?.item && ["iem", "headphone"].includes(n.node.item.category) && !desk.cables.some((c) => c.to === k))
+      .map((n) => `<li class="need">${esc(t("dk_unplugged", { name: deskName(n.node) }))}</li>`)
+      .join("");
+    side.innerHTML = `<h3>${esc(t("dk_parts"))}</h3>
+      ${rows ? `<ul class="dk-parts">${rows}</ul><p class="dk-total"><span>${esc(t("dk_total"))}</span><b>${money(total, to)}</b></p>${missing ? `<p class="small muted">${esc(t("dk_no_price", { n: missing }))}</p>` : ""}<p class="small muted">${esc(t("dk_total_note"))}</p>` : `<p class="muted small">${esc(t("dk_empty"))}</p>`}
+      ${issues || lonely ? `<h3>${esc(t("dk_checks"))}</h3><ul class="chain-steps">${issues}${lonely}</ul>` : desk.cables.length ? `<p class="small">${esc(t("dk_all_ok"))}</p>` : ""}
+      ${desk.nodes.length ? `<button type="button" class="pill primary" id="dk-share">${esc(t("dk_share"))}</button>` : ""}`;
+    side.querySelector("#dk-share")?.addEventListener("click", (e) => {
+      navigator.clipboard?.writeText(location.href).then(() => (e.target.textContent = t("copied")));
+    });
+  };
+  const draw = () => {
+    prune();
+    board.innerHTML = `<svg class="dk-wires"></svg>${nodes().map(nodeHtml).join("")}${desk.nodes.length ? "" : `<p class="dk-empty muted">${esc(t("dk_board_empty"))}</p>`}`;
+    board.style.minHeight = `${Math.max(520, ...desk.nodes.map((n) => n.y + 240))}px`;
+    drawWires(); // reading positions forces layout, so the sockets are in place
+    drawSide();
+  };
+  const commit = () => {
+    saveDesk();
+    draw();
+  };
+  const add = (ref) => {
+    if (!deskNode(ref)) return;
+    const k = desk.nodes.length;
+    desk.nodes.push({ ref, x: 20 + (k % 3) * 230, y: 20 + Math.floor(k / 3) * 210 });
+    commit();
+  };
+
+  board.addEventListener("click", (e) => {
+    const del = e.target.closest("[data-del]");
+    if (del) {
+      const k = Number(del.dataset.del);
+      desk.nodes.splice(k, 1);
+      desk.cables = desk.cables.filter((c) => c.from !== k && c.to !== k).map((c) => ({ ...c, from: c.from > k ? c.from - 1 : c.from, to: c.to > k ? c.to - 1 : c.to }));
+      pending = null;
+      return commit();
+    }
+    const wire = e.target.closest("[data-cable]");
+    if (wire) {
+      desk.cables.splice(Number(wire.dataset.cable), 1);
+      return commit();
+    }
+    const port = e.target.closest(".dk-port");
+    if (!port) {
+      if (pending) {
+        pending = null;
+        draw();
+      }
+      return;
+    }
+    const here = { n: Number(port.dataset.n), dir: port.dataset.dir, p: port.dataset.p };
+    if (!pending || pending.dir === here.dir || pending.n === here.n) {
+      pending = pending && pending.n === here.n && pending.dir === here.dir && pending.p === here.p ? null : here;
+      return draw();
+    }
+    const [a, b] = pending.dir === "out" ? [pending, here] : [here, pending];
+    // One cable per input socket: a new one replaces the old.
+    desk.cables = desk.cables.filter((c) => !(c.to === b.n && c.in === b.p));
+    desk.cables.push({ from: a.n, out: a.p, to: b.n, in: b.p });
+    pending = null;
+    commit();
+  });
+  board.addEventListener("pointerdown", (e) => {
+    const head = e.target.closest("[data-drag]");
+    if (!head || e.target.closest("[data-del]")) return;
+    e.preventDefault();
+    const k = Number(head.dataset.drag);
+    const el = head.closest(".dk-node");
+    const start = { x: e.clientX, y: e.clientY, nx: desk.nodes[k].x, ny: desk.nodes[k].y };
+    head.setPointerCapture(e.pointerId);
+    const move = (ev) => {
+      desk.nodes[k].x = Math.max(0, Math.round((start.nx + ev.clientX - start.x) / 10) * 10);
+      desk.nodes[k].y = Math.max(0, Math.round((start.ny + ev.clientY - start.y) / 10) * 10);
+      el.style.left = `${desk.nodes[k].x}px`;
+      el.style.top = `${desk.nodes[k].y}px`;
+      drawWires();
+    };
+    const up = () => {
+      head.removeEventListener("pointermove", move);
+      head.removeEventListener("pointerup", up);
+      commit();
+    };
+    head.addEventListener("pointermove", move);
+    head.addEventListener("pointerup", up);
+  });
+  const q = main.querySelector("#dk-q");
+  const results = main.querySelector("#dk-results");
+  q.addEventListener("input", () => {
+    const s = q.value.trim().toLowerCase();
+    const hits = s.length < 2 ? [] : db.items.filter((i) => matches(i, s)).sort((a, b) => storeCount(b) - storeCount(a)).slice(0, 8);
+    results.innerHTML = hits.map((i) => `<button type="button" class="dk-hit" data-add="${esc(i.id)}"><span>${esc(displayName(i))}</span><small class="muted">${esc(catLabel(i))}</small></button>`).join("");
+  });
+  main.querySelector(".desk-palette").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-add]");
+    if (b) add(b.dataset.add);
+  });
+  main.querySelector("#dk-clear").addEventListener("click", () => {
+    desk = { nodes: [], cables: [] };
+    commit();
+  });
+  const onResize = () => (board.isConnected ? drawWires() : removeEventListener("resize", onResize));
+  addEventListener("resize", onResize);
+  draw();
+}
+
 function money(n, currency) {
   if (n == null) return "";
   try {

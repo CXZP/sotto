@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5ympo8";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5ympo8";
-import { renderChart } from "./chart.js?v=mv5ympo8";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5ympo8";
-import { makeT } from "./i18n.js?v=mv5ympo8";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5ympo8";
-import { LEGAL } from "./legal.js?v=mv5ympo8";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5ympo8";
-import * as community from "./community.js?v=mv5ympo8";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5ympo8";
-import { redactImage } from "./redact.js?v=mv5ympo8";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5ympo8";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5ympo8";
-import { chainLinks } from "./chain.js?v=mv5ympo8";
-import { fits } from "./dcfit.js?v=mv5ympo8";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5ympo8";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5ympo8";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5ympo8";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5yvqok";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5yvqok";
+import { renderChart } from "./chart.js?v=mv5yvqok";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5yvqok";
+import { makeT } from "./i18n.js?v=mv5yvqok";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5yvqok";
+import { LEGAL } from "./legal.js?v=mv5yvqok";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5yvqok";
+import * as community from "./community.js?v=mv5yvqok";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5yvqok";
+import { redactImage } from "./redact.js?v=mv5yvqok";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5yvqok";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5yvqok";
+import { chainLinks } from "./chain.js?v=mv5yvqok";
+import { fits } from "./dcfit.js?v=mv5yvqok";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5yvqok";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5yvqok";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5yvqok";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1223,7 +1223,10 @@ function itemPage(id) {
     .filter((f) => i.specs?.[f] && !(f === "zout" && zoutPerJack))
     .map((f) => {
       const list = i.specs[f];
-      const conflict = new Set(list.map((e) => `${e.value}${e.unit ?? ""}`)).size > 1;
+      // Sources disagree only when the values come from different sites. One
+      // page giving several values (a figure per jack or mode) is not a clash.
+      const hosts = (e) => new Set((e.sources ?? []).map((s) => hostOf(s.url)));
+      const conflict = list.some((a, k) => list.slice(k + 1).some((b) => `${a.value}${a.unit ?? ""}` !== `${b.value}${b.unit ?? ""}` && ![...hosts(a)].some((h) => hosts(b).has(h))));
       return `<div class="spec"><div class="spec-name">${esc(f === "zout" ? "Output impedance" : f[0].toUpperCase() + f.slice(1))}${i.conflicts?.includes(f) ? ` <span class="tag warn">${esc(t("it_conflict_open"))}</span>` : conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
         <ul>${list.map((e) => `<li><b>${fmt(e.value, 2)} ${f === "sensitivity" ? e.unit ?? `dB <span class="tag">${esc(t("unit_unknown"))}</span>` : "Ω"}</b> ${tag(e)} ${quoteLinks(e, true)}</li>`).join("")}</ul></div>`;
     })
@@ -1298,7 +1301,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5ympo8").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5yvqok").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2589,7 +2592,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5ympo8" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5yvqok" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3104,7 +3107,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5ympo8" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5yvqok" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4308,13 +4311,23 @@ function tag(e) {
 }
 function quoteLinks(e, showQuotes = state.mode === "detail") {
   const srcs = e.sources ?? [];
-  return `<span class="srcs">${srcs.map((s) => srcLink(s.url)).join(" ")}</span>${
-    showQuotes ? srcs.filter((s) => s.quote).slice(0, 3).map((s) => `<q class="quote">${esc(s.quote)}</q>`).join("") : ""
+  // One link per site and each line once: a store's new and open-box pages carry the same text.
+  const sites = [...new Map(srcs.filter((s) => s.url).map((s) => [hostOf(s.url), s.url])).values()];
+  const quotes = [...new Set(srcs.map((s) => s.quote).filter(Boolean))];
+  return `<span class="srcs">${sites.map(srcLink).join(" ")}</span>${
+    showQuotes ? quotes.slice(0, 3).map((q) => `<q class="quote">${esc(q)}</q>`).join("") : ""
   }`;
+}
+function hostOf(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 function srcLink(url) {
   if (!url) return "";
-  const host = new URL(url).hostname.replace(/^www\./, "");
+  const host = hostOf(url);
   return `<a class="src" href="${esc(url)}" target="_blank" rel="noopener">${esc(host)}</a>`;
 }
 /** A store price in its own currency, then about how much that is in the reader's currency. */

@@ -1,17 +1,17 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv5ympo8";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mv5yvqok";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "portable", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos, rates] = await Promise.all([
-    fetch("data/catalog.json?v=mv5ympo8").then((r) => r.json()),
-    fetch("data/devices.json?v=mv5ympo8").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mv5ympo8").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mv5ympo8").then((r) => r.json()).catch(() => ({})),
-    fetch("data/fx.json?v=mv5ympo8").then((r) => r.json()).catch(() => null),
+    fetch("data/catalog.json?v=mv5yvqok").then((r) => r.json()),
+    fetch("data/devices.json?v=mv5yvqok").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mv5yvqok").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mv5yvqok").then((r) => r.json()).catch(() => ({})),
+    fetch("data/fx.json?v=mv5yvqok").then((r) => r.json()).catch(() => null),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   // Old ids (merged or renamed models) → the current id, and the reverse.
@@ -24,7 +24,7 @@ export async function loadData() {
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mv5ympo8").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mv5yvqok").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 
@@ -58,7 +58,9 @@ export function sourceOutputs(item) {
       jack: null,
       kind: "claimed",
       power: [...best.values()].map((p) => ({ load: p.load, mw: p.mw })),
-      zout: item.specs?.zout?.[0]?.value ?? null,
+      // Several figures (one per jack or mode): the highest is the safe side
+      // for the output-impedance check.
+      zout: item.specs?.zout?.length ? Math.max(...item.specs.zout.map((z) => z.value)) : null,
       source: power[0].sources[0].url,
       fromStore: true,
     },

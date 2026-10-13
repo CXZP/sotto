@@ -7,8 +7,8 @@
 // can put plugs and cables on them; panelSvg(spec) draws it. Socket labels are
 // silkscreen English (as printed on real gear), not translated.
 
-import { nodePorts } from "./desk.js?v=mv5xosvm";
-import { gearSvg } from "./gear.js?v=mv5xosvm";
+import { nodePorts } from "./desk.js?v=mv5wxx47";
+import { gearSvg } from "./gear.js?v=mv5wxx47";
 
 /** House styles: shape and finish, by brand (lower case). */
 const BRAND_CHASSIS = {

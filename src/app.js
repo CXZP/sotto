@@ -1,25 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5wxx47";
-import { loadData, loadPhotos, loadLayouts, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5wxx47";
-import { renderChart } from "./chart.js?v=mv5wxx47";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5wxx47";
-import { makeT } from "./i18n.js?v=mv5wxx47";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mv5wxx47";
-import { LEGAL } from "./legal.js?v=mv5wxx47";
-import { track, stats, trackingOff } from "./analytics.js?v=mv5wxx47";
-import * as community from "./community.js?v=mv5wxx47";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5wxx47";
-import { redactImage } from "./redact.js?v=mv5wxx47";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5wxx47";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5wxx47";
-import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5wxx47";
-import { gearKind, gearSvg } from "./gear.js?v=mv5wxx47";
-import { checkPage, wireCheck } from "./check.js?v=mv5wxx47";
-import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5wxx47";
-import { chainLinks } from "./chain.js?v=mv5wxx47";
-import { fits } from "./dcfit.js?v=mv5wxx47";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mv5wxx47";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5wxx47";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5wxx47";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mv5xosvm";
+import { loadData, loadPhotos, loadLayouts, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mv5xosvm";
+import { renderChart } from "./chart.js?v=mv5xosvm";
+import { drawShape } from "./shape.js?v=mv5xosvm";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mv5xosvm";
+import { makeT } from "./i18n.js?v=mv5xosvm";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mv5xosvm";
+import { LEGAL } from "./legal.js?v=mv5xosvm";
+import { track, stats, trackingOff } from "./analytics.js?v=mv5xosvm";
+import * as community from "./community.js?v=mv5xosvm";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mv5xosvm";
+import { redactImage } from "./redact.js?v=mv5xosvm";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mv5xosvm";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mv5xosvm";
+import { DESK_DEVICES, nodePorts, cableCheck, encodeDesk, decodeDesk, autoCables, wireNew, flowLayout, stageOf, FLOW } from "./desk.js?v=mv5xosvm";
+import { gearKind, gearSvg } from "./gear.js?v=mv5xosvm";
+import { checkPage, wireCheck } from "./check.js?v=mv5xosvm";
+import { panelSpec, panelSvg, plugGlyph, hpPlug, PANEL_DEFS, frontSpec, hasFront, finishesOf } from "./panel.js?v=mv5xosvm";
+import { chainLinks } from "./chain.js?v=mv5xosvm";
+import { fits } from "./dcfit.js?v=mv5xosvm";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mv5xosvm";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mv5xosvm";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mv5xosvm";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1305,7 +1306,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mv5wxx47").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mv5xosvm").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2605,7 +2606,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5wxx47" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mv5xosvm" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -2773,9 +2774,19 @@ function faceHtml(f) {
 async function renderLooks(el, item) {
   if (!el) return;
   const lay = (await loadLayouts())[item.id];
-  if (!el.isConnected || !lay?.faces?.length) return;
-  el.innerHTML = `<h3>${esc(t("lk_title"))}</h3>${lay.faces.map(faceHtml).join("")}`;
+  if (!el.isConnected || !(lay?.faces?.length || lay?.model)) return;
+  const shape = lay.model
+    ? `<figure class="shape"><canvas aria-label="${esc(t("lk_shape_alt"))}"></canvas>
+      <figcaption class="muted small">${esc(t("lk_shape_lead"))} <span class="tag">${esc(t(lay.model.checkedBy ? "lk_checked" : "lk_draft"))}</span></figcaption></figure>`
+    : "";
+  el.innerHTML = `<h3>${esc(t("lk_title"))}</h3>${shape}${(lay.faces ?? []).map(faceHtml).join("")}`;
   el.hidden = false;
+  const canvas = el.querySelector(".shape canvas");
+  if (canvas) {
+    const stop = drawShape(canvas, lay.model);
+    // Stop drawing once the page moves on.
+    const watch = setInterval(() => { if (!canvas.isConnected) { stop(); clearInterval(watch); } }, 1000);
+  }
 }
 
 async function renderPorts(el, item) {
@@ -3134,7 +3145,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5wxx47" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mv5xosvm" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

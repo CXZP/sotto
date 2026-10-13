@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv5ybg5o";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mv5ye119";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -164,41 +164,6 @@ export async function portsFor(itemIds) {
   const out = {};
   for (const r of data) (out[r.item_id] ??= []).push({ ...r, in: r.ports_in, out: r.ports_out });
   return out;
-}
-
-// People's checks (supabase/checks.sql). Read by everyone; written by checkers only.
-
-/** Every check, newest last ([] when the table isn't there yet). */
-export async function allChecks() {
-  const sb = await client();
-  if (!sb) return [];
-  const { data, error } = await sb.from("checks").select("id,item_id,field,verdict,shown,data,evidence_url,note,author,created_at").order("created_at", { ascending: true }).limit(20000);
-  return error ? [] : data;
-}
-
-/** Whether the signed-in person may record checks. */
-export async function amChecker() {
-  const sb = await client();
-  const s = sb ? (await sb.auth.getSession()).data.session : null;
-  if (!s) return false;
-  const { data } = await sb.from("checkers").select("user_id").eq("user_id", s.user.id).maybeSingle();
-  return !!data;
-}
-
-/** Record a check. Throws Error(message) on failure. */
-export async function addCheck(row) {
-  const sb = await client();
-  if (!sb) throw new Error("unavailable");
-  const { data, error } = await sb.from("checks").insert(row).select().single();
-  if (error) throw new Error(error.message);
-  return data;
-}
-
-export async function deleteCheck(id) {
-  const sb = await client();
-  if (!sb) throw new Error("unavailable");
-  const { error } = await sb.from("checks").delete().eq("id", id);
-  if (error) throw new Error(error.message);
 }
 
 /** Ask the summariser (Edge Function) for a draft from pasted text. Throws Error(code). */

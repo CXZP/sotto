@@ -60,11 +60,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: edit `data/*.json`, every
 - Data (`data/*.json`): [CC BY-SA 4.0](DATA_LICENSE.md)
 
 Brand and model names are trademarks of their owners and are used only to identify products. Sotto is not affiliated with or endorsed by any manufacturer, retailer or reviewer it cites.
-
----
-
-### ภาษาไทย
-
-Sotto เช็กชุดหูฟังว่า **เสียบได้ไหม · ดังพอไหม · ต้องซื้อแอมป์ไหม** โดยคำนวณจากสเปกจริงที่มีลิงก์ที่มาทุกตัว ไม่ตัดสินว่าเสียงเพราะไหม ไม่มี tracking · การคำนวณไม่ใช้ AI (มี AI แค่ตัวช่วยร่างโพสต์จากรีวิวที่ผู้ใช้วางเอง และทุกข้อต้องมีประโยคต้นฉบับกำกับ)
-
-เพิ่มหรือแก้ข้อมูล: แก้ไฟล์ใน `data/` ใส่ลิงก์ที่มาทุกค่า รัน `npm run check` แล้วเปิด PR — รายละเอียดใน [CONTRIBUTING.md](CONTRIBUTING.md)

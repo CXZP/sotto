@@ -578,9 +578,4 @@ select option { background: var(--surface); color: var(--text); }
 
 .seg-links button { padding: 6px 12px; border: 0; border-radius: 999px; background: none; color: var(--text-2); font: inherit; font-size: 13px; cursor: pointer; }
 .seg-links button.on { background: var(--surface); color: var(--text); }
-/* The real thing: the maker's image of the box, as it is. */
-.card.realthing { display: block; }
-.look { margin: 0; display: grid; gap: 6px; }
-.look + .look { margin-top: 14px; }
-.look img { display: block; max-width: 100%; height: auto; border-radius: 14px; }
 .tag.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }

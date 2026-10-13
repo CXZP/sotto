@@ -1,88 +1,196 @@
 {
- "shanling--ua2": {
-  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/964b5237725de61a39de1d3d83241c2f.jpg",
-  "page": "https://hifigo.com/products/shanling-ua2",
+ "shanling--ea5-plus-music-centre": {
+  "image": "https://ae01.alicdn.com/kf/S4492e6a4e34c4f3abef4a3162eda3408R.jpg",
+  "page": "https://hifigo.com/products/shanling-ea5-plus",
   "also": [
-   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/2dab413ec7f47910611c301a10f70ad6.jpg",
-   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/293521ed7c59cfc4611ee9bdc33b46d4.jpg",
-   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103329/915250e6b72b499505f13f476dffb077.jpg",
-   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/4390c98b3fd44b9e9b45994642740df5.jpg"
+   "https://ae01.alicdn.com/kf/S7c7e0e77815d45359342f895a82e42b4p.jpg",
+   "https://ae01.alicdn.com/kf/Sae60e33009314b15a32a156e9fdcf0b84.jpg"
   ],
   "complete": false,
   "in": {
+   "coax": {
+    "label": "COXIAL",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "OPTICAL",
+    "conn": "toslink"
+   },
    "usb": {
-    "label": "USB-C",
-    "conn": "usbC"
-   }
-  },
-  "out": {},
-  "jacks": [
-   "3.5",
-   "2.5"
-  ],
-  "jackLabels": {
-   "3.5": "3.5mm Single ended output",
-   "2.5": "2.5mm Balanced output"
-  },
-  "switches": [
-   "MODE"
-  ],
-  "note": "No single labelled panel view; USB-C input named only in the 'Exchange cables' text graphic, and MODE switch named in the Switch Mode graphic callout."
- },
- "shanling--m3-plus": {
-  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20250428143956/fd25b7944c4324aed376bb91607d471a.jpg",
-  "page": "https://hifigo.com/products/shanling-m3-plus",
-  "also": [
-   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_10.webp",
-   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_9.webp"
-  ],
-  "complete": false,
-  "in": {
+    "label": "USB DAC",
+    "conn": "usbB"
+   },
+   "rca": {
+    "label": "R - IN - L",
+    "conn": "rca"
+   },
    "bt": {
-    "label": "Two-Way Bluetooth 5.0"
+    "label": "Bluetooth Receiver: LDAC, SBC"
    }
   },
   "out": {
+   "rca": {
+    "label": "R - OUT - L",
+    "conn": "rca"
+   },
+   "spk": {
+    "label": "SPEAKER OUT"
+   },
    "bt": {
-    "label": "Two-Way Bluetooth 5.0"
+    "label": "Bluetooth Transmitter: LDAC, LHDC, aptX HD, aptX, SBC"
    }
   },
-  "jacks": [
-   "4.4",
-   "3.5"
+  "switches": [
+   "POWER OFF/ON"
   ],
-  "jackLabels": {
-   "4.4": "BAL",
-   "3.5": "3.5mm"
-  },
-  "switches": [],
-  "note": "4.4 jack printed 'BAL' on top panel (size from '4.4mm Balance' battery graphic); 3.5 jack has only a headphone icon on panel, label from battery graphic; USB-C socket never shown labelled (only 'USB-DAC mode' text), so usb not recorded; side buttons unlabelled."
+  "note": "Rear panel fully labelled (callouts 'Digital Coaxial Input', 'USB DAC Input', 'Analog Input/Output', 'Speaker Output Port', 'Power Connector'; 'COXIAL' misspelt on panel); also a USB-A 'USB for connecting external disk' and 'ETHERNET' port not mapped; front headphone jack size only from banner text '6.35mm Headphone Output' (banner titled 'EA5 DESKTOP STREAMER' on the EA5 Plus listing); power inlet is IEC AC, no conn given; Bluetooth from spec table. [Jack sizes dropped: from an EA5 (not Plus) banner]"
  },
- "shanling--ua6": {
-  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_6.jpg",
-  "page": "https://www.e-earphone.jp/products/513269",
-  "also": [
-   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_5.jpg",
-   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_10.jpg"
-  ],
-  "complete": false,
+ "shanling--eh1": {
+  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_eh1_12.jpg",
+  "page": "https://www.e-earphone.jp/products/524418",
+  "also": [],
+  "complete": true,
   "in": {
    "usb": {
     "label": "USB",
     "conn": "usbC"
+   },
+   "dc": {
+    "label": "DC 5V / DC IN",
+    "conn": "barrel"
    }
   },
-  "out": {},
+  "out": {
+   "coax": {
+    "label": "COAXIAL / DIGITAL OUT",
+    "conn": "rca"
+   },
+   "rca": {
+    "label": "ANALOG OUT",
+    "conn": "rca"
+   }
+  },
   "jacks": [
-   "3.5",
-   "4.4"
+   "4.4",
+   "6.35"
   ],
   "jackLabels": {
-   "3.5": "3.5Single-End",
-   "4.4": "4.4Balance"
+   "4.4": "4.4mmバランス出力端子 (headphone icon)",
+   "6.35": "6.35mmシングルエンド出力端子 (headphone icon)"
+  },
+  "switches": [
+   "GAIN",
+   "VOLUME",
+   "BASS",
+   "TREBLE",
+   "power button",
+   "LINE OUT / PRE OUT"
+  ],
+  "note": "Front/rear panel diagram with Japanese callouts (e-earphone); USB-C callout reads USB-C入力端子; panel prints no text on headphone jacks besides headphone icon, so jack labels come from callouts; barrel conn from visible socket shape."
+ },
+ "shanling--em5": {
+  "image": "https://ae01.alicdn.com/kf/H02406b68391e4c12a77414d1967cdc0bV.jpg",
+  "page": "https://hifigo.com/products/shanling-em5",
+  "also": [
+   "https://ae01.alicdn.com/kf/H601a4e93d35047ae975ef42ab80fcd63g.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB DAC Input",
+    "conn": "usbB"
+   },
+   "coax": {
+    "label": "Digital Coaxial Input",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "Digital Optical Input",
+    "conn": "toslink"
+   },
+   "bt": {
+    "label": "BLUETOOTH Receiver: LDAC, SBC"
+   }
+  },
+  "out": {
+   "coax": {
+    "label": "Digital Coaxial Output",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "Digital Optical Output",
+    "conn": "toslink"
+   },
+   "rca": {
+    "label": "Analog Output",
+    "conn": "rca"
+   },
+   "xlr": {
+    "label": "Balanced Audio Output",
+    "conn": "xlr"
+   },
+   "bt": {
+    "label": "BLUETOOTH Transmitter: LDAC, LHDC, aptX HD, aptX, SBC"
+   }
+  },
+  "jacks": [
+   "xlr4",
+   "4.4",
+   "6.35"
+  ],
+  "jackLabels": {
+   "xlr4": "XLR Balanced",
+   "4.4": "4.4mm Balanced",
+   "6.35": "6.35mm Single Ended Headphone Output"
+  },
+  "switches": [
+   "Power Switch",
+   "Power Button / Volume Wheel / Lock Button"
+  ],
+  "note": "Power Connector is an IEC AC inlet (no conn code fits); rear also has 'USB for connecting external disk' (USB-A) and 'Wired Network Connection' (Ethernet), not recorded as ports; xlr4 conn from the 4-pin socket drawing labelled 'XLR Balanced'; BT from spec table image a29."
+ },
+ "shanling--em7": {
+  "image": "https://cdn.shopify.com/s/files/1/0040/7201/3924/products/EM7_4.jpg?v=1659431687",
+  "page": "https://linsoul.com/products/shanling-em7",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0040/7201/3924/products/EM7_3.jpg?v=1659431690"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB DAC",
+    "conn": "usbB"
+   },
+   "coax": {
+    "label": "DIGITAL IN COAXIAL",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "DIGITAL IN OPTICAL",
+    "conn": "toslink"
+   }
+  },
+  "out": {
+   "xlr": {
+    "label": "ANALOG OUT R — XLR — L",
+    "conn": "xlr",
+    "n": 2
+   },
+   "rca": {
+    "label": "ANALOG OUT R — RCA — L",
+    "conn": "rca"
+   },
+   "coax": {
+    "label": "DIGITAL OUT COAXIAL",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "DIGITAL OUT OPTICAL",
+    "conn": "toslink"
+   }
   },
   "switches": [],
-  "note": "'USB' read only from a block diagram (no socket callout); usbC connector inferred from the cable plug in photos, not printed; side buttons carry icons only."
+  "note": "Rear panel printed labels read from store photo (also USB-A host port, a USB-A labelled 'USB AUDIO' and ETHERNET, not mapped); front headphone jacks carry only a headphone icon, so jack sizes are from socket shape (4-pin XLR, gold 4.4, 3.5, 6.35); IEC AC inlet, no conn. [Jack sizes dropped: only a headphone icon is printed]"
  },
  "shanling--h2": {
   "image": "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h2_6.jpg",
@@ -119,5 +227,811 @@
    "電源ボタン"
   ],
   "note": "Bottom panel also prints CHARGE / USB/DAC / microSD (MicroSDスロット not a port key); two volume/track dials (ダイヤル) not listed as switches; USB/DAC socket is USB-C by shape, matching the Type-C charge port beside it."
+ },
+ "shanling--h2-amps": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111141959/9aa1d1d3ef4b576b4d1339cbecf77688.jpg",
+  "page": "https://hifigo.com/products/shanling-h2",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111141959/045265a42535bf95679c1ecf0b54cac0.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111142000/6307f8087390d9fae434ee708bc8c79b.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB DAC",
+    "conn": "usbC"
+   },
+   "dc": {
+    "label": "Type-C Charging",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Bluetooth 5.0 (LDAC & AAC, receiver only)"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5MM",
+   "4.4": "4.4MM"
+  },
+  "switches": [
+   "Power button",
+   "Multi-function button"
+  ],
+  "note": "Bottom-face callouts (Type-C Charging, USB DAC, MicroSD Card Slot, 3.5MM, 4.4MM); USB DAC port conn read as Type-C from visible socket shape; also has two rotating wheels (Rotate Right/Left) in an Operating graphic."
+ },
+ "shanling--h5": {
+  "image": "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h5_2.jpg",
+  "page": "https://www.e-earphone.jp/products/365420",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h5_9.jpg",
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h5_10.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB/DAC",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Bluetooth 5.0"
+   },
+   "dc": {
+    "label": "CHARGE",
+    "conn": "usbC"
+   }
+  },
+  "out": {
+   "rca": {
+    "label": "R - LINE OUT - L",
+    "conn": "rca"
+   }
+  },
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5 mm シングルエンド出力",
+   "4.4": "4.4 mm バランス出力"
+  },
+  "switches": [
+   "CONTROL",
+   "VOL"
+  ],
+  "note": "Rear also has a 3.5mm-sized socket printed 'DIGITAL IN' whose type (coax/optical) is not stated, so not recorded as a port; jack labels come from the a25 graphic text (front panel only shows a headphone icon); USB-C conn plainly visible."
+ },
+ "shanling--h7": {
+  "image": "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h7_2.jpg",
+  "page": "https://www.e-earphone.jp/products/323046",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h7_9.jpg",
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h7_0.jpg",
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h7_14.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB/DAC",
+    "conn": "usbC"
+   },
+   "coax": {
+    "label": "DIGITAL IN (同軸デジタル入力)"
+   },
+   "optical": {
+    "label": "DIGITAL IN (光デジタル入力)"
+   },
+   "bt": {
+    "label": "Bluetooth Ver 5.0"
+   },
+   "dc": {
+    "label": "CHARGE",
+    "conn": "usbC"
+   }
+  },
+  "out": {
+   "rca": {
+    "label": "R — LINE OUT — L",
+    "conn": "rca"
+   }
+  },
+  "jacks": [
+   "6.35",
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "6.35": "6.35 mm",
+   "3.5": "3.5 mm",
+   "4.4": "4.4 mm"
+  },
+  "switches": [
+   "CONTROL",
+   "VOLUME"
+  ],
+  "note": "Coax and optical share one round 'DIGITAL IN' socket (banner lists 光デジタル入力 / 同軸デジタル入力); conn 3.5 for it is from shape; USB-C conn from socket shape in labelled image; CONTROL and VOLUME are knobs (VOLUME also power)."
+ },
+ "shanling--h7-high-end": {
+  "image": "https://ae01.alicdn.com/kf/S1d995b4aa25a4b6aa86cce04eb38d8482.jpg?width=800&height=800&hash=1600",
+  "page": "https://hifigo.com/products/shanling-h7",
+  "also": [
+   "https://ae01.alicdn.com/kf/Sc1daf52b4ed04e52876355f755b48c4fy.jpg?width=800&height=800&hash=1600"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB/DAC",
+    "conn": "usbC"
+   },
+   "dc": {
+    "label": "CHARGE",
+    "conn": "usbC"
+   }
+  },
+  "out": {
+   "rca": {
+    "label": "R — LINE OUT — L",
+    "conn": "rca"
+   }
+  },
+  "switches": [
+   "CONTROL",
+   "VOLUME (power)"
+  ],
+  "note": "Panel drawings print only 'DIGITAL IN' on a small round 3.5mm-looking socket (coax/optical type not printed, key coax is a guess); headphone jack sizes inferred from socket shape (large left = 6.35, small centre = 3.5, gold right = 4.4), only a headphone icon is printed; usbC from shape. [Jack sizes dropped: only a headphone icon is printed] [DIGITAL IN not mapped: coax or optical not printed]"
+ },
+ "shanling--m1-plus": {
+  "image": "https://wxalbum-10001658-file.dianxiaomi.com/wxalbum/406678/20250718134412/35cd91a516b49ebbc69107e96f609f6e.jpg",
+  "page": "https://hifigo.com/products/shanling-m1-plus",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_m1plus_9.jpg?v=1743994073",
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_m1plus_10.jpg?v=1743994073"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB-DACモード"
+   },
+   "bt": {
+    "label": "Bluetooth: Two-Way Bluetooth 5.2"
+   }
+  },
+  "out": {
+   "coax": {
+    "label": "3.5mm Digital Output Type: Coaxial SPDIF",
+    "conn": "3.5"
+   },
+   "line": {
+    "label": "LineOut 3.5mm/4.4mm",
+    "conn": "3.5"
+   },
+   "usb": {
+    "label": "USB AUDIO [USBデジタル出力]"
+   },
+   "bt": {
+    "label": "Bluetooth: Two-Way Bluetooth 5.2"
+   }
+  },
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Headphone Output",
+   "4.4": "4.4mm Balanced Headphone Output"
+  },
+  "switches": [],
+  "note": "Only a spec-table image and Japanese feature icons (no labelled panel diagram); line out shares the 3.5/4.4 headphone jacks per 'LineOut 3.5mm/4.4mm'; USB connector type not printed; buttons not labelled."
+ },
+ "shanling--m3-plus": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20250428143956/fd25b7944c4324aed376bb91607d471a.jpg",
+  "page": "https://hifigo.com/products/shanling-m3-plus",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_10.webp",
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_9.webp"
+  ],
+  "complete": false,
+  "in": {
+   "bt": {
+    "label": "Two-Way Bluetooth 5.0"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Two-Way Bluetooth 5.0"
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "BAL",
+   "3.5": "3.5mm"
+  },
+  "switches": [],
+  "note": "4.4 jack printed 'BAL' on top panel (size from '4.4mm Balance' battery graphic); 3.5 jack has only a headphone icon on panel, label from battery graphic; USB-C socket never shown labelled (only 'USB-DAC mode' text), so usb not recorded; side buttons unlabelled."
+ },
+ "shanling--m3-ultra-2-2-hd-player": {
+  "none": "only bare product/lifestyle photos (12 images), no labelled diagram or spec graphic"
+ },
+ "shanling--m30": {
+  "image": "https://cdn.shopify.com/s/files/1/0040/7201/3924/products/ShanlingM30.jpg?v=1614245575",
+  "page": "https://linsoul.com/products/shanling-m30",
+  "also": [],
+  "complete": false,
+  "in": {},
+  "out": {},
+  "switches": [],
+  "note": "Only a store photo of the front panel with tiny printed group labels 'BAL' and 'SE'; 4-pin XLR (BAL) and XLR/6.35 combo (SE) identified from socket shape; the two smaller BAL holes and two small SE holes have no legible size labels; rear/sockets otherwise unseen, the a1 diagram only labels modules. [Jack sizes dropped: read from socket shape]"
+ },
+ "shanling--m5-ultra-protable-wifi-dlna-airplay-4-7-in-screen": {
+  "image": "https://m.media-amazon.com/images/S/aplus-media-library-service-media/89f63644-b5d9-4f54-a36c-3e91fb6dcd3f.__CR0,0,1464,600_PT0_SX1464_V1___.jpg",
+  "page": "https://keephifi.com/products/shanling-m5-ultra-protable-music-player-wifi-dlna-airplay-bluetooth-5-2-4-7-in-screen",
+  "also": [
+   "https://m.media-amazon.com/images/S/aplus-media-library-service-media/a855e81b-1b14-4463-99e9-1bad7e8c9882.__CR0,0,1464,600_PT0_SX1464_V1___.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "bt": {
+    "label": "Bluetooth Receiver (Receive: LDAC, aptX HD, aptX, AAC, SBC)"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Bluetooth Transmitter (Transmit: LDAC, aptX HD, aptX, AAC, SBC)"
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "4.4mm Balanced Output",
+   "3.5": "3.5mm Single-Ended Output"
+  },
+  "switches": [],
+  "note": "Only a spec-table image and a feature collage ('4.4mm & 3.5mm Outputs', 'Bluetooth 5.2 Bi-Directional System'); no labelled panel diagram, so USB/charging port and buttons are not recorded."
+ },
+ "shanling--m6-pro-2021": {
+  "none": "only bare product photos (8 kept), no labelled diagram or spec graphic"
+ },
+ "shanling--m6-pro-android": {
+  "image": "https://ae01.alicdn.com/kf/Ha22017aa8bab4ebd852c9b82774149a9E.jpg",
+  "page": "https://hifigo.com/products/shanling-m6-pro-portable-music-player-with-dual-ak4497eq",
+  "also": [
+   "https://ae01.alicdn.com/kf/H5edf94e1d2a64df198fbf3e74077a397b.jpg",
+   "https://ae01.alicdn.com/kf/Hbdf5dfe1af994e46bbc492094ef6a1f2v.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB/DAC",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Two-way Bluetooth"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Two-way Bluetooth"
+   }
+  },
+  "jacks": [
+   "3.5",
+   "2.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single Ended (headphone icon)",
+   "2.5": "2.5mm Balanced (BAL)",
+   "4.4": "4.4mm Balanced (BAL)"
+  },
+  "switches": [
+   "Low / High / Turbo Gain (software)",
+   "volume wheel"
+  ],
+  "note": "Bottom panel prints USB/DAC, headphone icon, BAL, BAL; jack sizes from the same graphic's 3.5/2.5/4.4 mm captions mapped by left-to-right order; USB conn usbC from socket shape; gain is a setting, not a physical switch; out.bt is not a standard key use - BT transmit is per text."
+ },
+ "shanling--m7": {
+  "image": "https://ae01.alicdn.com/kf/Sf50a5766b8e54c51bd5c174b9846e0795.jpg",
+  "page": "https://hifigo.com/products/shanling-m7-audio-player",
+  "also": [
+   "https://ae01.alicdn.com/kf/S538e7855925d4ccebb0409c6c9b7f0aak.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "bt": {
+    "label": "Bluetooth: Version 5.0 - As Receiver: LDAC / SBC"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Bluetooth: Version 5.0 - As Transmitter: LDAC / LHDC / aptX HD / aptX / SBC"
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "BAL (4.4mm)",
+   "3.5": "3.5mm"
+  },
+  "switches": [],
+  "note": "Only a spec-table image (cut off before output section) and a power graphic naming 3.5mm and 4.4mm, with 'BAL' printed by the 4.4 jack; no labelled panel diagram, so USB port and buttons not recorded."
+ },
+ "shanling--onix-overture-xm5": {
+  "image": "https://ae01.alicdn.com/kf/S25fe027cd9c94e14ad4f5e4d59ea1adcy.jpg",
+  "page": "https://hifigo.com/products/onix-overture-xm5",
+  "also": [
+   "https://ae01.alicdn.com/kf/S4c73651456c14a64a91dca7b53f8eadfG.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB DAC: Dedicated XMOS XU316 Chip; Battery: standard USB-C charging port",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Two-Way Bluetooth 5.2 (Transmit or Receive)"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Two-Way Bluetooth 5.2 (Transmit or Receive)"
+   }
+  },
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single-Ended",
+   "4.4": "4.4mm Balanced"
+  },
+  "switches": [],
+  "note": "From spec-table image and feature graphic only, no socket-callout diagram; assumes the one USB-C charging port is also the USB DAC input (spec lists both); controls: 'Touch Screen, 4 Hardware Buttons, Volume Wheel', 'Custom Button', triple gain is in software."
+ },
+ "shanling--onix-waltz-xm10-ltd": {
+  "image": "https://cdn.shopify.com/s/files/1/0031/0453/8673/files/shanling-onix-waltz-xm10-ltd-ak4191ak4499ex-portable-music-player-hifigo-653985.jpg?v=1737067972",
+  "page": "https://hifigo.com/products/shanling-onix-waltz-xm10-ltd",
+  "also": [],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB DAC",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [],
+  "jackLabels": {},
+  "switches": [],
+  "note": "No labelled diagram; only a store photo of the bottom edge where 'microSD', 'USB DAC' and a headphone icon are printed; headphone jack sizes not printed and a second jack is cut off, so none recorded; usbC from socket shape."
+ },
+ "shanling--onix-xi1": {
+  "none": "only one bare product photo found, no labelled image"
+ },
+ "shanling--onix-xi1-sgm8262": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240607110701/7a14af14d602ece0c41ebcc8c518c454.jpg",
+  "page": "https://hifigo.com/products/shanling-onix-xi1",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240607110701/8761810e1a6cc01615d67aa1dacf6e4e.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240607110701/6af5af751b492ddf61ab0672d52a5b05.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "Standard USB-C Connector",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single-Ended",
+   "4.4": "4.4mm Balanced"
+  },
+  "switches": [
+   "Physical Buttons: + / − (volume), ▶II (playback)"
+  ],
+  "note": "Dongle (ONIX Alpha XI1); 'Dual Gain Switch' (Low & High) is a setting, not a physical switch; button symbols read from the callout image."
+ },
+ "shanling--s0": {
+  "none": "active speaker; low-res rear plate, sockets not visible"
+ },
+ "shanling--sm90": {
+  "image": "https://cdn.shopify.com/s/files/1/0040/7201/3924/files/f62226aa119985139121086c13c6a4eb146.jpg?v=1775645774",
+  "page": "https://linsoul.com/products/shanling-sm90",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0040/7201/3924/files/bb8894639c344c212573324503dfaec5773.png?v=1775645639"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB DAC",
+    "conn": "usbB"
+   },
+   "coax": {
+    "label": "DIGITAL - IN COAXIAL",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "DIGITAL - IN OPTICAL",
+    "conn": "toslink"
+   }
+  },
+  "out": {
+   "rca": {
+    "label": "ANALOG OUT RCA - R / RCA - L",
+    "conn": "rca"
+   },
+   "xlr": {
+    "label": "ANALOG OUT XLR - R / XLR - L",
+    "conn": "xlr"
+   },
+   "coax": {
+    "label": "OUT - DIGITAL COAXIAL",
+    "conn": "rca"
+   },
+   "optical": {
+    "label": "OUT - DIGITAL OPTICAL",
+    "conn": "toslink"
+   },
+   "usb": {
+    "label": "USB 3.0 USB AUDIO",
+    "conn": "usbA",
+    "n": 2
+   }
+  },
+  "jacks": [],
+  "jackLabels": {},
+  "switches": [
+   "ON / OFF"
+  ],
+  "note": "Images are photos of the panels with printed labels (no callouts); dc is an IEC AC inlet whose label is not legible; rear also has HDMI-ARC (input, no key), ETHERNET, and two ANTENNA connectors; front has only a USB-A socket (icon, unlabelled) and no headphone jack; USB AUDIO direction inferred as output to USB DACs (not printed)."
+ },
+ "shanling--tanchjim-m3-plus": {
+  "image": "https://ae01.alicdn.com/kf/Scfa129e1853845948c1a92235054be79v.jpg?width=1500&height=2036&hash=3536",
+  "page": "https://hifigo.com/products/shanling-x-tanchjim-m3-plus-limited-edition",
+  "also": [
+   "https://ae01.alicdn.com/kf/Sd1a8314bc09647e7a950ca1b86d61118V.jpg?width=1500&height=2036&hash=3536",
+   "https://ae01.alicdn.com/kf/Sa5ccca6175ad459e9e7ab9c04a82aa8ba.jpg?width=1500&height=2125&hash=3625",
+   "https://ae01.alicdn.com/kf/Sb7c829fa1cb8447b9f3ea8358013e614W.jpg?width=1500&height=2125&hash=3625"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB DAC播放规格",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "蓝牙接收支持: LDAC / SBC"
+   }
+  },
+  "out": {
+   "coax": {
+    "label": "3.5mm插口同时支持Spdif同轴输出",
+    "conn": "3.5"
+   },
+   "line": {
+    "label": "LO输出: 3.5mm: 2.58Vrms / 4.4mm: 5.16Vrms",
+    "conn": "3.5"
+   },
+   "bt": {
+    "label": "蓝牙发射支持: LDAC / aptX HD / aptX / AAC / SBC"
+   }
+  },
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm",
+   "4.4": "4.4mm"
+  },
+  "switches": [],
+  "note": "Chinese spec/feature images only, no socket callout diagram; line out is shared on both headphone jacks (also 4.4mm LO); USB-C conn inferred from bundled 'USB A转Type-C线' cable, not a socket label; three gain levels (高/中/低) are a setting; 蓝牙版本 5.0."
+ },
+ "shanling--ua-mini": {
+  "image": "https://cdn.shopify.com/s/files/1/0153/8863/files/Headphone-Zone-Shanling-UA-Mini-10.jpg?v=1781873069",
+  "page": "https://headphonezone.in/products/shanling-ua-mini",
+  "also": [],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB Type-C Input",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single-Ended Output Jack"
+  },
+  "switches": [],
+  "note": "Dongle with captive USB-C plug (a plug, not a socket); callout image is store photo a2 from Headphone Zone listing."
+ },
+ "shanling--ua1-ii": {
+  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua1-2_4.jpg",
+  "page": "https://www.e-earphone.jp/products/765399",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua1-2_0.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "Compact USB DAC/AMP"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "4.4mm Balanced",
+   "3.5": "3.5mm Single-Ended"
+  },
+  "switches": [
+   "ボリューム & 再生停止ボタン"
+  ],
+  "note": "Only text graphics (no labelled panel diagram); USB input known only from 'Compact USB DAC/AMP' title, connector type not printed; buttons are the volume and play/pause buttons named in the a8 text."
+ },
+ "shanling--ua1-plus": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20231116101102/cbc028bb1560611c4156dbbb9e9065e5.jpg",
+  "page": "https://hifigo.com/products/shanling-ua1-plus",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20231116101101/483957ea3d621a4273b043fd730919d0.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "industry standard USB-C connector",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "switches": [
+   "Multifunctional Button (Single Press – Play / Pause; Double Click – Enable/switch Volume Control)"
+  ],
+  "note": "Only callout is the Multifunctional Button image (the 'MODE button' for UAC1.0 mentioned in text is presumably the same button); the single headphone jack size is not printed in any image, 3.5 is from shape. [Jack sizes dropped: size not printed]"
+ },
+ "shanling--ua2": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/964b5237725de61a39de1d3d83241c2f.jpg",
+  "page": "https://hifigo.com/products/shanling-ua2",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/2dab413ec7f47910611c301a10f70ad6.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/293521ed7c59cfc4611ee9bdc33b46d4.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103329/915250e6b72b499505f13f476dffb077.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/4390c98b3fd44b9e9b45994642740df5.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB-C",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "2.5"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single ended output",
+   "2.5": "2.5mm Balanced output"
+  },
+  "switches": [
+   "MODE"
+  ],
+  "note": "No single labelled panel view; USB-C input named only in the 'Exchange cables' text graphic, and MODE switch named in the Switch Mode graphic callout."
+ },
+ "shanling--ua2-plus": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221027140904/22763e2d5d1f4a40d59bcaeaba64c0c3.jpg",
+  "page": "https://hifigo.com/products/shanling-ua2-plus",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221027140904/b71e6e5e1c7f951536e71dcf1126f7ad.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221027140905/367ee7b961b977aa5d23b1efa80d4113.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB Connection (no label on socket)",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm SE",
+   "4.4": "4.4mm BAL"
+  },
+  "switches": [
+   "Mode switch"
+  ],
+  "note": "Jacks labelled by callout in the 'Pick your output' graphic; USB-C socket plainly visible in the LED Indicator graphic but carries no printed label; Mode switch named only in body text (press while connecting to gaming console), not called out on the image."
+ },
+ "shanling--ua3-independent": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20230110172547/fbe57bf88c289e11e502718e0bdf6aa3.jpg",
+  "page": "https://hifigo.com/products/shanling-ua3-usb-dac-amp",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20230110172547/1c9938beef607f5d0dc62d9a29f2dbeb.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20230110172547/8956e90293f14d1258a7514a91de029b.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "industry standard USB-C connector",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm single-ended output",
+   "4.4": "4.4mm balanced outputs"
+  },
+  "switches": [
+   "Volume Up",
+   "Play/Pause",
+   "Volume Down"
+  ],
+  "note": "Buttons labelled in the a23 callout image (middle button: 'Hold for 2 seconds to switch between software / hardware controls'); jacks and USB-C from text graphics, no labelled image of the jack end."
+ },
+ "shanling--ua4": {
+  "image": "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_ua4_11.jpg",
+  "page": "https://www.e-earphone.jp/products/473933",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_ua4_0.jpg",
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_ua4_8.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "UAC1.0 GameDAC Mode"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm",
+   "4.4": "4.4mm"
+  },
+  "switches": [
+   "« (volume down)",
+   "▶|| (play/pause; long press: settings)",
+   "» (volume up)"
+  ],
+  "note": "Jack sizes from banner text '3.5mm / 4.4mm' (シングルエンド/バランス); buttons from 基本操作方法 diagram; USB socket type not labelled in any image (looks USB-C in photos), so no conn."
+ },
+ "shanling--ua4-high-end": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111145946/33c95a7adab2baae6b6b167d13a88387.jpg",
+  "page": "https://hifigo.com/products/shanling-ua4",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111145946/47e7d820855bdd7d05f255f3b8286e0f.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20240111145946/daa34a9745132226f80be6ff2de15f38.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "Standard USB-C Port",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single-Ended",
+   "4.4": "4.4mm Balanced"
+  },
+  "switches": [
+   "Middle Button",
+   "Left/Right Buttons"
+  ],
+  "note": "Jack sizes from a feature-tile caption above a photo of the two gold jacks (not individually pointed at); USB-C named in text, socket itself not clearly shown."
+ },
+ "shanling--ua6": {
+  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_6.jpg",
+  "page": "https://www.e-earphone.jp/products/513269",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_5.jpg",
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_10.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5Single-End",
+   "4.4": "4.4Balance"
+  },
+  "switches": [],
+  "note": "'USB' read only from a block diagram (no socket callout); usbC connector inferred from the cable plug in photos, not printed; side buttons carry icons only."
+ },
+ "shanling--ua6-4xcs43131": {
+  "none": "only bare product/case photos (10 store photos), no labelled image or spec graphic"
+ },
+ "shanling--ua7": {
+  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua7_6.jpg",
+  "page": "https://www.e-earphone.jp/products/668312",
+  "also": [],
+  "complete": false,
+  "in": {},
+  "out": {},
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "4.4mm",
+   "3.5": "3.5mm"
+  },
+  "switches": [],
+  "note": "Only the headphone face is labelled ('4.4mm 577mW', '3.5mm 195mW'); USB input socket and the side dial are never labelled in any image, so no usb entry recorded."
+ },
+ "shanling--up6": {
+  "image": "https://ae01.alicdn.com/kf/Sb07ba58ab7c946f1932f870b8bef06a3g.jpg?width=1920&height=1000&hash=2920",
+  "page": "https://hifigo.com/products/shanling-up6",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_up6-3.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB-C Connector",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Bluetooth 5.2 (LDAC / aptX HD / aptX LL / aptX / AAC / SBC)"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "4.4mm Output",
+   "3.5": "3.5mm Output"
+  },
+  "switches": [
+   "Power / Lock Button",
+   "Down Button",
+   "Multifunctional Button",
+   "Up Button"
+  ],
+  "note": "'UP6 Details' line drawing with callouts (hifigo); Bluetooth from e-earphone 'Bluetooth 5.2' graphic of same model; also has Microphone and NFC Area callouts."
  }
 }

@@ -17,6 +17,7 @@ import { preorder, listedAt } from "./lib/dates.js";
 import { jackOutputs } from "./lib/jacks.js";
 import { isMakerUrl } from "./lib/sources.js";
 import { settle } from "./lib/conflicts.js";
+import { applyDiagrams } from "./lib/diagrams.js";
 import { socketsOf, sameSockets } from "../src/sockets.js";
 import { appendHistory } from "./lib/history.js";
 
@@ -533,6 +534,14 @@ const handPorts = new Map();
       for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;
     }
   }
+}
+
+// The maker's labelled images (scripts/lib/diagrams.js).
+{
+  const file = new URL("data/diagram-ports.json", root);
+  const diagrams = existsSync(file) ? JSON.parse(await readFile(file, "utf8")) : {};
+  const hand = new Set(JSON.parse(await readFile(new URL("data/extra-items.json", root), "utf8")).filter((e) => e.portsComplete).map((e) => groupKey(e.id)));
+  applyDiagrams(catalog, diagrams, hand);
 }
 
 // The maker's DC inlet wins over a store's power sentence (iFi ZEN DAC 3: a

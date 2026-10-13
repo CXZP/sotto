@@ -1,0 +1,123 @@
+{
+ "shanling--ua2": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/964b5237725de61a39de1d3d83241c2f.jpg",
+  "page": "https://hifigo.com/products/shanling-ua2",
+  "also": [
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/2dab413ec7f47910611c301a10f70ad6.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/293521ed7c59cfc4611ee9bdc33b46d4.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103329/915250e6b72b499505f13f476dffb077.jpg",
+   "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20221013103328/4390c98b3fd44b9e9b45994642740df5.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB-C",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "2.5"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm Single ended output",
+   "2.5": "2.5mm Balanced output"
+  },
+  "switches": [
+   "MODE"
+  ],
+  "note": "No single labelled panel view; USB-C input named only in the 'Exchange cables' text graphic, and MODE switch named in the Switch Mode graphic callout."
+ },
+ "shanling--m3-plus": {
+  "image": "https://wxalbum-10001658.image.myqcloud.com//wxalbum/406678/20250428143956/fd25b7944c4324aed376bb91607d471a.jpg",
+  "page": "https://hifigo.com/products/shanling-m3-plus",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_10.webp",
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling-m3plus_9.webp"
+  ],
+  "complete": false,
+  "in": {
+   "bt": {
+    "label": "Two-Way Bluetooth 5.0"
+   }
+  },
+  "out": {
+   "bt": {
+    "label": "Two-Way Bluetooth 5.0"
+   }
+  },
+  "jacks": [
+   "4.4",
+   "3.5"
+  ],
+  "jackLabels": {
+   "4.4": "BAL",
+   "3.5": "3.5mm"
+  },
+  "switches": [],
+  "note": "4.4 jack printed 'BAL' on top panel (size from '4.4mm Balance' battery graphic); 3.5 jack has only a headphone icon on panel, label from battery graphic; USB-C socket never shown labelled (only 'USB-DAC mode' text), so usb not recorded; side buttons unlabelled."
+ },
+ "shanling--ua6": {
+  "image": "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_6.jpg",
+  "page": "https://www.e-earphone.jp/products/513269",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_5.jpg",
+   "https://cdn.shopify.com/s/files/1/0700/2990/2065/files/detail_shanling_ua6_10.jpg"
+  ],
+  "complete": false,
+  "in": {
+   "usb": {
+    "label": "USB",
+    "conn": "usbC"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5Single-End",
+   "4.4": "4.4Balance"
+  },
+  "switches": [],
+  "note": "'USB' read only from a block diagram (no socket callout); usbC connector inferred from the cable plug in photos, not printed; side buttons carry icons only."
+ },
+ "shanling--h2": {
+  "image": "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h2_6.jpg",
+  "page": "https://www.e-earphone.jp/products/434111",
+  "also": [
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h2_13.jpg",
+   "https://cdn.shopify.com/s/files/1/0670/3248/1941/files/html_template_default_assets_time_01_tm2021_detail_shanling_h2_bnr.jpg"
+  ],
+  "complete": true,
+  "in": {
+   "usb": {
+    "label": "USB / DACポート",
+    "conn": "usbC"
+   },
+   "dc": {
+    "label": "Type-C 充電ポート",
+    "conn": "usbC"
+   },
+   "bt": {
+    "label": "Bluetooth 5.0"
+   }
+  },
+  "out": {},
+  "jacks": [
+   "3.5",
+   "4.4"
+  ],
+  "jackLabels": {
+   "3.5": "3.5mm",
+   "4.4": "4.4mm"
+  },
+  "switches": [
+   "マルチファンクションボタン",
+   "電源ボタン"
+  ],
+  "note": "Bottom panel also prints CHARGE / USB/DAC / microSD (MicroSDスロット not a port key); two volume/track dials (ダイヤル) not listed as switches; USB/DAC socket is USB-C by shape, matching the Type-C charge port beside it."
+ }
+}

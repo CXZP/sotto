@@ -151,7 +151,7 @@ export const TERMS = [
 <h2>Common mistakes</h2>
 <ul>
 <li>"Volume at 50% = half the power": most volume controls are logarithmic; knob position says little</li>
-<li>A 130 dB+ maximum is not a feature. Sotto flags it as "too powerful": only the bottom of the volume range is usable and a slip is dangerous</li>
+<li>A 130 dB+ maximum is not a feature. Sotto flags it as "more than enough": only the bottom of the volume range is usable and a slip is dangerous</li>
 </ul>`,
     },
   },

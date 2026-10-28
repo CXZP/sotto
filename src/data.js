@@ -1,30 +1,31 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mvrzu38t";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mvs001ro";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "portable", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos, rates] = await Promise.all([
-    fetch("data/catalog.json?v=mvrzu38t").then((r) => r.json()),
-    fetch("data/devices.json?v=mvrzu38t").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mvrzu38t").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mvrzu38t").then((r) => r.json()).catch(() => ({})),
-    fetch("data/fx.json?v=mvrzu38t").then((r) => r.json()).catch(() => null),
+    fetch("data/catalog.json?v=mvs001ro").then((r) => r.json()),
+    fetch("data/devices.json?v=mvs001ro").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mvs001ro").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mvs001ro").then((r) => r.json()).catch(() => ({})),
+    fetch("data/fx.json?v=mvs001ro").then((r) => r.json()).catch(() => null),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   // Old ids (merged or renamed models) → the current id, and the reverse.
   const aliasesTo = new Map();
   for (const [from, to] of Object.entries(catalog.aliases ?? {})) aliasesTo.set(to, [...(aliasesTo.get(to) ?? []), from]);
   if (rates?.usdPer) Object.assign(USD_PER, rates.usdPer);
+  shortNames(catalog.items);
   return { ...catalog, devices, byId, aliasesTo, zhNames: zh.names, logos, fx: rates };
 }
 
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mvrzu38t").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mvs001ro").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 
@@ -116,5 +117,34 @@ export function prices(item) {
 }
 
 export function displayName(item) {
-  return item.brand ? `${item.brand} ${item.model}` : item.model;
+  const m = item.short ?? item.model;
+  return item.brand ? `${item.brand} ${m}` : m;
+}
+
+// Store titles leave blurbs on model names: "SonoFlow HQ50 - Active Noise
+// Cancelling Wireless", "STR -Excellent Condition", "Radia CD5 Disc Player".
+// Shown without them; the full name stays for search and the store rows.
+const TAIL = /\s+(?:digital media player|media player|disc player|player|unprecedented\b.*|(?:true|truly) wireless|wireless|(?:active )?noise[- ]cancell?(?:ing|ation)|interchangeable modules|ear-?hook|integrated amplifier|amplifier|gaming headset|headset|headphones?|earphones?|in-ear monitors?|iems?)$/i;
+export function cleanModel(m) {
+  let s = m.trim();
+  const cut = s.split(/\s+-\s+|\s-(?=[A-Z][a-z])/)[0];
+  if (cut.length >= 2) s = cut;
+  for (let k = 0; k < 4; k++) {
+    const n = s.replace(TAIL, "");
+    if (n === s || n.length < 2) break;
+    s = n;
+  }
+  return s;
+}
+/** Sets item.short where the cleaned name differs and no other model of the brand would then share it. */
+export function shortNames(items) {
+  const key = (i, m) => `${i.brand}|${m.toLowerCase()}`;
+  const count = new Map();
+  const clean = items.map((i) => cleanModel(i.model));
+  items.forEach((i, k) => {
+    for (const m of new Set([i.model, clean[k]])) count.set(key(i, m), (count.get(key(i, m)) ?? 0) + 1);
+  });
+  items.forEach((i, k) => {
+    if (clean[k] !== i.model && count.get(key(i, clean[k])) === 1) i.short = clean[k];
+  });
 }

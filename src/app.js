@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvrzu38t";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvrzu38t";
-import { renderChart } from "./chart.js?v=mvrzu38t";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvrzu38t";
-import { makeT } from "./i18n.js?v=mvrzu38t";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvrzu38t";
-import { LEGAL } from "./legal.js?v=mvrzu38t";
-import { track, stats, trackingOff } from "./analytics.js?v=mvrzu38t";
-import * as community from "./community.js?v=mvrzu38t";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvrzu38t";
-import { redactImage } from "./redact.js?v=mvrzu38t";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvrzu38t";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvrzu38t";
-import { chainLinks } from "./chain.js?v=mvrzu38t";
-import { fits } from "./dcfit.js?v=mvrzu38t";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvrzu38t";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvrzu38t";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvrzu38t";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs001ro";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs001ro";
+import { renderChart } from "./chart.js?v=mvs001ro";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs001ro";
+import { makeT } from "./i18n.js?v=mvs001ro";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs001ro";
+import { LEGAL } from "./legal.js?v=mvs001ro";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs001ro";
+import * as community from "./community.js?v=mvs001ro";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs001ro";
+import { redactImage } from "./redact.js?v=mvs001ro";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs001ro";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs001ro";
+import { chainLinks } from "./chain.js?v=mvs001ro";
+import { fits } from "./dcfit.js?v=mvs001ro";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs001ro";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs001ro";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs001ro";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -615,7 +615,7 @@ function buildPage() {
       ${buildTotal(amp, hp, dac, src, cart)}
       ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[src?.id, dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
-    <section class="results"><div id="warn-banner"></div>${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
+    <section class="results">${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
       <div class="card chart-card" id="chart"></div>
     </section>
   </div>`;
@@ -656,7 +656,7 @@ function buildResults(hp) {
   // device alone would also have been loud enough, so people don't buy one for loudness.
   let alone = null;
   if (src.amp && src.own?.length) alone = evaluate(hp, src.own, { level, crest: CREST }).status;
-  return [verdictCard(ev, hp, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
+  return [verdictCard(ev, hp, { amp: src.amp, device: src.device, src: src.src, alone }), `<div id="warn-banner"></div>`, conn.html, reverseCard(hp, level)].join("");
 }
 
 // Desktop roles that never drive headphones in Sotto's maths: speaker amps (their
@@ -675,8 +675,7 @@ function connectionCard({ outputs, driver }, hp) {
   if (!outputs.length) {
     // A headphone amp with no stated power is "can't tell", not "no jack".
     if (hasJack(driver)) steps.push(`<li class="need">${esc(t("c_no_power", { a: displayName(driver) }))} <a href="#item/${encodeURIComponent(driver.id)}">${esc(t("ch_check_ports"))}</a></li>`);
-    else steps.push(`<li class="danger">${esc(t("v_no_output"))}</li>`);
-    return { html: card(t("c_title"), `${links}<ol class="chain">${steps.join("")}</ol>`), outputs: [] };
+    return { html: card(t("c_title"), `${links}${steps.length ? `<ol class="chain">${steps.join("")}</ol>` : ""}`), outputs: [] };
   }
   const plug = plugOf(hp);
   let usable = outputs;
@@ -702,7 +701,7 @@ function connectionCard({ outputs, driver }, hp) {
 const VERDICT = {
   ok: ["good", "v_ok"],
   // Works, but a sensitive IEM on a powerful amp is a hearing and driver risk.
-  overkill: ["warn", "v_overkill", "v_overkill_sub"],
+  overkill: ["over", "v_overkill", "v_overkill_sub"],
   tight: ["warn", "v_tight"],
   insufficient: ["bad", "v_insufficient"],
   ambiguous: ["warn", "v_ambiguous"],
@@ -719,6 +718,7 @@ function verdictCard(ev, hp, chain = {}) {
   if (ev.status === "ambiguous") sub = t("v_ambiguous_sub", { a: t(VERDICT[ev.r.status][1]), b: t(VERDICT[ev.alt.r.status][1]) });
   else if (ev.unitAmbiguous) sub = t("v_unit_note");
   let body = `<div class="verdict"><span class="badge ${tone}" aria-hidden="true"></span><div><p class="big">${esc(t(key))}</p>${sub ? `<p class="sub">${esc(sub)}</p>` : ""}</div></div>`;
+  if (ev.status === "unknown" && hp) body += `<p class="note">${esc(t("v_unknown_next"))} <a href="#item/${encodeURIComponent(hp.id)}">${esc(t("v_unknown_see", { hp: displayName(hp) }))}</a></p>`;
   if (ev.r) body += meter(ev.r);
   if (ev.z && (ev.z.status === "warn" || ev.z.status === "warn-strong"))
     body += `<p class="note warn">${esc(t("zout_warn", { ratio: fmt(ev.z.ratio, 1), multi: ev.z.status === "warn-strong" ? t("zout_multi") : "" }))}</p>`;
@@ -820,7 +820,8 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
       <li>${esc(t("chart_h1"))}</li><li>${esc(t("chart_h2"))}</li><li>${esc(t("chart_h3", { src: srcLabel }))}</li><li>${esc(t("chart_h4"))}</li></ol></details>
     <div class="chart-host${opts.big ? " big" : ""}"></div>
     <p class="hint">${esc(t("chart_count", { n: points.length, ok: counts.ok, over: counts.overkill, tight: counts.tight, bad: counts.insufficient }))}</p>
-    <div class="chart-pick" aria-live="polite">${highlightId ? "" : `<p class="muted small">${esc(t("chart_pick_hint"))}</p>`}</div>`;
+    <div class="chart-pick" aria-live="polite">${highlightId ? "" : `<p class="muted small">${esc(t("chart_pick_hint"))}</p>`}</div>
+    ${highlightId && !points.some((p) => p.id === highlightId) ? `<p class="note">${esc(t("chart_not_plotted", { hp: displayName(findItem(highlightId) ?? { model: highlightId }) }))}</p>` : ""}`;
   const pickBox = el.querySelector(".chart-pick");
   const draw = (hl) =>
     renderChart(el.querySelector(".chart-host"), {
@@ -1306,7 +1307,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvrzu38t").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs001ro").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -1493,7 +1494,7 @@ function calendarPage() {
     return `<div class="calendar">${head}<p class="note">${esc(t("cal_empty"))}</p></div>`;
   return `<div class="calendar">${head}${chips}
     <section class="card pad"><h2>${esc(t("cal_pre"))}</h2>${pre.length ? calTimeline(pre, now) : `<p class="muted">${esc(t("cal_none"))}</p>`}
-      ${undated.length ? `<h3>${esc(t("cal_pre_nodate"))}</h3><div class="cal-grid">${undated.map(({ i, o }) => calCard(i, o.preorder.quote, o)).join("")}</div>` : ""}</section>
+      ${undated.length ? `<h3>${esc(t("cal_pre_nodate"))}</h3><div class="cal-grid">${undated.map(({ i, o }) => calCard(i, `${catLabel(i)} · ${db.stores[o.store]?.name ?? o.store}`, o)).join("")}</div>` : ""}</section>
     <section class="card pad"><h2>${esc(t("cal_new"))}</h2>${fresh.length ? calMonths(fresh) : `<p class="muted">${esc(t("cal_none"))}</p>`}</section>
     <p class="muted small">${esc(t("cal_note"))}</p></div>`;
 }
@@ -1506,7 +1507,8 @@ function calTimeline(rows, now) {
   const ticks = [];
   for (const d = new Date(start); d.getTime() < end; d.setUTCMonth(d.getUTCMonth() + 1, 1)) {
     const first = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1);
-    if (first >= start) ticks.push(`<span style="--l:${pct(first).toFixed(2)}%">${esc(new Date(first).toLocaleDateString(loc(), { month: "short" }))}</span>`);
+    // A month label right under "today" would print on top of it.
+    if (first >= start && Math.abs(pct(first) - pct(now)) > 6) ticks.push(`<span style="--l:${pct(first).toFixed(2)}%">${esc(new Date(first).toLocaleDateString(loc(), { month: "short" }))}</span>`);
   }
   const bars = rows
     .map(({ i, o }, n) => {
@@ -1516,7 +1518,7 @@ function calTimeline(rows, now) {
       const w = Math.max(pct(to) - l, 2);
       const im = imageOf(i);
       return `<li class="cal-row" style="--d:${Math.min(n, 12)}">
-        <a class="cal-name" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b>${esc(displayName(i))}</b><small>${esc(db.stores[o.store]?.name ?? o.store)} · ${priceTag(o.price, o.currency)}</small></span></a>
+        <a class="cal-name" href="#item/${encodeURIComponent(i.id)}">${im ? `<img src="${esc(sized(im.src, 96))}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="cal-ph"></span>`}<span><b title="${esc(displayName(i))}">${esc(displayName(i))}</b><small>${esc(db.stores[o.store]?.name ?? o.store)} · ${priceTag(o.price, o.currency)}</small></span></a>
         <div class="cal-track"><a class="cal-bar${to > now ? "" : " past"}${to > now + 200 * DAY ? " cut" : ""}${w < 40 ? (l + w > 65 ? " out left" : " out") : ""}" href="${esc(o.url)}" target="_blank" rel="noopener" title="${esc(o.preorder.quote)}" style="--l:${l.toFixed(2)}%;--w:${w.toFixed(2)}%"><span>${esc(t("cal_pre_until", { date: day(o.preorder.until) }))}</span></a></div></li>`;
     })
     .join("");
@@ -2605,7 +2607,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvrzu38t" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs001ro" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3127,7 +3129,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvrzu38t" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs001ro" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

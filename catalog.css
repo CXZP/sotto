@@ -1,6 +1,6 @@
 /* Catalog-driven pages: build slots, picker, chart, catalog table, item page. */
 
-:root { --st-good: #0ca30c; --st-warn: #d4ac00; --st-bad: #d03b3b; --st-amb: #7a7a80; }
+:root { --st-good: #0ca30c; --st-warn: #d4ac00; --st-bad: #d03b3b; --st-amb: #7a7a80; --st-over: #3a8ee6; }
 .small { font-size: 13px; }
 .strong { font-weight: 600; }
 /* The VU-meter glow of a tube DAC: the one accent colour, used for the main action and "selected". */
@@ -187,23 +187,23 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .banner { display: flex; gap: 12px; padding: 14px 18px; margin-bottom: 14px; background: var(--warn-bg); border-color: var(--warn); }
 .banner .big { margin: 0 0 4px; font-weight: 600; }
 .banner ul { margin: 0; padding-left: 18px; }
-.pt.s-overkill circle { fill: none; stroke: var(--st-warn); stroke-width: 2; }
-.lg.s-overkill svg { fill: none; stroke: var(--st-warn); stroke-width: 2; }
-.st.s-overkill { color: var(--st-warn); }
-.tip .s-overkill { color: var(--st-warn); }
+.pt.s-overkill circle { fill: none; stroke: var(--st-over); stroke-width: 2; }
+.lg.s-overkill svg { fill: none; stroke: var(--st-over); stroke-width: 2; }
+.st.s-overkill { color: var(--st-over); }
+.tip .s-overkill { color: var(--st-over); }
 
 /* Chart zones: background matches each status */
 .zone { stroke: none; }
 .zone.z-ok { fill: var(--st-good); opacity: 0.07; }
 .zone.z-tight { fill: var(--st-warn); opacity: 0.08; }
 .zone.z-insufficient { fill: var(--st-bad); opacity: 0.08; }
-.zone.z-overkill { fill: var(--warn); opacity: 0.1; }
+.zone.z-overkill { fill: var(--st-over); opacity: 0.1; }
 .zl { font-size: 13px; font-weight: 600; opacity: 0.75; pointer-events: none; }
 .zl.z-ok { fill: var(--st-good); }
 .zl.z-tight { fill: var(--st-warn); }
 .zl.z-insufficient { fill: var(--st-bad); }
-.zl.z-overkill { fill: var(--warn); }
-.hint-y { font-size: 11px; }
+.zl.z-overkill { fill: var(--st-over); }
+.hint-y { font-size: 11px; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
 .howto { margin: 4px 0 10px; }
 .howto summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 .howto ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; color: var(--text-2); }
@@ -534,7 +534,8 @@ select option { background: var(--surface); color: var(--text); }
 .cal-name { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--text); }
 .cal-name img, .cal-ph { flex: none; width: 40px; height: 40px; border-radius: 10px; object-fit: contain; background: #fff; border: 1px solid var(--line); }
 .cal-name > span, .cal-card > span { display: grid; min-width: 0; }
-.cal-name b, .cal-card b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.cal-name b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.cal-card b { font-weight: 600; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .cal-name small, .cal-card small { color: var(--text-2); font-size: 12px; }
 .cal-track { position: relative; height: 34px; border-radius: 10px; background: var(--surface-2); }
 .cal-track::before { content: ""; position: absolute; top: -4px; bottom: -4px; left: var(--t); width: 2px; background: var(--accent); opacity: 0.6; z-index: 1; }
@@ -589,3 +590,4 @@ select option { background: var(--surface); color: var(--text); }
 .seg-links button.on { background: var(--surface); color: var(--text); }
 .tag.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
 .results .banner { margin-bottom: 0; } /* the column grid already spaces cards */
+#warn-banner:empty { display: none; }

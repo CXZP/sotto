@@ -5,7 +5,7 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mvrzu38t";
+import { availableVrms } from "./calc.js?v=mvs001ro";
 
 let W = 760;
 let H = 440;
@@ -132,12 +132,12 @@ export function renderChart(el, opts) {
         <defs><clipPath id="plot-clip"><rect x="${PAD.l}" y="${PAD.t}" width="${W - PAD.l - PAD.r}" height="${H - PAD.t - PAD.b}"/></clipPath></defs>
         <g clip-path="url(#plot-clip)">${zones}</g>
         ${grid.join("")}
-        <text class="axis hint-y" x="${PAD.l + 6}" y="${PAD.t + 12}">↑ ${esc(labels.harder)}</text>
-        <text class="axis hint-y" x="${PAD.l + 6}" y="${H - PAD.b - 6}">↓ ${esc(labels.easier)}</text>
         <text class="axis" x="${(PAD.l + W - PAD.r) / 2}" y="${H - 8}" text-anchor="middle">${esc(labels.x)}</text>
         <text class="axis" transform="translate(14 ${(PAD.t + H - PAD.b) / 2}) rotate(-90)" text-anchor="middle">${esc(labels.y)}</text>
         ${pointSvg}
         ${curveSvg}
+        <text class="axis hint-y" x="${PAD.l + 6}" y="${PAD.t + 12}">↑ ${esc(labels.harder)}</text>
+        <text class="axis hint-y" x="${PAD.l + 6}" y="${H - PAD.b - 6}">↓ ${esc(labels.easier)}</text>
       </svg>
       <div class="map-hint" hidden></div>
       <p class="zoom-hint">${esc(labels.zoomHint ?? "Ctrl + scroll or pinch to zoom · drag to move")}</p>

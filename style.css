@@ -257,6 +257,7 @@ select:focus-visible, .seg button:focus-visible, .pill:focus-visible, .chip:focu
 .badge.warn { background: var(--warn-bg); color: var(--warn); }
 .badge.bad { background: var(--bad-bg); color: var(--bad); }
 .badge.muted { background: var(--surface-2); color: var(--text-2); }
+.badge.over { background: color-mix(in srgb, var(--st-over, #3a8ee6) 18%, transparent); color: var(--st-over, #3a8ee6); }
 
 .empty { padding: 48px 24px; text-align: center; color: var(--text-2); }
 
@@ -517,7 +518,8 @@ nav a { white-space: nowrap; }
 .tally-bar { height: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
 .tally-bar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); transform-origin: left; animation: draw 0.8s var(--ease) both; }
 .tally-bar i.s-ok { background: var(--good); }
-.tally-bar i.s-tight, .tally-bar i.s-overkill { background: var(--warn); }
+.tally-bar i.s-tight { background: var(--warn); }
+.tally-bar i.s-overkill { background: var(--st-over, #3a8ee6); }
 .tally-bar i.s-insufficient { background: var(--bad); }
 
 /* "// heading" kicker with the accent, and Apple's scroll reveal: grey and low, then bright and in place. */

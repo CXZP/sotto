@@ -1,17 +1,17 @@
 // Loads the catalog and turns catalog entries into the shapes calc.js expects.
 
-import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mvf17ycm";
+import { powerCheck, outputImpedanceCheck } from "./calc.js?v=mvryshxb";
 
 export const HEADPHONE_CATS = new Set(["iem", "headphone"]);
 export const SOURCE_CATS = new Set(["dongle", "portable", "desktop", "dap", "cd"]);
 
 export async function loadData() {
   const [catalog, devices, zh, logos, rates] = await Promise.all([
-    fetch("data/catalog.json?v=mvf17ycm").then((r) => r.json()),
-    fetch("data/devices.json?v=mvf17ycm").then((r) => r.json()),
-    fetch("data/brands-zh.json?v=mvf17ycm").then((r) => r.json()).catch(() => ({ names: {} })),
-    fetch("data/logos.json?v=mvf17ycm").then((r) => r.json()).catch(() => ({})),
-    fetch("data/fx.json?v=mvf17ycm").then((r) => r.json()).catch(() => null),
+    fetch("data/catalog.json?v=mvryshxb").then((r) => r.json()),
+    fetch("data/devices.json?v=mvryshxb").then((r) => r.json()),
+    fetch("data/brands-zh.json?v=mvryshxb").then((r) => r.json()).catch(() => ({ names: {} })),
+    fetch("data/logos.json?v=mvryshxb").then((r) => r.json()).catch(() => ({})),
+    fetch("data/fx.json?v=mvryshxb").then((r) => r.json()).catch(() => null),
   ]);
   const byId = new Map(catalog.items.map((i) => [i.id, i]));
   // Old ids (merged or renamed models) → the current id, and the reverse.
@@ -24,7 +24,7 @@ export async function loadData() {
 let photos;
 /** Extra store photos per item ({ store, url, src[] }), loaded on first use. */
 export function loadPhotos() {
-  photos ??= fetch("data/photos.json?v=mvf17ycm").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  photos ??= fetch("data/photos.json?v=mvryshxb").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   return photos;
 }
 
@@ -98,8 +98,8 @@ const group = (s) => (s === "overkill" ? "ok" : s);
 /** Cheapest new offer per currency, and all offers sorted by price. */
 // US dollars per unit: rough fallbacks, replaced by the ECB daily reference
 // rates in data/fx.json when it loads. Used to order offers in different
-// currencies and for the approximate amount in the reader's currency; the
-// store's own price is always shown first.
+// currencies and for the approximate amount in the reader's currency: shown
+// first in summaries (cards, "from", totals), second on each store's own row.
 const USD_PER = { USD: 1, SGD: 0.75, EUR: 1.1, GBP: 1.3, AUD: 0.66, CAD: 0.73, JPY: 0.0067, CNY: 0.14, THB: 0.03, MYR: 0.22, INR: 0.012 };
 const approxUsd = (o) => o.price * (USD_PER[o.currency] ?? 1);
 /** An amount in another currency at the loaded rates, or null when either rate is unknown. */

@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs001ro";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs001ro";
-import { renderChart } from "./chart.js?v=mvs001ro";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs001ro";
-import { makeT } from "./i18n.js?v=mvs001ro";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs001ro";
-import { LEGAL } from "./legal.js?v=mvs001ro";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs001ro";
-import * as community from "./community.js?v=mvs001ro";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs001ro";
-import { redactImage } from "./redact.js?v=mvs001ro";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs001ro";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs001ro";
-import { chainLinks } from "./chain.js?v=mvs001ro";
-import { fits } from "./dcfit.js?v=mvs001ro";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs001ro";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs001ro";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs001ro";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs07q8z";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs07q8z";
+import { renderChart } from "./chart.js?v=mvs07q8z";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs07q8z";
+import { makeT } from "./i18n.js?v=mvs07q8z";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs07q8z";
+import { LEGAL } from "./legal.js?v=mvs07q8z";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs07q8z";
+import * as community from "./community.js?v=mvs07q8z";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs07q8z";
+import { redactImage } from "./redact.js?v=mvs07q8z";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs07q8z";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs07q8z";
+import { chainLinks } from "./chain.js?v=mvs07q8z";
+import { fits } from "./dcfit.js?v=mvs07q8z";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs07q8z";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs07q8z";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs07q8z";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -345,15 +345,15 @@ function homeStage(e) {
   const s = hp.specs?.sensitivity?.[0];
   const p = prices(hp).cheapest;
   const short = (k) => hp.sheet?.[k]?.value.length <= 32 && hp.sheet[k].value;
-  const chips = [short("driver"), short("freq"), z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim(), p && `${t("price_from")} ${localPrice(p.price, p.currency)}`, t("stores", { n: storeCount(hp) })].filter(Boolean);
+  const chips = [short("driver"), short("freq"), z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim(), p && { html: `${esc(t("price_from"))} ${localPrice(p.price, p.currency)}` }, t("stores", { n: storeCount(hp) })].filter(Boolean);
   const r = homeExample(e);
-  return `<div class="stage-brand" aria-hidden="true">${esc(hp.brand)}</div>
+  return `<div class="stage-brand" aria-hidden="true" style="--len:${Math.max(String(hp.brand).length, 4)}">${esc(hp.brand)}</div>
     <div class="stage-top">
       ${im ? `<img class="stage-img" src="${esc(sized(im.src, 600))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">` : ""}
       <div class="stage-id">
         <p class="stage-name"><span class="br">[</span> ${esc(hp.model)} <span class="br">]</span></p>
         <p class="small muted">${esc(hp.brand)} · ${esc(catLabel(hp))}</p>
-        <div class="stage-chips">${chips.map((c) => `<span class="tag">${esc(c)}</span>`).join("")}</div>
+        <div class="stage-chips">${chips.map((c) => `<span class="tag">${c.html ?? esc(c)}</span>`).join("")}</div>
       </div>
     </div>
     ${r.verdict}
@@ -1233,7 +1233,7 @@ function itemPage(id) {
       // page giving several values (a figure per jack or mode) is not a clash.
       const hosts = (e) => new Set((e.sources ?? []).map((s) => hostOf(s.url)));
       const conflict = list.some((a, k) => list.slice(k + 1).some((b) => (a.value !== b.value || (a.unit && b.unit && a.unit !== b.unit)) && ![...hosts(a)].some((h) => hosts(b).has(h))));
-      return `<div class="spec"><div class="spec-name">${esc(f === "zout" ? "Output impedance" : f[0].toUpperCase() + f.slice(1))}${i.conflicts?.includes(f) ? ` <span class="tag warn">${esc(t("it_conflict_open"))}</span>` : conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
+      return `<div class="spec"><div class="spec-name">${esc(t(`spec_${f}`))}${i.conflicts?.includes(f) ? ` <span class="tag warn">${esc(t("it_conflict_open"))}</span>` : conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
         <ul>${list.map((e) => `<li><b>${fmt(e.value, 2)} ${f === "sensitivity" ? e.unit ?? `dB <span class="tag">${esc(t("unit_unknown"))}</span>` : "Ω"}</b> ${tag(e)} ${quoteLinks(e, true)}</li>`).join("")}</ul></div>`;
     })
     .join("");
@@ -1307,7 +1307,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs001ro").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs07q8z").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -1581,7 +1581,7 @@ const MATCH_ONLY_STORES = new Set(["eearphone"]);
 function shipTag(storeId) {
   const ok = shipsTo(db.stores[storeId], state.region);
   if (ok == null) return "";
-  return `<br><small class="ship ${ok ? "yes" : "no"}">${esc(t(ok ? "ship_yes" : "ship_no", { where: L(REGIONS[state.region]) }))}</small>`;
+  return `<small class="ship ${ok ? "yes" : "no"}">${esc(t(ok ? "ship_yes" : "ship_no", { where: L(REGIONS[state.region]) }))}</small>`;
 }
 
 // Cheapest few first; the rest fold away so the card doesn't tower over the specs beside it.
@@ -2607,7 +2607,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs001ro" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs07q8z" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3129,7 +3129,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs001ro" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs07q8z" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4340,9 +4340,7 @@ function quoteLinks(e, showQuotes = true) {
   // One link per site and each line once: a store's new and open-box pages carry the same text.
   const sites = [...new Map(srcs.filter((s) => s.url).map((s) => [hostOf(s.url), s.url])).values()];
   const quotes = [...new Set(srcs.map((s) => s.quote).filter(Boolean))];
-  return `<span class="srcs">${sites.map(srcLink).join(" ")}</span>${
-    showQuotes ? quoteFold(quotes.slice(0, 3)) : ""
-  }`;
+  return `<div class="srcline"><span class="srcs">${sites.map(srcLink).join("")}</span>${showQuotes ? quoteFold(quotes.slice(0, 3)) : ""}</div>`;
 }
 function hostOf(url) {
   try {

@@ -356,7 +356,8 @@ td > div + div { margin-top: 4px; }
   .builder { grid-template-columns: 1fr; }
   .steps { position: static; }
   .bar-inner { flex-wrap: wrap; border-radius: 22px; padding: 8px 10px; }
-  nav { order: 3; width: 100%; margin: 0; overflow-x: auto; }
+  nav { order: 3; width: 100%; margin: 0; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+  nav::-webkit-scrollbar { display: none; }
   .bar-tools { gap: 6px; }
   .detail { grid-template-columns: 1fr; gap: 2px; }
   .detail dd { margin-bottom: 8px; }
@@ -459,7 +460,7 @@ nav a { white-space: nowrap; }
 .home-stage { position: relative; overflow: hidden; border-radius: 16px; padding: 18px; min-height: 360px; display: grid; gap: 12px; align-content: start; isolation: isolate; }
 /* The accent block behind the photo, like Endfield's yellow panel. */
 .home-stage::before { content: ""; position: absolute; z-index: -2; top: 0; bottom: 0; right: 0; width: 34%; background: var(--accent); opacity: 0.9; transform-origin: right; }
-.stage-brand { position: absolute; z-index: -1; left: -4px; top: 6px; font-size: clamp(56px, 11vw, 120px); font-weight: 700; font-synthesis: none; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; white-space: nowrap; color: var(--line-strong); opacity: 0.45; pointer-events: none; }
+.stage-brand { position: absolute; z-index: -1; left: -4px; top: 6px; font-size: min(clamp(56px, 11vw, 120px), calc(560px / var(--len, 6))); font-weight: 700; font-synthesis: none; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; white-space: nowrap; color: var(--line-strong); opacity: 0.45; pointer-events: none; }
 .stage-top { display: grid; grid-template-columns: 1fr 220px; gap: 12px; align-items: end; min-height: 200px; }
 .stage-img { grid-column: 2; grid-row: 1; width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 16px; position: relative; }
 .stage-id { grid-column: 1; grid-row: 1; display: grid; gap: 6px; padding-top: 56px; }
@@ -536,7 +537,9 @@ nav a { white-space: nowrap; }
 }
 @media (max-width: 760px) {
   .home-select { grid-template-columns: 1fr; }
-  .home-rail { grid-auto-flow: column; justify-content: start; overflow-x: auto; padding: 8px; }
+  .home-rail { grid-auto-flow: column; justify-content: start; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding: 8px; }
+  .home-rail::-webkit-scrollbar { display: none; }
+  .stage-brand { display: none; }
   .rail-btn { width: 56px; height: 56px; }
   .stage-top { grid-template-columns: 1fr; }
   .stage-img { grid-column: 1; grid-row: 1; width: 160px; height: 160px; justify-self: end; }
@@ -551,3 +554,9 @@ nav a { white-space: nowrap; }
 #update-bar .link { font-size: 18px; padding: 0 8px; }
 .pt-finish { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0; }
 .pt-finish .pill { padding: 3px 10px; }
+
+/* First load: the catalog takes a moment; say so instead of a blank page. */
+.boot { min-height: 50vh; display: grid; place-content: center; justify-items: center; gap: 6px; color: var(--text-2); font-size: 15px; }
+.boot-dot { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent, #e8892c); animation: boot-spin 0.9s linear infinite; margin-bottom: 6px; }
+@keyframes boot-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .boot-dot { animation: none; } }

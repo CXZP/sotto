@@ -133,14 +133,16 @@ a.chip.on { background: var(--text); color: var(--bg); border-color: var(--text)
 .spec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .tag.warn { color: var(--warn); border-color: currentColor; }
 .tag.ok { color: var(--good); border-color: currentColor; }
-.srcs .src + .src { margin-left: 6px; }
-details.quotes { display: inline; }
-details.quotes summary { display: inline; cursor: pointer; color: var(--text-2); font-size: 12px; text-decoration: underline dotted; }
-details.quotes[open] { display: block; }
+.srcline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 2px; font-size: 12.5px; }
+.srcs { display: contents; }
+.spec li { line-height: 1.45; }
+details.quotes summary { cursor: pointer; color: var(--text-2); list-style: none; text-decoration: underline dotted; text-underline-offset: 3px; }
+details.quotes summary::-webkit-details-marker { display: none; }
+details.quotes[open] { flex-basis: 100%; }
 .howto.math { margin: 10px 0 0; }
 q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px solid var(--line-strong); color: var(--text-2); font-size: 13px; quotes: none; font-family: ui-monospace, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
 .offers { list-style: none; margin: 0; padding: 0; }
-.offers li { display: grid; grid-template-columns: 1fr auto auto; grid-template-areas: "s p k" "t t t"; gap: 2px 12px; padding: 9px 0; border-top: 1px solid var(--line); }
+.offers li { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "s p" "t k"; gap: 3px 12px; padding: 10px 0; border-top: 1px solid var(--line); align-items: baseline; line-height: 1.4; }
 .offers li:first-child { border-top: 0; }
 .offers .strong { grid-area: s; color: var(--text); }
 .offers .small { grid-area: t; }
@@ -149,7 +151,8 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 .fx { font-weight: 400; font-size: .85em; color: var(--text-2); white-space: nowrap; }
 .fx-pick { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .fx-pick select { width: auto; min-width: 0; }
-.stock { grid-area: k; font-size: 12px; font-weight: 600; }
+.stock { grid-area: k; font-size: 12px; font-weight: 600; text-align: right; white-space: nowrap; }
+.stock .ship::before { content: " · "; color: var(--text-2); }
 .stock.in { color: var(--st-good); }
 .stock.out { color: var(--text-2); }
 .row.compact { padding: 9px 20px; }
@@ -157,7 +160,10 @@ q.quote { display: block; margin: 4px 0 0; padding: 4px 10px; border-left: 2px s
 @media (max-width: 860px) {
   .slots { position: static; }
   .item-grid { grid-template-columns: 1fr; }
-  .rev li { grid-template-columns: 84px 1fr auto; }
+  .rev li { grid-template-columns: auto 1fr auto; grid-template-areas: "name name price" "st meta meta"; column-gap: 8px; row-gap: 3px; padding: 11px 0; align-items: baseline; }
+  .rev button { font-weight: 600; }
+  .rev .st, .rev .muted { font-size: 12.5px; line-height: 1.4; }
+  .rev .muted .tag { font-size: 11px; padding: 0 6px; }
 }
 
 /* Community */
@@ -561,7 +567,9 @@ select option { background: var(--surface); color: var(--text); }
 
 /* Spec sheet: label / value rows from the store's own spec list. */
 .card .sheet { margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
-.sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
+.sheet > div:last-child { border-bottom: 0; }
+.sheet dd a.small { white-space: nowrap; }
 .sheet dt { color: var(--text-2); font-size: 13px; }
 .sheet dd { margin: 0; overflow-wrap: anywhere; }
 
@@ -591,3 +599,12 @@ select option { background: var(--surface); color: var(--text); }
 .tag.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
 .results .banner { margin-bottom: 0; } /* the column grid already spaces cards */
 #warn-banner:empty { display: none; }
+@media (max-width: 760px) {
+  /* Category chips: one swipeable row instead of five wrapped rows above the products. */
+  .filters > .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
+  .filters > .chips::-webkit-scrollbar { display: none; }
+  .filters > .chips > * { flex: none; }
+  /* Two brands per row on a phone. */
+  .brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .brand-pic { height: 64px; }
+}

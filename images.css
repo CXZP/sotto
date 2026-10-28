@@ -88,3 +88,9 @@ a.img-credit:hover { background: rgba(0, 0, 0, 0.75); }
 .fr-ref { padding: 0 4px; border: 0; background: none; color: var(--text-2); cursor: pointer; font-size: 15px; line-height: 1; opacity: 0.5; }
 .fr-ref.on { color: var(--accent); opacity: 1; }
 .fr-targets .chips { margin-bottom: 6px; }
+@media (max-width: 760px) {
+  /* Pills that wrap to two lines look broken: a plain list on a phone. */
+  .fr-site-list { display: grid; gap: 0; }
+  .fr-site-list li { border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 7px 0; line-height: 1.4; }
+  .fr-site-list li:first-child { border-top: 0; }
+}

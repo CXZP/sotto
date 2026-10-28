@@ -294,6 +294,9 @@ export const STRINGS = {
     home_not3: "ไม่มีโฆษณา ไม่ขายของ",
     home_not3_sub: "ไม่มีลิงก์ค่าคอม ลำดับร้านเรียงตามราคา โค้ดและข้อมูลเปิดให้ทุกคน",
     show_math: "ดูวิธีคำนวณ",
+    spec_impedance: "ความต้านทาน (Impedance)",
+    spec_sensitivity: "ความไว (Sensitivity)",
+    spec_zout: "Output impedance",
     offers_more: "ดูอีก {n} รายการ",
     show_quotes: "ข้อความจากแหล่ง",
 
@@ -1206,6 +1209,9 @@ export const STRINGS = {
     home_not3: "No ads, nothing for sale",
     home_not3_sub: "No affiliate links, stores sorted by price, code and data open to everyone.",
     show_math: "How this is worked out",
+    spec_impedance: "Impedance",
+    spec_sensitivity: "Sensitivity",
+    spec_zout: "Output impedance",
     offers_more: "{n} more listings",
     show_quotes: "Source text",
 

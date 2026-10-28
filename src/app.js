@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvryunlz";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvryunlz";
-import { renderChart } from "./chart.js?v=mvryunlz";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvryunlz";
-import { makeT } from "./i18n.js?v=mvryunlz";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvryunlz";
-import { LEGAL } from "./legal.js?v=mvryunlz";
-import { track, stats, trackingOff } from "./analytics.js?v=mvryunlz";
-import * as community from "./community.js?v=mvryunlz";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvryunlz";
-import { redactImage } from "./redact.js?v=mvryunlz";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvryunlz";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvryunlz";
-import { chainLinks } from "./chain.js?v=mvryunlz";
-import { fits } from "./dcfit.js?v=mvryunlz";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvryunlz";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvryunlz";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvryunlz";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvryzmvh";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvryzmvh";
+import { renderChart } from "./chart.js?v=mvryzmvh";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvryzmvh";
+import { makeT } from "./i18n.js?v=mvryzmvh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvryzmvh";
+import { LEGAL } from "./legal.js?v=mvryzmvh";
+import { track, stats, trackingOff } from "./analytics.js?v=mvryzmvh";
+import * as community from "./community.js?v=mvryzmvh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvryzmvh";
+import { redactImage } from "./redact.js?v=mvryzmvh";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvryzmvh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvryzmvh";
+import { chainLinks } from "./chain.js?v=mvryzmvh";
+import { fits } from "./dcfit.js?v=mvryzmvh";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvryzmvh";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvryzmvh";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvryzmvh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -684,15 +684,18 @@ function connectionCard({ outputs, driver }, hp) {
   }
   const plug = plugOf(hp);
   let usable = outputs;
-  if (outputs.every((o) => o.jack)) {
-    const best = bestConnection(plug, outputs);
-    usable = [best.output];
+  // Power from a store line often doesn't say which jack; the box's jacks may
+  // still be known (maker page, hand entry), which is enough for the plug check.
+  const jacked = outputs.every((o) => o.jack) ? outputs : driver?.jacks?.length ? driver.jacks.filter((j) => JACKS[j]).map((jack) => ({ jack })) : [];
+  if (jacked.length) {
+    const best = bestConnection(plug, jacked);
+    if (jacked === outputs) usable = [best.output];
     if (best.status === "direct") steps.push(`<li>${esc(t("c_jack", { jack: JACK_LABEL[best.output.jack] }))}</li>`);
     else {
       const [from, to] = best.adapter.split("-").map((s) => JACK_LABEL[s.slice(0, -1)]);
       steps.push(`<li class="${best.status === "danger" ? "danger" : "need"}">${esc(t("c_adapter", { from, to }))} <span class="why">— ${esc(t(`note_${best.note.replaceAll("-", "_")}`))}</span></li>`);
     }
-    const bal = outputs.find((o) => JACKS[o.jack]?.balanced);
+    const bal = jacked.find((o) => JACKS[o.jack]?.balanced);
     if (bal && !JACKS[plug]?.balanced && hp.cable?.detachable !== false) steps.push(`<li class="alt">${esc(t("cable_swap", { jack: JACK_LABEL[bal.jack] }))}</li>`);
   } else {
     steps.push(`<li class="need">${esc(t("c_jack_unknown"))}</li>`);
@@ -1304,7 +1307,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvryunlz").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvryzmvh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const links = (await squigIndex)[i.id] ?? [];
   if (!el.isConnected) return;
   const n = displayName(i);
@@ -2595,7 +2598,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvryunlz" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvryzmvh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3117,7 +3120,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvryunlz" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvryzmvh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

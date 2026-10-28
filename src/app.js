@@ -1,22 +1,22 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs1qgrl";
-import { heroArt } from "./heroart.js?v=mvs1qgrl";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1qgrl";
-import { renderChart } from "./chart.js?v=mvs1qgrl";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1qgrl";
-import { makeT } from "./i18n.js?v=mvs1qgrl";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1qgrl";
-import { LEGAL } from "./legal.js?v=mvs1qgrl";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs1qgrl";
-import * as community from "./community.js?v=mvs1qgrl";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1qgrl";
-import { redactImage } from "./redact.js?v=mvs1qgrl";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1qgrl";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1qgrl";
-import { chainLinks } from "./chain.js?v=mvs1qgrl";
-import { fits } from "./dcfit.js?v=mvs1qgrl";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1qgrl";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1qgrl";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1qgrl";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs1zwfe";
+import { heroArt } from "./heroart.js?v=mvs1zwfe";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1zwfe";
+import { renderChart } from "./chart.js?v=mvs1zwfe";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1zwfe";
+import { makeT } from "./i18n.js?v=mvs1zwfe";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1zwfe";
+import { LEGAL } from "./legal.js?v=mvs1zwfe";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs1zwfe";
+import * as community from "./community.js?v=mvs1zwfe";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1zwfe";
+import { redactImage } from "./redact.js?v=mvs1zwfe";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1zwfe";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1zwfe";
+import { chainLinks } from "./chain.js?v=mvs1zwfe";
+import { fits } from "./dcfit.js?v=mvs1zwfe";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1zwfe";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1zwfe";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1zwfe";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -355,7 +355,7 @@ const HERO_PICKS = [HOME_DONGLE, "fiio--btr7", "ifi--go-link-2-max", "ifi--hip-d
 let heroCache = null;
 function heroData() {
   if (heroCache) return heroCache;
-  const loads = Array.from({ length: 36 }, (_, i) => 2 * 500 ** (i / 35));
+  const loads = Array.from({ length: 36 }, (_, i) => 6 * (700 / 6) ** (i / 35));
   const voltsAt = (outputs) => {
     let prev = null;
     return loads.map((r) => {
@@ -363,8 +363,8 @@ function heroData() {
       return (prev = v || prev || 0.001);
     });
   };
-  // Up to 320 strands, spread evenly over the catalog's sources.
-  const step = Math.max(1, sources.length / 320);
+  // Up to 170 strands, spread evenly over the catalog's sources: enough to read as a field, few enough to breathe.
+  const step = Math.max(1, sources.length / 170);
   const strands = [];
   for (let k = 0; k < sources.length; k += step) strands.push(voltsAt(sourceOutputs(sources[Math.floor(k)])));
   const hps = headphones.filter((h) => hpModel(h).unitKnown);
@@ -433,10 +433,20 @@ function homePage() {
         <p class="hero-sub">${esc(t("home_sub"))}</p>
         <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
       </div>
-      <div class="hero-picks" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.picks
-        .map((s, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}"><span class="hp-cat">${esc(s.cat)}</span><b>${esc(s.name)}</b><span class="hp-n">${esc(t("hero_drives", { ok: fmt(s.ok, 0), n: fmt(art.n, 0) }))}</span><i class="hp-bar" style="--w:${((s.ok / art.n) * 100).toFixed(1)}%"></i></button>`)
-        .join("")}</div>
-      <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span><span><i class="lg-dot on"></i>${esc(t("hero_lg_on"))}</span></p>
+      <div class="hero-right">
+      <div class="hero-plot" data-plot></div>
+      <div class="hero-readout" aria-live="polite">
+        <div class="ro-main">
+          <p class="ro-cat" data-ro="cat">${esc(art.picks[0]?.cat ?? "")}</p>
+          <p class="ro-name" data-ro="name">${esc(art.picks[0]?.name ?? "")}</p>
+          <p class="ro-n"><b data-ro="ok">${fmt(art.picks[0]?.ok ?? 0, 0)}</b><span>/ ${fmt(art.n, 0)} ${esc(t("hero_ro_cap"))}</span></p>
+        </div>
+        <div class="ro-side"><div class="hero-picks" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.picks
+          .map((s, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}">${esc(s.name.replace(/\s*\(.*\)$/, ""))}</button>`)
+          .join("")}</div>
+        <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span></p></div>
+      </div>
+      </div>
     </section>
     <section class="home-hero">
       <div class="home-demo card">
@@ -503,9 +513,16 @@ function wireHome(main) {
   const canvas = main.querySelector(".hero-canvas");
   const art = heroData();
   if (canvas && art.picks.length) {
-    // Wide: the plot fills the right of the hero. Narrow: the canvas is its own block under the copy.
-    const wide = innerWidth > 900;
-    heroHandle = heroArt(canvas, { ...art, plot: wide ? { l: 0.47, r: 0.985, t: 0.05, b: 0.8 } : { l: 0.04, r: 0.97, t: 0.04, b: 0.96 } });
+    // The plot box is an empty block in the layout; the canvas behind the whole hero
+    // measures it, so the art lines up with the text column at every width.
+    const box = main.querySelector("[data-plot]");
+    const plot = () => {
+      const c = canvas.getBoundingClientRect();
+      const b = box.getBoundingClientRect();
+      return { l: (b.left - c.left) / c.width, r: (b.right - c.left) / c.width, t: (b.top - c.top) / c.height, b: (b.bottom - c.top) / c.height };
+    };
+    heroHandle = heroArt(canvas, { ...art, plot, labels: { x: t("chart_x"), y: t("hero_y") } });
+    const ro = (k) => main.querySelector(`[data-ro="${k}"]`);
     const tabs = [...main.querySelectorAll("[data-hero]")];
     let at = 0;
     const show = (n) => {
@@ -515,6 +532,11 @@ function wireHome(main) {
         b.setAttribute("aria-selected", String(k === n));
       });
       heroHandle.show(n);
+      const s = art.picks[n];
+      ro("cat").textContent = s.cat;
+      ro("name").textContent = s.name;
+      ro("ok").textContent = fmt(s.ok, 0);
+      ro("ok").animate?.([{ opacity: 0.2, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 450, easing: "cubic-bezier(.32,.72,0,1)" });
       // Phones: keep the lit card in view inside its swipe row (the page itself doesn't move).
       const row = tabs[n].parentElement;
       if (row.scrollWidth > row.clientWidth) row.scrollTo({ left: tabs[n].offsetLeft - 16, behavior: "smooth" });
@@ -1370,7 +1392,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs1qgrl").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs1zwfe").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2670,7 +2692,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1qgrl" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1zwfe" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3192,7 +3214,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1qgrl" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1zwfe" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

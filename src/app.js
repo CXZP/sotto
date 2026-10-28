@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs0kphp";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs0kphp";
-import { renderChart } from "./chart.js?v=mvs0kphp";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs0kphp";
-import { makeT } from "./i18n.js?v=mvs0kphp";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs0kphp";
-import { LEGAL } from "./legal.js?v=mvs0kphp";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs0kphp";
-import * as community from "./community.js?v=mvs0kphp";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs0kphp";
-import { redactImage } from "./redact.js?v=mvs0kphp";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs0kphp";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs0kphp";
-import { chainLinks } from "./chain.js?v=mvs0kphp";
-import { fits } from "./dcfit.js?v=mvs0kphp";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs0kphp";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs0kphp";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs0kphp";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs1k1k6";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1k1k6";
+import { renderChart } from "./chart.js?v=mvs1k1k6";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1k1k6";
+import { makeT } from "./i18n.js?v=mvs1k1k6";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1k1k6";
+import { LEGAL } from "./legal.js?v=mvs1k1k6";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs1k1k6";
+import * as community from "./community.js?v=mvs1k1k6";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1k1k6";
+import { redactImage } from "./redact.js?v=mvs1k1k6";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1k1k6";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1k1k6";
+import { chainLinks } from "./chain.js?v=mvs1k1k6";
+import { fits } from "./dcfit.js?v=mvs1k1k6";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1k1k6";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1k1k6";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1k1k6";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1307,7 +1307,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs0kphp").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs1k1k6").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2607,7 +2607,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs0kphp" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1k1k6" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3129,7 +3129,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs0kphp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1k1k6" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

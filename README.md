@@ -1,6 +1,6 @@
 # Sotto
 
-**Will it plug in? Is it loud enough? Do you need an amp?**
+**Will it connect? Is it loud enough? Do you need a separate amp, or is your phone, dongle or DAP already enough?**
 
 Sotto checks a headphone setup — phone or computer → dongle / DAC-amp → headphones — and answers the questions that *have* answers:
 

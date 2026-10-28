@@ -545,6 +545,8 @@ nav a { white-space: nowrap; }
 .s-insufficient .ef-bar i { background: var(--bad); }
 .ef-bar::after { content: ""; position: absolute; left: 50%; top: -0.25vw; width: 2px; height: calc(100% + 0.5vw); background: var(--ink); }
 .ef-links { display: flex; flex-wrap: wrap; gap: 0.4vw 1.4vw; }
+/* Readable where the photo runs behind the text. */
+.ef-drive p, .ef-links { text-shadow: 0 0 2px var(--bg-f), 0 0 5px var(--bg-f), 0 0 9px var(--bg-f); }
 
 /* Phones and narrow windows: one column; photo on the column, a swipe row of faces, then the file. */
 @media (max-width: 1000px) {

@@ -562,3 +562,47 @@ nav a { white-space: nowrap; }
 .boot-dot { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent, #e8892c); animation: boot-spin 0.9s linear infinite; margin-bottom: 6px; }
 @keyframes boot-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .boot-dot { animation: none; } }
+
+/* ---------------------------------------------------------------- home hero art
+   Full width. The canvas draws the catalog (src/heroart.js): source curves as strands,
+   headphones as dots; the copy sits on the left, the example sources bottom right. */
+main.page-home { max-width: none; padding: 0 0 48px; }
+.page-home .home > :not(.hero-art) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
+.hero-art { position: relative; height: min(calc(100svh - 64px), 880px); min-height: 600px; overflow: hidden; --art-accent: #e8862e; --edge: max(16px, calc(50% - 564px)); }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-copy { position: absolute; z-index: 1; left: var(--edge); top: 46%; transform: translateY(-50%); width: min(540px, 40%); display: grid; gap: 18px; justify-items: start; }
+.hero-copy h1 { margin: 0; font-size: clamp(52px, 7.4vw, 112px); line-height: 0.98; font-weight: 800; letter-spacing: -0.04em; }
+.hero-kicker { margin: 0; display: flex; gap: 10px; align-items: baseline; font-size: 13px; letter-spacing: 0.05em; color: var(--text-2); }
+.hero-kicker .br { color: var(--art-accent); font-weight: 700; }
+.hero-sub { margin: 0; color: var(--text-2); font-size: 16px; line-height: 1.65; max-width: 460px; }
+.hero-art .home-cta { justify-content: flex-start; }
+/* Example sources: glass cards like a spec sheet; the lit one carries the accent and its share bar. */
+.hero-picks { position: absolute; z-index: 1; right: var(--edge); bottom: 72px; display: flex; gap: 8px; }
+.hero-pick { position: relative; overflow: hidden; display: grid; gap: 2px; min-width: 150px; padding: 10px 14px 12px; text-align: left; font: inherit; color: var(--text); cursor: pointer; border-radius: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--surface) 72%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: border-color 0.3s, transform 0.4s var(--ease), background 0.3s; }
+.hero-pick:hover { transform: translateY(-2px); }
+.hero-pick b { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.hp-cat { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.hp-n { font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.hp-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: var(--w); background: var(--st-good, #0ca30c); opacity: 0.35; transition: opacity 0.3s; }
+.hero-pick.on { border-color: var(--art-accent); background: color-mix(in srgb, var(--surface) 88%, transparent); }
+.hero-pick.on .hp-n { color: var(--text); }
+.hero-pick.on .hp-bar { opacity: 1; }
+.hero-legend { position: absolute; z-index: 1; right: var(--edge); bottom: 28px; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--text-2); }
+.hero-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.lg-line { width: 18px; height: 2px; background: var(--art-accent); border-radius: 2px; }
+.lg-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text); opacity: 0.6; }
+.lg-dot.on { background: var(--st-good, #0ca30c); opacity: 1; }
+/* The demo below no longer carries the headline. */
+.page-home .home-hero { padding-top: 28px; }
+@media (max-width: 900px) {
+  .hero-art { height: auto; min-height: 0; display: grid; gap: 14px; padding: 36px 16px 20px; }
+  .hero-canvas { position: relative; height: 300px; order: 2; margin-inline: -16px; width: calc(100% + 32px); }
+  .hero-copy { position: static; transform: none; width: auto; order: 1; }
+  .hero-picks { position: static; order: 3; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .hero-picks::-webkit-scrollbar { display: none; }
+  .hero-pick { flex: none; min-width: 140px; }
+  .hero-legend { position: static; order: 4; }
+}
+/* A soft pool of page colour behind the copy so the strands never fight the headline. */
+.hero-copy::before { content: ""; position: absolute; z-index: -1; inset: -60px -90px -60px -40px; background: radial-gradient(closest-side, var(--bg) 55%, transparent); pointer-events: none; }
+@media (max-width: 900px) { .hero-copy::before { content: none; } }

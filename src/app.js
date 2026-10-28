@@ -1,21 +1,22 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvs1k1k6";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1k1k6";
-import { renderChart } from "./chart.js?v=mvs1k1k6";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1k1k6";
-import { makeT } from "./i18n.js?v=mvs1k1k6";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1k1k6";
-import { LEGAL } from "./legal.js?v=mvs1k1k6";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs1k1k6";
-import * as community from "./community.js?v=mvs1k1k6";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1k1k6";
-import { redactImage } from "./redact.js?v=mvs1k1k6";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1k1k6";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1k1k6";
-import { chainLinks } from "./chain.js?v=mvs1k1k6";
-import { fits } from "./dcfit.js?v=mvs1k1k6";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1k1k6";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1k1k6";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1k1k6";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs1qgrl";
+import { heroArt } from "./heroart.js?v=mvs1qgrl";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1qgrl";
+import { renderChart } from "./chart.js?v=mvs1qgrl";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1qgrl";
+import { makeT } from "./i18n.js?v=mvs1qgrl";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1qgrl";
+import { LEGAL } from "./legal.js?v=mvs1qgrl";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs1qgrl";
+import * as community from "./community.js?v=mvs1qgrl";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1qgrl";
+import { redactImage } from "./redact.js?v=mvs1qgrl";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1qgrl";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1qgrl";
+import { chainLinks } from "./chain.js?v=mvs1qgrl";
+import { fits } from "./dcfit.js?v=mvs1qgrl";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1qgrl";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1qgrl";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1qgrl";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -324,18 +325,6 @@ function homeDongleTally() {
   return (dongleTally = tally);
 }
 
-function homeWaves() {
-  // Layered waves drifting sideways; each path is two periods wide so a -50% shift loops seamlessly.
-  const wave = (y, a) => `M0 ${y} C 150 ${y - a}, 350 ${y - a}, 500 ${y} S 850 ${y + a}, 1000 ${y} S 1350 ${y - a}, 1500 ${y} S 1850 ${y + a}, 2000 ${y} V 400 H 0 Z`;
-  return `<div class="home-waves" aria-hidden="true">${[
-    [150, 60, 38],
-    [210, 50, 29],
-    [270, 45, 23],
-    [320, 35, 17],
-  ]
-    .map(([y, a, s], n) => `<svg viewBox="0 0 2000 400" preserveAspectRatio="none" class="wv wv${n}" style="--s:${s}s"><path d="${wave(y, a)}"/></svg>`)
-    .join("")}</div>`;
-}
 
 /** The selected headphone on the hero stage: its photo, brand behind it, [ name ], spec chips, and the live result. */
 function homeStage(e) {
@@ -358,6 +347,41 @@ function homeStage(e) {
     </div>
     ${r.verdict}
     <a class="link small" href="${exUrl(e)}">${esc(t("home_open"))}</a>`;
+}
+
+// Sources lit one at a time in the hero art: a cheap dongle, a Bluetooth receiver,
+// a portable amp, a desktop amp. Each shows how many headphones it can drive.
+const HERO_PICKS = [HOME_DONGLE, "fiio--btr7", "ifi--go-link-2-max", "ifi--hip-dac3", "fiio--k15"];
+let heroCache = null;
+function heroData() {
+  if (heroCache) return heroCache;
+  const loads = Array.from({ length: 36 }, (_, i) => 2 * 500 ** (i / 35));
+  const voltsAt = (outputs) => {
+    let prev = null;
+    return loads.map((r) => {
+      const v = Math.max(0, ...outputs.map((o) => availableVrms(o, r).vrms ?? 0));
+      return (prev = v || prev || 0.001);
+    });
+  };
+  // Up to 320 strands, spread evenly over the catalog's sources.
+  const step = Math.max(1, sources.length / 320);
+  const strands = [];
+  for (let k = 0; k < sources.length; k += step) strands.push(voltsAt(sourceOutputs(sources[Math.floor(k)])));
+  const hps = headphones.filter((h) => hpModel(h).unitKnown);
+  const peak = LEVELS.normal + CREST;
+  const points = hps.map((h) => {
+    const { ohms, dbPerV } = headphoneSpecs(hpModel(h));
+    return { z: ohms, v: required(peak, dbPerV, ohms).vrms };
+  });
+  const picks = HERO_PICKS.map(findItem)
+    .filter((s) => s && sourceOutputs(s).length)
+    .slice(0, 4)
+    .map((s) => {
+      const outs = sourceOutputs(s);
+      const status = hps.map((h) => evaluate(h, outs, { level: LEVELS.normal, crest: CREST }).status);
+      return { id: s.id, name: displayName(s), cat: catLabel(s), curve: voltsAt(outs), status, ok: status.filter((x) => x === "ok" || x === "overkill").length };
+    });
+  return (heroCache = { loads, strands, points, picks, n: hps.length });
 }
 
 /** Right-hand panel of the "what Sotto checks" explorer, built from the same data as the site. */
@@ -399,14 +423,22 @@ function homePage() {
     .slice(0, 4);
   const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
   const dongle = findItem(HOME_DONGLE);
+  const art = heroData();
   return `<div class="home">
-    <section class="home-hero">${homeWaves()}
-      <div class="home-hero-text">
-        <p class="home-kicker">${esc(t("home_kicker"))}</p>
+    <section class="hero-art">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <p class="hero-kicker"><span class="br">[</span>${esc(t("home_kicker"))}<span class="br">]</span></p>
         <h1>${t("home_h1").split("\n").map(esc).join("<br>")}</h1>
-        <p class="home-sub">${esc(t("home_sub"))}</p>
+        <p class="hero-sub">${esc(t("home_sub"))}</p>
         <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
       </div>
+      <div class="hero-picks" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.picks
+        .map((s, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}"><span class="hp-cat">${esc(s.cat)}</span><b>${esc(s.name)}</b><span class="hp-n">${esc(t("hero_drives", { ok: fmt(s.ok, 0), n: fmt(art.n, 0) }))}</span><i class="hp-bar" style="--w:${((s.ok / art.n) * 100).toFixed(1)}%"></i></button>`)
+        .join("")}</div>
+      <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span><span><i class="lg-dot on"></i>${esc(t("hero_lg_on"))}</span></p>
+    </section>
+    <section class="home-hero">
       <div class="home-demo card">
         <p class="small muted home-demo-cap">${esc(t("home_try"))} · ${esc(t("home_ex_chain", { amp: dongle ? displayName(dongle) : "dongle" }))}</p>
         <div class="home-select">
@@ -465,7 +497,38 @@ function reviewCard(r) {
   return `<a class="card pad home-review" href="#item/${encodeURIComponent(r.item_id)}">${item ? `<span class="small muted">${esc(displayName(item))}</span>` : ""}<b>${esc(shown.title)}</b><p class="small">${esc(head)}</p></a>`;
 }
 
+let heroHandle = null;
 function wireHome(main) {
+  heroHandle?.stop();
+  const canvas = main.querySelector(".hero-canvas");
+  const art = heroData();
+  if (canvas && art.picks.length) {
+    // Wide: the plot fills the right of the hero. Narrow: the canvas is its own block under the copy.
+    const wide = innerWidth > 900;
+    heroHandle = heroArt(canvas, { ...art, plot: wide ? { l: 0.47, r: 0.985, t: 0.05, b: 0.8 } : { l: 0.04, r: 0.97, t: 0.04, b: 0.96 } });
+    const tabs = [...main.querySelectorAll("[data-hero]")];
+    let at = 0;
+    const show = (n) => {
+      at = n;
+      tabs.forEach((b, k) => {
+        b.classList.toggle("on", k === n);
+        b.setAttribute("aria-selected", String(k === n));
+      });
+      heroHandle.show(n);
+      // Phones: keep the lit card in view inside its swipe row (the page itself doesn't move).
+      const row = tabs[n].parentElement;
+      if (row.scrollWidth > row.clientWidth) row.scrollTo({ left: tabs[n].offsetLeft - 16, behavior: "smooth" });
+    };
+    // Cycles on its own until someone picks one.
+    let cycle = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : setInterval(() => (canvas.isConnected ? show((at + 1) % tabs.length) : clearInterval(cycle)), 4200);
+    tabs.forEach((b, k) =>
+      b.addEventListener("click", () => {
+        clearInterval(cycle);
+        cycle = 0;
+        show(k);
+      }),
+    );
+  }
   // Hero: picking a headphone on the rail swaps the stage like Endfield's operator change: the old
   // photo is washed in the accent and fades, then the new one arrives washed and clears to colour.
   const stage = main.querySelector("[data-stage]");
@@ -1307,7 +1370,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs1k1k6").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs1qgrl").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2607,7 +2670,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1k1k6" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1qgrl" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3129,7 +3192,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1k1k6" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1qgrl" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

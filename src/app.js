@@ -1,21 +1,21 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvrzfzr4";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvrzfzr4";
-import { renderChart } from "./chart.js?v=mvrzfzr4";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvrzfzr4";
-import { makeT } from "./i18n.js?v=mvrzfzr4";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvrzfzr4";
-import { LEGAL } from "./legal.js?v=mvrzfzr4";
-import { track, stats, trackingOff } from "./analytics.js?v=mvrzfzr4";
-import * as community from "./community.js?v=mvrzfzr4";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvrzfzr4";
-import { redactImage } from "./redact.js?v=mvrzfzr4";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvrzfzr4";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvrzfzr4";
-import { chainLinks } from "./chain.js?v=mvrzfzr4";
-import { fits } from "./dcfit.js?v=mvrzfzr4";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvrzfzr4";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvrzfzr4";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvrzfzr4";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, JACKS } from "./calc.js?v=mvrzu38t";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvrzu38t";
+import { renderChart } from "./chart.js?v=mvrzu38t";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvrzu38t";
+import { makeT } from "./i18n.js?v=mvrzu38t";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvrzu38t";
+import { LEGAL } from "./legal.js?v=mvrzu38t";
+import { track, stats, trackingOff } from "./analytics.js?v=mvrzu38t";
+import * as community from "./community.js?v=mvrzu38t";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvrzu38t";
+import { redactImage } from "./redact.js?v=mvrzu38t";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvrzu38t";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvrzu38t";
+import { chainLinks } from "./chain.js?v=mvrzu38t";
+import { fits } from "./dcfit.js?v=mvrzu38t";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvrzu38t";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvrzu38t";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvrzu38t";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -33,7 +33,6 @@ const browserLang = LANGS.find((l) => (navigator.language ?? "").toLowerCase().s
 const state = {
   lang: load("lang", browserLang),
   region: "",
-  mode: load("mode", "simple"),
   device: "phone-usb-c",
   src: "",
   amp: "",
@@ -84,8 +83,10 @@ function route() {
   if (h.startsWith("learn/")) return { name: "learn", term: decodeURIComponent(h.slice(6)) };
   if (h === "discuss/new") return { name: "discuss", sub: "new" };
   if (h.startsWith("discuss/")) return { name: "discuss", sub: "thread", id: h.slice(8) };
-  return { name: h || "home" };
+  // A mistyped or old link lands on the home page, not a half-wired setup page.
+  return { name: PAGES.has(h) ? h : "home" };
 }
+const PAGES = new Set(["build", "catalog", "deal", "brands", "chart", "discuss", "account", "saved", "stats", "compare", "gallery", "tools", "fr", "inbox", "learn", "about", "home", "calendar"]);
 function query() {
   return new URLSearchParams(location.hash.split("?")[1] ?? "");
 }
@@ -93,7 +94,6 @@ function readHash() {
   const p = query();
   if (route().name === "build") for (const k of ["device", "src", "cart", "dac", "amp", "hp", "plug", "level"]) state[k] = p.get(k) ?? (k === "device" ? state.device : k === "level" ? "normal" : "");
   if (LANGS.includes(p.get("lang"))) state.lang = p.get("lang");
-  if (["simple", "detail"].includes(p.get("mode"))) state.mode = p.get("mode");
 }
 function buildUrl() {
   const p = new URLSearchParams();
@@ -109,18 +109,18 @@ function go(hash) {
 // Chrome
 
 function bindChrome() {
+  // In-page jumps (A–Z, "comments"): scroll, keep the route. Delegated, so parts drawn later work too.
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest?.("[data-jump]");
+    if (!a) return;
+    e.preventDefault();
+    document.getElementById(a.dataset.jump)?.scrollIntoView({ behavior: "smooth" });
+  });
   document.querySelector("#lang-sel")?.addEventListener("change", (e) => {
     state.lang = e.target.value;
     save("lang", state.lang);
     render();
   });
-  document.querySelectorAll("[data-mode]").forEach((b) =>
-    b.addEventListener("click", () => {
-      state.mode = b.dataset.mode;
-      save("mode", state.mode);
-      render();
-    }),
-  );
   const apply = (v) => (v ? (document.documentElement.dataset.theme = v) : delete document.documentElement.dataset.theme);
   apply(load("theme", ""));
   document.getElementById("theme").addEventListener("click", () => {
@@ -154,9 +154,6 @@ function renderChrome(r) {
     b.setAttribute("aria-label", t(key));
     b.classList.toggle("active", r.name === name);
   }
-  setSeg("[data-mode]", "mode", state.mode);
-  document.querySelector("[data-mode=simple]").textContent = t("mode_simple");
-  document.querySelector("[data-mode=detail]").textContent = t("mode_detail");
   const date = new Date(db.builtAt).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
   document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="#tools">${esc(t("tl_title"))}</a> · <a href="#fr">${esc(t("fr_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
     <br><label class="region-pick">${esc(t("rg_label"))} ${regionSelect()}</label>`;
@@ -653,14 +650,13 @@ function plugOf(hp) {
 function buildResults(hp) {
   const src = currentSource();
   const level = LEVELS[state.level] ?? LEVELS.normal;
-  const detail = state.mode === "detail";
   const conn = connectionCard(src, hp);
   const ev = src.outputs.length ? evaluate(hp, conn.outputs, { level, crest: CREST }) : { status: hasJack(src.driver) ? "unknown" : "no-output" };
   // With an amp in the chain, "no amp needed" is the wrong message. Say whether the
   // device alone would also have been loud enough, so people don't buy one for loudness.
   let alone = null;
   if (src.amp && src.own?.length) alone = evaluate(hp, src.own, { level, crest: CREST }).status;
-  return [verdictCard(ev, hp, detail, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
+  return [verdictCard(ev, hp, { amp: src.amp, device: src.device, src: src.src, alone }), conn.html, reverseCard(hp, level)].join("");
 }
 
 // Desktop roles that never drive headphones in Sotto's maths: speaker amps (their
@@ -714,7 +710,7 @@ const VERDICT = {
   "no-output": ["bad", "v_no_output"],
 };
 
-function verdictCard(ev, hp, detail, chain = {}) {
+function verdictCard(ev, hp, chain = {}) {
   let [tone, key, subKey] = VERDICT[ev.status] ?? VERDICT.unknown;
   if (ev.status === "ok" && chain.amp) key = "v_ok_amp";
   let sub = subKey ? t(subKey) : "";
@@ -726,7 +722,8 @@ function verdictCard(ev, hp, detail, chain = {}) {
   if (ev.r) body += meter(ev.r);
   if (ev.z && (ev.z.status === "warn" || ev.z.status === "warn-strong"))
     body += `<p class="note warn">${esc(t("zout_warn", { ratio: fmt(ev.z.ratio, 1), multi: ev.z.status === "warn-strong" ? t("zout_multi") : "" }))}</p>`;
-  if (detail && ev.r) body += mathBlock(ev, hp);
+  // The working, folded: most readers want the answer; the curious can open it.
+  if (ev.r) body += `<details class="howto math"><summary>${esc(t("show_math"))}</summary>${mathBlock(ev, hp)}</details>`;
   return `<div class="card result ${tone}">${body}</div>`;
 }
 
@@ -819,7 +816,7 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
   }
   const bigLink = opts.big || !opts.srcParam ? "" : `<a class="pill small" href="#chart?${opts.srcParam}&level=${state.level}">${esc(t("chart_big"))} ↗</a>`;
   el.innerHTML = `<div class="chart-head"><h3>${esc(t("chart_title"))}</h3>${bigLink}</div>
-    <details class="howto"${state.mode === "simple" ? " open" : ""}><summary>${esc(t("chart_howto"))}</summary><ol class="small">
+    <details class="howto" open><summary>${esc(t("chart_howto"))}</summary><ol class="small">
       <li>${esc(t("chart_h1"))}</li><li>${esc(t("chart_h2"))}</li><li>${esc(t("chart_h3", { src: srcLabel }))}</li><li>${esc(t("chart_h4"))}</li></ol></details>
     <div class="chart-host${opts.big ? " big" : ""}"></div>
     <p class="hint">${esc(t("chart_count", { n: points.length, ok: counts.ok, over: counts.overkill, tight: counts.tight, bad: counts.insufficient }))}</p>
@@ -1108,7 +1105,10 @@ function brandOptions(cat, selected) {
     .join("");
 }
 
-/** Every brand A–Z, each shown with photos of its most-stocked models (no logos: see i18n brands_note). */
+/** A steady hue per name, so wordmarks differ without meaning anything. */
+const hue = (s) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
+
+/** Every brand A–Z: its icon (or its name as a wordmark), model count and categories. */
 function brandsPage() {
   const by = new Map();
   for (const i of db.items) if (i.brand) (by.get(i.brand) ?? by.set(i.brand, []).get(i.brand)).push(i);
@@ -1124,10 +1124,9 @@ function brandsPage() {
       html += `<h2 class="brand-letter" id="brand-${L}">${L}</h2><div class="brand-grid">`;
       current = L;
     }
-    const pics = [...items].sort((x, y) => storeCount(y) - storeCount(x)).map(imageOf).filter(Boolean).slice(0, 3);
-    const cats = [...new Set(items.map((i) => catLabel(i)))].slice(0, 3).join(" · ");
-    html += `<a class="brand-tile card" href="#catalog?brand=${encodeURIComponent(b)}"><div class="brand-pics">${pics.map((im) => `<img src="${esc(sized(im.src, 160))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`).join("")}</div>
-      <div class="brand-body">${brandMark(b, 32)}<b>${esc(b)}</b><span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></div></a>`;
+    const cats = [...new Set(items.map((i) => catLabel(i)))].slice(0, 2).join(" · ");
+    html += `<a class="brand-tile card" href="#catalog?brand=${encodeURIComponent(b)}"><div class="brand-pic">${db.logos?.[b] ? `<svg viewBox="0 0 24 24" role="img" aria-label="${esc(b)}"><path d="${esc(db.logos[b].path)}"/></svg>` : `<span class="wordmark" style="--h:${hue(b)};--fs:${Math.min(b.split(/\s+/).length > 2 ? 17 : 22, Math.round(200 / Math.max(...b.split(/\s+/).map((w) => w.length))))}px">${esc(b)}</span>`}</div>
+      <div class="brand-body">${db.logos?.[b] ? `<b>${esc(b)}</b>` : ""}<span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></div></a>`;
   }
   if (current) html += "</div>";
   return `<div class="brands"><header class="deal-head"><h1>${esc(t("brands_all"))}</h1><p class="muted small">${esc(t("brands_note"))}</p></header>
@@ -1232,7 +1231,7 @@ function itemPage(id) {
       // Sources disagree only when the values come from different sites. One
       // page giving several values (a figure per jack or mode) is not a clash.
       const hosts = (e) => new Set((e.sources ?? []).map((s) => hostOf(s.url)));
-      const conflict = list.some((a, k) => list.slice(k + 1).some((b) => `${a.value}${a.unit ?? ""}` !== `${b.value}${b.unit ?? ""}` && ![...hosts(a)].some((h) => hosts(b).has(h))));
+      const conflict = list.some((a, k) => list.slice(k + 1).some((b) => (a.value !== b.value || (a.unit && b.unit && a.unit !== b.unit)) && ![...hosts(a)].some((h) => hosts(b).has(h))));
       return `<div class="spec"><div class="spec-name">${esc(f === "zout" ? "Output impedance" : f[0].toUpperCase() + f.slice(1))}${i.conflicts?.includes(f) ? ` <span class="tag warn">${esc(t("it_conflict_open"))}</span>` : conflict ? ` <span class="tag warn">${esc(t("it_conflict"))}</span>` : ""}</div>
         <ul>${list.map((e) => `<li><b>${fmt(e.value, 2)} ${f === "sensitivity" ? e.unit ?? `dB <span class="tag">${esc(t("unit_unknown"))}</span>` : "Ω"}</b> ${tag(e)} ${quoteLinks(e, true)}</li>`).join("")}</ul></div>`;
     })
@@ -1248,7 +1247,7 @@ function itemPage(id) {
             ...(o.vrules ?? []).map((r) => `${r.vrms} V (<${r.maxLoad} Ω)`),
             ...(o.zout != null ? [`${t("cmp_zout")} ${o.zout} Ω`] : []),
           ];
-          return `<li><b>${o.jack ? JACK_LABEL[o.jack] : "—"}</b> ${parts.join(" · ")} ${srcLink(o.source)}${o.quote && state.mode === "detail" ? `<q class="quote">${esc(o.quote)}</q>` : ""}</li>`;
+          return `<li><b>${o.jack ? JACK_LABEL[o.jack] : "—"}</b> ${parts.join(" · ")} ${srcLink(o.source)}${o.quote ? quoteFold([o.quote]) : ""}</li>`;
         })
         .join("")}</ul></div>`
     : "";
@@ -1307,11 +1306,18 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvrzfzr4").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
-  const links = (await squigIndex)[i.id] ?? [];
+  squigIndex ??= fetch("data/squig.json?v=mvrzu38t").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  // One chip per site and database: a site listing the same model in two files shows once.
+  const seen = new Map();
+  for (const l of (await squigIndex)[i.id] ?? []) {
+    const k = `${l.s}|${l.t ?? ""}`;
+    if (seen.has(k)) seen.get(k).n = (seen.get(k).n ?? 1) + (l.n ?? 1);
+    else seen.set(k, { ...l });
+  }
+  const links = [...seen.values()];
   if (!el.isConnected) return;
   const n = displayName(i);
-  el.innerHTML = `<h2 class="section-h">${esc(t("frl_title"))}</h2>
+  el.innerHTML = `<h3>${esc(t("frl_title"))}</h3>
     ${links.length ? `<p class="muted small">${esc(t("frl_lead", { n: links.length }))}</p><ul class="fr-site-list">${links.map((l) => `<li><a href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.s)} ↗</a>${l.t ? ` <span class="muted small">${esc(l.t)}</span>` : ""}${l.v ? ` <span class="muted small" title="${esc(t("frl_variant"))}">· ${esc(l.v)}${l.n > 1 ? ` +${l.n - 1}` : ""}</span>` : ""}</li>`).join("")}</ul>` : `<p class="muted small">${esc(t("frl_none"))}</p>`}
     <p class="small"><a href="https://www.google.com/search?q=${encodeURIComponent(`${n} site:squig.link`)}" target="_blank" rel="noopener">${esc(t("frl_search"))} ↗</a> · <a href="#fr?item=${encodeURIComponent(i.id)}">${esc(t("fr_item_btn"))}</a></p>
     <p class="muted small">${esc(t("frl_note"))}</p>`;
@@ -1576,8 +1582,15 @@ function shipTag(storeId) {
   return `<br><small class="ship ${ok ? "yes" : "no"}">${esc(t(ok ? "ship_yes" : "ship_no", { where: L(REGIONS[state.region]) }))}</small>`;
 }
 
+// Cheapest few first; the rest fold away so the card doesn't tower over the specs beside it.
+const OFFERS_SHOWN = 6;
 function offersTable(offers) {
   if (!offers.length) return `<p class="muted">—</p>`;
+  if (offers.length > OFFERS_SHOWN + 1)
+    return `${offerList(offers.slice(0, OFFERS_SHOWN))}<details class="more-offers"><summary>${esc(t("offers_more", { n: offers.length - OFFERS_SHOWN }))}</summary>${offerList(offers.slice(OFFERS_SHOWN))}</details>`;
+  return offerList(offers);
+}
+function offerList(offers) {
   return `<ul class="offers">${offers
     .map(
       (o) => `<li><a href="${esc(o.url)}" target="_blank" rel="noopener" class="strong">${esc(db.stores[o.store]?.name ?? o.store)}</a>
@@ -1662,12 +1675,6 @@ function wire(main, r) {
   if (r.name === "gallery") wireGallery(main);
   if (r.name === "inbox") wireInbox(main);
   if (r.name === "item") wireBookmarks(main);
-  main.querySelectorAll("[data-jump]").forEach((a) =>
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById(a.dataset.jump)?.scrollIntoView({ behavior: "smooth" });
-    }),
-  );
   if (r.name === "learn") wireTool(main.querySelector("[data-tool]"));
   if (r.name === "catalog") {
     // Dropdowns and checkboxes rewrite one query param each.
@@ -2598,7 +2605,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvrzfzr4" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvrzu38t" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3120,7 +3127,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvrzfzr4" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvrzu38t" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3693,7 +3700,7 @@ async function wireThread(main) {
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
-        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s, true)}<a class="pill small" href="#comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
+        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s, true)}<a class="pill small" href="#discuss/${esc(th.id)}" data-jump="comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
       </article>
       <section class="card pad" id="comments">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
@@ -4322,13 +4329,17 @@ function tag(e) {
   const k = e.kind === "measured" ? "it_measured" : "it_claimed";
   return `<span class="tag ${e.kind}">${esc(t(k))}</span>`;
 }
-function quoteLinks(e, showQuotes = state.mode === "detail") {
+/** The store or maker sentences behind a figure, folded under a small toggle. */
+function quoteFold(quotes) {
+  return quotes.length ? `<details class="quotes"><summary>${esc(t("show_quotes"))}</summary>${quotes.map((q) => `<q class="quote">${esc(q)}</q>`).join("")}</details>` : "";
+}
+function quoteLinks(e, showQuotes = true) {
   const srcs = e.sources ?? [];
   // One link per site and each line once: a store's new and open-box pages carry the same text.
   const sites = [...new Map(srcs.filter((s) => s.url).map((s) => [hostOf(s.url), s.url])).values()];
   const quotes = [...new Set(srcs.map((s) => s.quote).filter(Boolean))];
   return `<span class="srcs">${sites.map(srcLink).join(" ")}</span>${
-    showQuotes ? quotes.slice(0, 3).map((q) => `<q class="quote">${esc(q)}</q>`).join("") : ""
+    showQuotes ? quoteFold(quotes.slice(0, 3)) : ""
   }`;
 }
 function hostOf(url) {

@@ -334,6 +334,8 @@ export const STRINGS = {
     st_ok: "ขับไหว",
     st_overkill: "แรงเกินไป",
     st_tight: "พีคไม่พอ",
+    st_thin: "ขับไหวแบบเฉียด",
+    rev_margin: "เผื่อ {db} dB",
     st_insufficient: "ไม่พอ",
     st_ambiguous: "หน่วยไม่ชัด",
 
@@ -1237,6 +1239,8 @@ export const STRINGS = {
     st_ok: "drives it",
     st_overkill: "too powerful",
     st_tight: "peaks short",
+    st_thin: "just enough",
+    rev_margin: "{db} dB to spare",
     st_insufficient: "not enough",
     st_ambiguous: "unit unclear",
 

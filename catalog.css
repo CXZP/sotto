@@ -42,7 +42,7 @@ a.pill:hover { text-decoration: none; }
 .st { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
 .st::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .st.s-ok { color: var(--st-good); }
-.st.s-tight, .st.s-ambiguous { color: var(--st-warn); }
+.st.s-tight, .st.s-thin, .st.s-ambiguous { color: var(--st-warn); }
 .st.s-insufficient { color: var(--st-bad); }
 
 /* Chart */

@@ -600,11 +600,20 @@ select option { background: var(--surface); color: var(--text); }
 .results .banner { margin-bottom: 0; } /* the column grid already spaces cards */
 #warn-banner:empty { display: none; }
 @media (max-width: 760px) {
-  /* Category chips: one swipeable row instead of five wrapped rows above the products. */
-  .filters > .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
-  .filters > .chips::-webkit-scrollbar { display: none; }
-  .filters > .chips > * { flex: none; }
   /* Two brands per row on a phone. */
   .brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .brand-pic { height: 64px; }
+}
+
+/* Category chips: one compact row at every width (swipe for the rest), not a wall of pills above the products. */
+.filters > .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 4px; padding-block: 2px; -webkit-mask-image: linear-gradient(to right, #000 92%, transparent); mask-image: linear-gradient(to right, #000 92%, transparent); }
+.filters > .chips::-webkit-scrollbar { display: none; }
+.filters > .chips > .chip { flex: none; padding: 5px 11px; font-size: 13px; }
+.filters > .chips > .chip:last-child { margin-right: 32px; }
+@media (max-width: 760px) {
+  .filters > .chips { margin-inline: -16px; padding-inline: 16px; }
+  /* Search on its own line, then brand · sort · view on one line. */
+  .filter-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .filter-top .search { grid-column: 1 / -1; }
+  .filter-top .mini-select { min-width: 0; width: 100%; }
 }

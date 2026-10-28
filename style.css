@@ -550,7 +550,9 @@ nav a { white-space: nowrap; }
 }
 
 /* "Sotto has been updated" bar (auto-refresh check in app.js). */
-#update-bar { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 12px; max-width: calc(100% - 32px); padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow); font-size: 14px; }
+#update-bar { position: fixed; left: 16px; right: 16px; bottom: 16px; margin-inline: auto; width: fit-content; max-width: calc(100% - 32px); box-sizing: border-box; z-index: 50; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 18px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow); font-size: 14px; line-height: 1.35; }
+#update-bar > span { min-width: 0; }
+#update-bar .pill { flex: none; white-space: nowrap; }
 #update-bar .link { font-size: 18px; padding: 0 8px; }
 .pt-finish { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0; }
 .pt-finish .pill { padding: 3px 10px; }

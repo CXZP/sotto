@@ -448,11 +448,13 @@ select option { background: var(--surface); color: var(--text); }
 
 /* Chart zoom */
 .chart-box { position: relative; }
-.zoom-ctl { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; z-index: 1; }
+.zoom-ctl { display: flex; justify-content: flex-end; gap: 4px; margin-bottom: 4px; }
 .zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--surface-2); background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px; }
 .zoom-ctl button:hover { background: var(--surface-2); }
-.chart-box svg { cursor: crosshair; user-select: none; }
-.zoombox { fill: color-mix(in srgb, var(--accent) 15%, transparent); stroke: var(--accent); stroke-dasharray: 4 3; }
+.chart-box svg { cursor: grab; user-select: none; touch-action: pan-y; }
+.chart-box svg:active { cursor: grabbing; }
+.map-hint { position: absolute; inset: 0 0 24px; display: grid; place-items: center; background: color-mix(in srgb, #000 45%, transparent); color: #fff; font-size: 15px; font-weight: 600; border-radius: 8px; pointer-events: none; }
+.map-hint[hidden] { display: none; }
 .zoom-hint { margin: 4px 0 0; font-size: 12px; color: var(--text-2); }
 
 /* Brand mark: logo (monochrome, follows the theme) or initials */
@@ -579,3 +581,4 @@ select option { background: var(--surface); color: var(--text); }
 .seg-links button { padding: 6px 12px; border: 0; border-radius: 999px; background: none; color: var(--text-2); font: inherit; font-size: 13px; cursor: pointer; }
 .seg-links button.on { background: var(--surface); color: var(--text); }
 .tag.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+.results .banner { margin-bottom: 0; } /* the column grid already spaces cards */

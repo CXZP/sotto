@@ -5,7 +5,7 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mvryzmvh";
+import { availableVrms } from "./calc.js?v=mvrzfzr4";
 
 let W = 760;
 let H = 440;
@@ -35,7 +35,7 @@ const SHAPE = {
  * @param o.onPick (id) => void
  */
 export function renderChart(el, opts) {
-  const { curves, points, labels, onPick, fmt, peak = 95, crest = 15, overkillSpl = 130, size } = opts;
+  const { curves, points, labels, fmt, peak = 95, crest = 15, overkillSpl = 130, size } = opts;
   el._chartOpts = opts;
   W = size?.w ?? 760;
   H = size?.h ?? 440;
@@ -53,9 +53,13 @@ export function renderChart(el, opts) {
     // lo/hi: multipliers on the envelope (null = chart edge)
     const top = zs.map((z) => `${lx(z).toFixed(1)},${ly(hi == null ? Y[1] : clampY(env(z) * hi)).toFixed(1)}`);
     const bottom = zs.map((z) => `${lx(z).toFixed(1)},${ly(lo == null ? Y[0] : clampY(env(z) * lo)).toFixed(1)}`).reverse();
-    const zl = 180;
-    const mid = lo == null ? env(zl) * hi / 6 : hi == null ? Math.min(env(zl) * lo * 2.5, Y[1] / 1.6) : Math.sqrt(env(zl) * lo * env(zl) * hi);
-    return `<polygon class="zone ${cls}" points="${[...top, ...bottom].join(" ")}"/><text class="zl ${cls}" x="${lx(zl)}" y="${ly(clampY(mid)) + 4}" text-anchor="middle">${esc(label)}</text>`;
+    // Label in the middle of what's visible of the zone at one impedance, and
+    // only where the zone is tall enough on screen not to run into the next one.
+    const zl = 10 ** ((Math.log10(X[0]) * 2 + Math.log10(X[1]) * 3) / 5);
+    const yLo = ly(lo == null ? Y[0] : clampY(env(zl) * lo));
+    const yHi = ly(hi == null ? Y[1] : clampY(env(zl) * hi));
+    const text = yLo - yHi >= 22 ? `<text class="zl ${cls}" x="${lx(zl)}" y="${(yLo + yHi) / 2 + 4}" text-anchor="middle">${esc(label)}</text>` : "";
+    return `<polygon class="zone ${cls}" points="${[...top, ...bottom].join(" ")}"/>${text}`;
   };
   const crestK = 10 ** (crest / 20);
   const overK = 10 ** (-(overkillSpl - peak) / 20);
@@ -79,20 +83,24 @@ export function renderChart(el, opts) {
     grid.push(`<text class="t" x="${PAD.l - 8}" y="${ly(v) + 4}" text-anchor="end">${v >= 1 ? v : +(v * 1000).toFixed(0) + "m"}V</text>`);
   }
 
-  const curveSvg = curves
-    .map((c) => {
-      const pts = [];
-      for (let i = 0; i <= 80; i++) {
-        const z = 10 ** (Math.log10(X[0]) + (i / 80) * (Math.log10(X[1]) - Math.log10(X[0])));
-        const v = availableVrms(c.output, z).vrms;
-        if (v) pts.push(`${lx(z).toFixed(1)},${ly(clampY(v)).toFixed(1)}`);
-      }
-      if (!pts.length) return "";
-      const last = pts[pts.length - 1].split(",");
-      return `<polyline class="curve${c.dashed ? " dashed" : ""}" points="${pts.join(" ")}"/>
-        <text class="cl" x="${Number(last[0]) + 6}" y="${Number(last[1]) + 4}">${esc(c.label)}</text>`;
-    })
-    .join("");
+  // Curves are clipped to the plot, not pressed flat against its edge when
+  // zoomed in; the label goes at the last point still in view.
+  const curveParts = curves.map((c) => {
+    const pts = [];
+    let last = null;
+    for (let i = 0; i <= 80; i++) {
+      const z = 10 ** (Math.log10(X[0]) + (i / 80) * (Math.log10(X[1]) - Math.log10(X[0])));
+      const v = availableVrms(c.output, z).vrms;
+      if (!v) continue;
+      pts.push(`${lx(z).toFixed(1)},${ly(v).toFixed(1)}`);
+      if (inY(v)) last = [lx(z), ly(v)];
+    }
+    return {
+      line: pts.length ? `<polyline class="curve${c.dashed ? " dashed" : ""}" points="${pts.join(" ")}"/>` : "",
+      label: last ? `<text class="cl" x="${last[0] + 6}" y="${last[1] + 4}">${esc(c.label)}</text>` : "",
+    };
+  });
+  const curveSvg = `<g clip-path="url(#plot-clip)">${curveParts.map((c) => c.line).join("")}</g>${curveParts.map((c) => c.label).join("")}`;
 
   // Background points first, highlighted last so it sits on top.
   const sorted = [...points].filter((p) => !zoomed || (inX(p.z) && inY(p.v))).sort((a, b) => Number(!!a.highlight) - Number(!!b.highlight));
@@ -130,9 +138,9 @@ export function renderChart(el, opts) {
         <text class="axis" transform="translate(14 ${(PAD.t + H - PAD.b) / 2}) rotate(-90)" text-anchor="middle">${esc(labels.y)}</text>
         ${pointSvg}
         ${curveSvg}
-        <rect class="zoombox" hidden/>
       </svg>
-      <p class="zoom-hint">${esc(labels.zoomHint ?? "Drag across the chart to zoom")}</p>
+      <div class="map-hint" hidden></div>
+      <p class="zoom-hint">${esc(labels.zoomHint ?? "Ctrl + scroll or pinch to zoom · drag to move")}</p>
       <div class="tip" hidden></div>
     </div>`;
 
@@ -157,6 +165,7 @@ export function renderChart(el, opts) {
   };
 
   svg.addEventListener("pointermove", (ev) => {
+    if (el._drag?.moved) return;
     const { best, box } = nearest(ev);
     if (!best) {
       tip.hidden = true;
@@ -170,69 +179,153 @@ export function renderChart(el, opts) {
     tip.style.transform = `translate(${Math.min(left + 12, box.width - 220)}px, ${Math.max(top - 64, 0)}px)`;
   });
   svg.addEventListener("pointerleave", () => (tip.hidden = true));
-  // Drag a box to zoom into it; a short press is still a click on the nearest dot.
-  const toSvg = (ev) => {
-    const box = svg.getBoundingClientRect();
-    return [((ev.clientX - box.left) / box.width) * W, ((ev.clientY - box.top) / box.height) * H];
-  };
-  const zAt = (px) => 10 ** (Math.log10(X[0]) + ((px - PAD.l) / (W - PAD.l - PAD.r)) * (Math.log10(X[1]) - Math.log10(X[0])));
-  const vAt = (py) => 10 ** (Math.log10(Y[0]) + ((H - PAD.b - py) / (H - PAD.t - PAD.b)) * (Math.log10(Y[1]) - Math.log10(Y[0])));
-  const rerender = (zoom) => {
-    el._zoom = zoom;
+  // Like a map: drag to move, Ctrl + scroll / trackpad pinch / two fingers to
+  // zoom at the pointer, double-click to zoom in. A plain scroll still scrolls
+  // the page; a short press is still a click on the nearest dot.
+  el._nearest = nearest;
+  el._size = { w: W, h: H };
+  if (!el._wired) wire(el);
+  el.querySelectorAll("[data-zoom]").forEach((b) =>
+    b.addEventListener("click", () => (b.dataset.zoom === "reset" ? setView(el, null) : zoomAt(el, 0.5, 0.5, b.dataset.zoom === "in" ? 0.5 : 2))),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Map-style view changes, in log space, kept inside the full range.
+
+const MIN_SPAN = { x: Math.log10(1.6), y: Math.log10(2) };
+const viewOf = (el) => el._zoom ?? { x: [...X0], y: [...Y0] };
+function fit(r, full, minSpan) {
+  let [a, b] = r;
+  const [fa, fb] = full.map(Math.log10);
+  if (b - a > fb - fa) return [fa, fb];
+  if (b - a < minSpan) {
+    const c = (a + b) / 2;
+    [a, b] = [c - minSpan / 2, c + minSpan / 2];
+  }
+  if (a < fa) [a, b] = [fa, fa + (b - a)];
+  if (b > fb) [a, b] = [fb - (b - a), fb];
+  return [a, b];
+}
+function setView(el, v) {
+  if (v) {
+    const full = v.x[0] <= X0[0] * 1.001 && v.x[1] >= X0[1] * 0.999 && v.y[0] <= Y0[0] * 1.001 && v.y[1] >= Y0[1] * 0.999;
+    if (full) v = null;
+  }
+  el._zoom = v;
+  if (el._raf) return;
+  el._raf = requestAnimationFrame(() => {
+    el._raf = 0;
     renderChart(el, el._chartOpts);
+  });
+}
+/** Zoom by k (<1 in) around a point given as fractions of the plot (0..1 from left / bottom). */
+function zoomAt(el, fx, fy, k, from = viewOf(el)) {
+  const around = (r, f, full, min) => {
+    const [a, b] = r.map(Math.log10);
+    const p = a + (b - a) * f;
+    return fit([p - (p - a) * k, p + (b - p) * k], full, min).map((n) => 10 ** n);
   };
-  const zb = svg.querySelector(".zoombox");
-  let start = null;
-  svg.addEventListener("pointerdown", (ev) => {
-    if (ev.pointerType === "touch") return; // touch keeps scrolling; use the buttons
-    start = toSvg(ev);
+  setView(el, { x: around(from.x, fx, X0, MIN_SPAN.x), y: around(from.y, fy, Y0, MIN_SPAN.y) });
+}
+/** Move by a fraction of the plot (dfx right, dfy up). */
+function panBy(el, dfx, dfy, from) {
+  const shift = (r, f, full, min) => {
+    const [a, b] = r.map(Math.log10);
+    const d = (b - a) * f;
+    return fit([a - d, b - d], full, min).map((n) => 10 ** n);
+  };
+  setView(el, { x: shift(from.x, dfx, X0, MIN_SPAN.x), y: shift(from.y, dfy, Y0, MIN_SPAN.y) });
+}
+
+// Listeners live on the container, which stays while the SVG inside is redrawn.
+function wire(el) {
+  el._wired = true;
+  const plot = (ev) => {
+    const svg = el.querySelector(".chart-box svg");
+    if (!svg) return null;
+    const box = svg.getBoundingClientRect();
+    const { w, h } = el._size;
+    const px = ((ev.clientX - box.left) / box.width) * w;
+    const py = ((ev.clientY - box.top) / box.height) * h;
+    return { fx: (px - PAD.l) / (w - PAD.l - PAD.r), fy: (h - PAD.b - py) / (h - PAD.t - PAD.b), pw: (box.width * (w - PAD.l - PAD.r)) / w, ph: (box.height * (h - PAD.t - PAD.b)) / h };
+  };
+  const inSvg = (ev) => ev.target.closest?.(".chart-box svg");
+  let hintTimer = 0;
+  const hint = (text) => {
+    const box = el.querySelector(".map-hint");
+    if (!box || !text) return;
+    box.textContent = text;
+    box.hidden = false;
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => (box.hidden = true), 1200);
+  };
+
+  el.addEventListener(
+    "wheel",
+    (ev) => {
+      if (!inSvg(ev)) return;
+      // Trackpad pinch arrives as a wheel event with ctrlKey.
+      if (!(ev.ctrlKey || ev.metaKey)) return hint(el._chartOpts.labels.ctrlHint);
+      ev.preventDefault();
+      const p = plot(ev);
+      zoomAt(el, p.fx, p.fy, Math.exp(Math.max(-1, Math.min(1, ev.deltaY * 0.01)) * 0.25));
+    },
+    { passive: false },
+  );
+  el.addEventListener("dblclick", (ev) => {
+    if (!inSvg(ev)) return;
+    const p = plot(ev);
+    zoomAt(el, p.fx, p.fy, ev.shiftKey ? 2 : 0.5);
   });
-  svg.addEventListener("pointermove", (ev) => {
-    if (!start) return;
-    const [x, y] = toSvg(ev);
-    zb.hidden = false;
-    zb.setAttribute("x", Math.min(x, start[0]));
-    zb.setAttribute("y", Math.min(y, start[1]));
-    zb.setAttribute("width", Math.abs(x - start[0]));
-    zb.setAttribute("height", Math.abs(y - start[1]));
-  });
-  const endDrag = (ev) => {
-    if (!start) return;
-    const [x, y] = toSvg(ev);
-    const [sx, sy] = start;
-    start = null;
-    zb.hidden = true;
-    if (Math.abs(x - sx) > 12 && Math.abs(y - sy) > 12) {
-      const xs2 = [zAt(Math.min(x, sx)), zAt(Math.max(x, sx))];
-      const ys2 = [vAt(Math.max(y, sy)), vAt(Math.min(y, sy))];
-      rerender({ x: [Math.max(xs2[0], X0[0]), Math.min(xs2[1], X0[1])], y: [Math.max(ys2[0], Y0[0]), Math.min(ys2[1], Y0[1])] });
+
+  const touches = new Map();
+  el.addEventListener("pointerdown", (ev) => {
+    if (!inSvg(ev) || ev.button > 0) return;
+    if (ev.pointerType === "touch") {
+      touches.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+      if (touches.size === 2) {
+        const [a, b] = [...touches.values()];
+        el._pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), mid: plot({ clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 }), from: viewOf(el) };
+        el._drag = null;
+      } else el._drag = { x: ev.clientX, y: ev.clientY, from: viewOf(el), moved: false, touch: true, id: ev.pointerId };
       return;
     }
-    const { best } = nearest(ev);
-    if (best && onPick) onPick(best.p.id);
-  };
-  svg.addEventListener("pointerup", endDrag);
-  svg.addEventListener("pointerleave", () => {
-    start = null;
-    zb.hidden = true;
+    el._drag = { x: ev.clientX, y: ev.clientY, from: viewOf(el), moved: false, id: ev.pointerId };
+    el.setPointerCapture?.(ev.pointerId);
   });
-  // Buttons: halve or double the visible range (in log space) around the centre.
-  const scale = (k) => {
-    const sc = (r, full) => {
-      const [a, b] = r.map(Math.log10);
-      const c = (a + b) / 2;
-      const h = ((b - a) / 2) * k;
-      const lo = Math.max(c - h, Math.log10(full[0]));
-      const hi = Math.min(c + h, Math.log10(full[1]));
-      return [10 ** lo, 10 ** hi];
-    };
-    const x = sc(X, X0), y = sc(Y, Y0);
-    const full = x[0] <= X0[0] * 1.001 && x[1] >= X0[1] * 0.999 && y[0] <= Y0[0] * 1.001 && y[1] >= Y0[1] * 0.999;
-    rerender(full ? null : { x, y });
+  el.addEventListener("pointermove", (ev) => {
+    if (touches.has(ev.pointerId)) touches.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    if (el._pinch && touches.size === 2) {
+      const [a, b] = [...touches.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d > 0) zoomAt(el, el._pinch.mid.fx, el._pinch.mid.fy, el._pinch.d / d, el._pinch.from);
+      return;
+    }
+    const g = el._drag;
+    if (!g || g.id !== ev.pointerId) return;
+    const dx = ev.clientX - g.x;
+    const dy = ev.clientY - g.y;
+    if (!g.moved && Math.hypot(dx, dy) < 5) return;
+    // One finger scrolls the page (two fingers move the chart), like an embedded map.
+    if (g.touch) return void (el._drag = null);
+    g.moved = true;
+    el.querySelector(".tip")?.setAttribute("hidden", "");
+    const p = plot(ev);
+    if (p) panBy(el, dx / p.pw, -dy / p.ph, g.from);
+  });
+  const end = (ev) => {
+    touches.delete(ev.pointerId);
+    if (touches.size < 2) el._pinch = null;
+    const g = el._drag;
+    if (!g || g.id !== ev.pointerId) return;
+    el._drag = null;
+    if (g.moved || ev.type !== "pointerup") return;
+    const { best } = el._nearest?.(ev) ?? {};
+    if (best) el._chartOpts.onPick?.(best.p.id);
   };
-  el.querySelectorAll("[data-zoom]").forEach((b) =>
-    b.addEventListener("click", () => (b.dataset.zoom === "reset" ? rerender(null) : scale(b.dataset.zoom === "in" ? 0.5 : 2))),
-  );
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointercancel", end);
 }
 
 function esc(s) {

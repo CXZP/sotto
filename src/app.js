@@ -1,22 +1,22 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs2ys2l";
-import { heroArt } from "./heroart.js?v=mvs2ys2l";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs2ys2l";
-import { renderChart } from "./chart.js?v=mvs2ys2l";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs2ys2l";
-import { makeT } from "./i18n.js?v=mvs2ys2l";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs2ys2l";
-import { LEGAL } from "./legal.js?v=mvs2ys2l";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs2ys2l";
-import * as community from "./community.js?v=mvs2ys2l";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs2ys2l";
-import { redactImage } from "./redact.js?v=mvs2ys2l";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs2ys2l";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs2ys2l";
-import { chainLinks } from "./chain.js?v=mvs2ys2l";
-import { fits } from "./dcfit.js?v=mvs2ys2l";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs2ys2l";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs2ys2l";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs2ys2l";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs3gvzn";
+import { heroArt } from "./heroart.js?v=mvs3gvzn";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs3gvzn";
+import { renderChart } from "./chart.js?v=mvs3gvzn";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs3gvzn";
+import { makeT } from "./i18n.js?v=mvs3gvzn";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs3gvzn";
+import { LEGAL } from "./legal.js?v=mvs3gvzn";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs3gvzn";
+import * as community from "./community.js?v=mvs3gvzn";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs3gvzn";
+import { redactImage } from "./redact.js?v=mvs3gvzn";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs3gvzn";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs3gvzn";
+import { chainLinks } from "./chain.js?v=mvs3gvzn";
+import { fits } from "./dcfit.js?v=mvs3gvzn";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs3gvzn";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs3gvzn";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs3gvzn";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -326,27 +326,48 @@ function homeDongleTally() {
 }
 
 
-/** The selected headphone on the hero stage: its photo, brand behind it, [ name ], spec chips, and the live result. */
-function homeStage(e) {
-  const hp = findItem(e.hp);
+// Headphone files: a rail of well-known models, five a cheap dongle drives and three it
+// doesn't, each shown with what it asks of a source next to what the dongle and a desktop
+// amp give (the same maths as the builder).
+const HOME_FILES = ["moondrop--blessing-3", "sennheiser--hd-600", "meze-audio--109-pro", "campfire-audio--cascara", "hifiman--sundara", "final-audio--a5000", "audio-technica--ath-r70xa", "sennheiser--hd-560s"];
+
+/** One headphone file: impedance as a big mark behind, photo on the accent block, [ name ], tag rows, drive check. */
+function homeFile(hp, n, total) {
   const im = imageOf(hp);
   const z = hp.specs?.impedance?.[0];
   const s = hp.specs?.sensitivity?.[0];
   const p = prices(hp).cheapest;
-  const short = (k) => hp.sheet?.[k]?.value.length <= 32 && hp.sheet[k].value;
-  const chips = [short("driver"), short("freq"), z && `${fmt(z.value, 1)} Ω`, s && `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim(), p && { html: `${esc(t("price_from"))} ${localPrice(p.price, p.currency)}` }, t("stores", { n: storeCount(hp) })].filter(Boolean);
-  const r = homeExample(e);
-  return `<div class="stage-brand" aria-hidden="true" style="--len:${Math.max(String(hp.brand).length, 4)}">${esc(hp.brand)}</div>
-    <div class="stage-top">
-      ${im ? `<img class="stage-img" src="${esc(sized(im.src, 600))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">` : ""}
-      <div class="stage-id">
-        <p class="stage-name"><span class="br">[</span> ${esc(hp.model)} <span class="br">]</span></p>
-        <p class="small muted">${esc(hp.brand)} · ${esc(catLabel(hp))}</p>
-        <div class="stage-chips">${chips.map((c) => `<span class="tag">${c.html ?? esc(c)}</span>`).join("")}</div>
+  const { ohms, dbPerV } = headphoneSpecs(hpModel(hp));
+  const need = required(LEVELS.normal + CREST, dbPerV, ohms).vrms;
+  const row = (id) => {
+    const src = findItem(id);
+    if (!src) return "";
+    const outs = sourceOutputs(src);
+    const has = Math.max(0, ...outs.map((o) => availableVrms(o, ohms).vrms ?? 0));
+    const st = evaluate(hp, outs, { level: LEVELS.normal, crest: CREST }).status;
+    // The tick at the middle is "exactly enough"; the fill passes it when the source has headroom.
+    const w = Math.min(has / need, 2) * 50;
+    return `<div class="drive-row s-${st}"><p><b>${esc(displayName(src).replace(/\s*\(.*\)$/, ""))}</b><span class="st s-${st}">${esc(t(`st_${st}`))}</span></p><div class="drive-bar" aria-hidden="true"><i style="width:${w}%"></i></div><p class="small">${esc(t("file_has", { v: fmt(has, 2) }))}</p></div>`;
+  };
+  const tags = [
+    [t("file_type"), catLabel(hp)],
+    z && [t("file_z"), `${fmt(z.value, 1)} Ω`],
+    s && [t("file_s"), `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim()],
+    p && [t("file_from"), { html: localPrice(p.price, p.currency) }],
+  ].filter(Boolean);
+  const num = String(n + 1).padStart(2, "0");
+  return `<div class="file-mark" aria-hidden="true">${esc(fmt(ohms, 0))}<small>Ω</small></div>
+    <div class="file-art"><i class="file-block"></i>${im ? `<img class="file-img" src="${esc(sized(im.src, 900))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">` : ""}</div>
+    <div class="file-card">
+      <p class="file-no"><span>FILE ${num}</span><span>/ ${String(total).padStart(2, "0")}</span><span>${esc(hp.brand)}</span></p>
+      <h3 class="file-name"><span class="br">[</span> ${esc(displayName(hp))} <span class="br">]</span></h3>
+      <dl class="file-tags">${tags.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v.html ?? esc(v)}</dd></div>`).join("")}</dl>
+      <div class="file-drive">
+        <p class="file-need">${esc(t("file_need", { v: fmt(need, 2) }))}</p>
+        ${row(HOME_DONGLE)}${row(HERO_DESK)}
       </div>
-    </div>
-    ${r.verdict}
-    <a class="link small" href="${exUrl(e)}">${esc(t("home_open"))}</a>`;
+      <p class="file-links"><a class="link small" href="#item/${encodeURIComponent(hp.id)}">${esc(t("file_open_item"))}</a><a class="link small" href="#build?device=phone-usb-c&amp;amp=${encodeURIComponent(HOME_DONGLE)}&amp;hp=${encodeURIComponent(hp.id)}">${esc(t("home_open"))}</a></p>
+    </div>`;
 }
 
 // The hero's story, three chapters on real numbers: a cheap USB-C dongle already drives
@@ -444,8 +465,7 @@ function homePage() {
     .filter((i) => HEADPHONE_CATS.has(i.category) && imageOf(i))
     .sort((a, b) => storeCount(b) - storeCount(a))
     .slice(0, 4);
-  const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
-  const dongle = findItem(HOME_DONGLE);
+  const files = HOME_FILES.map(findItem).filter(Boolean);
   const art = heroData();
   return `<div class="home">
     <section class="hero-art">
@@ -470,19 +490,24 @@ function homePage() {
       </div>
       </div>
     </section>
-    <section class="home-hero">
-      <div class="home-demo card">
-        <p class="small muted home-demo-cap">${esc(t("home_try"))} · ${esc(t("home_ex_chain", { amp: dongle ? displayName(dongle) : "dongle" }))}</p>
-        <div class="home-select">
-          <div class="home-rail" role="tablist" aria-label="${esc(t("home_try"))}">${ex
-            .map((e, n) => {
-              const hp = findItem(e.hp);
+    <section class="home-file" aria-labelledby="file-h">
+      <div class="file-in">
+        <header class="file-head">
+          <p class="file-kicker"><span class="br">[</span>${esc(t("file_kicker"))}<span class="br">]</span></p>
+          <h2 id="file-h">${esc(t("file_h"))}</h2>
+          <p class="file-sub">${esc(t("file_sub"))}</p>
+        </header>
+        <nav class="file-rail" aria-label="${esc(t("file_kicker"))}">
+          <button type="button" class="file-step" data-step="-1" aria-label="${esc(t("file_prev"))}">▲</button>
+          <div class="file-thumbs" role="tablist">${files
+            .map((hp, n) => {
               const im = imageOf(hp);
-              return `<button type="button" class="rail-btn${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-ex="${n}" title="${esc(displayName(hp))}">${im ? `<img src="${esc(sized(im.src, 120))}" alt="" referrerpolicy="no-referrer">` : esc(hp.model.slice(0, 2))}</button>`;
+              return `<button type="button" class="file-thumb${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-file="${n}" title="${esc(displayName(hp))}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : esc(hp.model.slice(0, 2))}</button>`;
             })
             .join("")}</div>
-          <div class="home-stage" data-stage>${ex.length ? homeStage(ex[0]) : ""}</div>
-        </div>
+          <button type="button" class="file-step" data-step="1" aria-label="${esc(t("file_next"))}">▼</button>
+        </nav>
+        <div class="file-stage pending" data-file-stage aria-live="polite">${files.length ? homeFile(files[0], 0, files.length) : ""}</div>
       </div>
     </section>
     <section class="home-stats">${stats.map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</section>
@@ -575,36 +600,65 @@ function wireHome(main) {
       }),
     );
   }
-  // Hero: picking a headphone on the rail swaps the stage like Endfield's operator change: the old
-  // photo is washed in the accent and fades, then the new one arrives washed and clears to colour.
-  const stage = main.querySelector("[data-stage]");
-  const ex = HOME_EXAMPLES.filter((e) => findItem(e.hp));
+  // Headphone files: the rail (or ▲▼, or arrow keys) swaps the file. The old one fades out
+  // quickly; the new one comes in staggered: block, mark, photo, name, tags, meters.
+  const stage = main.querySelector("[data-file-stage]");
+  const files = HOME_FILES.map(findItem).filter(Boolean);
+  const thumbs = [...main.querySelectorAll("[data-file]")];
   const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let fileAt = 0;
   let timer = 0;
   const enter = () => {
-    stage.classList.remove("leaving", "entering");
+    stage.classList.remove("leaving", "entering", "pending");
     void stage.offsetWidth;
     stage.classList.add("entering");
   };
-  enter();
-  main.querySelectorAll("[data-ex]").forEach((b) =>
-    b.addEventListener("click", () => {
-      if (b.classList.contains("on")) return;
-      main.querySelectorAll("[data-ex]").forEach((x) => {
-        x.classList.toggle("on", x === b);
-        x.setAttribute("aria-selected", String(x === b));
-      });
-      clearTimeout(timer);
-      const swap = () => {
-        stage.innerHTML = homeStage(ex[Number(b.dataset.ex)]);
-        enter();
-      };
-      if (calm) return swap();
-      stage.classList.remove("entering");
-      stage.classList.add("leaving");
-      timer = setTimeout(swap, 150);
-    }),
-  );
+  const pick = (n, focus) => {
+    n = (n + files.length) % files.length;
+    if (n === fileAt) return;
+    fileAt = n;
+    thumbs.forEach((x, k) => {
+      x.classList.toggle("on", k === n);
+      x.setAttribute("aria-selected", String(k === n));
+      x.tabIndex = k === n ? 0 : -1;
+    });
+    if (focus) thumbs[n].focus();
+    // Keep the picked thumb in view inside the rail, without moving the page.
+    const rail = thumbs[n].parentElement;
+    const th = thumbs[n];
+    if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: th.offsetLeft - (rail.clientWidth - th.offsetWidth) / 2, behavior: "smooth" });
+    else if (rail.scrollHeight > rail.clientHeight) rail.scrollTo({ top: th.offsetTop - (rail.clientHeight - th.offsetHeight) / 2, behavior: "smooth" });
+    clearTimeout(timer);
+    const swap = () => {
+      stage.innerHTML = homeFile(files[n], n, files.length);
+      enter();
+    };
+    if (calm) return swap();
+    stage.classList.remove("entering");
+    stage.classList.add("leaving");
+    timer = setTimeout(swap, 170);
+  };
+  if (stage && files.length) {
+    thumbs.forEach((b, k) => {
+      b.tabIndex = k ? -1 : 0;
+      b.addEventListener("click", () => pick(k));
+    });
+    main.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => pick(fileAt + Number(b.dataset.step))));
+    main.querySelector(".file-thumbs").addEventListener("keydown", (e) => {
+      const d = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      pick(fileAt + d, true);
+    });
+    // First entrance when the band scrolls into view.
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      if (calm) stage.classList.remove("pending");
+      else enter();
+    }, { threshold: 0.25 });
+    io.observe(stage);
+  }
   // Explorer: one open item at a time; the panel on the right shows that check on real data.
   const view = main.querySelector("[data-feature-view]");
   let reviews = null;
@@ -1416,7 +1470,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs2ys2l").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs3gvzn").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2716,7 +2770,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs2ys2l" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs3gvzn" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3238,7 +3292,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs2ys2l" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs3gvzn" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

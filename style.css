@@ -392,8 +392,6 @@ nav a { white-space: nowrap; }
 
 /* ---------------------------------------------------------------- home */
 .home { display: grid; gap: 28px; }
-.home-hero { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); padding: 64px 24px 32px; display: grid; gap: 28px; justify-items: center; text-align: center; isolation: isolate; }
-.home-hero-text { max-width: 920px; display: grid; gap: 14px; justify-items: center; }
 .home-kicker { margin: 0; letter-spacing: 0.18em; text-transform: uppercase; font-size: 12px; color: var(--text-2); }
 .home h1 { margin: 0; font-size: clamp(30px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
 .home h2 { margin: 0; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.02em; text-align: center; }
@@ -408,8 +406,6 @@ nav a { white-space: nowrap; }
 .home-waves .wv3 { opacity: 0.12; animation-direction: reverse; }
 @keyframes home-drift { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .home-waves .wv { animation: none; } }
-.home-demo { width: min(880px, 100%); text-align: left; padding: 18px; display: grid; gap: 12px; background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.home-demo > p { margin: 0; }
 .home-ex { display: flex; flex-wrap: wrap; gap: 6px; }
 .home-ex-out { display: grid; gap: 12px; }
 .home-ex-out .card { margin: 0; box-shadow: none; }
@@ -429,7 +425,6 @@ nav a { white-space: nowrap; }
 .home-not-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .home-not-grid p { margin: 6px 0 0; }
 @media (max-width: 760px) {
-  .home-hero { padding: 40px 16px 20px; }
   .home-stats, .home-products { grid-template-columns: repeat(2, 1fr); }
   .home-reviews, .home-not-grid { grid-template-columns: 1fr; }
 }
@@ -444,62 +439,119 @@ nav a { white-space: nowrap; }
   nav { scrollbar-width: none; }
 }
 
-/* ---------------------------------------------------------------- home motion
-   Endfield-style operator change on the hero, Apple-style smoothness elsewhere:
-   only transform and opacity move, on one spring-like curve. */
-.home-select { display: grid; grid-template-columns: 76px 1fr; gap: 16px; align-items: start; }
-.home-rail { display: grid; gap: 10px; padding: 6px 0; }
-.rail-btn { position: relative; width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--line-strong); background: #fff; padding: 6px; cursor: pointer; display: grid; place-items: center; overflow: visible; transition: transform 0.4s var(--ease), border-color 0.3s; }
-.rail-btn img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-.rail-btn:hover { transform: scale(1.06); }
-.rail-btn.on { border-color: var(--accent); }
-/* Dotted halo around the picked one, turning slowly. */
-.rail-btn.on::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 2px dotted var(--accent); animation: halo 9s linear infinite; }
+/* ---------------------------------------------------------------- headphone files
+   A full-width light band in both themes, so store photos (shot on white) multiply into
+   it and the gear floats on the page. Endfield's operator file for the structure: a rail
+   with ▲▼, the photo over an offset accent block, [ name ], label/value tag rows. The big
+   hatched mark behind is the model's impedance, the number the drive check hangs on. */
+.home-file {
+  --fb: #ebeae5;
+  --text: #141414; --text-2: #5d5d5a; --line: rgba(0, 0, 0, 0.12); --line-strong: rgba(0, 0, 0, 0.22);
+  --surface: #ffffff; --surface-2: #e0dfd9; --accent: #b4621c; --good: #1f8a3b; --warn: #9a6b00; --bad: #c9302c;
+  --file-accent: #e8862e;
+  position: relative; isolation: isolate; overflow: hidden; background: var(--fb); color: var(--text); color-scheme: light;
+  padding: 88px 0 96px; margin-top: 8px;
+}
+.file-in { width: min(1128px, 100% - 32px); margin-inline: auto; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 36px 40px; }
+.file-head { grid-column: 1 / -1; display: grid; gap: 12px; justify-items: start; }
+.file-kicker { margin: 0; display: flex; gap: 10px; align-items: baseline; font-size: 13px; letter-spacing: 0.05em; color: var(--text-2); }
+.file-kicker .br, .file-name .br { color: var(--accent); }
+.home .file-head h2 { text-align: left; font-size: clamp(30px, 4.2vw, 52px); line-height: 1.05; letter-spacing: -0.035em; font-weight: 800; max-width: 18ch; }
+.file-sub { margin: 0; color: var(--text-2); font-size: 16px; line-height: 1.6; max-width: 520px; }
+
+.file-rail { grid-column: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; align-self: center; }
+.file-step { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--text); font-size: 11px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.file-step:hover { background: var(--text); color: var(--fb); }
+.file-thumbs { display: grid; gap: 14px; padding: 10px; max-height: 302px; overflow-y: auto; scrollbar-width: none; }
+.file-thumbs::-webkit-scrollbar { display: none; }
+.file-thumb { position: relative; width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--line-strong); background: #fff; padding: 7px; cursor: pointer; display: grid; place-items: center; transition: transform 0.4s var(--ease), border-color 0.3s, filter 0.3s; filter: grayscale(0.8) opacity(0.7); }
+.file-thumb img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.file-thumb:hover { transform: scale(1.06); filter: none; }
+.file-thumb.on { border-color: var(--file-accent); filter: none; }
+.file-thumb.on::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 2px dotted var(--file-accent); animation: halo 9s linear infinite; }
 @keyframes halo { to { transform: rotate(360deg); } }
 
-.home-stage { position: relative; overflow: hidden; border-radius: 16px; padding: 18px; min-height: 360px; display: grid; gap: 12px; align-content: start; isolation: isolate; }
-/* The accent block behind the photo, like Endfield's yellow panel. */
-.home-stage::before { content: ""; position: absolute; z-index: -2; top: 0; bottom: 0; right: 0; width: 34%; background: var(--accent); opacity: 0.9; transform-origin: right; }
-.stage-brand { position: absolute; z-index: -1; left: -4px; top: 6px; font-size: min(clamp(56px, 11vw, 120px), calc(560px / var(--len, 6))); font-weight: 700; font-synthesis: none; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; white-space: nowrap; color: var(--line-strong); opacity: 0.45; pointer-events: none; }
-.stage-top { display: grid; grid-template-columns: 1fr 220px; gap: 12px; align-items: end; min-height: 200px; }
-.stage-img { grid-column: 2; grid-row: 1; width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 16px; position: relative; }
-.stage-id { grid-column: 1; grid-row: 1; display: grid; gap: 6px; padding-top: 56px; }
-.stage-id p { margin: 0; }
-.stage-name { font-size: clamp(24px, 3.4vw, 34px); font-weight: 700; letter-spacing: -0.02em; position: relative; padding-bottom: 8px; }
-.stage-name .br { color: var(--text-2); font-weight: 400; }
-/* Thin line under the name that draws in on each change. */
-.stage-name::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, var(--accent), transparent); transform-origin: left; }
-.stage-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.home-stage .card { margin: 0; box-shadow: none; }
-.home-stage > a { justify-self: start; }
+/* No isolation here: the photo has to multiply with the band itself. */
+.file-stage { grid-column: 2; position: relative; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: 24px; min-height: clamp(520px, 66svh, 660px); }
+.file-mark { position: absolute; z-index: -1; right: -0.02em; top: -0.16em; font-size: clamp(180px, 25vw, 360px); font-weight: 900; font-synthesis: none; line-height: 1; letter-spacing: -0.06em; white-space: nowrap; pointer-events: none; color: transparent; -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.2); background: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 7px); -webkit-background-clip: text; background-clip: text; }
+.file-mark small { font-size: 0.42em; letter-spacing: 0; margin-left: 0.04em; }
+.file-art { grid-column: 2; grid-row: 1; position: relative; display: grid; place-items: center; }
+.file-block { position: absolute; z-index: -1; left: 32%; top: 14%; bottom: 6%; width: 38%; background: var(--file-accent); }
+/* A thin frame offset from the block. */
+.file-block::after { content: ""; position: absolute; inset: 18px -18px -18px 18px; border: 1px solid rgba(0, 0, 0, 0.35); }
+.file-img { position: relative; width: min(118%, 700px); max-width: none; margin-inline: -9%; aspect-ratio: 1; object-fit: contain; mix-blend-mode: multiply; }
 
-/* Leaving: the old photo is washed in the accent and everything fades. */
-.home-stage.leaving .stage-img { animation: wash-out 0.16s var(--ease) forwards; }
-.home-stage.leaving .stage-id, .home-stage.leaving .result, .home-stage.leaving > a { animation: fade-out 0.14s ease-in forwards; }
-.home-stage.leaving .stage-brand { animation: fade-out 0.14s ease-in forwards; }
-@keyframes wash-out { to { opacity: 0; transform: translateX(-12px); filter: sepia(1) saturate(6) hue-rotate(-12deg) brightness(1.1); } }
+.file-card { grid-column: 1; grid-row: 1; align-self: end; display: grid; gap: 18px; position: relative; }
+.file-card p { margin: 0; }
+.file-no { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.file-no span:first-child { background: var(--text); color: var(--fb); padding: 3px 8px; font-weight: 700; }
+.file-no span:last-child { margin-left: 8px; }
+.file-name { margin: 0; font-size: clamp(32px, 3.6vw, 50px); font-weight: 800; line-height: 1.04; letter-spacing: -0.035em; position: relative; padding-bottom: 14px; }
+.file-name .br { font-weight: 300; }
+/* Two-tone rule under the name. */
+.file-name::after { content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: linear-gradient(90deg, var(--file-accent) 0 38%, var(--text) 38% 40%, var(--line-strong) 40%); transform-origin: left; }
+.file-tags { margin: 0; display: grid; gap: 6px; }
+.file-tags div { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
+.file-tags dt { background: var(--text); color: var(--fb); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 5px 10px; }
+.file-tags dd { margin: 0; background: rgba(0, 0, 0, 0.06); padding: 5px 12px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.file-drive { display: grid; gap: 14px; padding-top: 16px; border-top: 1px solid var(--line-strong); }
+.file-need { font-size: 13px; color: var(--text-2); }
+.drive-row { display: grid; gap: 6px; }
+.drive-row p:first-child { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-size: 14px; }
+.drive-row p.small { color: var(--text-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.drive-row .st { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; }
+.drive-row .st.s-ok, .drive-row .st.s-overkill { color: var(--good); }
+.drive-row .st.s-tight, .drive-row .st.s-thin { color: var(--warn); }
+.drive-row .st.s-insufficient { color: var(--bad); }
+/* Fill = what the source gives; the tick in the middle = exactly what the headphone needs. */
+.drive-bar { position: relative; height: 6px; background: rgba(0, 0, 0, 0.09); }
+.drive-bar i { display: block; height: 100%; background: var(--good); transform-origin: left; }
+.s-tight .drive-bar i, .s-thin .drive-bar i { background: var(--warn); }
+.s-insufficient .drive-bar i { background: var(--bad); }
+.drive-bar::after { content: ""; position: absolute; left: 50%; top: -4px; width: 2px; height: 14px; background: var(--text); }
+.file-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+
+/* Waiting to be scrolled to, then: block wipes up, mark wipes across, photo slides in, the rest rises in turn. */
+.file-stage.pending > * { opacity: 0; }
+.file-stage.entering .file-block { animation: file-wipe 0.7s var(--ease) both; }
+.file-stage.entering .file-mark { animation: file-mark 0.9s var(--ease) both; }
+.file-stage.entering .file-img { animation: file-img 0.85s var(--ease) 0.08s both; }
+.file-stage.entering .file-no { animation: rise-in 0.5s var(--ease) 0.05s both; }
+.file-stage.entering .file-name { animation: rise-in 0.55s var(--ease) 0.1s both; }
+.file-stage.entering .file-name::after { animation: draw 0.7s var(--ease) 0.2s both; }
+.file-stage.entering .file-tags div { animation: rise-in 0.45s var(--ease) both; }
+.file-stage.entering .file-tags div:nth-child(1) { animation-delay: 0.16s; }
+.file-stage.entering .file-tags div:nth-child(2) { animation-delay: 0.2s; }
+.file-stage.entering .file-tags div:nth-child(3) { animation-delay: 0.24s; }
+.file-stage.entering .file-tags div:nth-child(4) { animation-delay: 0.28s; }
+.file-stage.entering .file-drive, .file-stage.entering .file-links { animation: rise-in 0.55s var(--ease) 0.3s both; }
+.file-stage.entering .drive-bar i { animation: draw 0.9s var(--ease) 0.42s both; }
+.file-stage.leaving > * { animation: fade-out 0.16s ease-in forwards; }
+.file-stage.leaving .file-img { animation: file-out 0.16s ease-in forwards; }
+@keyframes file-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes file-mark { from { clip-path: inset(0 100% 0 0); transform: translateX(-24px); } to { clip-path: inset(0 0 0 0); } }
+@keyframes file-img { from { opacity: 0; transform: translateX(56px) scale(0.97); } }
+@keyframes file-out { to { opacity: 0; transform: translateX(-28px); } }
 @keyframes fade-out { to { opacity: 0; transform: translateY(-4px); } }
-
-/* Entering, staggered: block, brand word, photo (washed, then clears), name, line, chips, result. */
-.home-stage.entering::before { animation: block-in 0.55s var(--ease) both; }
-.home-stage.entering .stage-brand { animation: brand-in 0.7s var(--ease) both; }
-.home-stage.entering .stage-img { animation: wash-in 0.7s var(--ease) both; }
-.home-stage.entering .stage-name { animation: rise-in 0.5s var(--ease) 0.06s both; }
-.home-stage.entering .stage-name::after { animation: draw 0.6s var(--ease) 0.18s both; }
-.home-stage.entering .stage-id > :nth-child(2) { animation: rise-in 0.5s var(--ease) 0.1s both; }
-.home-stage.entering .stage-chips .tag { animation: rise-in 0.45s var(--ease) both; }
-.home-stage.entering .stage-chips .tag:nth-child(1) { animation-delay: 0.14s; }
-.home-stage.entering .stage-chips .tag:nth-child(2) { animation-delay: 0.18s; }
-.home-stage.entering .stage-chips .tag:nth-child(3) { animation-delay: 0.22s; }
-.home-stage.entering .stage-chips .tag:nth-child(4) { animation-delay: 0.26s; }
-.home-stage.entering .result { animation: rise-in 0.55s var(--ease) 0.22s both; }
-.home-stage.entering .result .meter-fill { animation: meter-in 0.9s var(--ease) 0.34s both; }
-@keyframes block-in { from { transform: scaleX(0.35); opacity: 0.4; } }
-@keyframes brand-in { from { clip-path: inset(0 100% 0 0); transform: translateX(-16px); } to { clip-path: inset(0 0 0 0); } }
-@keyframes wash-in { 0% { opacity: 0.35; transform: translateX(28px); filter: sepia(1) saturate(6) hue-rotate(-12deg) brightness(1.1); } 45% { opacity: 1; } 100% { transform: none; filter: none; } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(10px); } }
 @keyframes draw { from { transform: scaleX(0); } }
-@keyframes meter-in { from { transform: scaleX(0); } }
+
+@media (max-width: 900px) {
+  .home-file { padding: 56px 0 64px; }
+  .file-in { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .file-head { grid-row: 1; }
+  .file-rail { grid-column: 1; grid-row: 2; flex-direction: row; align-self: stretch; }
+  .file-step { display: none; }
+  .file-thumbs { grid-auto-flow: column; justify-content: start; max-height: none; overflow-x: auto; overflow-y: hidden; margin-inline: -16px; padding: 10px 16px; width: calc(100% + 32px); }
+  .file-thumb { width: 54px; height: 54px; }
+  .file-stage { grid-column: 1; grid-row: 3; grid-template-columns: minmax(0, 1fr); min-height: 0; row-gap: 8px; }
+  .file-art { grid-column: 1; grid-row: 1; height: min(84vw, 380px); }
+  .file-card { grid-column: 1; grid-row: 2; }
+  .file-mark { font-size: min(34vw, 200px); top: -0.1em; right: 0; }
+  .file-block { width: 46%; left: 27%; top: 8%; bottom: 4%; }
+  .file-img { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; }
+  .file-tags div { grid-template-columns: 100px minmax(0, 1fr); }
+}
 
 /* Apple-style explorer: pills that open into a card; the panel cross-fades. */
 .home-explore { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 20px; align-items: start; margin-top: 8px; }
@@ -532,19 +584,11 @@ nav a { white-space: nowrap; }
 .home-band.reveal.in > div { transition-delay: 0.12s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-stage *, .home-stage::before, .explore-view > *, .tally-bar i, .rail-btn.on::after { animation: none !important; }
+  .file-stage *, .file-stage *::after, .explore-view > *, .tally-bar i, .file-thumb.on::after { animation: none !important; }
+  .file-stage.pending > * { opacity: 1; }
   .home-band.reveal h2, .home-band.reveal .home-sub, .home-band.reveal > div { opacity: 1; transform: none; color: inherit; }
 }
 @media (max-width: 760px) {
-  .home-select { grid-template-columns: 1fr; }
-  .home-rail { grid-auto-flow: column; justify-content: start; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding: 8px; }
-  .home-rail::-webkit-scrollbar { display: none; }
-  .stage-brand { display: none; }
-  .rail-btn { width: 56px; height: 56px; }
-  .stage-top { grid-template-columns: 1fr; }
-  .stage-img { grid-column: 1; grid-row: 1; width: 160px; height: 160px; justify-self: end; }
-  .stage-id { grid-row: 2; padding-top: 0; }
-  .home-stage::before { width: 42%; bottom: auto; height: 200px; }
   .home-explore { grid-template-columns: 1fr; }
   .tally-row, .price-row { grid-template-columns: 90px 1fr auto; }
 }
@@ -567,7 +611,7 @@ nav a { white-space: nowrap; }
    Full width. The canvas draws the catalog (src/heroart.js): source curves as strands,
    headphones as dots; the copy sits on the left, the example sources bottom right. */
 main.page-home { max-width: none; padding: 0 0 48px; }
-.page-home .home > :not(.hero-art) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
+.page-home .home > :not(.hero-art):not(.home-file) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
 .hero-art { position: relative; overflow: hidden; --art-accent: #e8862e; --art-warn: #ff7a45; --edge: max(16px, calc(50% - 564px)); min-height: min(calc(100svh - 56px), 980px); box-sizing: border-box; padding: 48px var(--edge) 40px; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; align-items: center; }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .hero-copy { position: relative; z-index: 1; display: grid; gap: 18px; justify-items: start; }
@@ -601,8 +645,6 @@ main.page-home { max-width: none; padding: 0 0 48px; }
 .hero-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .lg-line { width: 18px; height: 2px; background: var(--art-accent); border-radius: 2px; }
 .lg-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--st-good, #0ca30c); }
-/* The demo below no longer carries the headline. */
-.page-home .home-hero { padding-top: 28px; }
 @media (max-width: 900px) {
   .hero-art { grid-template-columns: 1fr; min-height: 0; padding-top: 36px; gap: 20px; }
   .hero-plot { height: 300px; }

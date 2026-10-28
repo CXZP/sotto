@@ -63,3 +63,13 @@ test("Maximum SPL is not sensitivity", () => {
   const { specs } = extractSpecs("<p>Maximum SPL: Greater than 130 dB SPL</p><p>Sensitivity: 98dB SPL/mW at 1kHz</p>");
   assert.deepEqual(specs.sensitivity.map((e) => e.value), [98]);
 });
+
+test("sensitivity quoted at another drive level becomes dB/V or dB/mW", () => {
+  const sens = (h) => extractSpecs(`<p>${h}</p>`).specs.sensitivity.map((e) => [e.value, e.unit]);
+  // Campfire: 94 dB from 12.1 mV is 132 dB/V, not 94.
+  assert.deepEqual(sens("SPL: 94db @ 1 kHz - 12.10 mVrms"), [[132.3, "dB/V"]]);
+  assert.deepEqual(sens("Sensitivity: 110dB(1kHz/500mVrms)"), [[116, "dB/V"]]);
+  assert.deepEqual(sens("Sensitivity: 105 dB @ 0.5mW"), [[108, "dB/mW"]]);
+  // 64 Audio: the mV is what 1 mW takes; the figure is already dB/mW.
+  assert.deepEqual(sens("Sensitivity : 106 dB/mW @ 1kHz @ 1mW (84mV)"), [[106, "dB/mW"]]);
+});

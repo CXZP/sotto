@@ -96,6 +96,19 @@ function unitOf(raw) {
   return /mW/i.test(raw) ? "dB/mW" : "dB/V";
 }
 
+// "SPL: 94db @ 1 kHz - 12.10 mVrms" (Audio46, Campfire): 94 dB from only
+// 12.1 mV is 132 dB/V, not 94. A drive level other than 1 V / 1 mW right after
+// the figure turns it into the standard unit.
+function atLevel(entry, line, from) {
+  const rest = line.slice(from, from + 40).split(/\b(?:impedance|frequency|response|thd|weight|driver|cable)\b/i)[0];
+  // "106 dB/mW @ 1mW (84mV)" (64 Audio): the mV is just what 1 mW takes, already dB/mW.
+  const mv = entry.unit === "dB/mW" ? null : rest.match(/(\d+(?:\.\d+)?)\s*mV\s*(?:rms)?\b/i);
+  if (mv && Number(mv[1]) > 0) return { ...entry, value: Math.round((entry.value - 20 * Math.log10(Number(mv[1]) / 1000)) * 10) / 10, unit: "dB/V" };
+  const mw = rest.match(/(?<![\d.])(0?\.\d+|\d+(?:\.\d+)?)\s*mW\b/i);
+  if (mw && Number(mw[1]) > 0 && Number(mw[1]) !== 1) return { ...entry, value: Math.round((entry.value - 10 * Math.log10(Number(mw[1]))) * 10) / 10, unit: "dB/mW" };
+  return entry;
+}
+
 /** Extract { impedance, sensitivity, zout, power } from description HTML. */
 export function extractSpecs(html) {
   const lines = textify(html);
@@ -108,7 +121,7 @@ export function extractSpecs(html) {
           const m = sent.match(PROSE[field]);
           if (!m) continue;
           const value = Number(m[1]);
-          if (field === "sensitivity") found.sensitivity.push({ value, unit: unitOf(m[2]) ?? unitNear(sent, m.index + m[0].length), quote: sent });
+          if (field === "sensitivity") found.sensitivity.push(atLevel({ value, unit: unitOf(m[2]) ?? unitNear(sent, m.index + m[0].length), quote: sent }, sent, m.index + m[0].length));
           else found[field].push({ value, quote: sent });
         }
       continue;
@@ -116,13 +129,13 @@ export function extractSpecs(html) {
     const imp = line.match(IMP_FIRST);
     if (imp) found.impedance.push({ value: Number(imp[1]), quote: line });
     const sens = line.match(SENS_FIRST);
-    if (sens) found.sensitivity.push({ value: Number(sens[1]), unit: unitOf(sens[2]) ?? unitNear(line, sens.index + sens[0].length), quote: line });
+    if (sens) found.sensitivity.push(atLevel({ value: Number(sens[1]), unit: unitOf(sens[2]) ?? unitNear(line, sens.index + sens[0].length), quote: line }, line, sens.index + sens[0].length));
     for (const field of ["impedance", "zout", "sensitivity"]) {
       const m = line.match(PATTERNS[field]);
       if (!m) continue;
       const value = Number(m[1]);
       if (field === "sensitivity") {
-        found.sensitivity.push({ value, unit: unitOf(m[2]) ?? unitNear(line, m.index + m[0].length), quote: line });
+        found.sensitivity.push(atLevel({ value, unit: unitOf(m[2]) ?? unitNear(line, m.index + m[0].length), quote: line }, line, m.index + m[0].length));
       } else {
         found[field].push({ value, quote: line });
       }

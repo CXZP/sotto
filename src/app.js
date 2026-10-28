@@ -1,22 +1,23 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs3gvzn";
-import { heroArt } from "./heroart.js?v=mvs3gvzn";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs3gvzn";
-import { renderChart } from "./chart.js?v=mvs3gvzn";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs3gvzn";
-import { makeT } from "./i18n.js?v=mvs3gvzn";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs3gvzn";
-import { LEGAL } from "./legal.js?v=mvs3gvzn";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs3gvzn";
-import * as community from "./community.js?v=mvs3gvzn";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs3gvzn";
-import { redactImage } from "./redact.js?v=mvs3gvzn";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs3gvzn";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs3gvzn";
-import { chainLinks } from "./chain.js?v=mvs3gvzn";
-import { fits } from "./dcfit.js?v=mvs3gvzn";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs3gvzn";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs3gvzn";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs3gvzn";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs6nepp";
+import { cutout } from "./cutout.js?v=mvs6nepp";
+import { heroArt } from "./heroart.js?v=mvs6nepp";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs6nepp";
+import { renderChart } from "./chart.js?v=mvs6nepp";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs6nepp";
+import { makeT } from "./i18n.js?v=mvs6nepp";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs6nepp";
+import { LEGAL } from "./legal.js?v=mvs6nepp";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs6nepp";
+import * as community from "./community.js?v=mvs6nepp";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs6nepp";
+import { redactImage } from "./redact.js?v=mvs6nepp";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs6nepp";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs6nepp";
+import { chainLinks } from "./chain.js?v=mvs6nepp";
+import { fits } from "./dcfit.js?v=mvs6nepp";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs6nepp";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs6nepp";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs6nepp";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -329,46 +330,77 @@ function homeDongleTally() {
 // Headphone files: a rail of well-known models, five a cheap dongle drives and three it
 // doesn't, each shown with what it asks of a source next to what the dongle and a desktop
 // amp give (the same maths as the builder).
-const HOME_FILES = ["moondrop--blessing-3", "sennheiser--hd-600", "meze-audio--109-pro", "campfire-audio--cascara", "hifiman--sundara", "final-audio--a5000", "audio-technica--ath-r70xa", "sennheiser--hd-560s"];
+const HOME_FILES = ["moondrop--aria-2", "sennheiser--hd-600", "meze-audio--109-pro", "campfire-audio--cascara", "hifiman--sundara", "final-audio--a5000", "audio-technica--ath-r70xa", "sennheiser--hd-560s"];
 
-/** One headphone file: impedance as a big mark behind, photo on the accent block, [ name ], tag rows, drive check. */
-function homeFile(hp, n, total) {
-  const im = imageOf(hp);
+// Small glyphs for the file: category (over-ear or in-ear), plug, and the power marks.
+const EF_ICON = {
+  headphone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="13" width="5" height="8" rx="1.5" fill="currentColor"/><rect x="16" y="13" width="5" height="8" rx="1.5" fill="currentColor"/></svg>',
+  iem: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4a6 6 0 1 1-2.2 11.6L4 21l-1-1 4.4-5.6A6 6 0 0 1 9 4z" fill="currentColor"/><circle cx="10" cy="10" r="2.2" fill="#000" opacity=".35"/></svg>',
+  plug: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 5 13h6l-1 9 8-11h-6z" fill="currentColor"/></svg>',
+};
+// One power mark: a two-tone wedge, like a rank badge.
+const EF_MARK = '<svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 2 37 12v9L20 11 3 21v-9z" fill="currentColor"/><path d="M20 15 37 25v9L20 24 3 34v-9z" fill="currentColor" opacity=".55"/><path d="M20 28 37 38v4L20 32 3 42v-4z" fill="currentColor" opacity=".3"/></svg>';
+
+/** How hard a headphone is to drive, 1 to 6, from the volts it needs on peaks (each mark doubles it). */
+const driveLevel = (v) => Math.max(1, Math.min(6, Math.ceil(Math.log2(v / 0.05)) + 1));
+
+/** The data for one headphone file (text parts; the photo is set separately once cut out). */
+function fileData(hp) {
   const z = hp.specs?.impedance?.[0];
   const s = hp.specs?.sensitivity?.[0];
   const p = prices(hp).cheapest;
   const { ohms, dbPerV } = headphoneSpecs(hpModel(hp));
   const need = required(LEVELS.normal + CREST, dbPerV, ohms).vrms;
-  const row = (id) => {
+  const run = (id) => {
     const src = findItem(id);
-    if (!src) return "";
+    if (!src) return null;
     const outs = sourceOutputs(src);
-    const has = Math.max(0, ...outs.map((o) => availableVrms(o, ohms).vrms ?? 0));
-    const st = evaluate(hp, outs, { level: LEVELS.normal, crest: CREST }).status;
-    // The tick at the middle is "exactly enough"; the fill passes it when the source has headroom.
-    const w = Math.min(has / need, 2) * 50;
-    return `<div class="drive-row s-${st}"><p><b>${esc(displayName(src).replace(/\s*\(.*\)$/, ""))}</b><span class="st s-${st}">${esc(t(`st_${st}`))}</span></p><div class="drive-bar" aria-hidden="true"><i style="width:${w}%"></i></div><p class="small">${esc(t("file_has", { v: fmt(has, 2) }))}</p></div>`;
+    return { src, has: Math.max(0, ...outs.map((o) => availableVrms(o, ohms).vrms ?? 0)), st: evaluate(hp, outs, { level: LEVELS.normal, crest: CREST }).status };
   };
-  const tags = [
-    [t("file_type"), catLabel(hp)],
-    z && [t("file_z"), `${fmt(z.value, 1)} Ω`],
-    s && [t("file_s"), `${fmt(s.value, 1)} ${s.unit ?? ""}`.trim()],
-    p && [t("file_from"), { html: localPrice(p.price, p.currency) }],
-  ].filter(Boolean);
-  const num = String(n + 1).padStart(2, "0");
-  return `<div class="file-mark" aria-hidden="true">${esc(fmt(ohms, 0))}<small>Ω</small></div>
-    <div class="file-art"><i class="file-block"></i>${im ? `<img class="file-img" src="${esc(sized(im.src, 900))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">` : ""}</div>
-    <div class="file-card">
-      <p class="file-no"><span>FILE ${num}</span><span>/ ${String(total).padStart(2, "0")}</span><span>${esc(hp.brand)}</span></p>
-      <h3 class="file-name"><span class="br">[</span> ${esc(displayName(hp))} <span class="br">]</span></h3>
-      <dl class="file-tags">${tags.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v.html ?? esc(v)}</dd></div>`).join("")}</dl>
-      <div class="file-drive">
-        <p class="file-need">${esc(t("file_need", { v: fmt(need, 2) }))}</p>
-        ${row(HOME_DONGLE)}${row(HERO_DESK)}
-      </div>
-      <p class="file-links"><a class="link small" href="#item/${encodeURIComponent(hp.id)}">${esc(t("file_open_item"))}</a><a class="link small" href="#build?device=phone-usb-c&amp;amp=${encodeURIComponent(HOME_DONGLE)}&amp;hp=${encodeURIComponent(hp.id)}">${esc(t("home_open"))}</a></p>
+  return { z, s, p, ohms, need, level: driveLevel(need), dongle: run(HOME_DONGLE), desk: run(HERO_DESK) };
+}
+
+/** The text side of a file: header (brand, n / total, power marks), [ name ], tag rows, drive check. */
+function homeFile(hp, n, total) {
+  const d = fileData(hp);
+  const lit = (st) => st === "ok" || st === "overkill";
+  const row = (r) =>
+    r
+      ? String.raw`<div class="ef-drive s-${r.st}"><p><b>${esc(displayName(r.src).replace(/\s*\(.*\)$/, ""))}</b><span class="ef-st">${esc(t(`st_${r.st}`))}</span><span class="ef-v">${esc(t("file_has", { v: fmt(r.has, 2) }))}</span></p><div class="ef-bar" aria-hidden="true"><i style="width:${Math.min(r.has / d.need, 2) * 50}%"></i></div></div>`
+      : "";
+  const tag = (k, v) => `<div class="ef-tag"><dt>${esc(k)}</dt><dd>${v}</dd></div>`;
+  const pad = (x) => String(x).padStart(2, "0");
+  return String.raw`<div class="ef-head" data-fx>
+      <p class="ef-rec"><span class="br">[</span><b>FILE</b><span class="br">]</span><i class="ef-recicon" aria-hidden="true"></i><small>${esc(t("file_kicker"))}<br>SOTTO HEADPHONE INDEX</small></p>
+      <p class="ef-namebar"><span>${esc(hp.brand)}</span><span>${pad(n + 1)} / ${pad(total)}</span></p>
+      <p class="ef-marks" title="${esc(t("file_level", { n: d.level }))}">${EF_MARK.repeat(d.level)}<span class="sr">${esc(t("file_level", { n: d.level }))}</span></p>
+    </div>
+    <div class="ef-title" data-fx>
+      <span class="ef-icons"><i class="ef-ic">${hp.category === "iem" ? EF_ICON.iem : EF_ICON.headphone}</i><i class="ef-ic ${lit(d.dongle?.st) ? "ok" : "warn"}">${EF_ICON.plug}</i></span>
+      <h3><span class="br">[</span><span class="ef-name">${esc(hp.short ?? hp.model)}</span><span class="br">]</span></h3>
+    </div>
+    <div class="ef-body" data-fx>
+      <dl class="ef-tags">${tag(t("file_type"), esc(catLabel(hp)))}${d.z ? tag(t("file_z"), `${esc(fmt(d.z.value, 1))} Ω`) : ""}${d.s ? tag(t("file_s"), esc(`${fmt(d.s.value, 1)} ${d.s.unit ?? ""}`.trim())) : ""}${d.p ? tag(t("file_from"), localPrice(d.p.price, d.p.currency)) : ""}</dl>
+      <p class="ef-need"><i class="ef-ic accent">${EF_ICON.plug}</i><span>${esc(t("file_need", { v: fmt(d.need, 2) }))}</span></p>
+      ${row(d.dongle)}${row(d.desk)}
+      <p class="ef-links"><a class="link small" href="#item/${encodeURIComponent(hp.id)}">${esc(t("file_open_item"))}</a><a class="link small" href="#build?device=phone-usb-c&amp;amp=${encodeURIComponent(HOME_DONGLE)}&amp;hp=${encodeURIComponent(hp.id)}">${esc(t("home_open"))}</a></p>
     </div>`;
 }
+
+/** A ring of dots that thin out away from the picked thumb (drawn once). */
+const EF_HALO = (() => {
+  let dots = "";
+  for (let k = 0; k < 6; k++) {
+    const R = 61 + k * 6.6;
+    const n = Math.round((2 * Math.PI * R) / 6.6);
+    const r = 2.1 - k * 0.3;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + k * 0.26;
+      dots += `<circle cx="${(100 + R * Math.cos(a)).toFixed(1)}" cy="${(100 + R * Math.sin(a)).toFixed(1)}" r="${r.toFixed(2)}"/>`;
+    }
+  }
+  return `<svg class="ef-halo" viewBox="0 0 200 200" aria-hidden="true"><g fill="currentColor">${dots}</g></svg>`;
+})();
 
 // The hero's story, three chapters on real numbers: a cheap USB-C dongle already drives
 // most headphones; the few it doesn't are the ones where a separate amp matters; a
@@ -475,6 +507,7 @@ function homePage() {
         <h1>${t("home_h1").split("\n").map(esc).join("<br>")}</h1>
         <p class="hero-sub">${esc(t("home_sub"))}</p>
         <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
+        <dl class="hero-stats">${stats.map(([n, l]) => `<div><dt>${esc(l)}</dt><dd>${n}</dd></div>`).join("")}</dl>
       </div>
       <div class="hero-right">
       <div class="hero-plot" data-plot></div>
@@ -491,26 +524,29 @@ function homePage() {
       </div>
     </section>
     <section class="home-file" aria-labelledby="file-h">
-      <div class="file-in">
-        <header class="file-head">
-          <p class="file-kicker"><span class="br">[</span>${esc(t("file_kicker"))}<span class="br">]</span></p>
-          <h2 id="file-h">${esc(t("file_h"))}</h2>
-          <p class="file-sub">${esc(t("file_sub"))}</p>
-        </header>
-        <nav class="file-rail" aria-label="${esc(t("file_kicker"))}">
-          <button type="button" class="file-step" data-step="-1" aria-label="${esc(t("file_prev"))}">▲</button>
-          <div class="file-thumbs" role="tablist">${files
-            .map((hp, n) => {
-              const im = imageOf(hp);
-              return `<button type="button" class="file-thumb${n ? "" : " on"}" role="tab" aria-selected="${!n}" data-file="${n}" title="${esc(displayName(hp))}">${im ? `<img src="${esc(sized(im.src, 160))}" alt="" referrerpolicy="no-referrer">` : esc(hp.model.slice(0, 2))}</button>`;
-            })
-            .join("")}</div>
-          <button type="button" class="file-step" data-step="1" aria-label="${esc(t("file_next"))}">▼</button>
-        </nav>
-        <div class="file-stage pending" data-file-stage aria-live="polite">${files.length ? homeFile(files[0], 0, files.length) : ""}</div>
+      <h2 id="file-h" class="sr">${esc(t("file_h"))}</h2>
+      <div class="ef-deco" aria-hidden="true">
+        <i class="ef-shallow"></i>
+        <i class="ef-flag"></i>
+        <div class="ef-mark" data-mark>${files[0] ? `${esc(fmt(fileData(files[0]).ohms, 0))}<small>Ω</small>` : ""}</div>
+        <i class="ef-tape"></i>
+        <i class="ef-line"><svg viewBox="0 0 240 20"><path d="M2 4h16l-8 12z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M26 7h60M26 12h60M94 7h22M124 4v12M134 10h40M182 7h12M182 12h12" stroke="currentColor" stroke-width="2"/></svg></i>
+        <svg class="ef-plus" viewBox="0 0 26 280"><path d="M13 0v26M0 13h26M13 84v26M0 97h26M13 168v26M0 181h26M13 252v26M0 265h26" stroke="currentColor" stroke-width="1.5"/></svg>
       </div>
+      <div class="ef-art" data-art></div>
+      <nav class="ef-rail" aria-label="${esc(t("file_kicker"))}">
+        <button type="button" class="ef-step" data-step="-1" aria-label="${esc(t("file_prev"))}"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M3 13 12 4l9 9" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+        <div class="ef-window"><div class="ef-items" role="tablist">${files
+          .map((hp, n) => {
+            const im = imageOf(hp);
+            return `<button type="button" class="ef-item${n ? "" : " on"}" role="tab" aria-selected="${!n}" tabindex="${n ? -1 : 0}" data-file="${n}" title="${esc(displayName(hp))}">${EF_HALO}<span class="ef-face">${im ? `<img src="${esc(sized(im.src, 200))}" alt="" referrerpolicy="no-referrer">` : esc(hp.model.slice(0, 2))}</span></button>`;
+          })
+          .join("")}</div></div>
+        <button type="button" class="ef-step" data-step="1" aria-label="${esc(t("file_next"))}"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M3 3l9 9 9-9" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+        <a class="ef-all" href="#catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2"/></svg>${esc(t("file_all"))}</a>
+      </nav>
+      <div class="ef-content" data-file-stage aria-live="polite">${files.length ? homeFile(files[0], 0, files.length) : ""}</div>
     </section>
-    <section class="home-stats">${stats.map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</section>
     <section class="home-band">
       <p class="home-slash">// ${esc(t("home_f_kicker"))}</p>
       <h2>${esc(t("home_f_h"))}</h2>
@@ -600,64 +636,109 @@ function wireHome(main) {
       }),
     );
   }
-  // Headphone files: the rail (or ▲▼, or arrow keys) swaps the file. The old one fades out
-  // quickly; the new one comes in staggered: block, mark, photo, name, tags, meters.
+  // Headphone files, timed from Endfield's operator switch (measured frame by frame): the old
+  // photo blinks out three times and the text fades for 290 ms; then the new text fades in
+  // over 300 ms and the new photo fades in over 270 ms while sliding from 9.5vw, settling
+  // on a long tail over 3 s.
   const stage = main.querySelector("[data-file-stage]");
   const files = HOME_FILES.map(findItem).filter(Boolean);
-  const thumbs = [...main.querySelectorAll("[data-file]")];
-  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let fileAt = 0;
-  let timer = 0;
-  const enter = () => {
-    stage.classList.remove("leaving", "entering", "pending");
-    void stage.offsetWidth;
-    stage.classList.add("entering");
-  };
-  const pick = (n, focus) => {
-    n = (n + files.length) % files.length;
-    if (n === fileAt) return;
-    fileAt = n;
-    thumbs.forEach((x, k) => {
-      x.classList.toggle("on", k === n);
-      x.setAttribute("aria-selected", String(k === n));
-      x.tabIndex = k === n ? 0 : -1;
-    });
-    if (focus) thumbs[n].focus();
-    // Keep the picked thumb in view inside the rail, without moving the page.
-    const rail = thumbs[n].parentElement;
-    const th = thumbs[n];
-    if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: th.offsetLeft - (rail.clientWidth - th.offsetWidth) / 2, behavior: "smooth" });
-    else if (rail.scrollHeight > rail.clientHeight) rail.scrollTo({ top: th.offsetTop - (rail.clientHeight - th.offsetHeight) / 2, behavior: "smooth" });
-    clearTimeout(timer);
-    const swap = () => {
-      stage.innerHTML = homeFile(files[n], n, files.length);
-      enter();
-    };
-    if (calm) return swap();
-    stage.classList.remove("entering");
-    stage.classList.add("leaving");
-    timer = setTimeout(swap, 170);
-  };
   if (stage && files.length) {
-    thumbs.forEach((b, k) => {
-      b.tabIndex = k ? -1 : 0;
-      b.addEventListener("click", () => pick(k));
-    });
-    main.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => pick(fileAt + Number(b.dataset.step))));
-    main.querySelector(".file-thumbs").addEventListener("keydown", (e) => {
-      const d = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }[e.key];
-      if (!d) return;
+    const art = main.querySelector("[data-art]");
+    const mark = main.querySelector("[data-mark]");
+    const items = [...main.querySelectorAll("[data-file]")];
+    const list = main.querySelector(".ef-items");
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let at = 0;
+    let busy = 0;
+    // The photo: cut out of its white background when the CDN allows, else shown as is (multiplied).
+    const photo = async (hp) => {
+      const im = imageOf(hp);
+      if (!im) return "";
+      try {
+        const c = await cutout(sized(im.src, 1200));
+        return `<img class="ef-img cut" src="${c.url}" alt="${esc(displayName(hp))}" data-wide="${c.w / c.h > 1.25}">`;
+      } catch {
+        return `<img class="ef-img" src="${esc(sized(im.src, 1200))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">`;
+      }
+    };
+    const ARRIVE = [
+      { offset: 0, transform: "translateX(9.5vw)" },
+      { offset: 0.011, transform: "translateX(6.3vw)" },
+      { offset: 0.089, transform: "translateX(3.1vw)" },
+      { offset: 0.239, transform: "translateX(1.7vw)" },
+      { offset: 0.606, transform: "translateX(0.7vw)" },
+      { offset: 1, transform: "none" },
+    ];
+    const arrive = () => {
+      if (calm) return;
+      const img = art.firstElementChild;
+      img?.animate(ARRIVE, { duration: 3000, easing: "linear" });
+      img?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 270, easing: "cubic-bezier(.2,.7,.3,1)" });
+      for (const el of [...stage.querySelectorAll("[data-fx]"), mark]) el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: "linear" });
+    };
+    // The rail keeps the picked thumb in the second of four slots where it can (Endfield's rail).
+    const place = (n) => {
+      const vertical = getComputedStyle(list).flexDirection === "column";
+      const step = items[1] ? (vertical ? items[1].offsetTop - items[0].offsetTop : items[1].offsetLeft - items[0].offsetLeft) : 0;
+      const shown = vertical ? 4 : Math.max(1, Math.floor(list.parentElement.clientWidth / (step || 1)));
+      const first = Math.max(0, Math.min(n - 1, files.length - shown));
+      list.style.transform = vertical ? `translateY(${-first * step}px)` : `translateX(${-first * step}px)`;
+    };
+    const pick = async (n, focus) => {
+      n = (n + files.length) % files.length;
+      if (n === at) return;
+      at = n;
+      const token = ++busy;
+      items.forEach((x, k) => {
+        x.classList.toggle("on", k === n);
+        x.setAttribute("aria-selected", String(k === n));
+        x.tabIndex = k === n ? 0 : -1;
+      });
+      if (focus) items[n].focus({ preventScroll: true });
+      place(n);
+      const next = photo(files[n]);
+      if (!calm) {
+        art.firstElementChild?.animate(
+          [{ opacity: 0 }, { opacity: 1, offset: 0.29 }, { opacity: 0, offset: 0.291 }, { opacity: 1, offset: 0.58 }, { opacity: 0, offset: 0.581 }, { opacity: 1, offset: 0.96 }, { opacity: 0 }],
+          { duration: 290, fill: "forwards" },
+        );
+        for (const el of [...stage.querySelectorAll("[data-fx]"), mark]) el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 290, easing: "linear", fill: "forwards" });
+        await new Promise((r) => setTimeout(r, 290));
+      }
+      const html = await next;
+      if (token !== busy) return;
+      stage.innerHTML = homeFile(files[n], n, files.length);
+      mark.innerHTML = `${esc(fmt(fileData(files[n]).ohms, 0))}<small>Ω</small>`;
+      mark.getAnimations().forEach((x) => x.cancel());
+      art.innerHTML = html;
+      art.classList.toggle("wide", !!art.querySelector("[data-wide=true]"));
+      arrive();
+    };
+    items.forEach((b, k) => b.addEventListener("click", () => pick(k)));
+    main.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => pick(at + Number(b.dataset.step))));
+    list.addEventListener("keydown", (e) => {
+      const dir = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }[e.key];
+      if (!dir) return;
       e.preventDefault();
-      pick(fileAt + d, true);
+      pick(at + dir, true);
     });
-    // First entrance when the band scrolls into view.
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      io.disconnect();
-      if (calm) stage.classList.remove("pending");
-      else enter();
-    }, { threshold: 0.25 });
-    io.observe(stage);
+    addEventListener("resize", () => place(at));
+    place(0);
+    // First photo: cut out, then shown with the arrival when the section comes into view.
+    // The other photos are cut out in the background so switching doesn't wait.
+    let first = photo(files[0]);
+    const io = new IntersectionObserver(
+      async ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        art.innerHTML = await first;
+        art.classList.toggle("wide", !!art.querySelector("[data-wide=true]"));
+        arrive();
+        files.slice(1).forEach((hp) => imageOf(hp) && cutout(sized(imageOf(hp).src, 1200)).catch(() => {}));
+      },
+      { rootMargin: "0px 0px -20% 0px" },
+    );
+    io.observe(art);
   }
   // Explorer: one open item at a time; the panel on the right shows that check on real data.
   const view = main.querySelector("[data-feature-view]");
@@ -1470,7 +1551,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs3gvzn").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs6nepp").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2770,7 +2851,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs3gvzn" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs6nepp" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3292,7 +3373,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs3gvzn" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs6nepp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

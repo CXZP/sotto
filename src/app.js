@@ -1,22 +1,22 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs1zwfe";
-import { heroArt } from "./heroart.js?v=mvs1zwfe";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs1zwfe";
-import { renderChart } from "./chart.js?v=mvs1zwfe";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs1zwfe";
-import { makeT } from "./i18n.js?v=mvs1zwfe";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvs1zwfe";
-import { LEGAL } from "./legal.js?v=mvs1zwfe";
-import { track, stats, trackingOff } from "./analytics.js?v=mvs1zwfe";
-import * as community from "./community.js?v=mvs1zwfe";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs1zwfe";
-import { redactImage } from "./redact.js?v=mvs1zwfe";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs1zwfe";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs1zwfe";
-import { chainLinks } from "./chain.js?v=mvs1zwfe";
-import { fits } from "./dcfit.js?v=mvs1zwfe";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvs1zwfe";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs1zwfe";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs1zwfe";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvs2ys2l";
+import { heroArt } from "./heroart.js?v=mvs2ys2l";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvs2ys2l";
+import { renderChart } from "./chart.js?v=mvs2ys2l";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvs2ys2l";
+import { makeT } from "./i18n.js?v=mvs2ys2l";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvs2ys2l";
+import { LEGAL } from "./legal.js?v=mvs2ys2l";
+import { track, stats, trackingOff } from "./analytics.js?v=mvs2ys2l";
+import * as community from "./community.js?v=mvs2ys2l";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvs2ys2l";
+import { redactImage } from "./redact.js?v=mvs2ys2l";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvs2ys2l";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvs2ys2l";
+import { chainLinks } from "./chain.js?v=mvs2ys2l";
+import { fits } from "./dcfit.js?v=mvs2ys2l";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvs2ys2l";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvs2ys2l";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvs2ys2l";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -349,9 +349,10 @@ function homeStage(e) {
     <a class="link small" href="${exUrl(e)}">${esc(t("home_open"))}</a>`;
 }
 
-// Sources lit one at a time in the hero art: a cheap dongle, a Bluetooth receiver,
-// a portable amp, a desktop amp. Each shows how many headphones it can drive.
-const HERO_PICKS = [HOME_DONGLE, "fiio--btr7", "ifi--go-link-2-max", "ifi--hip-dac3", "fiio--k15"];
+// The hero's story, three chapters on real numbers: a cheap USB-C dongle already drives
+// most headphones; the few it doesn't are the ones where a separate amp matters; a
+// desktop amp drives those too.
+const HERO_DESK = "fiio--k15";
 let heroCache = null;
 function heroData() {
   if (heroCache) return heroCache;
@@ -373,15 +374,37 @@ function heroData() {
     const { ohms, dbPerV } = headphoneSpecs(hpModel(h));
     return { z: ohms, v: required(peak, dbPerV, ohms).vrms };
   });
-  const picks = HERO_PICKS.map(findItem)
-    .filter((s) => s && sourceOutputs(s).length)
-    .slice(0, 4)
-    .map((s) => {
-      const outs = sourceOutputs(s);
-      const status = hps.map((h) => evaluate(h, outs, { level: LEVELS.normal, crest: CREST }).status);
-      return { id: s.id, name: displayName(s), cat: catLabel(s), curve: voltsAt(outs), status, ok: status.filter((x) => x === "ok" || x === "overkill").length };
-    });
-  return (heroCache = { loads, strands, points, picks, n: hps.length });
+  const dongle = findItem(HOME_DONGLE);
+  const desk = findItem(HERO_DESK);
+  if (!dongle || !desk || !sourceOutputs(dongle).length || !sourceOutputs(desk).length) return (heroCache = { chapters: [] });
+  const run = (s) => hps.map((h) => evaluate(h, sourceOutputs(s), { level: LEVELS.normal, crest: CREST }).status);
+  const lit = (x) => x === "ok" || x === "overkill";
+  const sd = run(dongle);
+  const sk = run(desk);
+  const short = new Set(sd.flatMap((x, i) => (lit(x) ? [] : [i])));
+  // Names on the best-known few of those (most stores), spaced so they don't overprint.
+  const named = [];
+  for (const i of [...short].sort((x, y) => storeCount(hps[y]) - storeCount(hps[x]))) {
+    if (named.length >= 5) break;
+    if (named.some((j) => Math.abs(Math.log10(points[j].z / points[i].z)) < 0.12 && Math.abs(Math.log10(points[j].v / points[i].v)) < 0.12)) continue;
+    named.push(i);
+  }
+  const labels = named.map((i) => ({ i, text: displayName(hps[i]) }));
+  const okD = sd.filter(lit).length;
+  const okK = sk.filter(lit).length;
+  const name = (s) => displayName(s).replace(/\s*\(.*\)$/, "");
+  const price = (s) => {
+    const p = prices(s).cheapest;
+    if (!p) return "";
+    const v = convert(p.price, p.currency, viewCur());
+    return ` (${v != null ? money(v, viewCur()) : money(p.price, p.currency)})`;
+  };
+  const chapters = [
+    { curve: voltsAt(sourceOutputs(dongle)), status: sd, big: okD, of: hps.length, tone: "ok", key: "hero_c1", vars: { src: name(dongle), price: price(dongle), ok: fmt(okD, 0), n: fmt(hps.length, 0) }, chip: "hero_t1" },
+    { curve: voltsAt(sourceOutputs(dongle)), status: sd, focus: short, labels, big: short.size, of: hps.length, tone: "warn", key: "hero_c2", vars: { k: fmt(short.size, 0) }, chip: "hero_t2" },
+    { curve: voltsAt(sourceOutputs(desk)), status: sk, focus: short, labels, big: okK, of: hps.length, tone: "ok", key: "hero_c3", vars: { src: name(desk), price: price(desk), ok: fmt(okK, 0), n: fmt(hps.length, 0) }, chip: "hero_t3" },
+  ];
+  return (heroCache = { loads, strands, points, chapters, n: hps.length });
 }
 
 /** Right-hand panel of the "what Sotto checks" explorer, built from the same data as the site. */
@@ -436,15 +459,14 @@ function homePage() {
       <div class="hero-right">
       <div class="hero-plot" data-plot></div>
       <div class="hero-readout" aria-live="polite">
-        <div class="ro-main">
-          <p class="ro-cat" data-ro="cat">${esc(art.picks[0]?.cat ?? "")}</p>
-          <p class="ro-name" data-ro="name">${esc(art.picks[0]?.name ?? "")}</p>
-          <p class="ro-n"><b data-ro="ok">${fmt(art.picks[0]?.ok ?? 0, 0)}</b><span>/ ${fmt(art.n, 0)} ${esc(t("hero_ro_cap"))}</span></p>
+        <nav class="ro-steps" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.chapters
+          .map((c, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}"><span class="ro-num">0${n + 1}</span>${esc(t(c.chip))}</button>`)
+          .join("")}<span class="ro-auto" data-ro="auto">AUTO</span></nav>
+        <div class="ro-body">
+          <p class="ro-n"><b data-ro="big" class="tone-${art.chapters[0]?.tone ?? "ok"}">${fmt(art.chapters[0]?.big ?? 0, 0)}</b><span>/ ${fmt(art.n ?? 0, 0)}</span></p>
+          <p class="ro-line" data-ro="line">${art.chapters[0] ? esc(t(art.chapters[0].key, art.chapters[0].vars)) : ""}</p>
         </div>
-        <div class="ro-side"><div class="hero-picks" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.picks
-          .map((s, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}">${esc(s.name.replace(/\s*\(.*\)$/, ""))}</button>`)
-          .join("")}</div>
-        <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span></p></div>
+        <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span></p>
       </div>
       </div>
     </section>
@@ -512,7 +534,7 @@ function wireHome(main) {
   heroHandle?.stop();
   const canvas = main.querySelector(".hero-canvas");
   const art = heroData();
-  if (canvas && art.picks.length) {
+  if (canvas && art.chapters.length) {
     // The plot box is an empty block in the layout; the canvas behind the whole hero
     // measures it, so the art lines up with the text column at every width.
     const box = main.querySelector("[data-plot]");
@@ -532,21 +554,23 @@ function wireHome(main) {
         b.setAttribute("aria-selected", String(k === n));
       });
       heroHandle.show(n);
-      const s = art.picks[n];
-      ro("cat").textContent = s.cat;
-      ro("name").textContent = s.name;
-      ro("ok").textContent = fmt(s.ok, 0);
-      ro("ok").animate?.([{ opacity: 0.2, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 450, easing: "cubic-bezier(.32,.72,0,1)" });
-      // Phones: keep the lit card in view inside its swipe row (the page itself doesn't move).
+      const c = art.chapters[n];
+      const big = ro("big");
+      big.textContent = fmt(c.big, 0);
+      big.className = `tone-${c.tone}`;
+      ro("line").textContent = t(c.key, c.vars);
+      for (const el of [big, ro("line")]) el.animate?.([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 520, easing: "cubic-bezier(.32,.72,0,1)" });
+      // Phones: keep the lit chip in view inside its swipe row (the page itself doesn't move).
       const row = tabs[n].parentElement;
       if (row.scrollWidth > row.clientWidth) row.scrollTo({ left: tabs[n].offsetLeft - 16, behavior: "smooth" });
     };
     // Cycles on its own until someone picks one.
-    let cycle = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : setInterval(() => (canvas.isConnected ? show((at + 1) % tabs.length) : clearInterval(cycle)), 4200);
+    let cycle = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : setInterval(() => (canvas.isConnected ? show((at + 1) % tabs.length) : clearInterval(cycle)), 6000);
     tabs.forEach((b, k) =>
       b.addEventListener("click", () => {
         clearInterval(cycle);
         cycle = 0;
+        ro("auto")?.classList.add("off");
         show(k);
       }),
     );
@@ -1392,7 +1416,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvs1zwfe").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvs2ys2l").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2692,7 +2716,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs1zwfe" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvs2ys2l" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3214,7 +3238,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs1zwfe" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvs2ys2l" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

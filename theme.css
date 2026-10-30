@@ -483,3 +483,45 @@ label:has(> input[type="checkbox"]) { cursor: pointer; }
   .item .pad { padding: 20px; }
 }
 .item-title .power-line, .item-title .role-note { margin-top: 12px !important; }
+
+/* ------------------------------------------------------------- calendar
+   Product cards (photo on top, name, details, price) instead of small cramped rows; month
+   headings as real headings; a roomier pre-order timeline. */
+.calendar { display: grid; gap: 20px; }
+.calendar .deal-head { margin: 12px 0 4px; }
+.calendar .deal-head h1, .deal-head h1 { font-family: var(--display); font-size: clamp(36px, 4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 600; margin: 0 0 10px; }
+.deal-head p { font-size: 16px; }
+.calendar > .chips { margin-bottom: 4px; }
+.calendar > .chips .chip { padding: 8px 16px; font-size: 14px; }
+.calendar > .card.pad { padding: 30px 32px 34px; border-radius: 28px; }
+.calendar h2 { font-family: var(--display); font-size: clamp(24px, 2vw, 32px); letter-spacing: -0.03em; font-weight: 600; margin: 0 0 18px; }
+.calendar h3 { text-transform: none; letter-spacing: -0.02em; font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--text); margin: 30px 0 14px; display: flex; align-items: baseline; gap: 10px; }
+.calendar h3 .muted { font-family: var(--font); font-size: 13px; font-weight: 500; padding: 2px 10px; border-radius: 999px; background: var(--bg); letter-spacing: 0; }
+.calendar h2 + h3 { margin-top: 0; }
+
+.cal-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+.cal-card { display: grid; grid-template-rows: auto 1fr; align-items: stretch; gap: 0; padding: 0; border-radius: 18px; background: var(--bg); overflow: hidden; box-shadow: 0 0 0 1px var(--line); transition: transform 0.3s var(--ease), box-shadow 0.3s; }
+.cal-card:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--line-strong), 0 12px 24px -16px rgba(18, 17, 16, 0.35); }
+.cal-pic { display: block; aspect-ratio: 1; background: #fff; border-bottom: 1px solid var(--line); }
+.cal-card .cal-pic img, .cal-card .cal-pic .cal-ph { display: block; width: 100%; height: 100%; padding: 12%; box-sizing: border-box; object-fit: contain; border: 0; border-radius: 0; background: transparent; }
+.cal-text { display: grid; align-content: start; gap: 4px; padding: 12px 14px 14px; min-width: 0; }
+.cal-card b { font-size: 14.5px; line-height: 1.3; }
+.cal-card small { font-size: 12.5px; line-height: 1.35; }
+.cal-price { font-style: normal; font-weight: 600; font-size: 14px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.cal-price .muted, .cal-price small { font-weight: 400; }
+
+.cal-scale, .cal-row { grid-template-columns: minmax(220px, 320px) 1fr; gap: 18px; }
+.cal-rows { gap: 10px; }
+.cal-name { padding: 6px 10px 6px 6px; border-radius: 14px; background: var(--bg); box-shadow: 0 0 0 1px var(--line); }
+.cal-name img, .cal-ph { width: 48px; height: 48px; border: 0; }
+.cal-name b { font-size: 14.5px; }
+.cal-track { height: 48px; border-radius: 14px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
+.cal-bar { top: 6px; bottom: 6px; border-radius: 10px; font-size: 13px; padding: 0 12px; }
+.cal-axis { height: 26px; font-size: 13px; }
+@media (max-width: 860px) {
+  .calendar > .card.pad { padding: 20px 18px 22px; }
+  .cal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cal-scale, .cal-row { grid-template-columns: 1fr; }
+}
+.cal-text { grid-template-rows: auto auto 1fr; height: 100%; box-sizing: border-box; } .cal-price { align-self: end; }
+.cal-card, .cal-card:hover, .cal-name, .cal-name:hover, .cal-bar { text-decoration: none; }

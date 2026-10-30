@@ -58,10 +58,11 @@ a:hover { text-decoration-color: currentColor; }
 .link, button.link { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
 nav a, a.pill, .brand, .shelf-item, .bn-item, a.card, .home-review, .price-row, .explore-item, .ef-all { text-decoration: none; }
 
-/* Header, after Clay's: a solid tab hanging from the top edge (square top, round bottom
-   corners, hairline outline, no shadow, no blur), pinned while the page scrolls. */
-header.bar { position: sticky; top: 0; z-index: 50; padding: 0 20px; }
-header .bar-inner { max-width: 1360px; min-height: 58px; box-sizing: border-box; padding: 8px 10px 8px 22px; gap: 14px; border-radius: 0 0 24px 24px; background: var(--bg); border: 1px solid var(--line-strong); border-top: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+/* Header: a solid bar floating a little below the top edge (round corners, hairline
+   outline, no blur), pinned while the page scrolls. */
+header.bar { position: sticky; top: 0; z-index: 50; padding: 10px 20px 0; }
+header .bar-inner { min-height: 58px; box-sizing: border-box; padding: 8px 10px 8px 22px; gap: 14px; border-radius: 18px; background: var(--bg); border: 1px solid var(--line-strong); box-shadow: 0 6px 16px -10px rgba(18, 17, 16, 0.18); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.page-home .home { padding-top: 10px; }
 .brand { font-family: var(--display); font-size: 19px; font-weight: 600; letter-spacing: -0.03em; }
 header nav { position: relative; margin-left: 14px; }
 header nav a { position: relative; z-index: 1; padding: 8px 12px; border-radius: 10px; font-size: 15px; color: var(--text-2); background: transparent; transition: color 0.25s; }
@@ -77,8 +78,8 @@ header .icon-btn:hover, header .icon-btn.active { background: var(--surface-2); 
 header .lang-pick { height: 38px; border-radius: 10px; }
 @media (max-width: 860px) {
   /* Two rows tall here: it scrolls away instead of covering the small screen. */
-  header.bar { position: relative; padding: 0 8px; }
-  header .bar-inner { border-radius: 0 0 20px 20px; padding: 8px 8px 6px 14px; gap: 8px; }
+  header.bar { position: relative; padding: 8px 8px 0; }
+  header .bar-inner { border-radius: 18px; padding: 8px 8px 6px 14px; gap: 8px; }
   header nav { margin-left: 0; }
 }
 
@@ -307,3 +308,73 @@ footer .region-pick select, footer .region-pick .dd-btn { margin: 0; background-
 @keyframes ro-fill { to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) { .hero-pick.run::after { animation: none; } }
 .lang-pick .dd-btn { background-color: transparent; border-color: transparent; padding: 4px 24px 4px 2px; background-position: right 6px center; }
+
+/* ------------------------------------------------------------- build page
+   After Apple's configurator and Clay's pricing: the questions as a big two-line title, the
+   chain as a signal line with a node per box (sound flows top to bottom), each choice a
+   white tile on the grey panel, and the answer as the loudest thing on the page, tinted by
+   the result. */
+.hero { padding: 40px 16px 8px; }
+@media (min-width: 1200px) {
+  .hero { padding-inline: 28px; background: linear-gradient(var(--line), var(--line)) 0 0 / 1px 100% no-repeat, linear-gradient(var(--line), var(--line)) 100% 0 / 1px 100% no-repeat; }
+  main.page-build { padding-top: 24px; }
+}
+.hero .tagline { margin: 0; font-size: clamp(30px, 3.8vw, 54px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 600; }
+.hero .tagline span { display: block; }
+
+
+@media (min-width: 861px) { .builder { grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); gap: 32px; } }
+/* Wide screens: header, title, pages and footer share one wider column (text pages keep their own 760 px). */
+:root { --page: 1600px; }
+header .bar-inner, .hero, main:not(.page-home), footer { max-width: var(--page); }
+.results { gap: 20px; }
+.slots { padding: 16px 26px 22px; border-radius: 24px; }
+.slot { border-bottom: 0; padding: 14px 0; }
+.slot-label { text-transform: none; letter-spacing: -0.005em; font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+.slot .hint { margin-top: 8px; }
+.total-row { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 16px; }
+.total-row .slot-label { color: var(--text-2); font-weight: 500; }
+.total-row b { font-family: var(--display); font-size: 30px; font-weight: 600; letter-spacing: -0.03em; }
+
+/* The signal line: a node beside each box's label, joined to the next box below. */
+.slot.node { position: relative; padding-left: 26px; }
+.slot.node::before { content: ""; position: absolute; left: 2px; top: 19px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px var(--text); }
+.slot.node:has(.picked)::before { background: var(--text); }
+.slot.node:has(+ .slot.node)::after { content: ""; position: absolute; left: 6px; top: 33px; bottom: -18px; width: 2px; border-radius: 2px; background: var(--line-strong); }
+
+/* Choice tiles: white on the grey panel. */
+.slot-control > .pill[data-pick] { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 54px; box-sizing: border-box; padding: 8px 14px 8px 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 15px; text-align: left; transition: border-color 0.2s, box-shadow 0.2s; }
+.slot-control > .pill[data-pick]:hover { border-color: var(--line-strong); box-shadow: 0 4px 12px -8px rgba(18, 17, 16, 0.3); background: var(--bg); }
+.slot-control > .pill[data-pick]::before { content: ""; width: 38px; height: 38px; flex: none; border-radius: 10px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 3v10M3 8h10' stroke='%236b6a65' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / 16px no-repeat; }
+.slot-control > .pill[data-pick] + .muted { display: none; }
+.picked { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 12px; align-items: center; padding: 8px 12px 8px 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); }
+.picked .picked-img { float: none; grid-row: 1 / 4; width: 56px; height: 56px; margin: 0; border-radius: 10px; border: 0; background: #fff; }
+.picked-name { font-size: 15px; line-height: 1.25; text-decoration: none; }
+.picked-meta { font-size: 12.5px; }
+.picked-actions { margin-top: 4px; gap: 12px; font-size: 12.5px; }
+.picked:not(:has(.picked-img)) { grid-template-columns: minmax(0, 1fr); padding-left: 14px; }
+.slot-control .select + .link { display: block; margin-top: 8px; text-align: left; color: var(--text-2); }
+
+/* Results: the answer first and largest, its card tinted by the result. */
+
+.result { padding: 26px 28px; border-radius: 24px; }
+.result h3 { text-transform: none; letter-spacing: -0.01em; font-size: 15px; color: var(--text); margin-bottom: 12px; }
+.result.good { background: color-mix(in srgb, var(--good) 9%, var(--surface)); }
+.result.warn { background: color-mix(in srgb, var(--warn) 11%, var(--surface)); }
+.result.bad { background: color-mix(in srgb, var(--bad) 9%, var(--surface)); }
+.result.over { background: color-mix(in srgb, var(--st-over, #3a8ee6) 9%, var(--surface)); }
+.verdict { gap: 14px; align-items: center; }
+.verdict .big { font-family: var(--display); font-size: clamp(22px, 2vw, 30px); line-height: 1.12; letter-spacing: -0.03em; }
+.verdict .badge { width: 34px; height: 34px; margin: 0; }
+.verdict .badge::before { width: 12px; height: 12px; }
+.result .meter { height: 12px; background: color-mix(in srgb, var(--text) 8%, transparent); }
+.chain li { border-radius: 12px; }
+.empty.card { padding: 64px 24px; border-radius: 24px; }
+.empty.card p { font-size: 17px; color: var(--text-2); margin: 0; }
+
+@media (max-width: 860px) {
+  .hero { padding: 24px 16px 4px; }
+  .slots { padding: 8px 16px 14px; }
+}
+.slots .select select, .slots .dd-btn { min-height: 48px; border-radius: 14px; background-color: var(--bg); border: 1px solid var(--line); font-size: 15px; }
+.slots .dd-btn:hover { border-color: var(--line-strong); }

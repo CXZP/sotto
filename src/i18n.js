@@ -1218,7 +1218,7 @@ export const STRINGS = {
     ch_ebay: "eBay",
     ch_amazon: "Amazon",
     ch_local_note: "These are only searches; we don't scrape big marketplaces. Prices change daily; see what people paid above.",
-    tagline: "Will it connect · Is it loud enough · Do you need a separate amp",
+    tagline: "Will it connect? · Is it loud enough? · Do you need a separate amp?",
     nav_build: "Build",
     nav_catalog: "Products",
     nav_learn: "Learn",

@@ -1,24 +1,25 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvf20ch";
-import { scope } from "./scope.js?v=mvvf20ch";
-import { pickFront } from "./front.js?v=mvvf20ch";
-import { heroArt } from "./heroart.js?v=mvvf20ch";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvf20ch";
-import { renderChart } from "./chart.js?v=mvvf20ch";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvf20ch";
-import { makeT } from "./i18n.js?v=mvvf20ch";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvf20ch";
-import { LEGAL } from "./legal.js?v=mvvf20ch";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvf20ch";
-import * as community from "./community.js?v=mvvf20ch";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvf20ch";
-import { redactImage } from "./redact.js?v=mvvf20ch";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvf20ch";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvf20ch";
-import { chainLinks } from "./chain.js?v=mvvf20ch";
-import { fits } from "./dcfit.js?v=mvvf20ch";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvf20ch";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvf20ch";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvf20ch";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvfkoe2";
+import { scope } from "./scope.js?v=mvvfkoe2";
+import { enhanceDropdowns } from "./dropdown.js?v=mvvfkoe2";
+import { pickFront } from "./front.js?v=mvvfkoe2";
+import { heroArt } from "./heroart.js?v=mvvfkoe2";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvfkoe2";
+import { renderChart } from "./chart.js?v=mvvfkoe2";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvfkoe2";
+import { makeT } from "./i18n.js?v=mvvfkoe2";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvfkoe2";
+import { LEGAL } from "./legal.js?v=mvvfkoe2";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvfkoe2";
+import * as community from "./community.js?v=mvvfkoe2";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvfkoe2";
+import { redactImage } from "./redact.js?v=mvvfkoe2";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvfkoe2";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvfkoe2";
+import { chainLinks } from "./chain.js?v=mvvfkoe2";
+import { fits } from "./dcfit.js?v=mvvfkoe2";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvfkoe2";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvfkoe2";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvfkoe2";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -112,6 +113,7 @@ function go(hash) {
 // Chrome
 
 function bindChrome() {
+  enhanceDropdowns(document);
   // In-page jumps (A–Z, "comments"): scroll, keep the route. Delegated, so parts drawn later work too.
   document.addEventListener("click", (e) => {
     const a = e.target.closest?.("[data-jump]");
@@ -159,8 +161,19 @@ function renderChrome(r) {
     b.classList.toggle("active", r.name === name);
   }
   const date = new Date(db.builtAt).toLocaleDateString(loc(), { day: "numeric", month: "short", year: "numeric" });
-  document.querySelector("footer .foot").innerHTML = `${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))} · <a href="#about">${esc(t("nav_about"))}</a> · <a href="#terms">${esc(t("lg_terms"))}</a> · <a href="#privacy">${esc(t("lg_privacy"))}</a> · <a href="#contact">${esc(t("lg_contact"))}</a> · <a href="#stats">${esc(t("st_title"))}</a> · <a href="#tools">${esc(t("tl_title"))}</a> · <a href="#fr">${esc(t("fr_title"))}</a> · <a href="${REPO}" target="_blank" rel="noopener">GitHub</a>
-    <br><label class="region-pick">${esc(t("rg_label"))} ${regionSelect()}</label>`;
+  // Footer: link columns, then the brand, the data line and the region picker.
+  const col = (head, links) => `<div class="foot-col"><p class="foot-h">${esc(t(head))}</p>${links.map(([href, key, ext]) => `<a href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(key.startsWith("=") ? key.slice(1) : t(key))}</a>`).join("")}</div>`;
+  document.querySelector("footer .foot").innerHTML = `<div class="foot-cols">
+      ${col("foot_use", [["#build", "nav_build"], ["#catalog", "nav_catalog"], ["#deal", "nav_deal"], ["#calendar", "nav_calendar"]])}
+      ${col("foot_people", [["#discuss", "nav_discuss"], ["#gallery", "nav_gallery"], ["#learn", "nav_learn"]])}
+      ${col("foot_data", [["#about", "nav_about"], ["#stats", "st_title"], ["#tools", "tl_title"], ["#fr", "fr_title"], [REPO, "=GitHub", true]])}
+      ${col("foot_site", [["#terms", "lg_terms"], ["#privacy", "lg_privacy"], ["#contact", "lg_contact"]])}
+    </div>
+    <div class="foot-base">
+      <a class="foot-brand" href="#home">Sotto</a>
+      <p class="foot-meta">${esc(t("updated", { date, stores: Object.keys(db.stores).length, n: fmt(db.items.length, 0) }))}<br>${esc(t("footer"))}</p>
+      <label class="region-pick"><span>${esc(t("rg_label"))}</span>${regionSelect()}</label>
+    </div>`;
 }
 
 function regionSelect() {
@@ -571,7 +584,7 @@ function homePage() {
       <div class="hero-readout" aria-live="polite">
         <nav class="ro-steps" role="tablist" aria-label="${esc(t("hero_picks"))}">${art.chapters
           .map((c, n) => `<button type="button" role="tab" class="hero-pick${n ? "" : " on"}" aria-selected="${!n}" data-hero="${n}"><span class="ro-num">0${n + 1}</span>${esc(t(c.chip))}</button>`)
-          .join("")}<span class="ro-auto" data-ro="auto">AUTO</span></nav>
+          .join("")}</nav>
         <div class="ro-body">
           <p class="ro-n"><b data-ro="big" class="tone-${art.chapters[0]?.tone ?? "ok"}">${fmt(art.chapters[0]?.big ?? 0, 0)}</b><span>/ ${fmt(art.n ?? 0, 0)}</span></p>
           <p class="ro-line" data-ro="line">${art.chapters[0] ? esc(t(art.chapters[0].key, art.chapters[0].vars)) : ""}</p>
@@ -689,6 +702,12 @@ function wireHome(main) {
         b.setAttribute("aria-selected", String(k === n));
       });
       heroHandle.show(n);
+      // While the tour runs, the lit chip fills over the 6 s it stays.
+      tabs.forEach((b) => b.classList.remove("run"));
+      if (cycle) {
+        void tabs[n].offsetWidth;
+        tabs[n].classList.add("run");
+      }
       const c = art.chapters[n];
       const big = ro("big");
       big.textContent = fmt(c.big, 0);
@@ -701,11 +720,12 @@ function wireHome(main) {
     };
     // Cycles on its own until someone picks one.
     let cycle = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : setInterval(() => (canvas.isConnected ? show((at + 1) % tabs.length) : clearInterval(cycle)), 6000);
+    if (cycle) tabs[0]?.classList.add("run");
     tabs.forEach((b, k) =>
       b.addEventListener("click", () => {
         clearInterval(cycle);
         cycle = 0;
-        ro("auto")?.classList.add("off");
+        tabs.forEach((x) => x.classList.remove("run"));
         show(k);
       }),
     );
@@ -819,8 +839,12 @@ function wireHome(main) {
     });
     slab.style.setProperty("--c", `var(--flow-${k})`);
     what.textContent = t(`home_f_${k}_sub`);
+    const card = slab.querySelector(".flow-card");
+    const from = card.offsetHeight;
     view.innerHTML = homeFeature(k);
     fillReviews();
+    const to = card.offsetHeight;
+    if (!calm && from !== to) card.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: 450, easing: "cubic-bezier(.2,.7,.2,1)" });
     view.classList.remove("fade");
     void view.offsetWidth;
     view.classList.add("fade");
@@ -1622,7 +1646,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvf20ch").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvfkoe2").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2922,7 +2946,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvf20ch" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvfkoe2" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3444,7 +3468,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvf20ch" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvfkoe2" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

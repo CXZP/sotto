@@ -182,26 +182,48 @@ export function heroArt(canvas, data) {
       ctx.shadowBlur = 0;
     }
 
-    // Names by a few focused dots, on a halo so they read over strands.
+    // Names of a few focused dots: a pill above the dot on a short leader line, placed where
+    // it doesn't cover another name (tried higher up if the first spot is taken).
     if (B.labels && fade > 0.5 && g >= 1) {
       ctx.font = `600 12px ${font}`;
       ctx.textAlign = "left";
-      ctx.lineJoin = "round";
+      ctx.textBaseline = "middle";
       const taken = [];
+      const a = Math.min(1, (fade - 0.5) * 2);
       for (const { i, text } of B.labels) {
-        const x = Math.max(px(data.points[i].z), p.l * W + R + 2) + R * 2 + 8;
-        const y = py(data.points[i].v) + 4;
-        // Skip a name that would print over one already drawn.
-        const w = ctx.measureText(text).width;
-        if (taken.some((b) => x < b.x + b.w + 6 && b.x < x + w + 6 && Math.abs(b.y - y) < 15)) continue;
+        const dx = Math.max(px(data.points[i].z), p.l * W + R + 2);
+        const dy = py(data.points[i].v);
+        const w = ctx.measureText(text).width + 18;
+        const h = 22;
+        let x = Math.min(dx + 10, p.r * W - w);
+        let y = 0;
+        let ok = false;
+        for (const lift of [34, 60, 86]) {
+          y = dy - lift;
+          if (!taken.some((b) => x < b.x + b.w + 6 && b.x < x + w + 6 && Math.abs(b.y - y) < h + 4)) {
+            ok = true;
+            break;
+          }
+        }
+        if (!ok) continue;
         taken.push({ x, y, w });
-        ctx.globalAlpha = Math.min(1, (fade - 0.5) * 2);
-        ctx.strokeStyle = colors.bg;
-        ctx.lineWidth = 4;
-        ctx.strokeText(text, x, y);
+        ctx.globalAlpha = 0.6 * a;
+        ctx.strokeStyle = colors.ink;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(dx, dy - R * 2.6);
+        ctx.lineTo(dx, y + h / 2);
+        ctx.lineTo(x + 10, y + h / 2);
+        ctx.stroke();
+        ctx.globalAlpha = a;
         ctx.fillStyle = colors.ink;
-        ctx.fillText(text, x, y);
+        ctx.beginPath();
+        ctx.roundRect(x, y - h / 2, w, h, 11);
+        ctx.fill();
+        ctx.fillStyle = colors.bg;
+        ctx.fillText(text, x + 9, y + 0.5);
       }
+      ctx.textBaseline = "alphabetic";
     }
     ctx.globalAlpha = 1;
   };

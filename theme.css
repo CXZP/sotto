@@ -419,3 +419,65 @@ input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline
 input[type="checkbox"]:disabled { opacity: 0.45; cursor: default; }
 label:has(> input[type="checkbox"]) { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { input[type="checkbox"]::after { transition: none; } }
+
+/* Picker controls: type chips on one scrolling row, then sort and the specs tick on the right. */
+.modal .pick-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 2px 0 4px; }
+.modal .pick-tools .chips { flex: 1 1 260px; min-width: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.modal .pick-tools .chips::-webkit-scrollbar { display: none; }
+.modal .pick-tools .chip { flex: none; padding: 6px 14px; font-size: 13.5px; }
+.modal .pick-tools .dd-btn, .modal .pick-tools select { flex: none; width: auto; }
+.modal .pick-tools .check { flex: none; }
+.modal .pick-list { border-top: 1px solid var(--line); padding-top: 8px; }
+.modal input.search:focus-visible { outline: 0; border-color: var(--text); box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 10%, transparent); }
+.modal input.search { border: 1px solid var(--line); padding-left: 44px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='5' fill='none' stroke='%236b6a65' stroke-width='1.6'/%3E%3Cpath d='M11 11l3.5 3.5' stroke='%236b6a65' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 16px center / 16px no-repeat; }
+
+/* Guide lines start a little below the header, so they never run into its corners. */
+@media (min-width: 1200px) {
+  .hero { background-position: 0 28px, 100% 28px; background-size: 1px calc(100% - 28px), 1px calc(100% - 28px); }
+  .hero[hidden] + main:not(.page-home) { background-position: 0 28px, 100% 28px; background-size: 1px calc(100% - 28px), 1px calc(100% - 28px); }
+}
+
+/* ------------------------------------------------------------- product page
+   Like a store's product page: a large photo card on the left; on the right the name set
+   large, the price, the figures people look for first, then the actions. Sections below
+   are roomy panels with real headings instead of small grey capitals. */
+.item-head.has-img { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 72px); align-items: start; margin: 8px 0 32px; }
+.item-media { position: sticky; top: 84px; gap: 12px; max-width: none; }
+.item-img { border-radius: 28px; border: 1px solid var(--line); aspect-ratio: 5 / 4; }
+.item-img img { inset: 6%; width: 88%; height: 88%; }
+.item-thumbs { gap: 10px; }
+.item-thumbs button { width: 72px; height: 72px; border-radius: 14px; border: 1px solid var(--line); }
+.item-thumbs button[aria-current] { border: 2px solid var(--text); }
+.img-credit { right: 14px; bottom: 14px; padding: 4px 10px; background: rgba(18, 17, 16, 0.5); backdrop-filter: blur(6px); }
+.item-title { padding-top: clamp(8px, 3vw, 48px); display: grid; gap: 4px; justify-items: start; }
+.item-head h1 { font-family: var(--display); font-size: clamp(36px, 4.4vw, 72px); line-height: 1; letter-spacing: -0.04em; font-weight: 600; margin: 10px 0 6px; }
+.item-kicker { font-size: 14px; }
+.price-big { margin: 14px 0 0 !important; font-family: var(--display); font-size: clamp(22px, 2vw, 30px); font-weight: 600; letter-spacing: -0.02em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.price-big .muted { font-family: var(--font); font-size: 15px; font-weight: 400; letter-spacing: 0; }
+.price-deal { font-family: var(--font); font-size: 14px; font-weight: 500; letter-spacing: 0; }
+.item-facts { margin: 22px 0 6px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; width: 100%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.item-facts div { padding: 14px 16px 14px 0; }
+.item-facts div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.item-facts dt { font-size: 13px; color: var(--text-2); margin-bottom: 4px; }
+.item-facts dd { margin: 0; font-family: var(--display); font-size: clamp(20px, 1.6vw, 26px); font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.item-title .item-actions { margin-top: 18px; gap: 10px; }
+.item-actions .pill { padding: 11px 20px; font-size: 15px; }
+.item-more { margin-top: 18px; }
+
+.item-grid { gap: 20px; margin-bottom: 20px; }
+.item > .card + .card, .item > .card + [id], .item > [id] + .card, .item > [id] + [id] { margin-top: 20px; }
+.item .pad { padding: 28px 30px; border-radius: 24px; }
+.item .pad h3, .item .card-head h3 { text-transform: none; letter-spacing: -0.02em; font-family: var(--display); font-size: clamp(20px, 1.5vw, 24px); font-weight: 600; color: var(--text); margin: 0 0 12px; }
+.item .card-head { margin-bottom: 12px; }
+.item .card-head h3 { margin: 0; }
+.item .spec { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.item .spec-name { font-weight: 600; margin-bottom: 4px; }
+.fr-site-list { gap: 8px; margin: 14px 0; }
+.fr-site-list li { padding: 7px 14px; border: 0; border-radius: 12px; background: var(--bg); font-size: 13.5px; }
+@media (max-width: 860px) {
+  .item-head.has-img { grid-template-columns: 1fr; gap: 20px; }
+  .item-media { position: static; max-width: none; }
+  .item-title { padding-top: 0; }
+  .item .pad { padding: 20px; }
+}
+.item-title .power-line, .item-title .role-note { margin-top: 12px !important; }

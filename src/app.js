@@ -1,26 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvgtsj9";
-import { scope } from "./scope.js?v=mvvgtsj9";
-import { navPill } from "./navpill.js?v=mvvgtsj9";
-import { enhanceDropdowns } from "./dropdown.js?v=mvvgtsj9";
-import { pickFront } from "./front.js?v=mvvgtsj9";
-import { heroArt } from "./heroart.js?v=mvvgtsj9";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvgtsj9";
-import { renderChart } from "./chart.js?v=mvvgtsj9";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvgtsj9";
-import { makeT } from "./i18n.js?v=mvvgtsj9";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvgtsj9";
-import { LEGAL } from "./legal.js?v=mvvgtsj9";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvgtsj9";
-import * as community from "./community.js?v=mvvgtsj9";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvgtsj9";
-import { redactImage } from "./redact.js?v=mvvgtsj9";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvgtsj9";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvgtsj9";
-import { chainLinks } from "./chain.js?v=mvvgtsj9";
-import { fits } from "./dcfit.js?v=mvvgtsj9";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvgtsj9";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvgtsj9";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvgtsj9";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvhjgsj";
+import { scope } from "./scope.js?v=mvvhjgsj";
+import { navPill } from "./navpill.js?v=mvvhjgsj";
+import { enhanceDropdowns } from "./dropdown.js?v=mvvhjgsj";
+import { pickFront } from "./front.js?v=mvvhjgsj";
+import { heroArt } from "./heroart.js?v=mvvhjgsj";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvhjgsj";
+import { renderChart } from "./chart.js?v=mvvhjgsj";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvhjgsj";
+import { makeT } from "./i18n.js?v=mvvhjgsj";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvhjgsj";
+import { LEGAL } from "./legal.js?v=mvvhjgsj";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvhjgsj";
+import * as community from "./community.js?v=mvvhjgsj";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvhjgsj";
+import { redactImage } from "./redact.js?v=mvvhjgsj";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvhjgsj";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvhjgsj";
+import { chainLinks } from "./chain.js?v=mvvhjgsj";
+import { fits } from "./dcfit.js?v=mvvhjgsj";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvhjgsj";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvhjgsj";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvhjgsj";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1344,7 +1344,12 @@ function openPicker(slot) {
       })
       .join("");
   };
-  const close = () => dlg.remove();
+  const close = () => {
+    dlg.remove();
+    removeEventListener("hashchange", close);
+  };
+  // Going to another page closes the window.
+  addEventListener("hashchange", close);
   input.addEventListener("input", draw);
   only.addEventListener("change", draw);
   sortSel.addEventListener("change", draw);
@@ -1581,6 +1586,21 @@ function idsOf(i) {
   return [i.id, ...(db.aliasesTo?.get(i.id) ?? [])];
 }
 
+/** The figures people look for first, large, under the price (each one is in the specs below with its sources). */
+function keyFacts(i, outs) {
+  const first = (f) => i.specs?.[f]?.[0];
+  const facts = [];
+  const z = first("impedance");
+  if (z) facts.push([t("spec_impedance"), `${fmt(z.value, 2)} Ω`]);
+  const s = first("sensitivity");
+  if (s) facts.push([t("spec_sensitivity"), `${fmt(s.value, 2)} ${s.unit ?? "dB"}`]);
+  const p = outs.flatMap((o) => o.power ?? []).sort((a, b) => Math.abs(a.load - 32) - Math.abs(b.load - 32) || b.mw - a.mw)[0];
+  if (p) facts.push([t("it_power_title"), `${fmt(p.mw, 0)} mW @ ${p.load} Ω`]);
+  const zo = first("zout");
+  if (zo && !p) facts.push([t("cmp_zout"), `${fmt(zo.value, 2)} Ω`]);
+  return facts.length ? `<dl class="item-facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>` : "";
+}
+
 function itemPage(id) {
   const i = findItem(id);
   if (!i) return `<div class="card empty"><p>${esc(t("it_not_found"))}</p></div>`;
@@ -1632,6 +1652,8 @@ function itemPage(id) {
       <div class="item-title"><p class="muted item-kicker">${i.brand ? `${brandMark(i.brand, 24)} <a href="#catalog?brand=${encodeURIComponent(i.brand)}">${esc(i.brand)}</a> · ` : ""}${esc(catLabel(i))}${i.curated ? ` · ${esc(t("it_checked"))}` : ""}${i.drivers ? ` · ${esc(i.drivers)}` : ""}</p>
       <h1>${esc(displayName(i))}</h1>
       ${looksLine(i)}
+      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${localPrice(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span> <a class="price-deal" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))} →</a></p>` : ""}
+      ${keyFacts(i, outs)}
       ${i.addedFrom ? `<p class="small muted">${esc(t(i.offers.length ? "added_from_sold" : "added_from"))} <a href="${esc(i.addedFrom)}" target="_blank" rel="noopener">${esc(new URL(i.addedFrom).hostname)} ↗</a></p>` : ""}
       ${powerLine(i)}
       ${i.cart ? `<p class="small role-note">${esc(t(`cart_${i.cart}`))} · ${esc(t(i.cart === "mc" ? "cart_note_mc" : "cart_note_mm"))} <a href="#learn/phono">?</a></p>` : ""}
@@ -1641,7 +1663,6 @@ function itemPage(id) {
       ${isBtReceiver(i) ? `<p class="small role-note">${esc(t("bt_note"))} <a href="#learn/bluetooth">${esc(t("wl_codecs"))}</a></p>` : ""}
       ${i.category === "speaker" ? `<p class="small role-note">${esc(t(i.speaker === "passive" ? "spk_note_passive" : "spk_note_active"))} <a href="https://buildhifi.com/parts" target="_blank" rel="noopener">BuildHifi ↗</a></p>` : ""}
       ${i.role === "dac" || i.role === "amp" ? `<p class="small role-note">${esc(t(`role_note_${i.role}`))} <a href="#catalog?cat=desktop&role=${i.role === "dac" ? "amp" : "dac"}">${esc(t(`role_find_${i.role}`))}</a></p>` : ""}
-      ${pr.cheapest ? `<p class="price-big">${esc(t("price_from"))} ${localPrice(pr.cheapest.price, pr.cheapest.currency)} <span class="muted">· ${esc(t("stores", { n: new Set(i.offers.map((o) => o.store)).size }))}</span> <a class="price-deal" href="#deal?item=${encodeURIComponent(i.id)}">${esc(t("it_deal"))} →</a></p>` : ""}
       <div class="item-actions">${(isHp || isSrc || ["turntable", "phono", "cartridge"].includes(i.category)) && !["integrated", "poweramp"].includes(i.role) ? `<button class="pill primary" data-use="${esc(i.id)}" data-slot="${isHp ? "hp" : i.role === "dac" || i.category === "phono" ? "dac" : i.category === "cartridge" ? "cart" : ["dap", "cd", "turntable"].includes(i.category) || i.role === "streamer" ? "src" : "amp"}">${esc(t("it_add_build"))}</button>` : ""}${bmButton("item", i.id)}<button type="button" class="pill" data-copy="${esc(`${location.origin}${location.pathname.replace(/[^/]*$/, "")}p/${i.id}/`)}">${esc(t("ds_share"))}</button><a class="pill" href="#compare?ids=${encodeURIComponent(i.id)}">${esc(t("cmp_btn"))}</a></div>
       <details class="item-more"><summary>${esc(t("sq_more"))}</summary>
       <p class="issue-search small">${esc(t("sq_label"))} ${searchLinks(i).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>
@@ -1672,7 +1693,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvgtsj9").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvhjgsj").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2972,7 +2993,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvgtsj9" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvhjgsj" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3494,7 +3515,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvgtsj9" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvhjgsj" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

@@ -566,12 +566,12 @@ select option { background: var(--surface); color: var(--text); }
 @media (prefers-reduced-motion: reduce) { .cal-bar { animation: none; } }
 
 /* Spec sheet: label / value rows from the store's own spec list. */
-.card .sheet { margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
-.sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
-.sheet > div:last-child { border-bottom: 0; }
-.sheet dd a.small { white-space: nowrap; }
-.sheet dt { color: var(--text-2); font-size: 13px; }
-.sheet dd { margin: 0; overflow-wrap: anywhere; }
+.card dl.sheet { margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
+dl.sheet > div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
+dl.sheet > div:last-child { border-bottom: 0; }
+dl.sheet dd a.small { white-space: nowrap; }
+dl.sheet dt { color: var(--text-2); font-size: 13px; }
+dl.sheet dd { margin: 0; overflow-wrap: anywhere; }
 
 /* Item header: fewer things competing. Price links to the code calculator;
    search links and "report a mistake" fold under one line. */

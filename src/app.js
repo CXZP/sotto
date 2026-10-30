@@ -1,25 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvfkoe2";
-import { scope } from "./scope.js?v=mvvfkoe2";
-import { enhanceDropdowns } from "./dropdown.js?v=mvvfkoe2";
-import { pickFront } from "./front.js?v=mvvfkoe2";
-import { heroArt } from "./heroart.js?v=mvvfkoe2";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvfkoe2";
-import { renderChart } from "./chart.js?v=mvvfkoe2";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvfkoe2";
-import { makeT } from "./i18n.js?v=mvvfkoe2";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvfkoe2";
-import { LEGAL } from "./legal.js?v=mvvfkoe2";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvfkoe2";
-import * as community from "./community.js?v=mvvfkoe2";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvfkoe2";
-import { redactImage } from "./redact.js?v=mvvfkoe2";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvfkoe2";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvfkoe2";
-import { chainLinks } from "./chain.js?v=mvvfkoe2";
-import { fits } from "./dcfit.js?v=mvvfkoe2";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvfkoe2";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvfkoe2";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvfkoe2";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvg0ng8";
+import { scope } from "./scope.js?v=mvvg0ng8";
+import { navPill } from "./navpill.js?v=mvvg0ng8";
+import { enhanceDropdowns } from "./dropdown.js?v=mvvg0ng8";
+import { pickFront } from "./front.js?v=mvvg0ng8";
+import { heroArt } from "./heroart.js?v=mvvg0ng8";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvg0ng8";
+import { renderChart } from "./chart.js?v=mvvg0ng8";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvg0ng8";
+import { makeT } from "./i18n.js?v=mvvg0ng8";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvg0ng8";
+import { LEGAL } from "./legal.js?v=mvvg0ng8";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvg0ng8";
+import * as community from "./community.js?v=mvvg0ng8";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvg0ng8";
+import { redactImage } from "./redact.js?v=mvvg0ng8";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvg0ng8";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvg0ng8";
+import { chainLinks } from "./chain.js?v=mvvg0ng8";
+import { fits } from "./dcfit.js?v=mvvg0ng8";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvg0ng8";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvg0ng8";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvg0ng8";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -137,6 +138,9 @@ function bindChrome() {
   });
 }
 
+let pill = null;
+let lastPage = null;
+
 function renderChrome(r) {
   document.documentElement.lang = state.lang;
   document.querySelector(".tagline").textContent = t("tagline");
@@ -145,6 +149,7 @@ function renderChrome(r) {
     a.textContent = t(`nav_${a.dataset.route}`);
     a.classList.toggle("active", a.dataset.route === r.name || ((r.name === "item" || r.name === "brands") && a.dataset.route === "catalog"));
   });
+  (pill ??= navPill(document.querySelector("header nav"))).sync();
   const langSel = document.querySelector("#lang-sel");
   if (langSel) langSel.value = state.lang;
   const acct = document.getElementById("account-btn");
@@ -295,6 +300,10 @@ function render() {
   else main.innerHTML = buildPage();
   wire(main, r);
   scrollTo({ top: 0 });
+  // A new page rises in briefly (only when the page changes, not on a language switch).
+  if (lastPage && lastPage !== r.name && !matchMedia("(prefers-reduced-motion: reduce)").matches)
+    main.animate([{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.16,1,.3,1)" });
+  lastPage = r.name;
   const key = `${r.name}/${r.sub ?? ""}/${r.id ?? r.term ?? ""}`;
   if (key !== lastViewKey) {
     lastViewKey = key;
@@ -1646,7 +1655,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvfkoe2").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvg0ng8").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2946,7 +2955,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvfkoe2" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvg0ng8" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3468,7 +3477,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvfkoe2" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvg0ng8" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

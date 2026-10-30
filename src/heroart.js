@@ -89,6 +89,8 @@ export function heroArt(canvas, data) {
   const ease = (x) => 1 - (1 - Math.min(Math.max(x, 0), 1)) ** 3;
 
   const draw = (now) => {
+    // Off the page (another route) or not laid out yet: nothing to draw.
+    if (!canvas.isConnected || !W || !H) return;
     const time = calm ? 0 : (now - t0) / 1000;
     const g = GATHER ? (now - t0) / GATHER : 1; // opening gather progress
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -244,6 +246,7 @@ export function heroArt(canvas, data) {
 
   resize();
   const ro = new ResizeObserver(() => {
+    if (!canvas.isConnected) return handle.stop();
     resize();
     draw(performance.now());
   });
@@ -261,7 +264,7 @@ export function heroArt(canvas, data) {
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   kick();
 
-  return {
+  const handle = {
     show(n) {
       if (n === at) return;
       from = at;
@@ -277,4 +280,5 @@ export function heroArt(canvas, data) {
       mo.disconnect();
     },
   };
+  return handle;
 }

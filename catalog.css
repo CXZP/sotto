@@ -368,9 +368,9 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .stat-tiles .card { display: grid; gap: 4px; }
 .stat-tiles b { font-size: 30px; font-variant-numeric: tabular-nums; }
 .bars { display: flex; align-items: flex-end; gap: 3px; height: 160px; margin: 8px 0; }
-.bar { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; }
-.bar i { position: absolute; bottom: 0; left: 0; right: 0; border-radius: 4px 4px 0 0; background: var(--line-strong); }
-.bar i.v { left: 25%; right: 25%; background: var(--accent); }
+.bars > .bar { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.bars > .bar i { position: absolute; bottom: 0; left: 0; right: 0; border-radius: 4px 4px 0 0; background: var(--line-strong); }
+.bars > .bar i.v { left: 25%; right: 25%; background: var(--accent); }
 .key { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--line-strong); vertical-align: -1px; }
 .key.v { background: var(--accent); }
 .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin: 14px 0; }

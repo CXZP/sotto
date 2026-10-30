@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvve78jp";
-import { scope } from "./scope.js?v=mvve78jp";
-import { cutout } from "./cutout.js?v=mvve78jp";
-import { heroArt } from "./heroart.js?v=mvve78jp";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvve78jp";
-import { renderChart } from "./chart.js?v=mvve78jp";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvve78jp";
-import { makeT } from "./i18n.js?v=mvve78jp";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvve78jp";
-import { LEGAL } from "./legal.js?v=mvve78jp";
-import { track, stats, trackingOff } from "./analytics.js?v=mvve78jp";
-import * as community from "./community.js?v=mvve78jp";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvve78jp";
-import { redactImage } from "./redact.js?v=mvve78jp";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvve78jp";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvve78jp";
-import { chainLinks } from "./chain.js?v=mvve78jp";
-import { fits } from "./dcfit.js?v=mvve78jp";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvve78jp";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvve78jp";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvve78jp";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvemhry";
+import { scope } from "./scope.js?v=mvvemhry";
+import { pickFront } from "./front.js?v=mvvemhry";
+import { heroArt } from "./heroart.js?v=mvvemhry";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvemhry";
+import { renderChart } from "./chart.js?v=mvvemhry";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvemhry";
+import { makeT } from "./i18n.js?v=mvvemhry";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvemhry";
+import { LEGAL } from "./legal.js?v=mvvemhry";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvemhry";
+import * as community from "./community.js?v=mvvemhry";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvemhry";
+import { redactImage } from "./redact.js?v=mvvemhry";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvemhry";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvemhry";
+import { chainLinks } from "./chain.js?v=mvvemhry";
+import { fits } from "./dcfit.js?v=mvvemhry";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvemhry";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvemhry";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvemhry";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -445,38 +445,70 @@ function homeFeature(key) {
 
 const HOME_FEATURES = ["plug", "loud", "amp", "price", "reviews"];
 
-// The shelf: the most-stocked gear standing on two shelves, headphones above and sources
-// below, each photo cut out and drawn at roughly its real size relative to the others, with
-// a shop-style tag on the shelf edge. Only photos the cut-out can read (Shopify's CDN).
-const SHELF_H = { headphone: 1, iem: 0.5, dongle: 0.38, portable: 0.5, dap: 0.62, desktop: 0.56, cd: 0.6 };
-const cuttable = (i) => /cdn\.shopify\.com|\/cdn\/shop\//.test(imageOf(i)?.src ?? "");
+// Product photos on the home page are shown as shot, as cards: the photo fills the card and
+// the card takes the photo's own backdrop colour, so there is no seam. Which photo: the most
+// front-on or top-down shot in the store's gallery (src/front.js picks it on first view).
+function photoCard(i, cls = "") {
+  const im = imageOf(i);
+  return `<span class="pcard ${cls}" data-front="${esc(i.id)}"><img src="${im ? esc(sized(im.src, 800)) : ""}" alt="${esc(displayName(i))}" loading="lazy" referrerpolicy="no-referrer"><span class="pcard-label">${esc(i.brand)}</span></span>`;
+}
+// Hand-picked photos for the gear the home page shows (index into the store gallery):
+// over-ear headphones from the side, portable gear (dongles, portable amps, players) from the
+// top, IEMs and desktop gear from the front. Anything else falls back to the automatic pick.
+const HOME_PHOTO = {
+  "sennheiser--hd-600": 0, "meze-audio--109-pro": 2, "hifiman--sundara": 1, "audeze--lcd": 0, "hifiman--he1000-unveiled": 0,
+  "meze-audio--arta": 0, "sennheiser--hd660s2": 1, "audio-technica--ath-r70xa": 0, "sennheiser--hd-560s": 4,
+  "ifi--go-link-2-max": 1, "ifi--hip-3": 5, "ifi--idsd-gr-2": 0,
+  "moondrop--aria-2": 0, "qdc--anole-v14-10": 7, "moondrop--blessing-3": 7, "campfire-audio--cascara": 0, "final-audio--a5000": 7,
+  "fiio--k15": 1, "ifi--zen-3": 0, "ifi--zen-can-3": 5, "sennheiser--hdv820": 4,
+};
+async function fillFronts(root) {
+  const boxes = [...root.querySelectorAll("[data-front]")];
+  if (!boxes.length) return;
+  const sets = await loadPhotos();
+  boxes.forEach(async (box) => {
+    const i = findItem(box.dataset.front);
+    const im = i && imageOf(i);
+    if (!im) return;
+    const srcs = [...new Set([...(sets[i.id]?.src ?? []), im.src])];
+    const n = HOME_PHOTO[i.id];
+    const f = n != null && srcs[n] ? await pickFront(`${i.id}#${n}`, [srcs[n]]) : await pickFront(i.id, srcs);
+    if (!box.isConnected) return;
+    if (f.bg) box.style.setProperty("--bg", f.bg);
+    const img = box.querySelector("img");
+    const want = sized(f.src, 800);
+    if (img.src !== want) img.src = want;
+    box.classList.add("in");
+  });
+}
+
+// The shelf: the most-stocked headphones above, sources below, as photo cards with the price.
 function shelfRows() {
   const top = (cats, n) =>
     db.items
-      .filter((i) => cats.has(i.category) && cuttable(i) && prices(i).cheapest)
+      .filter((i) => cats.has(i.category) && imageOf(i) && prices(i).cheapest)
       .sort((a, b) => storeCount(b) - storeCount(a))
       .slice(0, n);
   return [
-    { label: t("shelf_hp"), items: top(HEADPHONE_CATS, 10) },
-    { label: t("shelf_src"), items: top(SOURCE_CATS, 10) },
+    { label: t("shelf_hp"), items: top(HEADPHONE_CATS, 6) },
+    { label: t("shelf_src"), items: top(SOURCE_CATS, 6) },
   ];
 }
 function shelfItem(i) {
   const p = prices(i).cheapest;
-  return `<a class="shelf-item" role="listitem" href="#item/${encodeURIComponent(i.id)}" style="--h:${SHELF_H[i.category] ?? 0.6}" data-shelf="${esc(i.id)}"><span class="shelf-gear"></span><span class="shelf-tag"><b>${esc(i.short ?? i.model)}</b><small>${esc(i.brand)}</small><span class="shelf-price">${localPrice(p.price, p.currency)}</span><small>${esc(t("stores", { n: storeCount(i) }))}</small></span></a>`;
+  return `<a class="shelf-item" role="listitem" href="#item/${encodeURIComponent(i.id)}">${photoCard(i)}<span class="shelf-tag"><b>${esc(i.short ?? i.model)}</b><span class="shelf-price">${localPrice(p.price, p.currency)}</span><small>${esc(t("stores", { n: storeCount(i) }))}</small></span></a>`;
 }
 
 // Tools on the home page as a stack of cards that pin and slide over each other (Clay's
-// feature stack). Each card's picture is real gear from the catalog, cut out.
+// feature stack), each with real gear from the catalog.
 function homeStackCards() {
   const newest = db.items
-    .filter((i) => (HEADPHONE_CATS.has(i.category) || SOURCE_CATS.has(i.category)) && cuttable(i) && i.listedAt)
-    .sort((a, b) => String(b.listedAt).localeCompare(String(a.listedAt)))
-    .slice(0, 8);
+    .filter((i) => (HEADPHONE_CATS.has(i.category) || SOURCE_CATS.has(i.category)) && imageOf(i) && i.listedAt)
+    .sort((a, b) => String(b.listedAt).localeCompare(String(a.listedAt)))[0];
   return [
     { k: "build", theme: "sky", gear: [HOME_DONGLE, "sennheiser--hd-600"] },
     { k: "deal", theme: "peach", gear: ["moondrop--aria-2"], price: true },
-    { k: "calendar", theme: "lime", gear: [newest[0]?.id].filter(Boolean), spares: newest.map((i) => i.id) },
+    { k: "calendar", theme: "lime", gear: [newest?.id] },
     { k: "discuss", theme: "pink", gear: ["meze-audio--109-pro"] },
     { k: "gallery", theme: "lilac", gear: ["fiio--k15", "hifiman--sundara"] },
   ].map((c) => ({ ...c, gear: c.gear.map(findItem).filter(Boolean) }));
@@ -485,7 +517,7 @@ function stackCard(c, n, all) {
   const gear = c.gear
     .map((i) => {
       const p = c.price && prices(i).cheapest;
-      return `<span class="stack-gear" data-cut="${esc(c.spares ? c.spares.join(",") : i.id)}" style="--h:${SHELF_H[i.category] ?? 0.6}" title="${esc(displayName(i))}">${p ? `<span class="shelf-tag stack-price"><b>${esc(i.short ?? i.model)}</b><span class="shelf-price">${localPrice(p.price, p.currency)}</span></span>` : ""}</span>`;
+      return `<span class="stack-slot">${photoCard(i)}${p ? `<span class="shelf-tag stack-price"><b>${esc(i.short ?? i.model)}</b><span class="shelf-price">${localPrice(p.price, p.currency)}</span></span>` : ""}</span>`;
     })
     .join("");
   return `<article class="stack-card th-${c.theme}${n === 0 ? " first" : ""}${n === all.length - 1 ? " last" : ""}">
@@ -495,7 +527,7 @@ function stackCard(c, n, all) {
         <p>${esc(t(`stack_${c.k}_p`))}</p>
         <a class="pill primary" href="#${c.k}">${esc(t("stack_open", { x: t(`nav_${c.k}`) }))}</a>
       </div>
-      <div class="stack-stage">${gear}</div>
+      <div class="stack-stage n${c.gear.length}">${gear}</div>
     </article>`;
 }
 
@@ -691,21 +723,10 @@ function wireHome(main) {
     let at = 0;
     let src = 0;
     let seen = false;
-    // The photo, cut out of its white background when the store's CDN allows, else as is.
-    const photo = async (hp) => {
-      const im = imageOf(hp);
-      if (!im) return "";
-      try {
-        const c = await cutout(sized(im.src, 1200));
-        return `<img class="bn-img cut" src="${c.url}" alt="${esc(displayName(hp))}">`;
-      } catch {
-        return `<img class="bn-img" src="${esc(sized(im.src, 1200))}" alt="${esc(displayName(hp))}" referrerpolicy="no-referrer">`;
-      }
-    };
-    const showPhoto = async (n) => {
-      const html = await photo(files[n]);
-      if (n !== at) return;
-      art.innerHTML = html;
+    // The photo: a card with the product's most front-on shot.
+    const showPhoto = (n) => {
+      art.innerHTML = photoCard(files[n], "bn-card");
+      fillFronts(art);
       if (!calm) art.firstElementChild?.animate([{ opacity: 0, transform: "translateY(3%) scale(0.97)" }, { opacity: 1, transform: "none" }], { duration: 520, easing: "cubic-bezier(.2,.7,.2,1)" });
     };
     const apply = () => {
@@ -756,46 +777,24 @@ function wireHome(main) {
         seen = true;
         apply();
         showPhoto(at);
-        files.forEach((hp) => imageOf(hp) && cutout(sized(imageOf(hp).src, 1200)).catch(() => {}));
       },
       { rootMargin: "0px 0px -25% 0px" },
     );
     io.observe(bench);
   }
-  // Shelf: photos are cut out (cropped to the product, so each stands on the board) as the shelf nears the screen.
-  const shelf = main.querySelector(".home-shelf");
-  if (shelf) {
+  // Photo cards on the shelf and in the tool stack: the best shot is picked as they come near.
+  for (const sel of [".home-shelf", ".home-stack"]) {
+    const el = main.querySelector(sel);
+    if (!el) continue;
     const io2 = new IntersectionObserver(
       ([e]) => {
         if (!e.isIntersecting) return;
         io2.disconnect();
-        // Each shelf holds spares: a piece whose photo can't be cut out cleanly is dropped, and
-        // the first six that work stay.
-        shelf.querySelectorAll(".shelf").forEach(async (row) => {
-          const items = [...row.querySelectorAll("[data-shelf]")];
-          const ok = await Promise.all(
-            items.map(async (a) => {
-              const i = findItem(a.dataset.shelf);
-              try {
-                const c = await cutout(sized(imageOf(i).src, 700), 700);
-                a.querySelector(".shelf-gear").innerHTML = `<img src="${c.url}" alt="${esc(displayName(i))}" style="aspect-ratio:${c.w}/${c.h}">`;
-                return true;
-              } catch {
-                return false;
-              }
-            }),
-          );
-          let kept = 0;
-          items.forEach((a, k) => {
-            if (!ok[k] || kept >= 6) return a.remove();
-            kept++;
-            a.querySelector(".shelf-gear").classList.add("in");
-          });
-        });
+        fillFronts(el);
       },
-      { rootMargin: "400px 0px" },
+      { rootMargin: "500px 0px" },
     );
-    io2.observe(shelf);
+    io2.observe(el);
   }
   // Tour of the checks: tabs over a colour slab; it moves on by itself every 7 s until someone picks one.
   const view = main.querySelector("[data-feature-view]");
@@ -831,35 +830,6 @@ function wireHome(main) {
       tour(i);
     }),
   );
-  // Gear in the tool cards: cut out when the stack comes near.
-  const cuts = [...main.querySelectorAll("[data-cut]")];
-  if (cuts.length) {
-    const io3 = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) return;
-        io3.disconnect();
-        // data-cut can list spares (comma-separated): the first photo that cuts out cleanly is used;
-        // if none does, the piece is left out rather than shown on its store backdrop.
-        cuts.forEach(async (box) => {
-          for (const id of box.dataset.cut.split(",")) {
-            const i = findItem(id);
-            const im = i && imageOf(i);
-            if (!im) continue;
-            try {
-              const c = await cutout(sized(im.src, 800), 800);
-              box.insertAdjacentHTML("afterbegin", `<img src="${c.url}" alt="${esc(displayName(i))}">`);
-              box.title = displayName(i);
-              box.classList.add("in");
-              return;
-            } catch {}
-          }
-          box.remove();
-        });
-      },
-      { rootMargin: "600px 0px" },
-    );
-    io3.observe(main.querySelector(".home-stack"));
-  }
   // Bands brighten and settle into place as they scroll in (once each).
   const bands = main.querySelectorAll(".home-band");
   if (!calm && "IntersectionObserver" in window) {
@@ -1650,7 +1620,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvve78jp").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvemhry").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2950,7 +2920,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvve78jp" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvemhry" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3472,7 +3442,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvve78jp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvemhry" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

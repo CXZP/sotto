@@ -5,11 +5,11 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mvvglgrl";
+import { availableVrms } from "./calc.js?v=mvvgtsj9";
 
 let W = 760;
 let H = 440;
-const PAD = { l: 58, r: 92, t: 18, b: 46 };
+const PAD = { l: 88, r: 100, t: 20, b: 72 };
 // Full range; zooming narrows X and Y for one chart.
 const X0 = [8, 1000];
 const Y0 = [0.003, 40];
@@ -76,11 +76,11 @@ export function renderChart(el, opts) {
   if (decades < 2.5) for (const d of [0.001, 0.01, 0.1, 1, 10]) for (const m of [2, 5]) if (inY(d * m)) ys.push(d * m);
   for (const z of xs) {
     grid.push(`<line class="g" x1="${lx(z)}" x2="${lx(z)}" y1="${PAD.t}" y2="${H - PAD.b}"/>`);
-    grid.push(`<text class="t" x="${lx(z)}" y="${H - PAD.b + 16}" text-anchor="middle">${z}</text>`);
+    grid.push(`<text class="t" x="${lx(z)}" y="${H - PAD.b + 24}" text-anchor="middle">${z}</text>`);
   }
   for (const v of ys) {
     grid.push(`<line class="g" x1="${PAD.l}" x2="${W - PAD.r}" y1="${ly(v)}" y2="${ly(v)}"/>`);
-    grid.push(`<text class="t" x="${PAD.l - 8}" y="${ly(v) + 4}" text-anchor="end">${v >= 1 ? v : +(v * 1000).toFixed(0) + "m"}V</text>`);
+    grid.push(`<text class="t" x="${PAD.l - 12}" y="${ly(v) + 4.5}" text-anchor="end">${v >= 1 ? v : +(v * 1000).toFixed(0) + "m"}V</text>`);
   }
 
   // Curves are clipped to the plot, not pressed flat against its edge when
@@ -132,8 +132,8 @@ export function renderChart(el, opts) {
         <defs><clipPath id="plot-clip"><rect x="${PAD.l}" y="${PAD.t}" width="${W - PAD.l - PAD.r}" height="${H - PAD.t - PAD.b}"/></clipPath></defs>
         <g clip-path="url(#plot-clip)">${zones}</g>
         ${grid.join("")}
-        <text class="axis" x="${(PAD.l + W - PAD.r) / 2}" y="${H - 8}" text-anchor="middle">${esc(labels.x)}</text>
-        <text class="axis" transform="translate(14 ${(PAD.t + H - PAD.b) / 2}) rotate(-90)" text-anchor="middle">${esc(labels.y)}</text>
+        <text class="axis" x="${(PAD.l + W - PAD.r) / 2}" y="${H - 16}" text-anchor="middle">${esc(labels.x)}</text>
+        <text class="axis" transform="translate(22 ${(PAD.t + H - PAD.b) / 2}) rotate(-90)" text-anchor="middle">${esc(labels.y)}</text>
         ${pointSvg}
         ${curveSvg}
         <text class="axis hint-y" x="${PAD.l + 6}" y="${PAD.t + 12}">↑ ${esc(labels.harder)}</text>

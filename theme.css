@@ -181,7 +181,7 @@ a.pill:not(.primary), button.pill:not(.primary) { background: var(--surface-2); 
 .final-wave { position: absolute; left: 0; right: 0; top: 50%; width: 100%; height: 46%; transform: translateY(-50%); fill: none; stroke: #e8862e; stroke-width: 1.5; opacity: 0.22; vector-effect: non-scaling-stroke; }
 
 /* Footer: an off-white card, on every page. */
-footer { box-sizing: border-box; width: min(1160px, 100% - 32px); margin: 40px auto 24px; padding: 26px 30px; background: var(--surface); border-radius: 28px; }
+footer { box-sizing: border-box; width: min(var(--page, 1600px) - 56px, 100% - 32px); margin: 40px auto 24px; padding: 26px 30px; background: var(--surface); border-radius: 28px; }
 .page-home ~ footer, footer { max-width: none; }
 
 @media (max-width: 900px) {
@@ -378,3 +378,44 @@ header .bar-inner, .hero, main:not(.page-home), footer { max-width: var(--page);
 }
 .slots .select select, .slots .dd-btn { min-height: 48px; border-radius: 14px; background-color: var(--bg); border: 1px solid var(--line); font-size: 15px; }
 .slots .dd-btn:hover { border-color: var(--line-strong); }
+
+/* The chart spans the builder's full width, below both columns. */
+.build-chart { margin-top: 32px; padding: 26px 28px; border-radius: 24px; }
+.chart-card h3 { text-transform: none; letter-spacing: -0.02em; font-family: var(--display); font-size: clamp(20px, 1.6vw, 26px); font-weight: 600; color: var(--text); margin: 0; }
+.chart-card .chart-head { margin-bottom: 8px; }
+.chart-card .howto ol { columns: 2 340px; column-gap: 32px; }
+
+/* Picker windows: roomier, above the pinned header. */
+.modal { z-index: 60; padding-top: 6vh; background: rgba(18, 17, 16, 0.38); }
+.modal .sheet { width: min(920px, 100%); max-height: 86vh; padding: 22px 24px 18px; gap: 12px; border-radius: 24px; background: var(--bg); box-shadow: 0 24px 60px -20px rgba(18, 17, 16, 0.35); }
+.sheet-head h2 { font-family: var(--display); font-size: 24px; letter-spacing: -0.03em; }
+.modal input.search { border-radius: 14px; padding: 13px 18px; font-size: 16px; background: var(--surface); }
+.modal .pick-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 4px 12px; align-content: start; }
+.modal .pick-list button { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 2px 14px; padding: 10px 14px 10px 10px; border-radius: 14px; }
+.modal .pick-list button:hover { background: var(--surface); }
+.modal .pt-img { width: 64px; height: 64px; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.modal .pn { font-size: 15px; align-self: end; }
+.modal .pm { align-self: start; }
+@media (max-width: 600px) {
+  .modal .sheet { padding: 16px; }
+  .modal .pick-list { grid-template-columns: minmax(0, 1fr); }
+  .modal .pt-img { width: 48px; height: 48px; }
+  .modal .pick-list button { grid-template-columns: 48px minmax(0, 1fr) auto; }
+}
+/* Chart axes: room to breathe, readable ticks. */
+.chart-box .t { font-size: 13px; }
+.chart-box .axis { font-size: 14px; font-weight: 500; }
+.chart-box .hint-y { font-size: 12.5px; font-weight: 400; }
+.chart-box .cl { font-size: 13.5px; }
+.sheet-head .icon-btn { margin-left: auto; }
+
+/* Tick boxes: rounded squares in the site's ink, the tick pops in (not the browser's blue box). */
+input[type="checkbox"] { appearance: none; -webkit-appearance: none; flex: none; width: 18px; height: 18px; margin: 0; border-radius: 6px; border: 1.5px solid var(--line-strong); background: var(--bg); display: inline-grid; place-content: center; vertical-align: -4px; cursor: pointer; transition: background-color 0.18s, border-color 0.18s; }
+input[type="checkbox"]::after { content: ""; width: 11px; height: 11px; background: var(--on-ink-btn); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.3l2.4 2.4 5.2-5.4' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.3l2.4 2.4 5.2-5.4' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; transform: scale(0); transition: transform 0.22s cubic-bezier(.3, 1.6, .5, 1); }
+input[type="checkbox"]:hover { border-color: var(--text-2); }
+input[type="checkbox"]:checked { background: var(--ink-btn); border-color: var(--ink-btn); }
+input[type="checkbox"]:checked::after { transform: scale(1); }
+input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[type="checkbox"]:disabled { opacity: 0.45; cursor: default; }
+label:has(> input[type="checkbox"]) { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { input[type="checkbox"]::after { transition: none; } }

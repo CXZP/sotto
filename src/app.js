@@ -1,26 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvglgrl";
-import { scope } from "./scope.js?v=mvvglgrl";
-import { navPill } from "./navpill.js?v=mvvglgrl";
-import { enhanceDropdowns } from "./dropdown.js?v=mvvglgrl";
-import { pickFront } from "./front.js?v=mvvglgrl";
-import { heroArt } from "./heroart.js?v=mvvglgrl";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvglgrl";
-import { renderChart } from "./chart.js?v=mvvglgrl";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvglgrl";
-import { makeT } from "./i18n.js?v=mvvglgrl";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvglgrl";
-import { LEGAL } from "./legal.js?v=mvvglgrl";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvglgrl";
-import * as community from "./community.js?v=mvvglgrl";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvglgrl";
-import { redactImage } from "./redact.js?v=mvvglgrl";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvglgrl";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvglgrl";
-import { chainLinks } from "./chain.js?v=mvvglgrl";
-import { fits } from "./dcfit.js?v=mvvglgrl";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvglgrl";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvglgrl";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvglgrl";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvgtsj9";
+import { scope } from "./scope.js?v=mvvgtsj9";
+import { navPill } from "./navpill.js?v=mvvgtsj9";
+import { enhanceDropdowns } from "./dropdown.js?v=mvvgtsj9";
+import { pickFront } from "./front.js?v=mvvgtsj9";
+import { heroArt } from "./heroart.js?v=mvvgtsj9";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvgtsj9";
+import { renderChart } from "./chart.js?v=mvvgtsj9";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvgtsj9";
+import { makeT } from "./i18n.js?v=mvvgtsj9";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvgtsj9";
+import { LEGAL } from "./legal.js?v=mvvgtsj9";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvgtsj9";
+import * as community from "./community.js?v=mvvgtsj9";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvgtsj9";
+import { redactImage } from "./redact.js?v=mvvgtsj9";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvgtsj9";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvgtsj9";
+import { chainLinks } from "./chain.js?v=mvvgtsj9";
+import { fits } from "./dcfit.js?v=mvvgtsj9";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvgtsj9";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvgtsj9";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvgtsj9";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -965,10 +965,9 @@ function buildPage() {
       ${buildTotal(amp, hp, dac, src, cart)}
       ${amp || hp ? `<div class="slot"><a class="pill small" href="#discuss/new?cat=dream&items=${[src?.id, dac?.id, amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_save_dream"))}</a> <a class="pill small" href="#discuss/new?cat=setup&items=${[amp?.id, hp?.id].filter(Boolean).map(encodeURIComponent).join(",")}">${esc(t("su_share_setup"))}</a></div>` : ""}
     </section>
-    <section class="results">${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}
-      <div class="card chart-card" id="chart"></div>
-    </section>
-  </div>`;
+    <section class="results">${hp ? buildResults(hp) : `<div class="card empty"><p>${esc(t("empty"))}</p><button class="pill primary" data-pick="hp">${esc(t("slot_pick"))} ${esc(t("slot_hp"))}</button></div>`}</section>
+  </div>
+  <div class="card chart-card build-chart" id="chart"></div>`;
 }
 
 function slotRow(label, control, hint = "", node = false) {
@@ -1173,13 +1172,20 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
     <div class="chart-pick" aria-live="polite">${highlightId ? "" : `<p class="muted small">${esc(t("chart_pick_hint"))}</p>`}</div>
     ${highlightId && !points.some((p) => p.id === highlightId) ? `<p class="note">${esc(t("chart_not_plotted", { hp: displayName(findItem(highlightId) ?? { model: highlightId }) }))}</p>` : ""}`;
   const pickBox = el.querySelector(".chart-pick");
-  const draw = (hl) =>
-    renderChart(el.querySelector(".chart-host"), {
+  const host = el.querySelector(".chart-host");
+  const fit = () => {
+    const w = Math.max(600, Math.round(host.clientWidth || 760));
+    return { w, h: Math.round(Math.min(Math.max(w * (opts.big ? 0.58 : 0.46), 400), opts.big ? 760 : 600)) };
+  };
+  let lit = highlightId;
+  const draw = (hl) => {
+    lit = hl;
+    renderChart(host, {
       curves: mergeCurves(outputs, srcLabel),
       points: points.map((p) => ({ ...p, highlight: p.id === hl })),
       peak,
       crest: CREST,
-      size: opts.big ? { w: 1100, h: 640 } : undefined,
+      size: fit(),
       labels: { harder: t("chart_harder"), easier: t("chart_easier"), zoomIn: t("zoom_in"), zoomOut: t("zoom_out"), zoomReset: t("zoom_reset"), zoomHint: t("zoom_hint"), ctrlHint: t(matchMedia("(pointer: coarse)").matches ? "zoom_two_fingers" : navigator.platform.startsWith("Mac") ? "zoom_cmd" : "zoom_ctrl"), x: t("chart_x"), y: t("chart_y"), need: t("chart_need"), aria: t("chart_aria"), ok: t("st_ok"), overkill: t("st_overkill"), tight: t("st_tight"), insufficient: t("st_insufficient"), ambiguous: t("st_ambiguous") },
       fmt: { z: (z) => `${fmt(z, 1)} Ω`, v: vfmt },
       onPick: (id) => {
@@ -1187,6 +1193,7 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
         showPick(id);
       },
     });
+  };
   const showPick = (id) => {
     const h = db.byId.get(id);
     const p = points.find((x) => x.id === id);
@@ -1202,6 +1209,14 @@ function drawChart(el, outputs, srcLabel, highlightId, opts = {}) {
   };
   draw(highlightId);
   if (highlightId) showPick(highlightId);
+  let lastW = host.clientWidth;
+  const ro = new ResizeObserver(() => {
+    if (!host.isConnected) return ro.disconnect();
+    if (Math.abs(host.clientWidth - lastW) < 24) return;
+    lastW = host.clientWidth;
+    draw(lit);
+  });
+  ro.observe(host);
 }
 
 /** #chart?src=<item id>|dev=<device id>&level=&cat=&max=  Full-page chart with filters. */
@@ -1657,7 +1672,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvglgrl").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvgtsj9").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2957,7 +2972,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvglgrl" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvgtsj9" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3479,7 +3494,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvglgrl" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvgtsj9" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

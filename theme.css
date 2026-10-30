@@ -1,0 +1,104 @@
+/* Sotto's look, after Clay (clay.com, measured on the live page): a white page, black type,
+   flat off-white panels with no borders or shadows, one family of round type, rounded
+   rectangles instead of pills (12 px for controls, 18 px for cards, 48 px for the big home
+   panels), black primary buttons, and faint guide lines down the content column.
+   Loaded last, so it sets the tone over the older sheets. */
+
+:root,
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f6f5f2;
+  --surface-2: #eeede8;
+  --text: #121110;
+  --text-2: #6b6a65;
+  --line: rgba(18, 17, 16, 0.08);
+  --line-strong: rgba(18, 17, 16, 0.16);
+  --accent: #b4621c;
+  --accent-bg: rgba(180, 98, 28, 0.1);
+  --on-accent: #fff;
+  --glass: rgba(255, 255, 255, 0.86);
+  --glass-edge: rgba(18, 17, 16, 0.08);
+  --shadow: none;
+  --ink-btn: #121110;
+  --on-ink-btn: #ffffff;
+  --r-ctl: 12px;
+  --r-card: 18px;
+  --r-panel: 48px;
+  --radius: var(--r-card);
+  --font: "Funnel Sans", "IBM Plex Sans Thai", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e0d0c; --surface: #191816; --surface-2: #24221f; --text: #f4f3f0; --text-2: #a3a19b;
+    --line: rgba(244, 243, 240, 0.08); --line-strong: rgba(244, 243, 240, 0.16);
+    --accent: #e8862e; --accent-bg: rgba(232, 134, 46, 0.14); --on-accent: #1a0e00;
+    --glass: rgba(14, 13, 12, 0.82); --glass-edge: rgba(244, 243, 240, 0.08);
+    --ink-btn: #f4f3f0; --on-ink-btn: #121110; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e0d0c; --surface: #191816; --surface-2: #24221f; --text: #f4f3f0; --text-2: #a3a19b;
+  --line: rgba(244, 243, 240, 0.08); --line-strong: rgba(244, 243, 240, 0.16);
+  --accent: #e8862e; --accent-bg: rgba(232, 134, 46, 0.14); --on-accent: #1a0e00;
+  --glass: rgba(14, 13, 12, 0.82); --glass-edge: rgba(244, 243, 240, 0.08);
+  --ink-btn: #f4f3f0; --on-ink-btn: #121110; color-scheme: dark;
+}
+:lang(th) body, html:lang(th) { --font: "Funnel Sans", "IBM Plex Sans Thai", system-ui, sans-serif; }
+body { font-size: 15.5px; }
+
+/* Headings: round, medium weight, set tight. */
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
+.home h2 { font-size: clamp(32px, 4.2vw, 68px); line-height: 1.02; letter-spacing: -0.035em; }
+.tagline { font-family: var(--display); font-weight: 600; letter-spacing: -0.03em; }
+
+/* Links read as text, underlined, not as coloured words. */
+a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: currentColor; }
+.link, button.link { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+nav a, a.pill, .brand, .shelf-item, .bn-item, a.card, .home-review, .price-row, .explore-item, .ef-all { text-decoration: none; }
+
+/* Header: a quiet bar, rounded rectangle, same width as the page. */
+.bar { padding: 10px 16px; }
+.bar-inner { border-radius: 16px; background: var(--glass); border: 1px solid var(--glass-edge); box-shadow: none; }
+nav a { border-radius: 10px; }
+nav a.active { background: var(--surface-2); }
+
+/* Controls: rounded rectangles. */
+.pill, select, .seg, .seg::before, .seg button, .chip, .lang-pick, .hero-pick, .bn-src button, input[type="text"], input[type="search"], input[type="number"], input:not([type]), textarea { border-radius: var(--r-ctl); }
+.pill { font-weight: 500; }
+.pill.primary { background: var(--ink-btn); color: var(--on-ink-btn); border-color: var(--ink-btn); }
+.pill.primary:hover { background: var(--ink-btn); opacity: 0.86; }
+a.pill:not(.primary), button.pill:not(.primary) { background: var(--surface-2); border-color: transparent; }
+.tag { border-radius: 7px; }
+
+/* Cards: flat panels, no outline, no shadow. */
+.card { background: var(--surface); border-color: transparent; box-shadow: none; border-radius: var(--r-card); }
+
+/* Faint guide lines down the content column (wide screens). */
+@media (min-width: 1200px) {
+  main:not(.page-home) { background: linear-gradient(var(--line), var(--line)) 0 0 / 1px 100% no-repeat, linear-gradient(var(--line), var(--line)) 100% 0 / 1px 100% no-repeat; padding-inline: 28px; }
+}
+
+/* Home: the hero, bench and shelf become big rounded panels set into the white page. */
+.page-home .home { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.hero-art, .home-bench, .home-shelf { margin: 0 20px; border-radius: var(--r-panel); }
+.hero-art { background: #0b0b0a; color: #f4f3f0; --text: #f4f3f0; --text-2: #a3a19b; --bg: #0b0b0a; --surface: #1a1917; --surface-2: #24221f; --line: rgba(244, 243, 240, 0.08); --line-strong: rgba(244, 243, 240, 0.18); --ink-btn: #f4f3f0; --on-ink-btn: #121110; color-scheme: dark; }
+.hero-art .pill.primary { background: var(--art-accent, #e8862e); border-color: var(--art-accent, #e8862e); color: #1a0e00; }
+.home-bench, .home-shelf { margin-top: 0; }
+.home-bench { padding-left: max(5vw, 48px); }
+.home-shelf { padding-inline: max(6vw, 48px); }
+.bn-stage { border-radius: 24px; border-color: rgba(0, 0, 0, 0.1); }
+.bn-item { border-radius: 10px; }
+.bn-list { border-top: 0; gap: 2px; }
+.bn-item { border-bottom: 0; }
+.bn-item.on::before { left: 4px; top: 10px; bottom: 10px; border-radius: 3px; }
+.shelf-tag { border-radius: 10px; border-top-width: 0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04); }
+.home-band { border-top: 0; padding-top: 56px; }
+.home-band h2 { margin-bottom: 8px; }
+.explore-item { border-radius: var(--r-card); border-color: transparent; background: var(--surface); }
+.explore-item.on { background: var(--surface-2); border-color: transparent; }
+@media (max-width: 900px) {
+  .hero-art, .home-bench, .home-shelf { margin: 0 8px; border-radius: 28px; }
+  .home-bench, .home-shelf { padding-inline: 16px; }
+}

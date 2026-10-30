@@ -209,13 +209,14 @@ a:hover .pcard img, a:focus-visible .pcard img { transform: scale(1.04); }
 .stack-price { position: absolute; right: 16px; bottom: 16px; left: auto; top: auto; border-radius: 12px; }
 
 /* Bench: the photo as a card standing on the scope screen. */
-.bn-photo { top: 7%; bottom: 7%; right: 3%; width: 38%; }
+.bn-photo { top: 3%; bottom: 3%; right: 2%; width: 50%; }
+.bn-card img { inset: 6% 5% 5%; width: 90%; height: 89%; }
 .bn-card { height: 100%; aspect-ratio: auto; box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.35); }
 
 @media (max-width: 900px) {
   .home-shelf .shelf { grid-template-columns: none; grid-auto-columns: 46vw; }
   .stack-slot .pcard { min-height: 240px; }
-  .bn-photo { width: 44%; top: 10%; bottom: 18%; }
+  .bn-photo { width: 56%; top: 6%; bottom: 16%; }
 }
 
 /* Tool cards, final: separate rounded panels with a gap (no pinning, so no corners of one

@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvveum28";
-import { scope } from "./scope.js?v=mvveum28";
-import { pickFront } from "./front.js?v=mvveum28";
-import { heroArt } from "./heroart.js?v=mvveum28";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvveum28";
-import { renderChart } from "./chart.js?v=mvveum28";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvveum28";
-import { makeT } from "./i18n.js?v=mvveum28";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvveum28";
-import { LEGAL } from "./legal.js?v=mvveum28";
-import { track, stats, trackingOff } from "./analytics.js?v=mvveum28";
-import * as community from "./community.js?v=mvveum28";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvveum28";
-import { redactImage } from "./redact.js?v=mvveum28";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvveum28";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvveum28";
-import { chainLinks } from "./chain.js?v=mvveum28";
-import { fits } from "./dcfit.js?v=mvveum28";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvveum28";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvveum28";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvveum28";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvf20ch";
+import { scope } from "./scope.js?v=mvvf20ch";
+import { pickFront } from "./front.js?v=mvvf20ch";
+import { heroArt } from "./heroart.js?v=mvvf20ch";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvf20ch";
+import { renderChart } from "./chart.js?v=mvvf20ch";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvf20ch";
+import { makeT } from "./i18n.js?v=mvvf20ch";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvf20ch";
+import { LEGAL } from "./legal.js?v=mvvf20ch";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvf20ch";
+import * as community from "./community.js?v=mvvf20ch";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvf20ch";
+import { redactImage } from "./redact.js?v=mvvf20ch";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvf20ch";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvf20ch";
+import { chainLinks } from "./chain.js?v=mvvf20ch";
+import { fits } from "./dcfit.js?v=mvvf20ch";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvf20ch";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvf20ch";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvf20ch";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -457,7 +457,7 @@ function photoCard(i, cls = "") {
 // top, IEMs and desktop gear from the front. Anything else falls back to the automatic pick.
 const HOME_PHOTO = {
   "sennheiser--hd-600": 0, "meze-audio--109-pro": 0, "hifiman--sundara": 0, "audeze--lcd": 0, "hifiman--he1000-unveiled": 0,
-  "meze-audio--arta": 0, "sennheiser--hd660s2": 1, "audio-technica--ath-r70xa": 0, "sennheiser--hd-560s": 4,
+  "meze-audio--arta": 0, "sennheiser--hd660s2": 1, "audio-technica--ath-r70xa": 0, "sennheiser--hd-560s": "https://cdn.shopify.com/s/files/1/0703/4830/8515/files/hd_560s_product_shot_cutout_isofront_2nd.jpg?v=1726718698",
   "ifi--go-link-2-max": 1, "ifi--hip-3": 5, "ifi--idsd-gr-2": 0,
   "moondrop--aria-2": 0, "qdc--anole-v14-10": 7, "moondrop--blessing-3": 7, "campfire-audio--cascara": 0, "final-audio--a5000": 7,
   "fiio--k15": 1, "ifi--zen-3": 0, "ifi--zen-can-3": 5, "sennheiser--hdv820": 4,
@@ -472,7 +472,9 @@ async function fillFronts(root) {
     if (!im) return;
     const srcs = [...new Set([...(sets[i.id]?.src ?? []), im.src])];
     const n = HOME_PHOTO[i.id];
-    const f = n != null && srcs[n] ? await pickFront(`${i.id}#${n}`, [srcs[n]]) : await pickFront(i.id, srcs);
+    // A number is a place in the gallery; a string is a photo from another store.
+    if (typeof n === "string") srcs.unshift(n);
+    const f = typeof n === "string" ? await pickFront(`${i.id}#url`, [n]) : n != null && srcs[n] ? await pickFront(`${i.id}#${n}`, [srcs[n]]) : await pickFront(i.id, srcs);
     if (!box.isConnected) return;
     if (f.bg) box.style.setProperty("--bg", f.bg);
     const img = box.querySelector("img");
@@ -1620,7 +1622,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvveum28").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvf20ch").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2920,7 +2922,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvveum28" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvf20ch" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3442,7 +3444,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvveum28" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvf20ch" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

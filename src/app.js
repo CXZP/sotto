@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvdqvue";
-import { scope } from "./scope.js?v=mvvdqvue";
-import { cutout } from "./cutout.js?v=mvvdqvue";
-import { heroArt } from "./heroart.js?v=mvvdqvue";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvdqvue";
-import { renderChart } from "./chart.js?v=mvvdqvue";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvdqvue";
-import { makeT } from "./i18n.js?v=mvvdqvue";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvdqvue";
-import { LEGAL } from "./legal.js?v=mvvdqvue";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvdqvue";
-import * as community from "./community.js?v=mvvdqvue";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvdqvue";
-import { redactImage } from "./redact.js?v=mvvdqvue";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvdqvue";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvdqvue";
-import { chainLinks } from "./chain.js?v=mvvdqvue";
-import { fits } from "./dcfit.js?v=mvvdqvue";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvdqvue";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvdqvue";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvdqvue";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvve78jp";
+import { scope } from "./scope.js?v=mvve78jp";
+import { cutout } from "./cutout.js?v=mvve78jp";
+import { heroArt } from "./heroart.js?v=mvve78jp";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvve78jp";
+import { renderChart } from "./chart.js?v=mvve78jp";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvve78jp";
+import { makeT } from "./i18n.js?v=mvve78jp";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvve78jp";
+import { LEGAL } from "./legal.js?v=mvve78jp";
+import { track, stats, trackingOff } from "./analytics.js?v=mvve78jp";
+import * as community from "./community.js?v=mvve78jp";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvve78jp";
+import { redactImage } from "./redact.js?v=mvve78jp";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvve78jp";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvve78jp";
+import { chainLinks } from "./chain.js?v=mvve78jp";
+import { fits } from "./dcfit.js?v=mvve78jp";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvve78jp";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvve78jp";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvve78jp";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -457,13 +457,56 @@ function shelfRows() {
       .sort((a, b) => storeCount(b) - storeCount(a))
       .slice(0, n);
   return [
-    { label: t("shelf_hp"), items: top(HEADPHONE_CATS, 6) },
-    { label: t("shelf_src"), items: top(SOURCE_CATS, 6) },
+    { label: t("shelf_hp"), items: top(HEADPHONE_CATS, 10) },
+    { label: t("shelf_src"), items: top(SOURCE_CATS, 10) },
   ];
 }
 function shelfItem(i) {
   const p = prices(i).cheapest;
   return `<a class="shelf-item" role="listitem" href="#item/${encodeURIComponent(i.id)}" style="--h:${SHELF_H[i.category] ?? 0.6}" data-shelf="${esc(i.id)}"><span class="shelf-gear"></span><span class="shelf-tag"><b>${esc(i.short ?? i.model)}</b><small>${esc(i.brand)}</small><span class="shelf-price">${localPrice(p.price, p.currency)}</span><small>${esc(t("stores", { n: storeCount(i) }))}</small></span></a>`;
+}
+
+// Tools on the home page as a stack of cards that pin and slide over each other (Clay's
+// feature stack). Each card's picture is real gear from the catalog, cut out.
+function homeStackCards() {
+  const newest = db.items
+    .filter((i) => (HEADPHONE_CATS.has(i.category) || SOURCE_CATS.has(i.category)) && cuttable(i) && i.listedAt)
+    .sort((a, b) => String(b.listedAt).localeCompare(String(a.listedAt)))
+    .slice(0, 8);
+  return [
+    { k: "build", theme: "sky", gear: [HOME_DONGLE, "sennheiser--hd-600"] },
+    { k: "deal", theme: "peach", gear: ["moondrop--aria-2"], price: true },
+    { k: "calendar", theme: "lime", gear: [newest[0]?.id].filter(Boolean), spares: newest.map((i) => i.id) },
+    { k: "discuss", theme: "pink", gear: ["meze-audio--109-pro"] },
+    { k: "gallery", theme: "lilac", gear: ["fiio--k15", "hifiman--sundara"] },
+  ].map((c) => ({ ...c, gear: c.gear.map(findItem).filter(Boolean) }));
+}
+function stackCard(c, n, all) {
+  const gear = c.gear
+    .map((i) => {
+      const p = c.price && prices(i).cheapest;
+      return `<span class="stack-gear" data-cut="${esc(c.spares ? c.spares.join(",") : i.id)}" style="--h:${SHELF_H[i.category] ?? 0.6}" title="${esc(displayName(i))}">${p ? `<span class="shelf-tag stack-price"><b>${esc(i.short ?? i.model)}</b><span class="shelf-price">${localPrice(p.price, p.currency)}</span></span>` : ""}</span>`;
+    })
+    .join("");
+  return `<article class="stack-card th-${c.theme}${n === 0 ? " first" : ""}${n === all.length - 1 ? " last" : ""}">
+      <div class="stack-text">
+        <span class="stack-tag">${esc(t(`nav_${c.k}`))}</span>
+        <h3>${esc(t(`stack_${c.k}_a`))}<span class="tone">${esc(t(`stack_${c.k}_b`))}</span></h3>
+        <p>${esc(t(`stack_${c.k}_p`))}</p>
+        <a class="pill primary" href="#${c.k}">${esc(t("stack_open", { x: t(`nav_${c.k}`) }))}</a>
+      </div>
+      <div class="stack-stage">${gear}</div>
+    </article>`;
+}
+
+// A quiet trace for the closing panel: the same song-like wave as the bench scope.
+function finalWave() {
+  let d = "";
+  for (let x = 0; x <= 1200; x += 6) {
+    const s = (0.28 + 0.72 * Math.abs(Math.sin(x * 0.004)) ** 2.4) * (0.6 * Math.sin(x * 0.045) + 0.28 * Math.sin(x * 0.11 + 1.3) + 0.12 * Math.sin(x * 0.27 + 0.4));
+    d += `${x ? "L" : "M"}${x} ${(60 - s * 52).toFixed(1)}`;
+  }
+  return `<svg class="final-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="${d}"/></svg>`;
 }
 
 function homePage() {
@@ -476,6 +519,8 @@ function homePage() {
     [fmt(sourced, 0), t("home_st_sourced")],
   ];
   const shelves = shelfRows();
+  const stack = homeStackCards();
+  const storeNames = [...new Set(Object.values(db.stores).map((s) => s.name).filter(Boolean))];
   const files = HOME_FILES.map(findItem).filter(Boolean);
   const art = heroData();
   return `<div class="home">
@@ -486,7 +531,6 @@ function homePage() {
         <h1>${t("home_h1").split("\n").map(esc).join("<br>")}</h1>
         <p class="hero-sub">${esc(t("home_sub"))}</p>
         <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
-        <dl class="hero-stats">${stats.map(([n, l]) => `<div><dt>${esc(l)}</dt><dd>${n}</dd></div>`).join("")}</dl>
       </div>
       <div class="hero-right">
       <div class="hero-plot" data-plot></div>
@@ -501,6 +545,11 @@ function homePage() {
         <p class="hero-legend"><span><i class="lg-line"></i>${esc(t("hero_lg_line"))}</span><span><i class="lg-dot"></i>${esc(t("hero_lg_dot"))}</span></p>
       </div>
       </div>
+    </section>
+    <section class="home-proof" aria-label="${esc(t("proof_label"))}">
+      <p class="proof-line">${esc(t("proof_line", { n: Object.keys(db.stores).length }))}</p>
+      <div class="proof-stores" aria-hidden="true"><div class="proof-track">${[...storeNames, ...storeNames].map((n) => `<span>${esc(n)}</span>`).join("")}</div></div>
+      <dl class="proof-stats">${stats.map(([n, l]) => `<div><dd>${n}</dd><dt>${esc(l)}</dt></div>`).join("")}</dl>
     </section>
     <section class="home-bench" aria-labelledby="bench-h">
       <div class="bn-intro">
@@ -527,15 +576,22 @@ function homePage() {
       </div>
       <div class="bn-read" data-file-stage aria-live="polite">${files.length ? homeFile(files[0], 0) : ""}</div>
     </section>
-    <section class="home-band">
-      <p class="home-slash">// ${esc(t("home_f_kicker"))}</p>
-      <h2>${esc(t("home_f_h"))}</h2>
-      <div class="home-explore">
-        <div class="explore-list">${HOME_FEATURES.map(
-          (k, n) => `<button type="button" class="explore-item${n ? "" : " on"}" data-feature="${k}" aria-expanded="${!n}"><b>${esc(t(`home_f_${k}`))}</b><span class="small">${esc(t(`home_f_${k}_sub`))}</span></button>`,
-        ).join("")}</div>
-        <div class="explore-view" data-feature-view>${homeFeature(HOME_FEATURES[0])}</div>
+    <section class="home-flow" aria-labelledby="flow-h">
+      <h2 id="flow-h">${esc(t("home_f_h"))}</h2>
+      <p class="home-sub">${esc(t("flow_sub"))}</p>
+      <div class="flow-tabs" role="tablist" aria-label="${esc(t("home_f_kicker"))}">${HOME_FEATURES.map(
+        (k, n) => `<button type="button" role="tab" class="flow-tab${n ? "" : " on"}" aria-selected="${!n}" data-feature="${k}" style="--c: var(--flow-${k})">${esc(t(`home_f_${k}`))}</button>`,
+      ).join("")}</div>
+      <div class="flow-slab" data-slab style="--c: var(--flow-${HOME_FEATURES[0]})">
+        <div class="flow-card">
+          <p class="flow-what" data-feature-sub>${esc(t(`home_f_${HOME_FEATURES[0]}_sub`))}</p>
+          <div class="explore-view" data-feature-view>${homeFeature(HOME_FEATURES[0])}</div>
+        </div>
       </div>
+    </section>
+    <section class="home-stack" aria-labelledby="stack-h">
+      <h2 id="stack-h">${esc(t("stack_h"))}</h2>
+      <div class="stack">${stack.map(stackCard).join("")}</div>
     </section>
     <section class="home-shelf" aria-labelledby="shelf-h">
       <div class="shelf-head">
@@ -556,6 +612,12 @@ function homePage() {
       <div class="home-not-grid">${[1, 2, 3].map((n) => `<div class="card pad"><b>${esc(t(`home_not${n}`))}</b><p class="muted small">${esc(t(`home_not${n}_sub`))}</p></div>`).join("")}</div>
       <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#about">${esc(t("nav_about"))}</a></div>
     </section>
+    <section class="home-final">
+      ${finalWave()}
+      <h2>${esc(t("final_h"))}</h2>
+      <p class="home-sub">${esc(t("final_sub"))}</p>
+      <div class="home-cta"><a class="pill primary" href="#build">${esc(t("home_cta_build"))}</a><a class="pill" href="#catalog">${esc(t("home_cta_catalog"))}</a></div>
+    </section>
   </div>`;
 }
 
@@ -569,6 +631,7 @@ function reviewCard(r) {
 let heroHandle = null;
 let scopeHandle = null;
 function wireHome(main) {
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
   heroHandle?.stop();
   const canvas = main.querySelector(".hero-canvas");
   const art = heroData();
@@ -624,7 +687,6 @@ function wireHome(main) {
     const read = bench.querySelector("[data-file-stage]");
     const items = [...bench.querySelectorAll("[data-file]")];
     const srcs = [...bench.querySelectorAll("[data-src]")];
-    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
     scopeHandle = scope(bench.querySelector(".bn-scope"));
     let at = 0;
     let src = 0;
@@ -707,43 +769,97 @@ function wireHome(main) {
       ([e]) => {
         if (!e.isIntersecting) return;
         io2.disconnect();
-        shelf.querySelectorAll("[data-shelf]").forEach(async (a) => {
-          const i = findItem(a.dataset.shelf);
-          const box = a.querySelector(".shelf-gear");
-          try {
-            const c = await cutout(sized(imageOf(i).src, 700), 700);
-            box.innerHTML = `<img src="${c.url}" alt="${esc(displayName(i))}" style="aspect-ratio:${c.w}/${c.h}">`;
-          } catch {
-            box.innerHTML = `<img class="flat" src="${esc(sized(imageOf(i).src, 500))}" alt="${esc(displayName(i))}" referrerpolicy="no-referrer">`;
-          }
-          box.classList.add("in");
+        // Each shelf holds spares: a piece whose photo can't be cut out cleanly is dropped, and
+        // the first six that work stay.
+        shelf.querySelectorAll(".shelf").forEach(async (row) => {
+          const items = [...row.querySelectorAll("[data-shelf]")];
+          const ok = await Promise.all(
+            items.map(async (a) => {
+              const i = findItem(a.dataset.shelf);
+              try {
+                const c = await cutout(sized(imageOf(i).src, 700), 700);
+                a.querySelector(".shelf-gear").innerHTML = `<img src="${c.url}" alt="${esc(displayName(i))}" style="aspect-ratio:${c.w}/${c.h}">`;
+                return true;
+              } catch {
+                return false;
+              }
+            }),
+          );
+          let kept = 0;
+          items.forEach((a, k) => {
+            if (!ok[k] || kept >= 6) return a.remove();
+            kept++;
+            a.querySelector(".shelf-gear").classList.add("in");
+          });
         });
       },
       { rootMargin: "400px 0px" },
     );
     io2.observe(shelf);
   }
-  // Explorer: one open item at a time; the panel on the right shows that check on real data.
+  // Tour of the checks: tabs over a colour slab; it moves on by itself every 7 s until someone picks one.
   const view = main.querySelector("[data-feature-view]");
+  const slab = main.querySelector("[data-slab]");
+  const what = main.querySelector("[data-feature-sub]");
+  const tabs = [...main.querySelectorAll("[data-feature]")];
   let reviews = null;
   const fillReviews = () => {
     const el = view.querySelector("[data-feature-reviews]");
     if (!el || !reviews) return;
     el.outerHTML = reviews.length ? `<div class="explore-reviews">${reviews.slice(0, 2).map(reviewCard).join("")}</div>` : `<div class="card result"><p class="muted">${esc(t("home_s3_empty"))}</p></div>`;
   };
-  main.querySelectorAll("[data-feature]").forEach((b) =>
+  let tourAt = 0;
+  const tour = (n) => {
+    tourAt = n;
+    const k = tabs[n].dataset.feature;
+    tabs.forEach((x, i) => {
+      x.classList.toggle("on", i === n);
+      x.setAttribute("aria-selected", String(i === n));
+    });
+    slab.style.setProperty("--c", `var(--flow-${k})`);
+    what.textContent = t(`home_f_${k}_sub`);
+    view.innerHTML = homeFeature(k);
+    fillReviews();
+    view.classList.remove("fade");
+    void view.offsetWidth;
+    view.classList.add("fade");
+  };
+  let tourTimer = calm ? 0 : setInterval(() => (slab.isConnected ? tour((tourAt + 1) % tabs.length) : clearInterval(tourTimer)), 7000);
+  tabs.forEach((b, i) =>
     b.addEventListener("click", () => {
-      main.querySelectorAll("[data-feature]").forEach((x) => {
-        x.classList.toggle("on", x === b);
-        x.setAttribute("aria-expanded", String(x === b));
-      });
-      view.innerHTML = homeFeature(b.dataset.feature);
-      fillReviews();
-      view.classList.remove("fade");
-      void view.offsetWidth;
-      view.classList.add("fade");
+      clearInterval(tourTimer);
+      tour(i);
     }),
   );
+  // Gear in the tool cards: cut out when the stack comes near.
+  const cuts = [...main.querySelectorAll("[data-cut]")];
+  if (cuts.length) {
+    const io3 = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io3.disconnect();
+        // data-cut can list spares (comma-separated): the first photo that cuts out cleanly is used;
+        // if none does, the piece is left out rather than shown on its store backdrop.
+        cuts.forEach(async (box) => {
+          for (const id of box.dataset.cut.split(",")) {
+            const i = findItem(id);
+            const im = i && imageOf(i);
+            if (!im) continue;
+            try {
+              const c = await cutout(sized(im.src, 800), 800);
+              box.insertAdjacentHTML("afterbegin", `<img src="${c.url}" alt="${esc(displayName(i))}">`);
+              box.title = displayName(i);
+              box.classList.add("in");
+              return;
+            } catch {}
+          }
+          box.remove();
+        });
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io3.observe(main.querySelector(".home-stack"));
+  }
   // Bands brighten and settle into place as they scroll in (once each).
   const bands = main.querySelectorAll(".home-band");
   if (!calm && "IntersectionObserver" in window) {
@@ -1534,7 +1650,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvdqvue").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvve78jp").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2834,7 +2950,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvdqvue" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvve78jp" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3356,7 +3472,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvdqvue" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvve78jp" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4534,7 +4650,8 @@ function seg(name, items, value) {
 /** First store photo for an item: { src, url, store }. Loaded from the store CDN, never copied. */
 // Stores whose first photo is a product shot on a plain background come first;
 // big hi-fi shops often lead with a room or lifestyle photo.
-const PHOTO_LAST = new Set(["a2a", "audioadvice", "moon", "hifiheadphones", "headphonezone", "zeppelin", "kitsune"]);
+// Audio46 stamps a "certified" badge in the corner of its photos.
+const PHOTO_LAST = new Set(["a2a", "audioadvice", "moon", "hifiheadphones", "headphonezone", "zeppelin", "kitsune", "audio46"]);
 function imageOf(i) {
   const offers = (i.offers ?? []).filter((x) => x.image && !x.suspect);
   const o = offers.find((x) => !PHOTO_LAST.has(x.store)) ?? offers[0];

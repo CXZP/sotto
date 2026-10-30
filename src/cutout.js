@@ -59,16 +59,39 @@ async function make(src, max) {
       stack[sp++] = i;
     }
   };
+  // Studio backdrops are often a grey sweep, lighter at the top. Besides the measured colour,
+  // the fill also creeps along smooth, colourless steps from pixel to pixel, so the whole sweep
+  // goes; a product's edge is a sharper step and stops it.
+  const grey = (i) => {
+    const o = i * 4;
+    return Math.max(px[o], px[o + 1], px[o + 2]) - Math.min(px[o], px[o + 1], px[o + 2]) <= 18 && px[o] + px[o + 1] + px[o + 2] >= 3 * 110;
+  };
+  const step = (i, j) => {
+    const a = i * 4;
+    const b = j * 4;
+    return Math.max(Math.abs(px[a] - px[b]), Math.abs(px[a + 1] - px[b + 1]), Math.abs(px[a + 2] - px[b + 2])) <= 3;
+  };
+  const creep = (i, j) => {
+    if (bg[j]) return;
+    if (near(j) || (grey(j) && step(i, j))) {
+      bg[j] = 1;
+      stack[sp++] = j;
+    }
+  };
   for (let x = 0; x < W; x++) (seed(x), seed((H - 1) * W + x));
   for (let y = 0; y < H; y++) (seed(y * W), seed(y * W + W - 1));
   while (sp) {
     const i = stack[--sp];
     const x = i % W;
-    if (x > 0) seed(i - 1);
-    if (x < W - 1) seed(i + 1);
-    if (i >= W) seed(i - W);
-    if (i < N - W) seed(i + W);
+    if (x > 0) creep(i, i - 1);
+    if (x < W - 1) creep(i, i + 1);
+    if (i >= W) creep(i, i - W);
+    if (i < N - W) creep(i, i + W);
   }
+  // A product shot has a plain backdrop all round. If much of the border isn't backdrop, it's a
+  // scene or a cropped shot, and cutting it out would look broken: refuse, the caller skips it.
+  const edge = ring.filter((i) => bg[i]).length / ring.length;
+  if (edge < 0.9) throw new Error(`not a plain backdrop (${Math.round(edge * 100)}%)`);
   // Backdrop showing through closed loops (inside a headband, between cable and shell) doesn't
   // touch the border. A large enclosed patch that is the backdrop colour almost exactly is
   // cleared too; small or shaded light areas are more likely part of the product and stay.
@@ -99,13 +122,59 @@ async function make(src, max) {
   // than the backdrop becomes its opacity, and its colour is un-mixed from the backdrop. Pure
   // backdrop goes clear, a soft shadow becomes a see-through shadow, edge pixels lose their
   // white fringe. Everything else is the product and stays as shot.
+  // Bright, colourless edges of the product itself (a polished side, a white rim) can look like
+  // backdrop and get bitten in narrow teeth. Close the product outline: anything the backdrop
+  // reaches only through a gap narrower than ~2R pixels is given back to the product.
+  const R = Math.max(3, Math.round(Math.max(W, H) / 110));
+  const grow = (seedOf, r) => {
+    const dist = new Int16Array(N).fill(-1);
+    let q = [];
+    for (let i = 0; i < N; i++) if (seedOf(i)) (dist[i] = 0), q.push(i);
+    for (let d = 0; d < r && q.length; d++) {
+      const next = [];
+      for (const i of q) {
+        const x = i % W;
+        for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) {
+          if (j < 0 || j >= N || dist[j] >= 0) continue;
+          dist[j] = d + 1;
+          next.push(j);
+        }
+      }
+      q = next;
+    }
+    return dist;
+  };
+  const dil = grow((i) => !bg[i], R); // product, dilated
+  const far = grow((i) => dil[i] < 0, R); // what stays backdrop, dilated back
+  // Only bright pixels go back (a product edge catching light); a shadow between feet stays backdrop.
+  const bright = (i) => Math.min(px[i * 4], px[i * 4 + 1], px[i * 4 + 2]) >= Math.min(...B) - 10;
+  for (let i = 0; i < N; i++) if (bg[i] && far[i] < 0 && bright(i)) bg[i] = 0;
+  // Only backdrop within a few pixels of the product is un-mixed (that's where fringes and
+  // contact shadows are); the rest goes fully clear, so a sweep darker than the measured colour
+  // can't come back as a grey box.
+  const near6 = new Uint8Array(N);
+  let ring1 = [];
+  for (let i = 0; i < N; i++) if (!bg[i]) ring1.push(i);
+  for (let d = 0; d < 2 && ring1.length; d++) {
+    const next = [];
+    for (const i of ring1) {
+      const x = i % W;
+      for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) {
+        if (j < 0 || j >= N || !bg[j] || near6[j]) continue;
+        near6[j] = 1;
+        next.push(j);
+      }
+    }
+    ring1 = next;
+  }
   let x0 = W;
   let y0 = H;
   let x1 = -1;
   let y1 = -1;
   for (let i = 0; i < N; i++) {
     const o = i * 4;
-    if (bg[i]) {
+    if (bg[i] && !near6[i]) px[o + 3] = 0;
+    else if (bg[i]) {
       let a = 0;
       for (let c = 0; c < 3; c++) a = Math.max(a, (B[c] - px[o + c]) / Math.max(B[c], 1));
       a = a < 0.035 ? 0 : Math.min(1, a * 1.15);
@@ -121,6 +190,52 @@ async function make(src, max) {
     if (y > y1) y1 = y;
   }
   if (x1 < 0) throw new Error("empty cutout");
+  // Pieces: label what's left. A store badge is a small separate piece in a corner: drop it.
+  // A see-through product (clear resin shells) shatters into many pieces: refuse the photo.
+  {
+    const lab = new Int32Array(N).fill(-1);
+    const pieces = [];
+    for (let s = 0; s < N; s++) {
+      if (lab[s] >= 0 || px[s * 4 + 3] < 90) continue;
+      const id = pieces.length;
+      const p = { px: [], x0: W, y0: H, x1: 0, y1: 0 };
+      lab[s] = id;
+      stack[sp++] = s;
+      while (sp) {
+        const i = stack[--sp];
+        p.px.push(i);
+        const x = i % W;
+        const y = (i - x) / W;
+        if (x < p.x0) p.x0 = x;
+        if (x > p.x1) p.x1 = x;
+        if (y < p.y0) p.y0 = y;
+        if (y > p.y1) p.y1 = y;
+        for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) {
+          if (j < 0 || j >= N || lab[j] >= 0 || px[j * 4 + 3] < 90) continue;
+          lab[j] = id;
+          stack[sp++] = j;
+        }
+      }
+      pieces.push(p);
+    }
+    const total = pieces.reduce((n, p) => n + p.px.length, 0);
+    const big = pieces.filter((p) => p.px.length > total * 0.004);
+    if (big.length > 6) throw new Error(`breaks into ${big.length} pieces`);
+    const corner = (p) => (p.x1 < W * 0.2 || p.x0 > W * 0.8) && (p.y1 < H * 0.2 || p.y0 > H * 0.8);
+    for (const p of pieces) if (p.px.length < total * 0.04 && corner(p)) for (const i of p.px) px[i * 4 + 3] = 0;
+    // Re-measure the crop without the dropped pieces.
+    x0 = W;
+    y0 = H;
+    x1 = -1;
+    y1 = -1;
+    for (const p of pieces) {
+      if (px[p.px[0] * 4 + 3] < 90) continue;
+      x0 = Math.min(x0, p.x0);
+      y0 = Math.min(y0, p.y0);
+      x1 = Math.max(x1, p.x1);
+      y1 = Math.max(y1, p.y1);
+    }
+  }
   // Keep a margin so a soft shadow isn't cropped hard.
   const m = Math.round(Math.max(x1 - x0, y1 - y0) * 0.03);
   x0 = Math.max(0, x0 - m);

@@ -575,7 +575,7 @@ nav a { white-space: nowrap; }
    Full width. The canvas draws the catalog (src/heroart.js): source curves as strands,
    headphones as dots; the copy sits on the left, the example sources bottom right. */
 main.page-home { max-width: none; padding: 0 0 48px; }
-.page-home .home > :not(.hero-art):not(.home-bench):not(.home-shelf) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
+.page-home .home > :not(.hero-art):not(.home-bench):not(.home-shelf):not(.home-proof):not(.home-flow):not(.home-stack):not(.home-final) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
 .hero-art { position: relative; overflow: hidden; --art-accent: #e8862e; --art-warn: #ff7a45; --edge: 12vw; min-height: calc(100svh - 56px); box-sizing: border-box; padding: 40px 4vw 40px var(--edge); display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 3vw; align-items: center; }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .hero-copy { position: relative; z-index: 1; display: grid; gap: 18px; justify-items: start; }

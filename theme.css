@@ -102,3 +102,84 @@ a.pill:not(.primary), button.pill:not(.primary) { background: var(--surface-2); 
   .hero-art, .home-bench, .home-shelf { margin: 0 8px; border-radius: 28px; }
   .home-bench, .home-shelf { padding-inline: 16px; }
 }
+
+/* ---------------------------------------------------------------- Clay's page structure */
+/* Proof panel: off-white, rises over the bottom of the hero; store names drift past, numbers below. */
+.hero-art { padding-bottom: 150px; }
+.home-proof { position: relative; z-index: 2; width: min(1280px, 100% - 80px); margin: -158px auto 0; box-sizing: border-box; background: #f4f3f0; color: #121110; border-radius: var(--r-panel); padding: 40px 0 36px; display: grid; gap: 26px; text-align: center; }
+.proof-line { margin: 0 auto; max-width: 40em; padding: 0 24px; font-size: 16px; line-height: 1.6; color: #45443f; }
+.proof-stores { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.proof-track { display: flex; gap: 10px; width: max-content; animation: proof-drift 60s linear infinite; }
+.proof-track span { padding: 14px 22px; background: #fefdfb; border-radius: var(--r-card); font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+@keyframes proof-drift { to { transform: translateX(-50%); } }
+.proof-stats { margin: 0 40px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.proof-stats div { background: #fefdfb; border-radius: var(--r-card); padding: 18px 20px; display: grid; gap: 2px; text-align: left; }
+.proof-stats dd { margin: 0; font-family: var(--display); font-size: clamp(28px, 2.6vw, 44px); font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.proof-stats dt { font-size: 13.5px; color: #6b6a65; }
+
+/* Tour of the checks: centred heading, tabs, and the answer on a colour slab that changes with the tab. */
+.home-flow { --flow-plug: #9fe4f9; --flow-loud: #eef773; --flow-amp: #ffb98a; --flow-price: #cdbbfb; --flow-reviews: #f9c5e1; width: min(1280px, 100% - 40px); margin: 40px auto 0; display: grid; gap: 18px; justify-items: center; text-align: center; }
+.home-flow h2 { max-width: 14em; }
+.flow-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
+.flow-tab { padding: 10px 16px; border: 0; border-radius: var(--r-ctl); background: var(--surface); color: var(--text); font-size: 15.5px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; }
+.flow-tab:hover { background: var(--surface-2); }
+.flow-tab.on { background: var(--c); color: #121110; }
+.flow-slab { width: 100%; box-sizing: border-box; margin-top: 10px; padding: clamp(24px, 5vw, 72px) 20px; border-radius: 32px; background: var(--c); transition: background-color 0.5s; display: grid; justify-items: center; }
+.flow-card { width: min(760px, 100%); background: #fefdfb; color: #121110; border-radius: 24px; padding: 22px; text-align: left; display: grid; gap: 12px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.25); --text: #121110; --text-2: #6b6a65; --surface: #f4f3f0; --surface-2: #ebeae5; --line: rgba(0, 0, 0, 0.08); }
+.flow-what { margin: 0; color: #6b6a65; font-size: 14.5px; }
+.flow-card .card { background: #f4f3f0; }
+
+/* Tool stack: cards pin 72 px from the top and the next slides over; together they read as one tall panel. */
+.home-stack { width: min(1280px, 100% - 40px); margin: 72px auto 0; display: grid; gap: 28px; }
+.home-stack > h2 { text-align: center; }
+.stack { display: grid; }
+.stack-card { position: sticky; top: 72px; min-height: min(78vh, 640px); box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; padding: clamp(28px, 4vw, 64px); background: var(--bg-c); color: #121110; }
+.stack-card.first { border-radius: var(--r-panel) var(--r-panel) 0 0; }
+.stack-card.last { border-radius: 0 0 var(--r-panel) var(--r-panel); }
+.th-sky { --bg-c: #e9f3ff; --fg-c: #2f57d6; }
+.th-peach { --bg-c: #fff0e8; --fg-c: #c2470f; }
+.th-lime { --bg-c: #f6f9d6; --fg-c: #6a7800; }
+.th-pink { --bg-c: #fdecf6; --fg-c: #b8197e; }
+.th-lilac { --bg-c: #f1edff; --fg-c: #6a3fd6; }
+.stack-text { display: grid; gap: 16px; justify-items: start; align-content: center; }
+.stack-tag { padding: 4px 12px; border-radius: 999px; background: var(--fg-c); color: #fff; font-size: 13px; font-weight: 600; }
+.stack-text h3 { margin: 0; font-size: clamp(30px, 3.2vw, 52px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 600; }
+.stack-text h3 .tone { display: block; color: var(--fg-c); }
+.stack-text p { margin: 0; max-width: 32em; font-size: 15.5px; line-height: 1.65; color: #45443f; }
+.stack-text .pill.primary { background: var(--fg-c); border-color: var(--fg-c); color: #fff; }
+/* The stage: a soft floor, the gear standing on it. */
+.stack-stage { position: relative; align-self: stretch; min-height: 340px; border-radius: 28px; background: linear-gradient(180deg, #f3efe8 0 62%, #e4ddd2 62% 100%); display: flex; align-items: flex-end; justify-content: center; gap: 4%; padding: 0 6% 10%; overflow: hidden; }
+.stack-gear { position: relative; height: calc(var(--h) * 78%); max-width: 58%; display: flex; align-items: flex-end; opacity: 0; transition: opacity 0.5s; }
+.stack-gear.in { opacity: 1; }
+.stack-gear img { height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 16px 14px rgba(0, 0, 0, 0.18)); }
+.stack-gear img.flat { mix-blend-mode: multiply; filter: none; }
+.stack-price { position: absolute; left: 70%; top: 8%; white-space: nowrap; }
+
+/* Closing panel: dark, the scope's wave running across, one line and the two actions. */
+.home-final { position: relative; overflow: hidden; margin: 72px 20px 0; padding: clamp(72px, 9vw, 140px) 24px; border-radius: var(--r-panel); background: #0b0b0a; color: #f4f3f0; display: grid; gap: 16px; justify-items: center; text-align: center; --text: #f4f3f0; --text-2: #a3a19b; --surface-2: #24221f; --ink-btn: #f4f3f0; --on-ink-btn: #121110; }
+.home-final h2, .home-final .home-sub, .home-final .home-cta { position: relative; }
+.home-final .pill.primary { background: #e8862e; border-color: #e8862e; color: #1a0e00; }
+.final-wave { position: absolute; left: 0; right: 0; top: 50%; width: 100%; height: 46%; transform: translateY(-50%); fill: none; stroke: #e8862e; stroke-width: 1.5; opacity: 0.22; vector-effect: non-scaling-stroke; }
+
+/* Footer: an off-white card, on every page. */
+footer { box-sizing: border-box; width: min(1160px, 100% - 32px); margin: 40px auto 24px; padding: 26px 30px; background: var(--surface); border-radius: 28px; }
+.page-home ~ footer, footer { max-width: none; }
+
+@media (max-width: 900px) {
+  .hero-art { padding-bottom: 110px; }
+  .home-proof { width: calc(100% - 32px); margin-top: -118px; border-radius: 28px; padding: 26px 0; }
+  .proof-stats { margin: 0 14px; grid-template-columns: 1fr 1fr; }
+  .home-flow, .home-stack { width: calc(100% - 16px); }
+  .flow-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; width: 100%; scrollbar-width: none; padding: 0 8px; }
+  .flow-tabs::-webkit-scrollbar { display: none; }
+  .flow-tab { white-space: nowrap; }
+  .flow-slab { padding: 16px 10px; border-radius: 24px; }
+  .flow-card { padding: 16px; border-radius: 18px; }
+  .stack-card { position: relative; top: auto; grid-template-columns: 1fr; min-height: 0; padding: 26px 18px; }
+  .stack-stage { min-height: 260px; }
+  .home-final { margin: 48px 8px 0; border-radius: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proof-track { animation: none; }
+  .flow-slab, .stack-gear { transition: none; }
+}

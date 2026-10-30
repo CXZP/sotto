@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvemhry";
-import { scope } from "./scope.js?v=mvvemhry";
-import { pickFront } from "./front.js?v=mvvemhry";
-import { heroArt } from "./heroart.js?v=mvvemhry";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvemhry";
-import { renderChart } from "./chart.js?v=mvvemhry";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvemhry";
-import { makeT } from "./i18n.js?v=mvvemhry";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvemhry";
-import { LEGAL } from "./legal.js?v=mvvemhry";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvemhry";
-import * as community from "./community.js?v=mvvemhry";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvemhry";
-import { redactImage } from "./redact.js?v=mvvemhry";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvemhry";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvemhry";
-import { chainLinks } from "./chain.js?v=mvvemhry";
-import { fits } from "./dcfit.js?v=mvvemhry";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvemhry";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvemhry";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvemhry";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvveoao6";
+import { scope } from "./scope.js?v=mvveoao6";
+import { pickFront } from "./front.js?v=mvveoao6";
+import { heroArt } from "./heroart.js?v=mvveoao6";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvveoao6";
+import { renderChart } from "./chart.js?v=mvveoao6";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvveoao6";
+import { makeT } from "./i18n.js?v=mvveoao6";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvveoao6";
+import { LEGAL } from "./legal.js?v=mvveoao6";
+import { track, stats, trackingOff } from "./analytics.js?v=mvveoao6";
+import * as community from "./community.js?v=mvveoao6";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvveoao6";
+import { redactImage } from "./redact.js?v=mvveoao6";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvveoao6";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvveoao6";
+import { chainLinks } from "./chain.js?v=mvveoao6";
+import { fits } from "./dcfit.js?v=mvveoao6";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvveoao6";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvveoao6";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvveoao6";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -453,10 +453,10 @@ function photoCard(i, cls = "") {
   return `<span class="pcard ${cls}" data-front="${esc(i.id)}"><img src="${im ? esc(sized(im.src, 800)) : ""}" alt="${esc(displayName(i))}" loading="lazy" referrerpolicy="no-referrer"><span class="pcard-label">${esc(i.brand)}</span></span>`;
 }
 // Hand-picked photos for the gear the home page shows (index into the store gallery):
-// over-ear headphones from the side, portable gear (dongles, portable amps, players) from the
+// over-ear headphones at an angle from the side (never straight side-on), portable gear (dongles, portable amps, players) from the
 // top, IEMs and desktop gear from the front. Anything else falls back to the automatic pick.
 const HOME_PHOTO = {
-  "sennheiser--hd-600": 0, "meze-audio--109-pro": 2, "hifiman--sundara": 1, "audeze--lcd": 0, "hifiman--he1000-unveiled": 0,
+  "sennheiser--hd-600": 0, "meze-audio--109-pro": 0, "hifiman--sundara": 0, "audeze--lcd": 0, "hifiman--he1000-unveiled": 0,
   "meze-audio--arta": 0, "sennheiser--hd660s2": 1, "audio-technica--ath-r70xa": 0, "sennheiser--hd-560s": 4,
   "ifi--go-link-2-max": 1, "ifi--hip-3": 5, "ifi--idsd-gr-2": 0,
   "moondrop--aria-2": 0, "qdc--anole-v14-10": 7, "moondrop--blessing-3": 7, "campfire-audio--cascara": 0, "final-audio--a5000": 7,
@@ -1620,7 +1620,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvemhry").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvveoao6").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2920,7 +2920,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvemhry" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvveoao6" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3442,7 +3442,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvemhry" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvveoao6" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

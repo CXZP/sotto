@@ -575,7 +575,7 @@ nav a { white-space: nowrap; }
    Full width. The canvas draws the catalog (src/heroart.js): source curves as strands,
    headphones as dots; the copy sits on the left, the example sources bottom right. */
 main.page-home { max-width: none; padding: 0 0 48px; }
-.page-home .home > :not(.hero-art):not(.home-bench) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
+.page-home .home > :not(.hero-art):not(.home-bench):not(.home-shelf) { width: min(1128px, 100% - 32px); margin-inline: auto; box-sizing: border-box; }
 .hero-art { position: relative; overflow: hidden; --art-accent: #e8862e; --art-warn: #ff7a45; --edge: 12vw; min-height: calc(100svh - 56px); box-sizing: border-box; padding: 40px 4vw 40px var(--edge); display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 3vw; align-items: center; }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .hero-copy { position: relative; z-index: 1; display: grid; gap: 18px; justify-items: start; }
@@ -630,3 +630,46 @@ main.page-home { max-width: none; padding: 0 0 48px; }
 /* A soft pool of page colour behind the copy so the strands never fight the headline. */
 .hero-copy::before { content: ""; position: absolute; z-index: -1; inset: -80px -120px -80px -60px; background: radial-gradient(closest-side, var(--bg) 55%, transparent); pointer-events: none; }
 @media (max-width: 900px) { .hero-copy::before { content: none; } }
+
+/* ---------------------------------------------------------------- the shelf
+   The most-stocked gear standing on two shelves against a light wall, each piece at about
+   its real size next to the others, with a shop-style price tag on the shelf edge. */
+.home-shelf {
+  --wall: #e6e6e4; --ink: #141414; --ink-2: #5a5a58;
+  --text: var(--ink); --text-2: var(--ink-2); --line: rgba(0, 0, 0, 0.12); --accent: #8a4d0f; --surface: #fff; --surface-2: #ececea;
+  --gear: 230px; --gap: 3vw;
+  background: radial-gradient(120% 90% at 50% 20%, #f3f3f1, var(--wall)); color: var(--ink); color-scheme: light;
+  padding: 80px 12vw 96px; margin-top: 8px;
+}
+.shelf-head { display: grid; gap: 14px; justify-items: start; max-width: 40em; }
+.home .shelf-head h2 { text-align: left; font-size: clamp(30px, 2.5vw, 50px); line-height: 1.12; font-weight: 600; }
+.shelf-sub { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+.shelf-head .home-cta { justify-content: flex-start; }
+.shelf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: var(--gap); margin-top: 64px; }
+.shelf + .shelf { margin-top: 72px; }
+.shelf-item { position: relative; display: grid; grid-template-rows: var(--gear) auto; color: inherit; text-decoration: none; }
+/* The board runs under every item and across the gaps, so the row reads as one shelf. */
+.shelf-item::before { content: ""; position: absolute; left: calc(var(--gap) / -2); right: calc(var(--gap) / -2); top: var(--gear); height: 12px; background: linear-gradient(#fbfbfa, #e2e2df 55%, #c9c9c5); box-shadow: 0 24px 26px -16px rgba(0, 0, 0, 0.38); }
+.shelf-item:first-child::before { left: -1.5vw; }
+.shelf-item:last-child::before { right: -1.5vw; }
+.shelf-gear { position: relative; display: flex; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity 0.5s; }
+.shelf-gear.in { opacity: 1; }
+.shelf-gear::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: -3px; height: 10px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.32), transparent); z-index: 0; }
+.shelf-gear img { position: relative; z-index: 1; height: calc(var(--h) * 100%); width: auto; max-width: 100%; object-fit: contain; object-position: bottom; transition: transform 0.35s cubic-bezier(.2,.7,.2,1); }
+.shelf-gear img.flat { mix-blend-mode: multiply; }
+.shelf-item:hover .shelf-gear img, .shelf-item:focus-visible .shelf-gear img { transform: translateY(-8px); }
+.shelf-item:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
+/* Shelf-edge tag. */
+.shelf-tag { position: relative; margin-top: 22px; justify-self: center; display: grid; gap: 1px; min-width: 70%; padding: 8px 10px 9px; background: #fff; border-top: 3px solid var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); font-size: 12px; color: var(--ink-2); }
+.shelf-tag b { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shelf-price { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--ink); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.shelf-price .muted, .shelf-price small { font-size: 12px; font-weight: 400; color: var(--ink-2); }
+@media (max-width: 900px) {
+  .home-shelf { --gear: 170px; --gap: 22px; padding: 56px 16px 64px; }
+  .shelf { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 44vw; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 0 16px 8px; scroll-snap-type: x mandatory; }
+  .shelf::-webkit-scrollbar { display: none; }
+  .shelf-item { scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-gear, .shelf-gear img { transition: none; }
+}

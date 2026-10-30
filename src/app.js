@@ -1,24 +1,24 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvccnqd";
-import { scope } from "./scope.js?v=mvvccnqd";
-import { cutout } from "./cutout.js?v=mvvccnqd";
-import { heroArt } from "./heroart.js?v=mvvccnqd";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvccnqd";
-import { renderChart } from "./chart.js?v=mvvccnqd";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvccnqd";
-import { makeT } from "./i18n.js?v=mvvccnqd";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvccnqd";
-import { LEGAL } from "./legal.js?v=mvvccnqd";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvccnqd";
-import * as community from "./community.js?v=mvvccnqd";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvccnqd";
-import { redactImage } from "./redact.js?v=mvvccnqd";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvccnqd";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvccnqd";
-import { chainLinks } from "./chain.js?v=mvvccnqd";
-import { fits } from "./dcfit.js?v=mvvccnqd";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvccnqd";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvccnqd";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvccnqd";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvde2iv";
+import { scope } from "./scope.js?v=mvvde2iv";
+import { cutout } from "./cutout.js?v=mvvde2iv";
+import { heroArt } from "./heroart.js?v=mvvde2iv";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvde2iv";
+import { renderChart } from "./chart.js?v=mvvde2iv";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvde2iv";
+import { makeT } from "./i18n.js?v=mvvde2iv";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvvde2iv";
+import { LEGAL } from "./legal.js?v=mvvde2iv";
+import { track, stats, trackingOff } from "./analytics.js?v=mvvde2iv";
+import * as community from "./community.js?v=mvvde2iv";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvde2iv";
+import { redactImage } from "./redact.js?v=mvvde2iv";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvde2iv";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvde2iv";
+import { chainLinks } from "./chain.js?v=mvvde2iv";
+import { fits } from "./dcfit.js?v=mvvde2iv";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvvde2iv";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvde2iv";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvde2iv";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -444,6 +444,27 @@ function homeFeature(key) {
 
 const HOME_FEATURES = ["plug", "loud", "amp", "price", "reviews"];
 
+// The shelf: the most-stocked gear standing on two shelves, headphones above and sources
+// below, each photo cut out and drawn at roughly its real size relative to the others, with
+// a shop-style tag on the shelf edge. Only photos the cut-out can read (Shopify's CDN).
+const SHELF_H = { headphone: 1, iem: 0.5, dongle: 0.38, portable: 0.5, dap: 0.62, desktop: 0.56, cd: 0.6 };
+const cuttable = (i) => /cdn\.shopify\.com|\/cdn\/shop\//.test(imageOf(i)?.src ?? "");
+function shelfRows() {
+  const top = (cats, n) =>
+    db.items
+      .filter((i) => cats.has(i.category) && cuttable(i) && prices(i).cheapest)
+      .sort((a, b) => storeCount(b) - storeCount(a))
+      .slice(0, n);
+  return [
+    { label: t("shelf_hp"), items: top(HEADPHONE_CATS, 6) },
+    { label: t("shelf_src"), items: top(SOURCE_CATS, 6) },
+  ];
+}
+function shelfItem(i) {
+  const p = prices(i).cheapest;
+  return `<a class="shelf-item" role="listitem" href="#item/${encodeURIComponent(i.id)}" style="--h:${SHELF_H[i.category] ?? 0.6}" data-shelf="${esc(i.id)}"><span class="shelf-gear"></span><span class="shelf-tag"><b>${esc(i.short ?? i.model)}</b><small>${esc(i.brand)}</small><span class="shelf-price">${localPrice(p.price, p.currency)}</span><small>${esc(t("stores", { n: storeCount(i) }))}</small></span></a>`;
+}
+
 function homePage() {
   const brands = new Set(db.items.map((i) => i.brand)).size;
   const sourced = db.items.reduce((n, i) => n + Object.values(i.specs ?? {}).reduce((m, v) => m + (Array.isArray(v) ? v.length : 0), 0), 0);
@@ -453,10 +474,7 @@ function homePage() {
     [fmt(brands, 0), t("home_st_brands")],
     [fmt(sourced, 0), t("home_st_sourced")],
   ];
-  const popular = db.items
-    .filter((i) => HEADPHONE_CATS.has(i.category) && imageOf(i))
-    .sort((a, b) => storeCount(b) - storeCount(a))
-    .slice(0, 4);
+  const shelves = shelfRows();
   const files = HOME_FILES.map(findItem).filter(Boolean);
   const art = heroData();
   return `<div class="home">
@@ -518,17 +536,13 @@ function homePage() {
         <div class="explore-view" data-feature-view>${homeFeature(HOME_FEATURES[0])}</div>
       </div>
     </section>
-    <section class="home-band">
-      <p class="home-slash">// ${esc(t("home_s2_kicker"))}</p>
-      <h2>${esc(t("home_s2_h"))}</h2><p class="home-sub">${esc(t("home_s2_sub"))}</p>
-      <div class="home-cta"><a class="pill primary" href="#catalog">${esc(t("home_cta_catalog"))}</a><a class="pill" href="#deal">${esc(t("home_cta_deal"))}</a></div>
-      <div class="home-products">${popular
-        .map((i) => {
-          const im = imageOf(i);
-          const p = prices(i).cheapest;
-          return `<a class="card home-product" href="#item/${encodeURIComponent(i.id)}"><img src="${esc(sized(im.src, 400))}" alt="" loading="lazy" referrerpolicy="no-referrer"><b>${esc(displayName(i))}</b><span class="muted small">${p ? `${esc(t("price_from"))} ${localPrice(p.price, p.currency)} · ` : ""}${esc(t("stores", { n: storeCount(i) }))}</span></a>`;
-        })
-        .join("")}</div>
+    <section class="home-shelf" aria-labelledby="shelf-h">
+      <div class="shelf-head">
+        <h2 id="shelf-h">${esc(t("home_s2_h"))}</h2>
+        <p class="shelf-sub">${esc(t("home_s2_sub"))}</p>
+        <div class="home-cta"><a class="pill primary" href="#catalog">${esc(t("home_cta_catalog"))}</a><a class="pill" href="#deal">${esc(t("home_cta_deal"))}</a></div>
+      </div>
+      ${shelves.map((row) => `<div class="shelf" role="list" aria-label="${esc(row.label)}">${row.items.map(shelfItem).join("")}</div>`).join("")}
     </section>
     <section class="home-band" data-home-reviews>
       <p class="home-slash">// ${esc(t("home_s3_kicker"))}</p>
@@ -684,6 +698,29 @@ function wireHome(main) {
       { rootMargin: "0px 0px -25% 0px" },
     );
     io.observe(bench);
+  }
+  // Shelf: photos are cut out (cropped to the product, so each stands on the board) as the shelf nears the screen.
+  const shelf = main.querySelector(".home-shelf");
+  if (shelf) {
+    const io2 = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io2.disconnect();
+        shelf.querySelectorAll("[data-shelf]").forEach(async (a) => {
+          const i = findItem(a.dataset.shelf);
+          const box = a.querySelector(".shelf-gear");
+          try {
+            const c = await cutout(sized(imageOf(i).src, 700), 700);
+            box.innerHTML = `<img src="${c.url}" alt="${esc(displayName(i))}" style="aspect-ratio:${c.w}/${c.h}">`;
+          } catch {
+            box.innerHTML = `<img class="flat" src="${esc(sized(imageOf(i).src, 500))}" alt="${esc(displayName(i))}" referrerpolicy="no-referrer">`;
+          }
+          box.classList.add("in");
+        });
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io2.observe(shelf);
   }
   // Explorer: one open item at a time; the panel on the right shows that check on real data.
   const view = main.querySelector("[data-feature-view]");
@@ -1496,7 +1533,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvccnqd").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvvde2iv").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2796,7 +2833,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvccnqd" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvde2iv" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3318,7 +3355,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvccnqd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvde2iv" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

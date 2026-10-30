@@ -23,8 +23,8 @@
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --radius: 18px;
   --font: "Inter", "IBM Plex Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* Headings and numbers: Chakra Petch (Cadson Demak), squared like lettering on equipment, Thai and Latin in one design. */
-  --display: "Chakra Petch", "IBM Plex Sans Thai", system-ui, sans-serif;
+  /* Headings and numbers: Funnel Display (round bowls, sharp joins) for Latin, Prompt (Cadson Demak, round Thai forms to match) for Thai. */
+  --display: "Funnel Display", "Prompt", "IBM Plex Sans Thai", system-ui, sans-serif;
   color-scheme: light;
 }
 

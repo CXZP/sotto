@@ -217,3 +217,18 @@ a:hover .pcard img, a:focus-visible .pcard img { transform: scale(1.04); }
   .stack-slot .pcard { min-height: 240px; }
   .bn-photo { width: 44%; top: 10%; bottom: 18%; }
 }
+
+/* Tool cards, final: separate rounded panels with a gap (no pinning, so no corners of one
+   card showing behind the next), and the photo stage filling the right half. */
+.stack { gap: 16px; }
+.stack-card, .stack-card.first, .stack-card.last { position: relative; top: auto; border-radius: 40px; min-height: 0; padding: clamp(24px, 3vw, 40px); align-items: stretch; }
+.stack-text { padding: clamp(8px, 2vw, 32px) 0; }
+.stack-stage, .stack-stage.n1 { justify-content: stretch; align-items: stretch; grid-template-columns: minmax(0, 1fr); min-height: 440px; }
+.stack-stage.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.stack-slot { min-width: 0; }
+.stack-slot .pcard { width: 100%; min-height: 440px; border-radius: 28px; }
+@media (max-width: 900px) {
+  .stack-card, .stack-card.first, .stack-card.last { border-radius: 28px; padding: 20px 16px; }
+  .stack-stage, .stack-stage.n1, .stack-slot .pcard { min-height: 280px; }
+}
+.stack-slot .stack-price { width: max-content; min-width: 0; left: auto; right: 16px; bottom: 16px; }

@@ -618,3 +618,4 @@ th { text-transform: none; letter-spacing: 0; font-size: 13px; }
 .about.prose > p { max-width: 760px; }
 .stat-tiles .card b { display: block; margin-top: 10px; font-family: var(--display); font-size: clamp(40px, 4vw, 64px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 main > .prose, main > article.prose { margin-left: 0; margin-right: auto; }
+main > .narrow { margin-left: 0; margin-right: auto; }

@@ -1,26 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvw5hljd";
-import { scope } from "./scope.js?v=mvw5hljd";
-import { navPill } from "./navpill.js?v=mvw5hljd";
-import { enhanceDropdowns } from "./dropdown.js?v=mvw5hljd";
-import { pickFront } from "./front.js?v=mvw5hljd";
-import { heroArt } from "./heroart.js?v=mvw5hljd";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvw5hljd";
-import { renderChart } from "./chart.js?v=mvw5hljd";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvw5hljd";
-import { makeT } from "./i18n.js?v=mvw5hljd";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvw5hljd";
-import { LEGAL } from "./legal.js?v=mvw5hljd";
-import { track, stats, trackingOff } from "./analytics.js?v=mvw5hljd";
-import * as community from "./community.js?v=mvw5hljd";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvw5hljd";
-import { redactImage } from "./redact.js?v=mvw5hljd";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvw5hljd";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvw5hljd";
-import { chainLinks } from "./chain.js?v=mvw5hljd";
-import { fits } from "./dcfit.js?v=mvw5hljd";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvw5hljd";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvw5hljd";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvw5hljd";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvw64wbk";
+import { scope } from "./scope.js?v=mvw64wbk";
+import { navPill } from "./navpill.js?v=mvw64wbk";
+import { enhanceDropdowns } from "./dropdown.js?v=mvw64wbk";
+import { pickFront } from "./front.js?v=mvw64wbk";
+import { heroArt } from "./heroart.js?v=mvw64wbk";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvw64wbk";
+import { renderChart } from "./chart.js?v=mvw64wbk";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvw64wbk";
+import { makeT } from "./i18n.js?v=mvw64wbk";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvw64wbk";
+import { LEGAL } from "./legal.js?v=mvw64wbk";
+import { track, stats, trackingOff } from "./analytics.js?v=mvw64wbk";
+import * as community from "./community.js?v=mvw64wbk";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvw64wbk";
+import { redactImage } from "./redact.js?v=mvw64wbk";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvw64wbk";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvw64wbk";
+import { chainLinks } from "./chain.js?v=mvw64wbk";
+import { fits } from "./dcfit.js?v=mvw64wbk";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvw64wbk";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvw64wbk";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvw64wbk";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -89,7 +89,7 @@ function route() {
   if (h === "discuss/new") return { name: "discuss", sub: "new" };
   if (h.startsWith("discuss/")) return { name: "discuss", sub: "thread", id: h.slice(8) };
   // A mistyped or old link lands on the home page, not a half-wired setup page.
-  return { name: PAGES.has(h) ? h : "home" };
+  return { name: PAGES.has(h) || Object.hasOwn(LEGAL, h) ? h : "home" };
 }
 const PAGES = new Set(["build", "catalog", "deal", "brands", "chart", "discuss", "account", "saved", "stats", "compare", "gallery", "tools", "fr", "inbox", "learn", "about", "home", "calendar"]);
 function query() {
@@ -1721,7 +1721,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvw5hljd").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvw64wbk").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -3021,7 +3021,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvw5hljd" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvw64wbk" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3543,7 +3543,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvw5hljd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvw64wbk" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3832,6 +3832,13 @@ function threadRow(r, mine, signedIn) {
     </div>${r.images?.length ? `<a class="row-thumb" href="#discuss/${r.id}"><img src="${esc(r.images[0])}" alt="" loading="lazy">${r.images.length > 1 ? `<span>+${r.images.length - 1}</span>` : ""}</a>` : ""}</article>`;
 }
 
+/** An empty list: its message as a heading, and the next step as a button ("No threads yet." / "Start the first one"). */
+function emptyState(text, href) {
+  const m = text.match(/^(.+?[.。!?])s*(.+?)[.。]?$/u) ?? text.match(/^(S+)s+(.+)$/u);
+  const [head, act] = m ? [m[1], m[2]] : [text, ""];
+  return `<div class="empty-state"><p class="empty-head">${esc(head)}</p>${act ? `<a class="pill primary" href="${href}">${esc(act)}</a>` : ""}</div>`;
+}
+
 async function wireDiscuss(main) {
   const box = main.querySelector("#threads");
   const p = query();
@@ -3844,7 +3851,7 @@ async function wireDiscuss(main) {
     }
     const s = await community.session();
     const mine = s ? await community.myVotes("thread", rows.map((r) => r.id)) : new Map();
-    box.innerHTML = rows.length ? rows.map((r) => threadRow(r, mine.get(r.id), !!s)).join("") : `<p class="muted pad">${esc(t("ds_empty"))}</p>`;
+    box.innerHTML = rows.length ? rows.map((r) => threadRow(r, mine.get(r.id), !!s)).join("") : emptyState(t("ds_empty"), "#discuss/new");
     wireVotes(box, load);
   };
   load();
@@ -4688,7 +4695,7 @@ async function wireGallery(main) {
             ${sums.size ? `<span class="small strong">${sumsLocal(sums)}</span>` : ""}</div></a>`;
         })
         .join("")
-    : `<p class="muted">${esc(t("ga_empty"))}</p>`;
+    : emptyState(t("ga_empty"), "#discuss/new?cat=setup");
 }
 
 // ---------------------------------------------------------------------------

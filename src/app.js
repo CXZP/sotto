@@ -1,26 +1,26 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvvhzf6t";
-import { scope } from "./scope.js?v=mvvhzf6t";
-import { navPill } from "./navpill.js?v=mvvhzf6t";
-import { enhanceDropdowns } from "./dropdown.js?v=mvvhzf6t";
-import { pickFront } from "./front.js?v=mvvhzf6t";
-import { heroArt } from "./heroart.js?v=mvvhzf6t";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvvhzf6t";
-import { renderChart } from "./chart.js?v=mvvhzf6t";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvvhzf6t";
-import { makeT } from "./i18n.js?v=mvvhzf6t";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvvhzf6t";
-import { LEGAL } from "./legal.js?v=mvvhzf6t";
-import { track, stats, trackingOff } from "./analytics.js?v=mvvhzf6t";
-import * as community from "./community.js?v=mvvhzf6t";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvvhzf6t";
-import { redactImage } from "./redact.js?v=mvvhzf6t";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvvhzf6t";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvvhzf6t";
-import { chainLinks } from "./chain.js?v=mvvhzf6t";
-import { fits } from "./dcfit.js?v=mvvhzf6t";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvvhzf6t";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvvhzf6t";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvvhzf6t";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvw5hljd";
+import { scope } from "./scope.js?v=mvw5hljd";
+import { navPill } from "./navpill.js?v=mvw5hljd";
+import { enhanceDropdowns } from "./dropdown.js?v=mvw5hljd";
+import { pickFront } from "./front.js?v=mvw5hljd";
+import { heroArt } from "./heroart.js?v=mvw5hljd";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvw5hljd";
+import { renderChart } from "./chart.js?v=mvw5hljd";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvw5hljd";
+import { makeT } from "./i18n.js?v=mvw5hljd";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mvw5hljd";
+import { LEGAL } from "./legal.js?v=mvw5hljd";
+import { track, stats, trackingOff } from "./analytics.js?v=mvw5hljd";
+import * as community from "./community.js?v=mvw5hljd";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvw5hljd";
+import { redactImage } from "./redact.js?v=mvw5hljd";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvw5hljd";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvw5hljd";
+import { chainLinks } from "./chain.js?v=mvw5hljd";
+import { fits } from "./dcfit.js?v=mvw5hljd";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mvw5hljd";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvw5hljd";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvw5hljd";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -209,9 +209,20 @@ document.addEventListener("change", (e) => {
 });
 
 /** Brand mark: the Simple Icons logo when one exists, else initials. Identification only. */
+/** The brand's logo as it should be drawn: a Simple Icons path, an image file, or a
+ * one-colour image drawn in the text colour (mask). Empty when there is no logo. */
+function logoArt(brand) {
+  const logo = db.logos?.[brand];
+  if (!logo) return "";
+  if (logo.path) return `<svg viewBox="0 0 24 24" role="img" aria-label="${esc(brand)}"><path d="${esc(logo.path)}"/></svg>`;
+  if (logo.mask) return `<span class="logo-mask" role="img" aria-label="${esc(brand)}" style="--src:url('${esc(logo.img)}')"></span>`;
+  return `<img class="logo-img" src="${esc(logo.img)}" alt="${esc(brand)}" loading="lazy">`;
+}
+
 function brandMark(brand, size = 40) {
   const logo = db.logos?.[brand];
-  if (logo) return `<span class="brand-mark" style="--s:${size}px" title="${esc(brand)}"><svg viewBox="0 0 24 24" role="img" aria-label="${esc(brand)}"><path d="${esc(logo.path)}"/></svg></span>`;
+  // A wide wordmark is unreadable in a small square: only square marks go here.
+  if (logo && (logo.path || /.icon./.test(logo.img))) return `<span class="brand-mark${logo.path ? "" : " pic"}" style="--s:${size}px" title="${esc(brand)}">${logoArt(brand)}</span>`;
   const initials = String(brand ?? "?")
     .replace(/[^\p{L}\p{N} ]/gu, " ")
     .split(/\s+/)
@@ -1379,6 +1390,22 @@ function openPicker(slot) {
 // ---------------------------------------------------------------------------
 // Catalog page
 
+/** What a brand makes most, as category names (most models first). */
+function topCats(items, n) {
+  const c = new Map();
+  for (const i of items) c.set(catLabel(i), (c.get(catLabel(i)) ?? 0) + 1);
+  return [...c].sort((a, b) => b[1] - a[1]).slice(0, n).map(([k]) => k).join(" · ");
+}
+
+/** Top of a brand's page (the catalog filtered to one brand): logo, name, what it makes. */
+function brandHead(brand) {
+  const items = db.items.filter((i) => i.brand === brand);
+  if (!items.length) return "";
+  const cats = topCats(items, 4);
+  return `<header class="brand-head"><span class="brand-pic${db.logos?.[brand] ? "" : " none"}">${logoArt(brand) || `<span class="wordmark">${esc(brand)}</span>`}</span>
+    <div><h1>${esc(brand)}</h1><p class="muted">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</p><a class="link small" href="#brands">${esc(t("brands_all"))}</a></div></header>`;
+}
+
 function catalogPage() {
   const p = query();
   const q = (p.get("q") ?? "").toLowerCase();
@@ -1428,6 +1455,7 @@ function catalogPage() {
     })
     .join("")}</div>`;
   return `<div class="catalog">
+    ${brand ? brandHead(brand) : ""}
     <div class="filters">
       <div class="filter-top">
         <input class="search" type="search" id="cq" placeholder="${esc(t("search"))}" value="${esc(p.get("q") ?? "")}">
@@ -1476,8 +1504,6 @@ function brandOptions(cat, selected) {
     .join("");
 }
 
-/** A steady hue per name, so wordmarks differ without meaning anything. */
-const hue = (s) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 
 /** Every brand A–Z: its icon (or its name as a wordmark), model count and categories. */
 function brandsPage() {
@@ -1495,9 +1521,11 @@ function brandsPage() {
       html += `<h2 class="brand-letter" id="brand-${L}">${L}</h2><div class="brand-grid">`;
       current = L;
     }
-    const cats = [...new Set(items.map((i) => catLabel(i)))].slice(0, 2).join(" · ");
-    html += `<a class="brand-tile card" href="#catalog?brand=${encodeURIComponent(b)}"><div class="brand-pic">${db.logos?.[b] ? `<svg viewBox="0 0 24 24" role="img" aria-label="${esc(b)}"><path d="${esc(db.logos[b].path)}"/></svg>` : `<span class="wordmark" style="--h:${hue(b)};--fs:${Math.min(b.split(/\s+/).length > 2 ? 17 : 22, Math.round(200 / Math.max(...b.split(/\s+/).map((w) => w.length))))}px">${esc(b)}</span>`}</div>
-      <div class="brand-body">${db.logos?.[b] ? `<b>${esc(b)}</b>` : ""}<span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></div></a>`;
+    const cats = topCats(items, 2);
+    // Every tile the same shape: the logo (or the name set as a wordmark), then the name
+    // and what the brand makes.
+    html += `<a class="brand-tile" href="#catalog?brand=${encodeURIComponent(b)}"><span class="brand-pic${db.logos?.[b] ? "" : " none"}">${logoArt(b) || `<span class="wordmark">${esc(b)}</span>`}</span>
+      <span class="brand-body"><b>${esc(b)}</b><span class="muted small">${esc(t("n_results", { n: items.length }))} · ${esc(cats)}</span></span></a>`;
   }
   if (current) html += "</div>";
   return `<div class="brands"><header class="deal-head"><h1>${esc(t("brands_all"))}</h1><p class="muted small">${esc(t("brands_note"))}</p></header>
@@ -1693,7 +1721,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvvhzf6t").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mvw5hljd").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2993,7 +3021,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvvhzf6t" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvw5hljd" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3515,7 +3543,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvvhzf6t" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvw5hljd" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

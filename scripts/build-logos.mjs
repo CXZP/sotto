@@ -22,7 +22,14 @@ for (const brand of new Set(catalog.items.map((i) => i.brand).filter(Boolean))) 
   if (icon) out[brand] = { path: icon.path, title: icon.title, slug: icon.slug, ...(icon.guidelines ? { guidelines: icon.guidelines } : {}) };
 }
 // Logos from the brands' own homepages (scripts/fetch-logos.mjs), each checked by eye.
+// Matched loosely, as the catalog spells the brand ("Hidizs" is the catalog's "HIDIZS",
+// "Sendy" its "Sendy Audio").
 const ok = JSON.parse(await readFile(new URL("data/logos-ok.json", root), "utf8"));
-for (const [brand, x] of Object.entries(ok)) if (x.file && !out[brand]) out[brand] = { img: `data/logos/${x.file}`, ...(x.mask ? { mask: true } : {}) };
+const loose = (s) => norm(s).replace(/(.{4,})audio$/, "$1");
+const byLoose = new Map([...new Set(catalog.items.map((i) => i.brand).filter(Boolean))].map((b) => [loose(b), b]));
+for (const [name, x] of Object.entries(ok)) {
+  const brand = byLoose.get(loose(name));
+  if (x.file && brand && !out[brand]) out[brand] = { img: `data/logos/${x.file}`, ...(x.mask ? { mask: true } : {}) };
+}
 await writeFile(new URL("data/logos.json", root), JSON.stringify(out));
 console.log(`${Object.keys(out).length} logos: ${Object.keys(out).join(", ")}`);

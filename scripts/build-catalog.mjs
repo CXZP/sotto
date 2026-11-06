@@ -55,10 +55,25 @@ const SUB_BRANDS = { Audalytic: "gustard" };
 const HOUSE_LINE = /^(?:kte|dragon)\b/i;
 // One brand, several spellings: "Ferrum" / "Ferrum Audio", "SMSL" / "S.M.S.L",
 // "iFi" / "iFi Audio". Same key = same brand; the most used spelling wins.
-const brandKey = (b) => {
+const baseKey = (b) => {
   const k = b.toLowerCase().replace(/[^a-z0-9]/g, "");
   return k.length > 7 && k.endsWith("audio") ? k.slice(0, -5) : k;
 };
+// One maker under names that don't share a key: the name shown first, then the other
+// spellings stores use. Every spelling is also cut from titles, so "QoA Queen of Audio
+// Aviation" is the model "Aviation" and "Geek Wold GK200" is "GK200".
+const SAME_BRAND = {
+  "Chord Electronics": ["Chord"],
+  ddHiFi: ["DD", "DD ddHiFi"],
+  "I/O Audio": ["I/O", "I\\O", "IO Audio", "IOAUDIO"],
+  QoA: ["QOA", "Queen of Audio"],
+  Etymotic: ["Etymotic Research"],
+  "JH Audio": ["Jerry Harvey Audio"],
+  "Pro-Ject": ["Pro-Ject Audio Systems"],
+  GeekWold: ["Geek Wold"],
+};
+const sameKey = new Map(Object.entries(SAME_BRAND).flatMap(([name, list]) => list.map((sp) => [baseKey(sp), baseKey(name)])));
+const brandKey = (b) => sameKey.get(baseKey(b)) ?? baseKey(b);
 const spellingCount = new Map();
 for (const file of files) {
   if (isMatchOnly(file)) continue; // "水月雨 (MOONDROP)" is not a spelling to show
@@ -76,11 +91,22 @@ for (const file of files) {
 const ALIASES = { astellkern: ["AK"] };
 for (const m of MAKERS) spellingCount.set(brandKey(m), new Map([...(spellingCount.get(brandKey(m)) ?? []), [m, 1e6]]));
 for (const [k, list] of Object.entries(ALIASES)) for (const a of list) spellingCount.get(k)?.set(a, 0);
+for (const [name, list] of Object.entries(SAME_BRAND)) {
+  const m = spellingCount.get(brandKey(name)) ?? new Map();
+  for (const sp of list) if (!m.has(sp)) m.set(sp, 0);
+  m.set(name, 1e6);
+  spellingCount.set(brandKey(name), m);
+}
 const isMixed = (x) => x !== x.toUpperCase() && x !== x.toLowerCase();
 const canonical = new Map([...spellingCount].map(([k, m]) => [k, [...m].sort((a, b) => b[1] - a[1] || isMixed(b[0]) - isMixed(a[0]))[0][0]]));
 const knownBrands = new Set([...spellingCount.values()].flatMap((m) => [...m.keys()]));
 const brandsLongestFirst = [...knownBrands].sort((a, b) => b.length - a.length);
+// Titles that name the maker only by a product line, or come with no maker at all:
+// Blue Hawaii is HeadAmp's electrostatic amp, Blue Point a Sumiko cartridge, IER-M7 Sony's.
+const TITLE_BRAND = [[/^Blue Hawaii\b/i, "HeadAmp"], [/^Blue Point\b/i, "Sumiko"], [/^IER-M\d/i, "Sony"], [/^Parasound\b/i, "Parasound"]];
 function realVendor(p) {
+  const fixed = TITLE_BRAND.find(([re]) => re.test(p.title))?.[1];
+  if (fixed) return canonical.get(brandKey(fixed)) ?? fixed;
   let v = (p.vendor ?? "").trim();
   if (STORE_VENDOR.test(v)) {
     const title = p.title.toLowerCase();
@@ -114,6 +140,8 @@ for (const file of files) {
   stats.stores[snap.store] = { name: snap.name, host: snap.host, products: snap.products.length, fetchedAt: snap.fetchedAt, ...(snap.ships ? { ships: snap.ships, country: snap.country } : {}) };
   for (const p of snap.products) {
     stats.products++;
+    // Headphone Zone lists its shops ("Headphone Connect Chennai") as products.
+    if (/^headphone connect$/i.test(p.vendor ?? "")) continue;
     let category = classify(p);
     // Stores file small USB DACs under "AMP & DAC". A sub-$40 "desktop" unit that
     // doesn't call itself desktop/tube/preamp is a dongle.

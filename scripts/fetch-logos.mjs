@@ -6,7 +6,7 @@
 //
 // Run: node scripts/fetch-logos.mjs [brand…]
 
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 const SITES = {
   FiiO: "https://www.fiio.com/",
@@ -81,6 +81,103 @@ const SITES = {
   Ultrasone: "https://www.ultrasone.com/",
   "Dan Clark Audio": "https://danclarkaudio.com/",
   Sony: null,
+  // Second round, the brands with the most catalog entries still without a mark.
+  Thieaudio: "https://www.thieaudio.com/",
+  "EarAcoustic Audio": "https://earacousticaudio.com/",
+  Westone: "https://www.westoneaudio.com/",
+  Acoustune: "https://acoustune.com/",
+  DALI: "https://www.dali-speakers.com/",
+  ddHiFi: "https://www.ddhifi.com/",
+  ELAC: "https://www.elac.com/",
+  Eversolo: "https://www.eversolo.com/",
+  "FIR Audio": "https://firaudio.com/",
+  "Matrix Audio": "https://www.matrix-digi.com/",
+  McIntosh: "https://www.mcintoshlabs.com/",
+  Rotel: "https://www.rotel.com/",
+  Violectric: "https://www.violectric.de/",
+  "Fosi Audio": "https://fosiaudio.com/",
+  "HiFi Rose": "https://www.hifirose.com/",
+  Kennerton: "https://kennerton.com/",
+  HEDD: "https://hedd.audio/",
+  Kanto: "https://www.kantoaudio.com/",
+  AAW: "https://www.aaw.me/",
+  ARCAM: "https://www.arcam.co.uk/",
+  FlipEars: "https://www.flipears.com/",
+  Goldmund: "https://goldmund.com/",
+  GUSTARD: "https://www.gustard.com/",
+  IKKO: "https://www.ikkoaudio.com/",
+  "Little Dot": "http://www.littledot.net/",
+  Marantz: "https://www.marantz.com/",
+  Simaudio: "https://simaudio.com/",
+  Sumiko: "https://www.sumikoaudio.net/",
+  "Argon Audio": "https://argonaudio.com/",
+  "DITA Audio": "https://www.dita-audio.com/",
+  "Jomo Audio": "https://www.jomoaudio.com/",
+  NICEHCK: "https://nicehck.com/",
+  Shokz: "https://shokz.com/",
+  "1MORE": "https://www.1more.com/",
+  Etymotic: "https://www.etymotic.com/",
+  Goldring: "https://www.goldring.co.uk/",
+  Hegel: "https://www.hegel.com/",
+  "Monitor Audio": "https://www.monitoraudio.com/",
+  "Q Acoustics": "https://www.qacoustics.co.uk/",
+  Soundcore: "https://us.soundcore.com/",
+  "T+A": "https://www.ta-hifi.de/",
+  "Warwick Acoustics": "https://warwickacoustics.com/",
+  "Aune Audio": "https://www.auneaudio.com/",
+  Edifier: "https://www.edifier.com/",
+  "Symphonium Audio": "https://www.symphonium.net/",
+  ZMF: "https://www.zmfheadphones.com/",
+  "Craft Ears": "https://craftears.com/",
+  "Music Hall": "https://www.musichallaudio.com/",
+  Primare: "https://www.primare.net/",
+  "Sonus Faber": "https://www.sonusfaber.com/",
+  "Soulution Audio": "https://www.soulution-audio.com/",
+  Wharfedale: "https://www.wharfedale.co.uk/",
+  ABYSS: "https://abyss-headphones.com/",
+  "Andover Audio": "https://andoveraudio.com/",
+  "Dekoni Audio": "https://dekoniaudio.com/",
+  Focusrite: "https://focusrite.com/",
+  "JH Audio": "https://www.jhaudio.com/",
+  Michell: "https://www.michell-engineering.co.uk/",
+  Paradigm: "https://www.paradigm.com/",
+  SME: "https://www.sme.co.uk/",
+  "U-Turn Audio": "https://www.uturnaudio.com/",
+  AKG: "https://www.akg.com/",
+  Audiolab: "https://www.audiolab.co.uk/",
+  Aurender: "https://www.aurender.com/",
+  "Effect Audio": "https://www.effectaudio.com/",
+  "Audio Research": "https://www.audioresearch.com/",
+  "Mark Levinson": "https://www.marklevinson.com/",
+  Marshall: "https://www.marshall.com/",
+  "Pass Labs": "https://www.passlabs.com/",
+  Peachtree: "https://www.peachtreeaudio.com/",
+  Revel: "https://www.revelspeakers.com/",
+  Soundsmith: "https://www.sound-smith.com/",
+  "Ultimate Ears": "https://www.ultimateears.com/",
+  Weiss: "https://weiss.ch/",
+  HeadAmp: "https://www.headamp.com/",
+  Parasound: "https://www.parasound.com/",
+  Audioengine: "https://audioengineusa.com/",
+  AudioQuest: "https://www.audioquest.com/",
+  "Austrian Audio": "https://austrian.audio/",
+  Koss: "https://www.koss.com/",
+  Luxman: "https://www.luxman.com/",
+  Mytek: "https://mytek.audio/",
+  RME: "https://www.rme-audio.de/",
+  "Rosson Audio Design": "https://rossonaudio.com/",
+  Thorens: "https://www.thorens.com/",
+  Bryston: "https://bryston.com/",
+  Lotoo: "https://www.lotoo.cn/",
+  Qudelix: "https://www.qudelix.com/",
+  EarMen: "https://earmen.com/",
+  Denafrips: "https://www.denafrips.com/",
+  "Musical Fidelity": "https://www.musicalfidelity.com/",
+  Roksan: "https://www.roksan.com/",
+  PSB: "https://www.psbspeakers.com/",
+  "Polk Audio": "https://www.polkaudio.com/",
+  Skullcandy: "https://www.skullcandy.com/",
+  WiiM: "https://www.wiimhome.com/",
 };
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
@@ -120,9 +217,11 @@ function findIcon(html, base) {
 }
 
 const want = process.argv.slice(2);
+// Brands with an approved logo are not fetched again unless named.
+const approved = JSON.parse(await readFile(new URL("../data/logos-ok.json", import.meta.url), "utf8"));
 const report = {};
 for (const [brand, site] of Object.entries(SITES)) {
-  if (!site || (want.length && !want.includes(brand))) continue;
+  if (!site || (want.length ? !want.includes(brand) : approved[brand])) continue;
   const s = slug(brand);
   const r = (report[brand] = { site });
   try {

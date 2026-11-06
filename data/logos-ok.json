@@ -15,7 +15,7 @@
   "Fostex": { "file": "fostex.icon.png" },
   "64 Audio": { "file": "64-audio.logo.png", "mask": true },
   "Rega": { "file": "rega.icon.png" },
-  "Cayin": { "file": "cayin.logo.png" },
+  "Cayin": { "file": "cayin.logo.png", "mask": "luminance" },
   "SIVGA": { "file": "sivga.logo.png" },
   "iBasso": { "file": "ibasso.logo.png" },
   "Bowers & Wilkins": { "file": "bowers-and-wilkins.logo.svg" },

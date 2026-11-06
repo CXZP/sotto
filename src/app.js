@@ -1,26 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mvw657g1";
-import { scope } from "./scope.js?v=mvw657g1";
-import { navPill } from "./navpill.js?v=mvw657g1";
-import { enhanceDropdowns } from "./dropdown.js?v=mvw657g1";
-import { pickFront } from "./front.js?v=mvw657g1";
-import { heroArt } from "./heroart.js?v=mvw657g1";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mvw657g1";
-import { renderChart } from "./chart.js?v=mvw657g1";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mvw657g1";
-import { makeT } from "./i18n.js?v=mvw657g1";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mvw657g1";
-import { LEGAL } from "./legal.js?v=mvw657g1";
-import { track, stats, trackingOff } from "./analytics.js?v=mvw657g1";
-import * as community from "./community.js?v=mvw657g1";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mvw657g1";
-import { redactImage } from "./redact.js?v=mvw657g1";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mvw657g1";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mvw657g1";
-import { chainLinks } from "./chain.js?v=mvw657g1";
-import { fits } from "./dcfit.js?v=mvw657g1";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mvw657g1";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mvw657g1";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mvw657g1";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw5dok4i";
+import { scope } from "./scope.js?v=mw5dok4i";
+import { navPill } from "./navpill.js?v=mw5dok4i";
+import { enhanceDropdowns } from "./dropdown.js?v=mw5dok4i";
+import { pickFront } from "./front.js?v=mw5dok4i";
+import { unframe } from "./frame.js?v=mw5dok4i";
+import { heroArt } from "./heroart.js?v=mw5dok4i";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw5dok4i";
+import { renderChart } from "./chart.js?v=mw5dok4i";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw5dok4i";
+import { makeT } from "./i18n.js?v=mw5dok4i";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw5dok4i";
+import { LEGAL } from "./legal.js?v=mw5dok4i";
+import { track, stats, trackingOff } from "./analytics.js?v=mw5dok4i";
+import * as community from "./community.js?v=mw5dok4i";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw5dok4i";
+import { redactImage } from "./redact.js?v=mw5dok4i";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw5dok4i";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw5dok4i";
+import { chainLinks } from "./chain.js?v=mw5dok4i";
+import { fits } from "./dcfit.js?v=mw5dok4i";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw5dok4i";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw5dok4i";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw5dok4i";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -215,14 +216,16 @@ function logoArt(brand) {
   const logo = db.logos?.[brand];
   if (!logo) return "";
   if (logo.path) return `<svg viewBox="0 0 24 24" role="img" aria-label="${esc(brand)}"><path d="${esc(logo.path)}"/></svg>`;
-  if (logo.mask) return `<span class="logo-mask" role="img" aria-label="${esc(brand)}" style="--src:url('${esc(logo.img)}')"></span>`;
+  // mask: a one-colour logo drawn in the text colour; "luminance": light text on a dark box,
+  // where only the light part is drawn.
+  if (logo.mask) return `<span class="logo-mask${logo.mask === "luminance" ? " lum" : ""}" role="img" aria-label="${esc(brand)}" style="--src:url('${esc(logo.img)}')"></span>`;
   return `<img class="logo-img" src="${esc(logo.img)}" alt="${esc(brand)}" loading="lazy">`;
 }
 
 function brandMark(brand, size = 40) {
   const logo = db.logos?.[brand];
   // A wide wordmark is unreadable in a small square: only square marks go here.
-  if (logo && (logo.path || /.icon./.test(logo.img))) return `<span class="brand-mark${logo.path ? "" : " pic"}" style="--s:${size}px" title="${esc(brand)}">${logoArt(brand)}</span>`;
+  if (logo && (logo.path || /\.icon\./.test(logo.img))) return `<span class="brand-mark${logo.path ? "" : " pic"}" style="--s:${size}px" title="${esc(brand)}">${logoArt(brand)}</span>`;
   const initials = String(brand ?? "?")
     .replace(/[^\p{L}\p{N} ]/gu, " ")
     .split(/\s+/)
@@ -1510,7 +1513,10 @@ function brandsPage() {
   const by = new Map();
   for (const i of db.items) if (i.brand) (by.get(i.brand) ?? by.set(i.brand, []).get(i.brand)).push(i);
   const brands = [...by].sort((a, b) => a[0].localeCompare(b[0], undefined, { sensitivity: "base" }));
-  const letter = (b) => (/^[a-z]/i.test(b) ? b[0].toUpperCase() : "#");
+  // The letter the name sorts under: accents and Ø/Æ count as their base letter ("Ø Audio"
+  // sorts among the O's, so it's filed there); names starting with a digit go under "#", first.
+  const base = (b) => b.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/^Ø/i, "O").replace(/^Æ/i, "A");
+  const letter = (b) => (/^[a-z]/i.test(base(b)) ? base(b)[0].toUpperCase() : "#");
   const letters = [...new Set(brands.map(([b]) => letter(b)))];
   let html = "";
   let current = "";
@@ -1721,7 +1727,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mvw657g1").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw5dok4i").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -3021,7 +3027,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mvw657g1" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw5dok4i" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3543,7 +3549,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mvw657g1" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw5dok4i" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4902,6 +4908,8 @@ headphones = db.items.filter((i) => HEADPHONE_CATS.has(i.category) && hpModel(i)
 sources = db.items.filter((i) => SOURCE_CATS.has(i.category) && sourceOutputs(i).length);
 readHash();
 bindChrome();
+// Catalog tiles: a photo a store padded with a white frame fills its tile (src/frame.js).
+document.addEventListener("load", (e) => { if (e.target instanceof HTMLImageElement && e.target.matches(".tile-img img")) unframe(e.target); }, true);
 render();
 updateBell();
 setInterval(updateBell, 3 * 60 * 1000);

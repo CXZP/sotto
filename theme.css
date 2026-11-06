@@ -553,6 +553,7 @@ label:has(> input[type="checkbox"]) { cursor: pointer; }
 .brand-body .small { font-size: 12.5px; }
 /* One-colour logos drawn in the text colour. */
 .logo-mask { display: block; background: currentColor; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; }
+.logo-mask.lum { mask-mode: luminance; }
 .brand-mark.pic { background: #fff; color: #121110; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); }
 .brand-mark.pic .logo-img { width: 84%; height: 84%; object-fit: contain; }
 .brand-mark.pic .logo-mask { width: 84%; height: 84%; }

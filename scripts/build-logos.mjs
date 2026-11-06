@@ -29,7 +29,7 @@ const loose = (s) => norm(s).replace(/(.{4,})audio$/, "$1");
 const byLoose = new Map([...new Set(catalog.items.map((i) => i.brand).filter(Boolean))].map((b) => [loose(b), b]));
 for (const [name, x] of Object.entries(ok)) {
   const brand = byLoose.get(loose(name));
-  if (x.file && brand && !out[brand]) out[brand] = { img: `data/logos/${x.file}`, ...(x.mask ? { mask: true } : {}) };
+  if (x.file && brand && !out[brand]) out[brand] = { img: `data/logos/${x.file}`, ...(x.mask ? { mask: x.mask } : {}) };
 }
 await writeFile(new URL("data/logos.json", root), JSON.stringify(out));
 console.log(`${Object.keys(out).length} logos: ${Object.keys(out).join(", ")}`);

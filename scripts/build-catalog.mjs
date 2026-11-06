@@ -382,6 +382,8 @@ for (const file of files.filter(isMatchOnly)) {
 }
 
 const KIND_RANK = { measured: 0, claimed: 1 };
+// aloaudio.com: Pilot II is a USB-C dongle (ESS 9281AC Pro, 3.5 + 4.4 mm out).
+const FORM_FACTOR = { "alo-audio--pilot-ii": "dongle" };
 // Order: measured first, then values with a stated unit, then the most-quoted.
 const rank = (list) =>
   list.sort(
@@ -431,6 +433,9 @@ const catalog = [...groups.values()]
     const says = (re) => rest.offers.some((o) => re.test(o.title));
     if (rest.category === "desktop" && rest.categoryConflict?.includes("dongle") && says(/\b(portable|dongle)\b/i) && !says(/\bdesktop\b/i)) rest.category = "dongle";
     if (rest.category === "dongle" && rest.categoryConflict?.includes("desktop") && says(/\bdesktop\b/i) && !says(/\b(portable|dongle)\b/i)) rest.category = "desktop";
+    // Form factor checked on the maker's page, for models whose only listing doesn't say it.
+    const FORM = FORM_FACTOR[rest.id];
+    if (FORM) rest.category = FORM;
     // Any store calling it a DAC/amp, or a headphone output power rating, means it has both.
     if (rest.category === "desktop" && !rest.role) {
       const v = roleVotes ?? [];

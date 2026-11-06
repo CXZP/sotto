@@ -1,12 +1,13 @@
 // Some stores pad a photo that has its own backdrop (dark, coloured, a scene) with a white
 // frame, so in a white tile it sits small inside a white border. This finds that frame and
-// zooms the photo past it so it fills the tile edge to edge.
+// zooms the photo past it so it fills the tile edge to edge. A photo with its own backdrop
+// and no frame fills its box too (the calendar pads photos; that padding is dropped).
 //
 // A product cut out on white is left as it is: the box round a cut-out's outline is mostly
 // white along its edges (a headphone isn't a rectangle), while a framed photo's inner edge is
 // photo all the way round. Only the image's display changes; the photo itself is not edited.
 
-const KEY = "sotto:frame:v1:";
+const KEY = "sotto:frame:v2:";
 const small = (src) => (/cdn\.shopify\.com|\/cdn\/shop\//.test(src) ? `${src}${src.includes("?") ? "&" : "?"}width=160` : src);
 
 /** @returns {Promise<{x:number,y:number,w:number,h:number,a:number}|null>} the photo inside the frame, as fractions of the image (a: image width / height) */
@@ -41,8 +42,6 @@ async function measure(src) {
   if (x1 < 0) return null;
   const w = x1 - x0 + 1;
   const h = y1 - y0 + 1;
-  // No white border worth removing, or too little left inside it.
-  if (w > W * 0.96 && h > H * 0.96) return null;
   if (w * h < W * H * 0.3) return null;
   // The inner edge: a framed photo is photo all along it, a cut-out mostly isn't.
   let on = 0, all = 0;
@@ -50,6 +49,9 @@ async function measure(src) {
   for (let x = x0; x <= x1; x++) { edge(x, y0 + 1); edge(x, y1 - 1); }
   for (let y = y0; y <= y1; y++) { edge(x0 + 1, y); edge(x1 - 1, y); }
   if (on / all < 0.9) return null;
+  // No white frame at all: a photo with its own backdrop out to the edge. It fills the box
+  // whole (the calendar's padding is dropped); nothing to crop.
+  if (w > W * 0.96 && h > H * 0.96) return { x: 0, y: 0, w: 1, h: 1, a: W / H };
   // One pixel in, so no light seam from the scaled-down edge.
   return { x: (x0 + 1) / W, y: (y0 + 1) / H, w: (w - 2) / W, h: (h - 2) / H, a: W / H };
 }
@@ -73,6 +75,8 @@ export async function unframe(img) {
   img.dataset.unframed = "1";
   const f = await frameOf(img.currentSrc || img.src);
   if (!f) return;
+  // The class drops any padding (calendar squares pad their photos), so measure after it.
+  img.classList.add("unframed");
   // Where the image sits in the box under object-fit: contain, as fractions of the box.
   const box = img.getBoundingClientRect();
   const boxA = box.width && box.height ? box.width / box.height : 1;
@@ -86,5 +90,4 @@ export async function unframe(img) {
   const s = Math.max(cw, ch) / Math.min(cw, ch) < 1.25 ? Math.max(1 / cw, 1 / ch) : Math.min(1 / cw, 1 / ch);
   img.style.transformOrigin = "0 0";
   img.style.transform = `translate(${(0.5 - cx * s) * 100}%, ${(0.5 - cy * s) * 100}%) scale(${s})`;
-  img.classList.add("unframed");
 }

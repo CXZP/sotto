@@ -528,6 +528,7 @@ label:has(> input[type="checkbox"]) { cursor: pointer; }
 /* A tall photo fits inside the square instead of pushing past it. */
 .cal-pic { position: relative; overflow: hidden; }
 .cal-card .cal-pic img, .cal-card .cal-pic .cal-ph { position: absolute; inset: 0; }
+.cal-card .cal-pic img.unframed { padding: 0; } /* a framed photo fills the square (src/frame.js) */
 
 /* ------------------------------------------------------------- brands A-Z
    After Clay's integrations grid: every tile the same shape, the logo on a white plate

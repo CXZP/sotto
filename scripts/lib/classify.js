@@ -209,7 +209,9 @@ const NOISE = [
   /\b(in[- ]ears?|(?:digital |hi-?res )?(?:audio|music|mp3) players?|android \d+|jade ?audio|snow ?sky|lossless|bluetooth(?: \d(?:\.\d)?)?|headphone|portable usb)\b/gi,
   // DAC/amp chip names and driver counts.
   /\b(dual|quad)?\s*(es\d{4}\w*|cs\d{5}\w*|ak\d{4}\w*|pcm\d{4}\w*|tpa\d{4}\w*|ricore\w*|rt\d{4}\w*)\b/gi,
-  /\b\d+\s*(dd|ba|est|bc|pzt|mems)\b(\s*\+\s*\d+\s*(dd|ba|est|bc|pzt|mems)\b)*/gi,
+  // Planars too ("2DD+4BA+4Planar"); after a "+" a bare count is one whose type word went in
+  // an earlier pass ("2DD+4BA+4 Planar" is "2DD+4BA+4" by now, not the model "Psyche 4").
+  /\b\d+\s*(dd|ba|est|bc|pzt|mems|(?:micro\s*)?planars?)\b(\s*\+\s*\d+\s*(?:micro\b\s*)?(dd|ba|est|bc|pzt|mems|planars?)?\b)*/gi,
   /[|–—:,/+&]+/g,
   // Speaker descriptors ("KEF Q350 Passive Bookshelf Speakers" == "KEF Q350").
   /\b((?:passive|active|powered|wireless|bookshelf|desktop|stereo|hi-?fi|high-fidelity|2-way|two-way|three-way)\s+)*(?:loud)?speakers?\b(\s*-?\s*pair)?|\b(?:pair|freight damaged)\b/gi,

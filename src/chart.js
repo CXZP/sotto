@@ -5,7 +5,7 @@
 // A point under a curve is drivable. Status is shown by shape + colour + legend,
 // never colour alone.
 
-import { availableVrms } from "./calc.js?v=mw5dok4i";
+import { availableVrms } from "./calc.js?v=mw5dvaap";
 
 let W = 760;
 let H = 440;

@@ -1,27 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw5dok4i";
-import { scope } from "./scope.js?v=mw5dok4i";
-import { navPill } from "./navpill.js?v=mw5dok4i";
-import { enhanceDropdowns } from "./dropdown.js?v=mw5dok4i";
-import { pickFront } from "./front.js?v=mw5dok4i";
-import { unframe } from "./frame.js?v=mw5dok4i";
-import { heroArt } from "./heroart.js?v=mw5dok4i";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw5dok4i";
-import { renderChart } from "./chart.js?v=mw5dok4i";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw5dok4i";
-import { makeT } from "./i18n.js?v=mw5dok4i";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mw5dok4i";
-import { LEGAL } from "./legal.js?v=mw5dok4i";
-import { track, stats, trackingOff } from "./analytics.js?v=mw5dok4i";
-import * as community from "./community.js?v=mw5dok4i";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw5dok4i";
-import { redactImage } from "./redact.js?v=mw5dok4i";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw5dok4i";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw5dok4i";
-import { chainLinks } from "./chain.js?v=mw5dok4i";
-import { fits } from "./dcfit.js?v=mw5dok4i";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mw5dok4i";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw5dok4i";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw5dok4i";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw5dvaap";
+import { scope } from "./scope.js?v=mw5dvaap";
+import { navPill } from "./navpill.js?v=mw5dvaap";
+import { enhanceDropdowns } from "./dropdown.js?v=mw5dvaap";
+import { pickFront } from "./front.js?v=mw5dvaap";
+import { unframe } from "./frame.js?v=mw5dvaap";
+import { heroArt } from "./heroart.js?v=mw5dvaap";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw5dvaap";
+import { renderChart } from "./chart.js?v=mw5dvaap";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw5dvaap";
+import { makeT } from "./i18n.js?v=mw5dvaap";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw5dvaap";
+import { LEGAL } from "./legal.js?v=mw5dvaap";
+import { track, stats, trackingOff } from "./analytics.js?v=mw5dvaap";
+import * as community from "./community.js?v=mw5dvaap";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw5dvaap";
+import { redactImage } from "./redact.js?v=mw5dvaap";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw5dvaap";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw5dvaap";
+import { chainLinks } from "./chain.js?v=mw5dvaap";
+import { fits } from "./dcfit.js?v=mw5dvaap";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw5dvaap";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw5dvaap";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw5dvaap";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1727,7 +1727,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mw5dok4i").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw5dvaap").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -3027,7 +3027,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw5dok4i" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw5dvaap" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3549,7 +3549,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw5dok4i" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw5dvaap" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4908,8 +4908,9 @@ headphones = db.items.filter((i) => HEADPHONE_CATS.has(i.category) && hpModel(i)
 sources = db.items.filter((i) => SOURCE_CATS.has(i.category) && sourceOutputs(i).length);
 readHash();
 bindChrome();
-// Catalog tiles: a photo a store padded with a white frame fills its tile (src/frame.js).
-document.addEventListener("load", (e) => { if (e.target instanceof HTMLImageElement && e.target.matches(".tile-img img")) unframe(e.target); }, true);
+// Catalog tiles and pre-order cards: a photo a store padded with a white frame fills its
+// square (src/frame.js).
+document.addEventListener("load", (e) => { if (e.target instanceof HTMLImageElement && e.target.matches(".tile-img img, .cal-pic img")) unframe(e.target); }, true);
 render();
 updateBell();
 setInterval(updateBell, 3 * 60 * 1000);

@@ -1,27 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7rctqh";
-import { scope } from "./scope.js?v=mw7rctqh";
-import { navPill } from "./navpill.js?v=mw7rctqh";
-import { enhanceDropdowns } from "./dropdown.js?v=mw7rctqh";
-import { pickFront } from "./front.js?v=mw7rctqh";
-import { unframe } from "./frame.js?v=mw7rctqh";
-import { heroArt } from "./heroart.js?v=mw7rctqh";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7rctqh";
-import { renderChart } from "./chart.js?v=mw7rctqh";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7rctqh";
-import { makeT } from "./i18n.js?v=mw7rctqh";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mw7rctqh";
-import { LEGAL } from "./legal.js?v=mw7rctqh";
-import { track, stats, trackingOff } from "./analytics.js?v=mw7rctqh";
-import * as community from "./community.js?v=mw7rctqh";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7rctqh";
-import { redactImage } from "./redact.js?v=mw7rctqh";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7rctqh";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7rctqh";
-import { chainLinks } from "./chain.js?v=mw7rctqh";
-import { fits } from "./dcfit.js?v=mw7rctqh";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mw7rctqh";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7rctqh";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7rctqh";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7rzn6f";
+import { scope } from "./scope.js?v=mw7rzn6f";
+import { navPill } from "./navpill.js?v=mw7rzn6f";
+import { enhanceDropdowns } from "./dropdown.js?v=mw7rzn6f";
+import { pickFront } from "./front.js?v=mw7rzn6f";
+import { unframe } from "./frame.js?v=mw7rzn6f";
+import { heroArt } from "./heroart.js?v=mw7rzn6f";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7rzn6f";
+import { renderChart } from "./chart.js?v=mw7rzn6f";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7rzn6f";
+import { makeT } from "./i18n.js?v=mw7rzn6f";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw7rzn6f";
+import { LEGAL } from "./legal.js?v=mw7rzn6f";
+import { track, stats, trackingOff } from "./analytics.js?v=mw7rzn6f";
+import * as community from "./community.js?v=mw7rzn6f";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7rzn6f";
+import { redactImage } from "./redact.js?v=mw7rzn6f";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7rzn6f";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7rzn6f";
+import { chainLinks } from "./chain.js?v=mw7rzn6f";
+import { fits } from "./dcfit.js?v=mw7rzn6f";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw7rzn6f";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7rzn6f";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7rzn6f";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -292,6 +292,8 @@ function render() {
   renderChrome(r);
   const main = document.querySelector("main");
   main.className = `page-${r.name}`;
+  // A page that throws while building shows a message, never the previous page's content.
+  try {
   if (r.name === "catalog") main.innerHTML = catalogPage();
   else if (r.name === "item") main.innerHTML = itemPage(r.id);
   else if (r.name === "deal") main.innerHTML = dealPage();
@@ -313,6 +315,10 @@ function render() {
   else if (r.name === "calendar") main.innerHTML = calendarPage();
   else main.innerHTML = buildPage();
   wire(main, r);
+  } catch (e) {
+    console.error(e);
+    main.innerHTML = `<div class="empty-state"><p class="empty-head">${esc(t("cm_offline"))}</p><a class="pill primary" href="#">Sotto</a></div>`;
+  }
   scrollTo({ top: 0 });
   // A new page rises in briefly (only when the page changes, not on a language switch).
   if (lastPage && lastPage !== r.name && !matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -591,7 +597,8 @@ function homePage() {
   const shelves = shelfRows();
   const stack = homeStackCards();
   const storeNames = [...new Set(Object.values(db.stores).map((s) => s.name).filter(Boolean))];
-  const files = HOME_FILES.map(findItem).filter(Boolean);
+  // Only models the maths can run on: a weekly crawl can drop a spec (Cascara lost its sensitivity).
+  const files = HOME_FILES.map(findItem).filter((hp) => hp && hpModel(hp));
   const art = heroData();
   return `<div class="home">
     <section class="hero-art">
@@ -757,7 +764,8 @@ function wireHome(main) {
   // that headphone needs under that source's ceiling, and the photo swaps.
   scopeHandle?.stop();
   const bench = main.querySelector(".home-bench");
-  const files = HOME_FILES.map(findItem).filter(Boolean);
+  // Only models the maths can run on: a weekly crawl can drop a spec (Cascara lost its sensitivity).
+  const files = HOME_FILES.map(findItem).filter((hp) => hp && hpModel(hp));
   if (bench && files.length) {
     const data = files.map(fileData);
     const art = bench.querySelector("[data-art]");
@@ -1727,7 +1735,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mw7rctqh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw7rzn6f").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -3027,7 +3035,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7rctqh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7rzn6f" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3549,7 +3557,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7rctqh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7rzn6f" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -4132,7 +4140,7 @@ async function wireThread(main) {
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
-        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), live, true)}<a class="pill small" href="#discuss/${esc(th.id)}" data-jump="comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
+        <div class="post-actions main-actions">${voteBox("thread", th.id, th.score, tv.get(th.id), live, true)}<a class="pill small" href="#discuss/${esc(th.id)}" data-jump="comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
       </article>
       <section class="card pad" id="comments">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>

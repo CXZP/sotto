@@ -332,7 +332,7 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .thread-meta .back:hover { text-decoration: none; }
 .thread .thread-h1 { margin: 10px 0 0; }
 .post-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 4px; }
-.post-actions.bar { margin-top: 14px; }
+.post-actions.main-actions { margin-top: 14px; }
 .vote.row { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 999px; background: var(--surface-2); }
 .vote.row .score { min-width: 18px; text-align: center; }
 .gallery.one { grid-template-columns: 1fr; }

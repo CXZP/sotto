@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7rctqh";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7rzn6f";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -258,7 +258,7 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mw7rctqh")
+    demo = fetch("data/demo-threads.json?v=mw7rzn6f")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();

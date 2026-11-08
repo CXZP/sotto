@@ -629,3 +629,19 @@ main > .narrow { margin-left: 0; margin-right: auto; }
 /* Demo threads (data/demo-threads.json): a small label by the name, and a note on the thread. */
 .demo-badge { display: inline-block; margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent, #e8862e) 16%, transparent); color: var(--text); font-size: 11px; font-weight: 600; line-height: 1.5; vertical-align: 1px; cursor: help; }
 .demo-note { margin: 0 0 10px; padding: 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--accent, #e8862e) 10%, transparent); font-size: 14px; }
+
+/* Threads: one spacing step between every box (16px, the same as the column gap), and every
+   control in an action row the same height, shape and type size: vote, comments, follow,
+   share and report sit on one baseline instead of four different sizes. */
+.thread-col, .thread-aside { gap: 16px; }
+.thread-aside { top: 96px; }
+.post-actions { gap: 8px; }
+.post-actions > :is(*, a.pill), .thread-meta .back { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin: 0; border: 0; border-radius: 999px; background: var(--surface-2); color: var(--text); font: 500 14px/1 var(--font); text-decoration: none; white-space: nowrap; }
+.post-actions.main-actions > :is(*, a.pill) { height: 36px; padding: 0 14px; }
+.post-actions:not(.main-actions) > :is(*, a.pill) { height: 30px; padding: 0 12px; font-size: 13px; }
+.post-actions > div.vote.row { padding: 0 4px; gap: 0; }
+.post-actions > div.vote.row button { width: 28px; height: 28px; padding: 0; display: grid; place-items: center; border-radius: 50%; }
+.post-actions:not(.main-actions) > div.vote.row button { width: 24px; height: 24px; }
+.post-actions > *:hover { text-decoration: none; background: color-mix(in srgb, var(--text) 9%, var(--surface-2)); }
+.post-actions > .vote.row:hover { background: var(--surface-2); }
+.thread-meta .back { width: 36px; height: 36px; padding: 0; }

@@ -192,7 +192,7 @@ export const SHEET = [
   ["crosstalk", /^(?:crosstalk|channel\s+separation|separation)\b/i],
   ["weight", /^(?:net\s+)?weight\b/i],
   ["cable", /^cable(?:\s*(?:length|material|type))?\s*$/i],
-  ["connector", /^(?:(?:cable\s+)?connectors?|pin\s*type|connection\s+type|earphone\s+interface)\b/i],
+  ["connector", /^(?:(?:cable\s+)?connectors?|pin\s*type|connection\s+type|connectivity|(?:earphone|cable|earbud)\s+interface|(?:cable\s+)?socket|detachable\s+cable)\b/i],
   ["plug", /^(?:plugs?|termination|jack|headphone\s+(?:outputs?|jacks?))\b/i],
   ["dac", /^(?:DAC(?:\s*chips?)?|decod(?:ing|er)\s*chips?|chipset)\b/i],
   ["ampchip", /^(?:amp(?:lifier)?\s*chips?|op-?amps?)\b/i],
@@ -218,6 +218,16 @@ export function extractSheet(html, lines = textify(html)) {
       if (out[key] || !re.test(label.trim())) continue;
       out[key] = { value, quote: line };
       break;
+    }
+  }
+  // No labelled connector line: a short line that names the IEM socket outright
+  // ("Standard 0.78mm Two-Pin Connectors", "Detachable MMCX cable"). The quote is the line itself.
+  if (!out.connector) {
+    const re = /\b(0\.78\s*mm\s*(?:2|two)[\s-]*pins?|(?:2|two)[\s-]*pins?\s*(?:0\.78\s*mm)?|mmcx|qdc|t2|a2dc|ipx|0\.75\s*mm\s*(?:2|two)[\s-]*pins?)\b/i;
+    for (const line of lines) {
+      if (line.length > 120 || !/connector|socket|interface|cable|pins?\b/i.test(line) || /power|\bac\b|mains|charg|usb/i.test(line)) continue;
+      const m = line.match(re);
+      if (m) { out.connector = { value: m[1].replace(/\s+/g, " ").trim(), quote: line }; break; }
     }
   }
   return out;

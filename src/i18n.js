@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw7xes0p";
-import { ZH } from "./i18n-zh.js?v=mw7xes0p";
+import { JA } from "./i18n-ja.js?v=mw7y5s91";
+import { ZH } from "./i18n-zh.js?v=mw7y5s91";
 
 export const STRINGS = {
   th: {
@@ -498,6 +498,9 @@ export const STRINGS = {
     it_shopee: "ค้นใน Shopee",
     it_add_build: "ใช้ในชุด",
     it_not_found: "ไม่พบสินค้านี้",
+    toc_label: "ในหน้านี้",
+    it_ports_in: "ช่องรับเข้า",
+    it_ports_out: "ช่องออก",
     it_no_specs: "ร้านไม่ได้ใส่สเปกในข้อมูลสินค้า",
     sh_driver: "ไดรเวอร์",
     sh_freq: "ตอบสนองความถี่",
@@ -1486,6 +1489,9 @@ export const STRINGS = {
     it_shopee: "Search Shopee",
     it_add_build: "Use in build",
     it_not_found: "Product not found",
+    toc_label: "On this page",
+    it_ports_in: "Inputs",
+    it_ports_out: "Outputs",
     it_no_specs: "The store listing has no specs",
     sh_driver: "Drivers",
     sh_freq: "Frequency response",

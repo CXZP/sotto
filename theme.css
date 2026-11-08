@@ -660,3 +660,19 @@ main > .narrow { margin-left: 0; margin-right: auto; }
 .deal-sub { margin: 36px 0 4px; }
 .deal-sub h2 { margin: 0 0 6px; font-family: var(--display); font-size: clamp(24px, 2vw, 32px); font-weight: 600; letter-spacing: -0.03em; }
 .deal-item .pill { margin-top: 8px; }
+
+/* Thread header: back link on its own line, then meta, demo note, title, evenly spaced */
+.thread .back-link { display: inline-flex; align-items: center; gap: 4px; margin: 0 0 12px; color: var(--text-2, inherit); text-decoration: none; font-weight: 500; }
+.thread .back-link:hover { color: var(--text); text-decoration: underline; }
+.thread .thread-meta { gap: 4px 8px; line-height: 1.4; }
+.thread .demo-note { margin: 12px 0 0; }
+.thread .thread-h1 { margin: 16px 0 0; }
+/* Mid widths (861–1000px): the links can be wider than the bar; they scroll sideways instead of pushing the tools off screen. */
+@media (min-width: 861px) {
+  header nav { min-width: 0; flex: 0 1 auto; overflow-x: auto; scrollbar-width: none; }
+  header nav::-webkit-scrollbar { display: none; }
+  header .bar-tools { flex: none; }
+}
+@media (min-width: 861px) and (max-width: 1060px) {
+  header nav { -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
+}

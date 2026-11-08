@@ -877,5 +877,83 @@
       "detachable": true
     },
     "stockPlug": null
+  },
+  {
+    "id": "dunu-glacier",
+    "brand": "DUNU",
+    "model": "Glacier",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 43,
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/dunu-glacier"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 109,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/dunu-glacier"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "simgot-ew200",
+    "brand": "SIMGOT",
+    "model": "EW200",
+    "type": "iem",
+    "driver": "dynamic",
+    "impedance": [
+      {
+        "value": 16,
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/simgot-ew200"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 126,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/simgot-ew200"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "thieaudio-monarch-mkii",
+    "brand": "THIEAUDIO",
+    "model": "Monarch MKII",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 36,
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/thieaudio-monarch-mkii"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 108,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://linsoul.com/products/thieaudio-monarch-mkii"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
   }
 ]

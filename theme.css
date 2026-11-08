@@ -704,3 +704,16 @@ main:not(.page-home) { min-height: 50svh; }
 .spec-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 48px; align-items: start; }
 .spec-cols > div > :first-child { margin-top: 0; }
 @media (max-width: 900px) { .spec-cols { grid-template-columns: minmax(0, 1fr); } }
+/* Tools, contact and FR pages use the full width like the header. */
+.page-tools .discuss.narrow { max-width: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; align-items: stretch; }
+.page-tools .discuss.narrow > header { grid-column: 1 / -1; }
+.page-tools .discuss.narrow > .card { margin: 0; }
+.page-contact .prose.legal { max-width: none; }
+.page-contact .prose.legal > p { max-width: 760px; }
+.fr-page { max-width: none; margin: 0; }
+/* Learn basics: each topic is its own card, like the glossary above. */
+.learn-guide > section { background: var(--bg); border-radius: 18px; padding: 24px 28px; }
+.learn-guide > section > :first-child { margin-top: 0; }
+.page-contact .contact-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+/* Account, notifications and new thread: full width like the header. */
+.discuss.narrow { max-width: none; }

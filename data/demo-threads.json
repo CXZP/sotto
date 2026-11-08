@@ -1,37 +1,118 @@
 {
-  "_note": "Demo threads written by the Sotto team to show how Discuss works. Every one is labelled \"Demo\" on the site; the usernames are made up and belong to no real person. hours_ago is counted from the moment the page loads. No defect claims about real products: the problems here are set-up mistakes with a known fix.",
+  "_note": "Demo threads written by the Sotto team to show how Discuss works. Every one is labelled \"Demo\" on the site; the usernames are made up and belong to no real person. hours_ago is counted from the moment the page loads. Photos are free-licence images from Wikimedia Commons, credited inside each post. No defect claims about real products: the problems here are set-up mistakes with a known fix.",
   "threads": [
     {
       "id": "demo-1",
       "category": "question",
       "title": "First real upgrade from AirPods: Blessing 3 or EW300?",
       "body": "Budget is around $300. Mostly lo-fi, city pop and some metal on the commute (BTS, so it's loud). Phone is a Pixel with USB-C.\n\nSotto says both are fine straight from the Apple dongle, so I don't need an amp yet, right? What would you pick and why?",
-      "item_ids": ["moondrop--blessing-3", "simgot--ew300"],
+      "item_ids": [
+        "moondrop--blessing-3",
+        "simgot--ew300"
+      ],
       "author_name": "commute_canalphone",
       "hours_ago": 7,
       "score": 24,
       "comments": [
-        { "id": "demo-1-c1", "author_name": "sub_bass_sommelier", "hours_ago": 6, "score": 15, "body": "For metal on a train I'd lean Blessing 3, the bass is tighter and it isolates better. EW300 is more fun and warmer, but it's chunkier in the ear.\n\nAnd yes, the dongle is fine for both. They're easy to drive." },
-        { "id": "demo-1-c2", "parent": "demo-1-c1", "author_name": "commute_canalphone", "hours_ago": 5, "score": 6, "body": "Fit is a good point, I have small ears. Is the B3 shell big?" },
-        { "id": "demo-1-c3", "parent": "demo-1-c2", "author_name": "sub_bass_sommelier", "hours_ago": 5, "score": 8, "body": "Medium-ish. Try a smaller tip before you decide it doesn't fit, it makes a huge difference." },
-        { "id": "demo-1-c4", "author_name": "LowGainLarry", "hours_ago": 4, "score": 9, "body": "Checked both in Build with the Apple adapter: both say \"loud enough\" with headroom. If you ever add a dongle with a high gain switch, keep it on low with IEMs like these." },
-        { "id": "demo-1-c5", "author_name": "bkk_audio_noob", "hours_ago": 2, "score": 3, "body": "ถ้าอยู่ไทยลองไปฟังจริงก่อนดีกว่าครับ สองตัวนี้นิสัยต่างกันเยอะ ฟังแค่เพลงเดียวก็รู้แล้วว่าชอบแบบไหน" }
+        {
+          "id": "demo-1-c1",
+          "author_name": "sub_bass_sommelier",
+          "hours_ago": 6,
+          "score": 15,
+          "body": "For metal on a train I'd lean Blessing 3, the bass is tighter and it isolates better. EW300 is more fun and warmer, but it's chunkier in the ear.\n\nAnd yes, the dongle is fine for both. They're easy to drive."
+        },
+        {
+          "id": "demo-1-c2",
+          "parent": "demo-1-c1",
+          "author_name": "commute_canalphone",
+          "hours_ago": 5,
+          "score": 6,
+          "body": "Fit is a good point, I have small ears. Is the B3 shell big?"
+        },
+        {
+          "id": "demo-1-c3",
+          "parent": "demo-1-c2",
+          "author_name": "sub_bass_sommelier",
+          "hours_ago": 5,
+          "score": 8,
+          "body": "Medium-ish. Try a smaller tip before you decide it doesn't fit, it makes a huge difference."
+        },
+        {
+          "id": "demo-1-c4",
+          "author_name": "LowGainLarry",
+          "hours_ago": 4,
+          "score": 9,
+          "body": "Checked both in Build with the Apple adapter: both say \"loud enough\" with headroom. If you ever add a dongle with a high gain switch, keep it on low with IEMs like these."
+        },
+        {
+          "id": "demo-1-c5",
+          "author_name": "bkk_audio_noob",
+          "hours_ago": 2,
+          "score": 3,
+          "body": "ถ้าอยู่ไทยลองไปฟังจริงก่อนดีกว่าครับ สองตัวนี้นิสัยต่างกันเยอะ ฟังแค่เพลงเดียวก็รู้แล้วว่าชอบแบบไหน"
+        },
+        {
+          "id": "demo-1-c6",
+          "author_name": "wallet_in_recovery",
+          "hours_ago": 3,
+          "score": 21,
+          "body": "2 sounds to 1 moneys either way lol"
+        },
+        {
+          "id": "demo-1-c7",
+          "parent": "demo-1-c6",
+          "author_name": "commute_canalphone",
+          "hours_ago": 2,
+          "score": 6,
+          "body": "my wallet felt that"
+        }
       ]
     },
     {
       "id": "demo-2",
       "category": "question",
       "title": "HD600 เสียบมือถือตรงๆ ดังพอไหม หรือต้องซื้อแอมป์",
-      "body": "เพิ่งได้ HD600 มือสองมาครับ ตอนนี้ใช้กับหางหนู USB-C ของ Apple อยู่ ฟังได้แต่รู้สึกต้องเปิดเกือบสุด\n\nกด Build ใน Sotto แล้วขึ้นว่า \"ปกติพอ แต่ช่วงพีคดังสุดอาจไม่พอ\" แปลว่าต้องซื้อแอมป์เลยไหมครับ งบไม่เยอะ",
-      "item_ids": ["sennheiser--hd-600", "apple--c-to-adapter"],
+      "body": "เพิ่งได้ HD600 มือสองมาครับ ตอนนี้ใช้กับหางหนู USB-C ของ Apple อยู่ ฟังได้แต่รู้สึกต้องเปิดเกือบสุด\n\nกด Build ใน Sotto แล้วขึ้นว่า \"ปกติพอ แต่ช่วงพีคดังสุดอาจไม่พอ\" แปลว่าต้องซื้อแอมป์เลยไหมครับ งบไม่เยอะ\n\n*Photo: Ulfbastel, CC BY-SA 3.0, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hd600_klein.jpg)*",
+      "item_ids": [
+        "sennheiser--hd-600",
+        "apple--c-to-adapter"
+      ],
       "author_name": "ohm_sweet_ohm",
       "hours_ago": 20,
       "score": 31,
       "comments": [
-        { "id": "demo-2-c1", "author_name": "planar_curious_22", "hours_ago": 19, "score": 18, "body": "ไม่จำเป็นต้องรีบครับ ถ้าฟังเบาถึงกลางๆ หางหนูก็พอ แต่เพลงที่ไดนามิกกว้างๆ (คลาสสิก, แจ๊ส) ช่วงที่ดังสุดจะโดนตัด\n\nถ้าจะซื้อ dongle ที่แรงขึ้นอย่าง KA17 ก็ช่วยได้เยอะแล้ว ไม่ต้องถึงตั้งโต๊ะ" },
-        { "id": "demo-2-c2", "parent": "demo-2-c1", "author_name": "ohm_sweet_ohm", "hours_ago": 18, "score": 5, "body": "ใส่ KA17 ใน Build แล้วขึ้นเขียวเลยครับ ขอบคุณมาก" },
-        { "id": "demo-2-c3", "author_name": "thrift_iem_hunter", "hours_ago": 16, "score": 7, "body": "300 ohm แต่ไม่ได้กินแรงขนาดนั้นครับ ที่ต้องเปิดเกือบสุดเพราะหางหนู Apple ไม่ได้แรงมาก ตัวหูฟังไม่ได้ผิดอะไร" },
-        { "id": "demo-2-c4", "author_name": "CoffeeAndCanals", "hours_ago": 11, "score": 4, "body": "Same experience here. The Apple dongle is great for IEMs, but the HD600 wants a bit more voltage on peaks. A desktop amp is nice, not required." }
+        {
+          "id": "demo-2-c1",
+          "author_name": "planar_curious_22",
+          "hours_ago": 19,
+          "score": 18,
+          "body": "ไม่จำเป็นต้องรีบครับ ถ้าฟังเบาถึงกลางๆ หางหนูก็พอ แต่เพลงที่ไดนามิกกว้างๆ (คลาสสิก, แจ๊ส) ช่วงที่ดังสุดจะโดนตัด\n\nถ้าจะซื้อ dongle ที่แรงขึ้นอย่าง KA17 ก็ช่วยได้เยอะแล้ว ไม่ต้องถึงตั้งโต๊ะ"
+        },
+        {
+          "id": "demo-2-c2",
+          "parent": "demo-2-c1",
+          "author_name": "ohm_sweet_ohm",
+          "hours_ago": 18,
+          "score": 5,
+          "body": "ใส่ KA17 ใน Build แล้วขึ้นเขียวเลยครับ ขอบคุณมาก"
+        },
+        {
+          "id": "demo-2-c3",
+          "author_name": "thrift_iem_hunter",
+          "hours_ago": 16,
+          "score": 7,
+          "body": "300 ohm แต่ไม่ได้กินแรงขนาดนั้นครับ ที่ต้องเปิดเกือบสุดเพราะหางหนู Apple ไม่ได้แรงมาก ตัวหูฟังไม่ได้ผิดอะไร"
+        },
+        {
+          "id": "demo-2-c4",
+          "author_name": "CoffeeAndCanals",
+          "hours_ago": 11,
+          "score": 4,
+          "body": "Same experience here. The Apple dongle is great for IEMs, but the HD600 wants a bit more voltage on peaks. A desktop amp is nice, not required."
+        }
+      ],
+      "images": [
+        "img/demo/hd600.jpg"
       ]
     },
     {
@@ -39,14 +120,36 @@
       "category": "setup",
       "title": "My small desk setup after 2 years: DX3 Pro + Sundara",
       "body": "Nothing fancy, but I finally stopped upgrading.\n\n- Source: PC over USB\n- DAC/amp: Topping DX3 Pro\n- Headphones: HiFiMAN Sundara (pads swapped once)\n\nSotto puts the Sundara well under the DX3 Pro's line on the chart, so it drives it with room to spare. Happy to answer questions.",
-      "item_ids": ["topping--dx3-pro", "hifiman--sundara"],
+      "item_ids": [
+        "topping--dx3-pro",
+        "hifiman--sundara"
+      ],
       "author_name": "desk_goblin_audio",
       "hours_ago": 30,
       "score": 42,
       "comments": [
-        { "id": "demo-3-c1", "author_name": "wallet_in_recovery", "hours_ago": 29, "score": 10, "body": "Clean. Did you ever try the Sundara on a weaker source? Wondering if it's worth getting a proper amp for it." },
-        { "id": "demo-3-c2", "parent": "demo-3-c1", "author_name": "desk_goblin_audio", "hours_ago": 28, "score": 9, "body": "Ran it off a laptop jack for a week before this. It played, but turned up loud it fell apart on busy tracks. The DX3 Pro fixed that." },
-        { "id": "demo-3-c3", "author_name": "bkk_audio_noob", "hours_ago": 25, "score": 5, "body": "ชุดนี้คุ้มมากครับ ผมกำลังเล็ง Sundara อยู่พอดี" }
+        {
+          "id": "demo-3-c1",
+          "author_name": "wallet_in_recovery",
+          "hours_ago": 29,
+          "score": 10,
+          "body": "Clean. Did you ever try the Sundara on a weaker source? Wondering if it's worth getting a proper amp for it."
+        },
+        {
+          "id": "demo-3-c2",
+          "parent": "demo-3-c1",
+          "author_name": "desk_goblin_audio",
+          "hours_ago": 28,
+          "score": 9,
+          "body": "Ran it off a laptop jack for a week before this. It played, but turned up loud it fell apart on busy tracks. The DX3 Pro fixed that."
+        },
+        {
+          "id": "demo-3-c3",
+          "author_name": "bkk_audio_noob",
+          "hours_ago": 25,
+          "score": 5,
+          "body": "ชุดนี้คุ้มมากครับ ผมกำลังเล็ง Sundara อยู่พอดี"
+        }
       ]
     },
     {
@@ -59,9 +162,28 @@
       "hours_ago": 52,
       "score": 37,
       "comments": [
-        { "id": "demo-4-c1", "author_name": "thrift_iem_hunter", "hours_ago": 50, "score": 12, "body": "The cap thing gets everyone. A bigger % with a low cap loses on anything expensive." },
-        { "id": "demo-4-c2", "author_name": "commute_canalphone", "hours_ago": 47, "score": 4, "body": "ใช้ได้กับ Lazada ด้วยไหมครับ" },
-        { "id": "demo-4-c3", "parent": "demo-4-c2", "author_name": "coupon_stacker_th", "hours_ago": 46, "score": 6, "body": "ได้ครับ ใส่ราคากับโค้ดเหมือนกัน มันไม่ได้ผูกกับแอปไหน" }
+        {
+          "id": "demo-4-c1",
+          "author_name": "thrift_iem_hunter",
+          "hours_ago": 50,
+          "score": 12,
+          "body": "The cap thing gets everyone. A bigger % with a low cap loses on anything expensive."
+        },
+        {
+          "id": "demo-4-c2",
+          "author_name": "commute_canalphone",
+          "hours_ago": 47,
+          "score": 4,
+          "body": "ใช้ได้กับ Lazada ด้วยไหมครับ"
+        },
+        {
+          "id": "demo-4-c3",
+          "parent": "demo-4-c2",
+          "author_name": "coupon_stacker_th",
+          "hours_ago": 46,
+          "score": 6,
+          "body": "ได้ครับ ใส่ราคากับโค้ดเหมือนกัน มันไม่ได้ผูกกับแอปไหน"
+        }
       ]
     },
     {
@@ -69,13 +191,27 @@
       "category": "issue",
       "title": "Hiss with sensitive IEMs on a KA17, solved (it was the gain)",
       "body": "Got background hiss in quiet tracks with my multi-BA IEMs on the KA17. Thought something was broken.\n\nTurned out I'd left it on high gain from using it with headphones. Low gain and the hiss is basically gone. This is what Sotto means by \"more than enough\": a very sensitive IEM on a strong source.\n\nPosting in case someone else panics like I did.",
-      "item_ids": ["fiio--ka17"],
+      "item_ids": [
+        "fiio--ka17"
+      ],
       "author_name": "LowGainLarry",
       "hours_ago": 75,
       "score": 28,
       "comments": [
-        { "id": "demo-5-c1", "author_name": "planar_curious_22", "hours_ago": 74, "score": 9, "body": "Classic. An impedance adapter is the other fix if low gain still isn't quiet enough, but it can change the sound on multi-driver IEMs." },
-        { "id": "demo-5-c2", "author_name": "ohm_sweet_ohm", "hours_ago": 70, "score": 3, "body": "ขอบคุณครับ เกือบส่งเคลมไปแล้ว ลองปรับ gain ตามนี้หายเลย" }
+        {
+          "id": "demo-5-c1",
+          "author_name": "planar_curious_22",
+          "hours_ago": 74,
+          "score": 9,
+          "body": "Classic. An impedance adapter is the other fix if low gain still isn't quiet enough, but it can change the sound on multi-driver IEMs."
+        },
+        {
+          "id": "demo-5-c2",
+          "author_name": "ohm_sweet_ohm",
+          "hours_ago": 70,
+          "score": 3,
+          "body": "ขอบคุณครับ เกือบส่งเคลมไปแล้ว ลองปรับ gain ตามนี้หายเลย"
+        }
       ]
     },
     {
@@ -83,13 +219,27 @@
       "category": "news",
       "title": "Moondrop Psyche is up for pre-order",
       "body": "Showed up on the Calendar page this week: Moondrop's flagship Psyche (2DD + 4BA + 4 planar) is on pre-order at HiFiGo (also listed at Linsoul and Shenzhen Audio), US$2,399.\n\nAnyone planning to try one? Curious how it compares to the Variations and the Blessing line.",
-      "item_ids": ["moondrop--psyche"],
+      "item_ids": [
+        "moondrop--psyche"
+      ],
       "author_name": "calendar_watcher",
       "hours_ago": 96,
       "score": 19,
       "comments": [
-        { "id": "demo-6-c1", "author_name": "wallet_in_recovery", "hours_ago": 95, "score": 11, "body": "Way out of my budget, but I'll read every impression thread." },
-        { "id": "demo-6-c2", "author_name": "sub_bass_sommelier", "hours_ago": 90, "score": 5, "body": "I'll wait for measurements on squig.link before getting excited." }
+        {
+          "id": "demo-6-c1",
+          "author_name": "wallet_in_recovery",
+          "hours_ago": 95,
+          "score": 11,
+          "body": "Way out of my budget, but I'll read every impression thread."
+        },
+        {
+          "id": "demo-6-c2",
+          "author_name": "sub_bass_sommelier",
+          "hours_ago": 90,
+          "score": 5,
+          "body": "I'll wait for measurements on squig.link before getting excited."
+        }
       ]
     },
     {
@@ -97,13 +247,29 @@
       "category": "dream",
       "title": "Dream endgame if I win the lottery",
       "body": "Focal Utopia on a FiiO K11 R2R for now (I know, it deserves more), Andromeda for travel.\n\nBuild says the K11 R2R drives the Utopia easily, so the \"you need a ฿100k amp\" crowd can relax.",
-      "item_ids": ["focal--utopia", "fiio--k11-r2r", "campfire-audio--andromeda-10"],
+      "item_ids": [
+        "focal--utopia",
+        "fiio--k11-r2r",
+        "campfire-audio--andromeda-10"
+      ],
       "author_name": "wallet_in_recovery",
       "hours_ago": 130,
       "score": 22,
       "comments": [
-        { "id": "demo-7-c1", "author_name": "desk_goblin_audio", "hours_ago": 128, "score": 8, "body": "Utopia is efficient, a modest amp is fine. Spend the rest on music." },
-        { "id": "demo-7-c2", "author_name": "coupon_stacker_th", "hours_ago": 120, "score": 6, "body": "ถ้าถูกหวยจริงอย่าลืมใช้โค้ดด้วยนะครับ 555" }
+        {
+          "id": "demo-7-c1",
+          "author_name": "desk_goblin_audio",
+          "hours_ago": 128,
+          "score": 8,
+          "body": "Utopia is efficient, a modest amp is fine. Spend the rest on music."
+        },
+        {
+          "id": "demo-7-c2",
+          "author_name": "coupon_stacker_th",
+          "hours_ago": 120,
+          "score": 6,
+          "body": "ถ้าถูกหวยจริงอย่าลืมใช้โค้ดด้วยนะครับ 555"
+        }
       ]
     },
     {
@@ -111,14 +277,171 @@
       "category": "general",
       "title": "ใครเริ่มจาก IEM หลักร้อยบ้าง ตอนนี้ไปถึงไหนแล้ว",
       "body": "ผมเริ่มจาก 7Hz Salnotes Zero ตอนนี้มา Kiwi Ears Orchestra Lite แล้ว อยากรู้ว่าคนอื่นเริ่มจากอะไร แล้วหยุดที่ตัวไหน",
-      "item_ids": ["7hz--salnotes-zero", "kiwi-ears--orchestra-lite"],
+      "item_ids": [
+        "7hz--salnotes-zero",
+        "kiwi-ears--orchestra-lite"
+      ],
       "author_name": "bkk_audio_noob",
       "hours_ago": 160,
       "score": 15,
       "comments": [
-        { "id": "demo-8-c1", "author_name": "thrift_iem_hunter", "hours_ago": 158, "score": 7, "body": "Zero เหมือนกันครับ ตัวนี้พาคนลงหลุมมาเยอะมาก" },
-        { "id": "demo-8-c2", "author_name": "CoffeeAndCanals", "hours_ago": 150, "score": 5, "body": "Started on a KZ, now on a Blessing 3 and honestly I think I'm done. The rest is tips and music." },
-        { "id": "demo-8-c3", "parent": "demo-8-c2", "author_name": "commute_canalphone", "hours_ago": 140, "score": 4, "body": "This is the dream. \"I think I'm done.\"" }
+        {
+          "id": "demo-8-c1",
+          "author_name": "thrift_iem_hunter",
+          "hours_ago": 158,
+          "score": 7,
+          "body": "Zero เหมือนกันครับ ตัวนี้พาคนลงหลุมมาเยอะมาก"
+        },
+        {
+          "id": "demo-8-c2",
+          "author_name": "CoffeeAndCanals",
+          "hours_ago": 150,
+          "score": 5,
+          "body": "Started on a KZ, now on a Blessing 3 and honestly I think I'm done. The rest is tips and music."
+        },
+        {
+          "id": "demo-8-c3",
+          "parent": "demo-8-c2",
+          "author_name": "commute_canalphone",
+          "hours_ago": 140,
+          "score": 4,
+          "body": "This is the dream. \"I think I'm done.\""
+        }
+      ]
+    },
+    {
+      "id": "demo-9",
+      "category": "setup",
+      "title": "Finally a proper desktop DAC/amp: FiiO K9 [first impressions]",
+      "body": "Upgraded from a dongle last month. Quick notes, no fancy review.\n\n**Pros:**\n\n- Every input I need: USB, optical, coax, line in, Bluetooth\n- 6.35, 4.4 and XLR4 out on the front\n- Low/mid/high gain switch, so IEMs and harder headphones both work\n\n**Cons:**\n\n- Big. Takes more desk than I expected\n- The antenna sticks up and looks a bit silly\n\n**Disclaimer:** bought with my own money.\n\nBuild puts my HD650 well inside what it can drive. Sotto lists this one without power specs yet, so I checked with the K9 Pro numbers instead.\n\n*Photo: Benlisquare, CC BY-SA 4.0, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:FiiO_K9.jpg)*",
+      "item_ids": [
+        "fiio--k9-akm",
+        "sennheiser--hd650"
+      ],
+      "images": [
+        "img/demo/fiio-k9.jpg"
+      ],
+      "author_name": "desk_goblin_audio",
+      "hours_ago": 40,
+      "score": 33,
+      "comments": [
+        {
+          "id": "demo-9-c1",
+          "author_name": "sub_bass_sommelier",
+          "hours_ago": 39,
+          "score": 12,
+          "body": "that knob is chef's kiss"
+        },
+        {
+          "id": "demo-9-c2",
+          "author_name": "LowGainLarry",
+          "hours_ago": 37,
+          "score": 9,
+          "body": "Use low gain with IEMs on this thing. Ask me how I know."
+        },
+        {
+          "id": "demo-9-c3",
+          "parent": "demo-9-c2",
+          "author_name": "desk_goblin_audio",
+          "hours_ago": 36,
+          "score": 7,
+          "body": "already learned that one the loud way 💀"
+        },
+        {
+          "id": "demo-9-c4",
+          "author_name": "coupon_stacker_th",
+          "hours_ago": 30,
+          "score": 4,
+          "body": "ซื้อที่ไหนครับ ร้านไทยหรือสั่งนอก"
+        },
+        {
+          "id": "demo-9-c5",
+          "parent": "demo-9-c4",
+          "author_name": "desk_goblin_audio",
+          "hours_ago": 29,
+          "score": 5,
+          "body": "ร้านไทยครับ ช่วงโปรเดือนก่อน ใส่โค้ดร้าน + โค้ดแพลตฟอร์ม เช็คในหน้าราคาจริงก่อนจ่าย"
+        }
+      ]
+    },
+    {
+      "id": "demo-10",
+      "category": "setup",
+      "title": "Weekend project: built a Bottlehead Crack (DIY tube amp)",
+      "body": "Two weekends, one burnt fingertip, zero regrets. Running it with my high-impedance Sennheisers, which is what OTL tube amps like this are known for.\n\nNot something Sotto can calculate (kit, no store listing), just sharing because it's pretty.\n\n*Photo: John Donovan, CC BY 3.0, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Bottlehead_Crack_Headphone_Amplifier_(116368567).jpg)*",
+      "item_ids": [],
+      "images": [
+        "img/demo/bottlehead-crack.jpg"
+      ],
+      "author_name": "solder_and_ohms",
+      "hours_ago": 110,
+      "score": 57,
+      "comments": [
+        {
+          "id": "demo-10-c1",
+          "author_name": "thrift_iem_hunter",
+          "hours_ago": 108,
+          "score": 18,
+          "body": "the wood box is so clean. what finish?"
+        },
+        {
+          "id": "demo-10-c2",
+          "parent": "demo-10-c1",
+          "author_name": "solder_and_ohms",
+          "hours_ago": 107,
+          "score": 9,
+          "body": "just oil, two coats. the top plate is spray paint"
+        },
+        {
+          "id": "demo-10-c3",
+          "author_name": "CoffeeAndCanals",
+          "hours_ago": 100,
+          "score": 11,
+          "body": "Can't wait for the day I'm brave enough to solder mains voltage. Not today."
+        },
+        {
+          "id": "demo-10-c4",
+          "author_name": "planar_curious_22",
+          "hours_ago": 96,
+          "score": 6,
+          "body": "Heads up for anyone tempted: OTL tube amps like this suit high-impedance cans. Low-impedance planars and IEMs are a bad match."
+        }
+      ]
+    },
+    {
+      "id": "demo-11",
+      "category": "question",
+      "title": "DT 770 Pro 250 ohm straight from a laptop?",
+      "body": "Got these for editing at uni. They play from my laptop jack but I'm at like 90% volume. Normal or do I need something?\n\n*Photo: Alex Holyoake, CC0, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Top_view_of_headphones_hanging_from_a_desk_(Unsplash).jpg)*",
+      "item_ids": [],
+      "images": [
+        "img/demo/desk-hanging.jpg"
+      ],
+      "author_name": "uni_editing_rig",
+      "hours_ago": 15,
+      "score": 12,
+      "comments": [
+        {
+          "id": "demo-11-c1",
+          "author_name": "ohm_sweet_ohm",
+          "hours_ago": 14,
+          "score": 10,
+          "body": "Normal for the 250 ohm version. It needs more voltage than a laptop jack usually gives. A small dongle with more output fixes it, you don't need a big amp."
+        },
+        {
+          "id": "demo-11-c2",
+          "author_name": "LowGainLarry",
+          "hours_ago": 13,
+          "score": 5,
+          "body": "Pick one in Build and compare it against your laptop. If the bar goes green you're done."
+        },
+        {
+          "id": "demo-11-c3",
+          "author_name": "bkk_audio_noob",
+          "hours_ago": 9,
+          "score": 2,
+          "body": "ตัวนี้เป็นตัวแรกของผมเลย ใช้มา 3 ปีแล้วยังไม่พัง"
+        }
       ]
     }
   ]

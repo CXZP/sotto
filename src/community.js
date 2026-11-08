@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7rzn6f";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7s4x67";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -258,14 +258,14 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mw7rzn6f")
+    demo = fetch("data/demo-threads.json?v=mw7s4x67")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();
         return threads.map((th) => {
-          const comments = th.comments.map((c) => ({ id: c.id, thread_id: th.id, parent_id: c.parent ?? null, body: c.body, images: [], score: c.score, created_at: at(c.hours_ago), author: `demo:${c.author_name}`, author_name: c.author_name, demo: true }));
+          const comments = th.comments.map((c) => ({ id: c.id, thread_id: th.id, parent_id: c.parent ?? null, body: c.body, images: c.images ?? [], score: c.score, created_at: at(c.hours_ago), author: `demo:${c.author_name}`, author_name: c.author_name, demo: true }));
           return {
-            row: { id: th.id, category: th.category, title: th.title, body: th.body, item_ids: th.item_ids, images: [], score: th.score, comment_count: comments.length, created_at: at(th.hours_ago), last_activity: comments.length ? comments.reduce((a, c) => (c.created_at > a ? c.created_at : a), at(th.hours_ago)) : at(th.hours_ago), author: `demo:${th.author_name}`, author_name: th.author_name, demo: true },
+            row: { id: th.id, category: th.category, title: th.title, body: th.body, item_ids: th.item_ids, images: th.images ?? [], score: th.score, comment_count: comments.length, created_at: at(th.hours_ago), last_activity: comments.length ? comments.reduce((a, c) => (c.created_at > a ? c.created_at : a), at(th.hours_ago)) : at(th.hours_ago), author: `demo:${th.author_name}`, author_name: th.author_name, demo: true },
             comments,
           };
         });

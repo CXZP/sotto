@@ -142,7 +142,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -r index.html *.css .nojekyll src data LICENSE DATA_LICENSE.md _site/
+          cp -r index.html *.css .nojekyll src data img LICENSE DATA_LICENSE.md _site/
       - name: Product pages, share cards, sitemap
         run: node scripts/build-pages.mjs _site
       - uses: actions/configure-pages@v5

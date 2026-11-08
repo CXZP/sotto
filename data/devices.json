@@ -1,25 +1,25 @@
 [
   {
     "id": "phone-usb-c",
-    "name": { "th": "มือถือ / แท็บเล็ต (USB-C)", "en": "Phone / tablet (USB-C)" },
+    "name": { "th": "มือถือ / แท็บเล็ต (USB-C)", "en": "Phone / tablet (USB-C)", "ja": "スマホ / タブレット（USB-C）", "zh": "手机 / 平板（USB-C）" },
     "port": "usb-c",
     "outputs": []
   },
   {
     "id": "iphone-lightning",
-    "name": { "th": "iPhone รุ่นที่ใช้ Lightning", "en": "iPhone with Lightning" },
+    "name": { "th": "iPhone รุ่นที่ใช้ Lightning", "en": "iPhone with Lightning", "ja": "Lightning端子のiPhone", "zh": "Lightning 接口的 iPhone" },
     "port": "lightning",
     "outputs": []
   },
   {
     "id": "computer-usb",
-    "name": { "th": "คอมพิวเตอร์ (USB)", "en": "Computer (USB)" },
+    "name": { "th": "คอมพิวเตอร์ (USB)", "en": "Computer (USB)", "ja": "パソコン（USB）", "zh": "电脑（USB）" },
     "port": "usb-a",
     "outputs": []
   },
   {
     "id": "apple-macbook-2021",
-    "name": { "th": "ช่องหูฟังของ Mac (รุ่นปี 2021 ขึ้นไป)", "en": "Mac headphone jack (2021 or later)" },
+    "name": { "th": "ช่องหูฟังของ Mac (รุ่นปี 2021 ขึ้นไป)", "en": "Mac headphone jack (2021 or later)", "ja": "Macのヘッドホン端子（2021年以降）", "zh": "Mac 耳机孔（2021 年及以后）" },
     "port": "usb-c",
     "outputs": [
       {

@@ -1,4 +1,7 @@
-// UI strings. Short and plain. Keys identical in both languages.
+// UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
+// live in their own files, and any key missing there falls back to English.
+import { JA } from "./i18n-ja.js?v=mw7r6qfo";
+import { ZH } from "./i18n-zh.js?v=mw7r6qfo";
 
 export const STRINGS = {
   th: {
@@ -1949,6 +1952,9 @@ export const STRINGS = {
     footer: "Code MIT · Data CC BY-SA 4.0 · No ads, no tracking cookies",
   },
 };
+
+STRINGS.ja = JA;
+STRINGS.zh = ZH;
 
 export function makeT(lang) {
   const table = STRINGS[lang] ?? STRINGS.en;

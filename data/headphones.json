@@ -7,12 +7,23 @@
     "back": "open",
     "driver": "dynamic",
     "impedance": [
-      { "value": 300, "kind": "claimed", "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600" }
+      {
+        "value": 300,
+        "kind": "claimed",
+        "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600"
+      }
     ],
     "sensitivity": [
-      { "value": 97, "unit": "dB/V", "kind": "claimed", "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600" }
+      {
+        "value": 97,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://ph.sennheiser-hearing.com/collections/by-type/products/hd-600"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -23,12 +34,23 @@
     "back": "open",
     "driver": "dynamic",
     "impedance": [
-      { "value": 300, "kind": "claimed", "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications" }
+      {
+        "value": 300,
+        "kind": "claimed",
+        "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications"
+      }
     ],
     "sensitivity": [
-      { "value": 103, "unit": "dB/V", "kind": "claimed", "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications" }
+      {
+        "value": 103,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://support.sennheiser-hearing.com/hc/en-de/articles/38295144424989-HD-650-Specifications"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -39,12 +61,23 @@
     "back": "open",
     "driver": "dynamic",
     "impedance": [
-      { "value": 120, "kind": "claimed", "source": "https://headphones.com/products/sennheiser-hd-560s" }
+      {
+        "value": 120,
+        "kind": "claimed",
+        "source": "https://headphones.com/products/sennheiser-hd-560s"
+      }
     ],
     "sensitivity": [
-      { "value": 110, "unit": "dB/V", "kind": "claimed", "source": "https://headphones.com/products/sennheiser-hd-560s" }
+      {
+        "value": 110,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://headphones.com/products/sennheiser-hd-560s"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -55,12 +88,27 @@
     "back": "open",
     "driver": "dynamic",
     "impedance": [
-      { "value": 250, "kind": "claimed", "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm" }
+      {
+        "value": 250,
+        "kind": "claimed",
+        "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm"
+      }
     ],
     "sensitivity": [
-      { "value": 96, "unit": "dB/mW", "kind": "claimed", "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm", "note": { "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)", "en": "Nominal SPL per IEC 60268-7 (1 mW reference)" } }
+      {
+        "value": 96,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.fullcompass.com/prod/012639-beyerdynamic-dt-990-pro-open-back-studio-headphones-250-ohm",
+        "note": {
+          "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)",
+          "en": "Nominal SPL per IEC 60268-7 (1 mW reference)"
+        }
+      }
     ],
-    "cable": { "detachable": false },
+    "cable": {
+      "detachable": false
+    },
     "stockPlug": null
   },
   {
@@ -71,12 +119,27 @@
     "back": "closed",
     "driver": "dynamic",
     "impedance": [
-      { "value": 80, "kind": "claimed", "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630" }
+      {
+        "value": 80,
+        "kind": "claimed",
+        "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630"
+      }
     ],
     "sensitivity": [
-      { "value": 96, "unit": "dB/mW", "kind": "claimed", "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630", "note": { "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)", "en": "Nominal SPL per IEC 60268-7 (1 mW reference)" } }
+      {
+        "value": 96,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.adcom.it/en/audio/sound-diffusion/professional-headphones/beyerdynamic-dt-770-pro-80-ohm/p_n_0_0_0_59630",
+        "note": {
+          "th": "ค่า Nominal SPL ตาม IEC 60268-7 (อ้างอิง 1 mW)",
+          "en": "Nominal SPL per IEC 60268-7 (1 mW reference)"
+        }
+      }
     ],
-    "cable": { "detachable": false },
+    "cable": {
+      "detachable": false
+    },
     "stockPlug": null
   },
   {
@@ -87,13 +150,33 @@
     "back": "closed",
     "driver": "dynamic",
     "impedance": [
-      { "value": 38, "kind": "claimed", "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x" }
+      {
+        "value": 38,
+        "kind": "claimed",
+        "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x"
+      }
     ],
     "sensitivity": [
-      { "value": 99, "unit": "dB/mW", "kind": "claimed", "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x" },
-      { "value": 98, "unit": "dB/mW", "kind": "claimed", "source": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones", "note": { "th": "บางร้านระบุ 98 dB — สเปกไม่ตรงกันระหว่างแหล่ง", "en": "Some listings say 98 dB — sources disagree" } }
+      {
+        "value": 99,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.hifiverse.io/components/headphones-extra/headphones/ath-m50x"
+      },
+      {
+        "value": 98,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones",
+        "note": {
+          "th": "บางร้านระบุ 98 dB — สเปกไม่ตรงกันระหว่างแหล่ง",
+          "en": "Some listings say 98 dB — sources disagree"
+        }
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -104,12 +187,23 @@
     "back": "open",
     "driver": "dynamic",
     "impedance": [
-      { "value": 470, "kind": "claimed", "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4" }
+      {
+        "value": 470,
+        "kind": "claimed",
+        "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4"
+      }
     ],
     "sensitivity": [
-      { "value": 99, "unit": "dB/mW", "kind": "claimed", "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4" }
+      {
+        "value": 99,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.scan.co.uk/products/audio-technica-ath-r70x-professional-open-back-reference-headphones-45-mm-drivers-5-40000-hz-98-db-4"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -120,16 +214,43 @@
     "back": "open",
     "driver": "planar",
     "impedance": [
-      { "value": 37, "kind": "claimed", "source": "https://headphones.com/products/hifiman-sundara-headphones", "note": { "th": "บางร้านระบุ 20 Ω หรือ 32 Ω — มีหลายรุ่นย่อย", "en": "Some listings say 20 Ω or 32 Ω — there are several revisions" } }
+      {
+        "value": 37,
+        "kind": "claimed",
+        "source": "https://headphones.com/products/hifiman-sundara-headphones",
+        "note": {
+          "th": "บางร้านระบุ 20 Ω หรือ 32 Ω — มีหลายรุ่นย่อย",
+          "en": "Some listings say 20 Ω or 32 Ω — there are several revisions"
+        }
+      }
     ],
     "sensitivity": [
-      { "value": 105.7, "unit": "dB/V", "kind": "measured", "source": "https://www.hifinews.com/content/hifiman-sundara-headphones-lab-report", "note": { "th": "HiFi News วัดเฉลี่ยสองข้างที่ 1 kHz", "en": "HiFi News lab measurement, both capsules averaged, 1 kHz" } },
-      { "value": 94, "unit": "dB/mW", "kind": "claimed", "source": "https://headphones.com/products/hifiman-sundara-headphones" }
+      {
+        "value": 105.7,
+        "unit": "dB/V",
+        "kind": "measured",
+        "source": "https://www.hifinews.com/content/hifiman-sundara-headphones-lab-report",
+        "note": {
+          "th": "HiFi News วัดเฉลี่ยสองข้างที่ 1 kHz",
+          "en": "HiFi News lab measurement, both capsules averaged, 1 kHz"
+        }
+      },
+      {
+        "value": 94,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://headphones.com/products/hifiman-sundara-headphones"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null,
     "notes": [
-      { "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้", "en": "Open-back: leaks sound to people nearby and does not block outside noise." }
+      {
+        "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้",
+        "en": "Open-back: leaks sound to people nearby and does not block outside noise."
+      }
     ]
   },
   {
@@ -140,16 +261,43 @@
     "back": "open",
     "driver": "planar",
     "impedance": [
-      { "value": 18, "kind": "claimed", "source": "https://www.audioconcierge.co.uk/edition-xs/" }
+      {
+        "value": 18,
+        "kind": "claimed",
+        "source": "https://www.audioconcierge.co.uk/edition-xs/"
+      }
     ],
     "sensitivity": [
-      { "value": 105.4, "unit": "dB/V", "kind": "measured", "source": "https://www.rtings.com/headphones/tools/compare/sennheiser-hd-800-s-hifiman-edition-xs/290/29106", "note": { "th": "RTINGS วัดที่ 1 kHz / 1 V", "en": "RTINGS measurement at 1 kHz / 1 V" } },
-      { "value": 92, "unit": "dB/mW", "kind": "claimed", "source": "https://www.audioconcierge.co.uk/edition-xs/", "note": { "th": "สเปกโรงงานไม่ระบุหน่วย สันนิษฐานว่าเป็น dB/mW", "en": "Spec sheet gives no unit; assumed dB/mW" } }
+      {
+        "value": 105.4,
+        "unit": "dB/V",
+        "kind": "measured",
+        "source": "https://www.rtings.com/headphones/tools/compare/sennheiser-hd-800-s-hifiman-edition-xs/290/29106",
+        "note": {
+          "th": "RTINGS วัดที่ 1 kHz / 1 V",
+          "en": "RTINGS measurement at 1 kHz / 1 V"
+        }
+      },
+      {
+        "value": 92,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.audioconcierge.co.uk/edition-xs/",
+        "note": {
+          "th": "สเปกโรงงานไม่ระบุหน่วย สันนิษฐานว่าเป็น dB/mW",
+          "en": "Spec sheet gives no unit; assumed dB/mW"
+        }
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null,
     "notes": [
-      { "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้", "en": "Open-back: leaks sound to people nearby and does not block outside noise." }
+      {
+        "th": "Open-back: เสียงรั่วออกนอกหูฟัง คนข้างๆ ได้ยิน และกันเสียงภายนอกไม่ได้",
+        "en": "Open-back: leaks sound to people nearby and does not block outside noise."
+      }
     ]
   },
   {
@@ -159,12 +307,25 @@
     "type": "iem",
     "driver": "dynamic",
     "impedance": [
-      { "value": 18, "kind": "claimed", "source": "https://hangout.audio/products/moondrop-chu-2" }
+      {
+        "value": 18,
+        "kind": "claimed",
+        "source": "https://hangout.audio/products/moondrop-chu-2"
+      }
     ],
     "sensitivity": [
-      { "value": 119, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/products/moondrop-chu-2" }
+      {
+        "value": 119,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://hangout.audio/products/moondrop-chu-2"
+      }
     ],
-    "cable": { "detachable": true, "connector": "2pin-0.78", "source": "https://www.ifixit.com/Device/Moondrop_Chu_II" },
+    "cable": {
+      "detachable": true,
+      "connector": "2pin-0.78",
+      "source": "https://www.ifixit.com/Device/Moondrop_Chu_II"
+    },
     "stockPlug": "3.5",
     "stockPlugSource": "https://www.ifixit.com/Device/Moondrop_Chu_II"
   },
@@ -175,12 +336,23 @@
     "type": "iem",
     "driver": "dynamic",
     "impedance": [
-      { "value": 33, "kind": "claimed", "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones" }
+      {
+        "value": 33,
+        "kind": "claimed",
+        "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones"
+      }
     ],
     "sensitivity": [
-      { "value": 122, "unit": "dB/V", "kind": "claimed", "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones" }
+      {
+        "value": 122,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.pccasegear.com/products/73677/moondrop-aria2-wired-in-ear-headphones"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -191,12 +363,23 @@
     "driver": "hybrid",
     "drivers": "2DD + 4BA",
     "impedance": [
-      { "value": 14.8, "kind": "claimed", "source": "https://moondroplab.com/en/products/blessing3" }
+      {
+        "value": 14.8,
+        "kind": "claimed",
+        "source": "https://moondroplab.com/en/products/blessing3"
+      }
     ],
     "sensitivity": [
-      { "value": 120, "unit": "dB/V", "kind": "claimed", "source": "https://moondroplab.com/en/products/blessing3" }
+      {
+        "value": 120,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://moondroplab.com/en/products/blessing3"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -207,12 +390,23 @@
     "driver": "hybrid",
     "drivers": "1DD + 3BA",
     "impedance": [
-      { "value": 20.5, "kind": "claimed", "source": "https://hangout.audio/zh/products/truthear-hexa" }
+      {
+        "value": 20.5,
+        "kind": "claimed",
+        "source": "https://hangout.audio/zh/products/truthear-hexa"
+      }
     ],
     "sensitivity": [
-      { "value": 120, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/zh/products/truthear-hexa" }
+      {
+        "value": 120,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://hangout.audio/zh/products/truthear-hexa"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   },
   {
@@ -223,15 +417,30 @@
     "driver": "dynamic",
     "drivers": "2DD",
     "impedance": [
-      { "value": 17.5, "kind": "claimed", "source": "https://hangout.audio/products/red" }
+      {
+        "value": 17.5,
+        "kind": "claimed",
+        "source": "https://hangout.audio/products/red"
+      }
     ],
     "sensitivity": [
-      { "value": 117.5, "unit": "dB/V", "kind": "claimed", "source": "https://hangout.audio/products/red" }
+      {
+        "value": 117.5,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://hangout.audio/products/red"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null,
     "notes": [
-      { "th": "แถมตัวต้านทาน 10 Ω มาให้เสียบเพื่อลดเบส — คือการเพิ่ม output impedance โดยตั้งใจ (ดูหัวข้อกฎ 1/8)", "en": "Ships with a 10 Ω adapter that reduces bass — deliberately raising output impedance (see the 1/8 rule).", "source": "https://hangout.audio/products/red" }
+      {
+        "th": "แถมตัวต้านทาน 10 Ω มาให้เสียบเพื่อลดเบส — คือการเพิ่ม output impedance โดยตั้งใจ (ดูหัวข้อกฎ 1/8)",
+        "en": "Ships with a 10 Ω adapter that reduces bass — deliberately raising output impedance (see the 1/8 rule).",
+        "source": "https://hangout.audio/products/red"
+      }
     ]
   },
   {
@@ -241,13 +450,432 @@
     "type": "iem",
     "driver": "dynamic",
     "impedance": [
-      { "value": 21, "kind": "claimed", "source": "https://moonstarreviews.net/simgot-ea500-lm-review/" }
+      {
+        "value": 21,
+        "kind": "claimed",
+        "source": "https://moonstarreviews.net/simgot-ea500-lm-review/"
+      }
     ],
     "sensitivity": [
-      { "value": 123, "unit": "dB/V", "kind": "claimed", "source": "https://moonstarreviews.net/simgot-ea500-lm-review/", "note": { "th": "ค่าขึ้นกับหัวจุก (nozzle) ที่ใส่ 123–124 dB/V", "en": "Depends on the fitted nozzle: 123–124 dB/V" } },
-      { "value": 107, "unit": "dB/mW", "kind": "claimed", "source": "https://www.headphonesty.com/2024/02/simgot-ea500lm-review/" }
+      {
+        "value": 123,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://moonstarreviews.net/simgot-ea500-lm-review/",
+        "note": {
+          "th": "ค่าขึ้นกับหัวจุก (nozzle) ที่ใส่ 123–124 dB/V",
+          "en": "Depends on the fitted nozzle: 123–124 dB/V"
+        }
+      },
+      {
+        "value": 107,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.headphonesty.com/2024/02/simgot-ea500lm-review/"
+      }
     ],
-    "cable": { "detachable": true },
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "64-audio-u18s",
+    "brand": "64 Audio",
+    "model": "U18s",
+    "type": "iem",
+    "driver": "ba",
+    "impedance": [
+      {
+        "value": 8,
+        "kind": "claimed",
+        "source": "https://www.64audio.com/products/u18s"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 106,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.64audio.com/products/u18s"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "audeze-lcd-3",
+    "brand": "Audeze",
+    "model": "LCD-3",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "planar",
+    "impedance": [
+      {
+        "value": 110,
+        "kind": "claimed",
+        "source": "https://www.audeze.com/products/lcd-3"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 101,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.audeze.com/products/lcd-3"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "audeze-mm-500",
+    "brand": "Audeze",
+    "model": "MM-500",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "planar",
+    "impedance": [
+      {
+        "value": 18,
+        "kind": "claimed",
+        "source": "https://www.audeze.com/products/mm-500"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 100,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://www.audeze.com/products/mm-500"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "flipears-aegis",
+    "brand": "FlipEars",
+    "model": "Aegis",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 8.2,
+        "kind": "claimed",
+        "source": "https://flipears.com/products/aegis"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 112,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://flipears.com/products/aegis"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "flipears-legion",
+    "brand": "FlipEars",
+    "model": "Legion",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 5.3,
+        "kind": "claimed",
+        "source": "https://flipears.com/products/legion"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 114,
+        "unit": "dB/mW",
+        "kind": "claimed",
+        "source": "https://flipears.com/products/legion"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "grell-audio-oae2",
+    "brand": "Grell Audio",
+    "model": "OAE2",
+    "type": "over-ear",
+    "back": "open",
+    "driver": "dynamic",
+    "impedance": [
+      {
+        "value": 38,
+        "kind": "claimed",
+        "source": "https://www.grellaudio.com/products/oae2"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 100,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.grellaudio.com/products/oae2"
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-alien-brain",
+    "brand": "Campfire Audio",
+    "model": "Alien Brain",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 7.8,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/alien-brain"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 134.9,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/alien-brain",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 8.97 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 8.97 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-andromeda-10",
+    "brand": "Campfire Audio",
+    "model": "Andromeda 10",
+    "type": "iem",
+    "driver": "ba",
+    "impedance": [
+      {
+        "value": 8.5,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/andromeda-10"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 132.3,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/andromeda-10",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 12.1 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 12.1 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-bonneville",
+    "brand": "Campfire Audio",
+    "model": "Bonneville",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 29,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/bonneville"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 130.7,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/bonneville",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 14.59 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 14.59 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-cascara",
+    "brand": "Campfire Audio",
+    "model": "Cascara",
+    "type": "iem",
+    "driver": "dynamic",
+    "impedance": [
+      {
+        "value": 23,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/cascara"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 129.6,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/cascara",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 16.6 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 16.6 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-clara",
+    "brand": "Campfire Audio",
+    "model": "Clara",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 13.3,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/clara"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 134,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/clara",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 9.95 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 9.95 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-fathom",
+    "brand": "Campfire Audio",
+    "model": "Fathom",
+    "type": "iem",
+    "driver": "ba",
+    "impedance": [
+      {
+        "value": 11.7,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/fathom"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 137.4,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/fathom",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 6.75 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 6.75 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-grand-luna",
+    "brand": "Campfire Audio",
+    "model": "Grand Luna",
+    "type": "iem",
+    "driver": "hybrid",
+    "impedance": [
+      {
+        "value": 13,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/grand-luna"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 123.6,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/grand-luna",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 33 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 33 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
+    "stockPlug": null
+  },
+  {
+    "id": "campfire-audio-ponderosa",
+    "brand": "Campfire Audio",
+    "model": "Ponderosa",
+    "type": "iem",
+    "driver": "ba",
+    "impedance": [
+      {
+        "value": 6,
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/ponderosa"
+      }
+    ],
+    "sensitivity": [
+      {
+        "value": 135.8,
+        "unit": "dB/V",
+        "kind": "claimed",
+        "source": "https://www.campfireaudio.com/products/ponderosa",
+        "note": {
+          "th": "ผู้ผลิตระบุ 94 dB SPL ที่ 1 kHz เมื่อป้อน 8.1 mVrms แปลงเป็น dB/V",
+          "en": "Maker lists 94 dB SPL @ 1 kHz at 8.1 mVrms; converted to dB/V"
+        }
+      }
+    ],
+    "cable": {
+      "detachable": true
+    },
     "stockPlug": null
   }
 ]

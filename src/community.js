@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw5kb8ts";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7qhz26";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";

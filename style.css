@@ -22,9 +22,9 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.05);
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --radius: 18px;
-  --font: "Inter", "IBM Plex Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* Headings and numbers: Funnel Display (round bowls, sharp joins) for Latin, Prompt (Cadson Demak, round Thai forms to match) for Thai. */
-  --display: "Funnel Display", "Prompt", "IBM Plex Sans Thai", system-ui, sans-serif;
+  --font: "Inter", "Anuphan", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Headings and numbers: Funnel Display (round bowls, sharp joins) for Latin; Thai in Anuphan (Cadson Demak), whose weight and round loopless forms sit with Funnel at the same size. */
+  --display: "Funnel Display", "Anuphan", system-ui, sans-serif;
   color-scheme: light;
 }
 
@@ -87,7 +87,7 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
-:lang(th) body, html:lang(th) { --font: "IBM Plex Sans Thai", "Inter", system-ui, sans-serif; }
+:lang(th) body, html:lang(th) { --font: "Anuphan", "Inter", system-ui, sans-serif; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 button { font: inherit; color: inherit; }

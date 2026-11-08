@@ -178,7 +178,7 @@ export function aboutPage(lang, sites, stores) {
 <div class="card">
   <a class="row link-row" href="${REPO}" target="_blank" rel="noopener"><div><div class="row-title">${th ? "โค้ด — MIT" : "Code — MIT"}</div><div class="row-url">${REPO}</div></div><span class="ext" aria-hidden="true"></span></a>
   <a class="row link-row" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"><div><div class="row-title">${th ? "ข้อมูล — CC BY-SA 4.0" : "Data — CC BY-SA 4.0"}</div><div class="row-sub">${th ? "ใช้ได้ ให้เครดิต และเปิดต่อด้วย license เดียวกัน" : "Use it, credit it, share alike"}</div></div><span class="ext" aria-hidden="true"></span></a>
-  <a class="row link-row" href="https://fonts.google.com/specimen/IBM+Plex+Sans+Thai" target="_blank" rel="noopener"><div><div class="row-title">IBM Plex Sans Thai, Inter</div><div class="row-sub">SIL Open Font License 1.1</div></div><span class="ext" aria-hidden="true"></span></a>
+  <a class="row link-row" href="https://fonts.google.com/specimen/Anuphan" target="_blank" rel="noopener"><div><div class="row-title">Funnel Display, Funnel Sans, Anuphan, Inter</div><div class="row-sub">SIL Open Font License 1.1</div></div><span class="ext" aria-hidden="true"></span></a>
   <div class="row"><div><div class="row-sub">${th ? "ชื่อแบรนด์และรุ่นเป็นเครื่องหมายการค้าของเจ้าของ ใช้เพื่อระบุสินค้าเท่านั้น" : "Brand and model names are trademarks of their owners, used only to identify products."}</div></div></div>
 </div>`;
 }

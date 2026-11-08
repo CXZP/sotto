@@ -25,7 +25,7 @@
   --r-card: 18px;
   --r-panel: 48px;
   --radius: var(--r-card);
-  --font: "Funnel Sans", "IBM Plex Sans Thai", system-ui, sans-serif;
+  --font: "Funnel Sans", "Anuphan", system-ui, sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -44,7 +44,7 @@
   --glass: rgba(14, 13, 12, 0.82); --glass-edge: rgba(244, 243, 240, 0.08);
   --ink-btn: #f4f3f0; --on-ink-btn: #121110; color-scheme: dark;
 }
-:lang(th) body, html:lang(th) { --font: "Funnel Sans", "IBM Plex Sans Thai", system-ui, sans-serif; }
+:lang(th) body, html:lang(th) { --font: "Funnel Sans", "Anuphan", system-ui, sans-serif; }
 body { font-size: 15.5px; }
 
 /* Headings: round, medium weight, set tight. */

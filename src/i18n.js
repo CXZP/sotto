@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw7y5s91";
-import { ZH } from "./i18n-zh.js?v=mw7y5s91";
+import { JA } from "./i18n-ja.js?v=mw7ysh33";
+import { ZH } from "./i18n-zh.js?v=mw7ysh33";
 
 export const STRINGS = {
   th: {

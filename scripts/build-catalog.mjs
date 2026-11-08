@@ -556,16 +556,31 @@ const handPorts = new Map();
   const byLoose = new Map(catalog.map((g) => [looseKey(g.id, g.category), g]));
   for (const [id, m] of Object.entries(maker)) {
     const g = byKey.get(groupKey(id)) ?? byKey.get(groupKey(before[id] ?? "")) ?? (m.category ? byLoose.get(looseKey(id, m.category)) : null);
-    if (!g || hand.has(groupKey(g.id))) continue;
-    if (m.jacks?.length && !g.jacks) g.jacks = m.jacks;
-    if (m.complete) {
-      g.ports = structuredClone(m.ports);
-      for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(handPorts.get(g)?.[dir] ?? {})) g.ports[dir][p] = v;
+    if (!g) continue;
+    // Hand-checked sockets (data/extra-items.json) win over the maker's table.
+    if (!hand.has(groupKey(g.id))) {
+      if (m.jacks?.length && !g.jacks) g.jacks = m.jacks;
+      if (m.complete) {
+        g.ports = structuredClone(m.ports);
+        for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(handPorts.get(g)?.[dir] ?? {})) g.ports[dir][p] = v;
+      } else {
+        g.ports ??= { in: {}, out: {} };
+        for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;
+      }
     }
-    else {
-      g.ports ??= { in: {}, out: {} };
-      for (const dir of ["in", "out"]) for (const [p, v] of Object.entries(m.ports[dir] ?? {})) g.ports[dir][p] ??= v;
+    // Headphone output figures off the same page (scripts/maker-specs.mjs), only
+    // where no store gave any, and never on a box with no headphone output.
+    if (NOT_HP_ROLES.has(g.role)) continue;
+    // A maker's headphone power rating on a box stores call a DAC means it is a
+    // DAC/amp (the same rule as for store figures above).
+    if (g.role === "dac") {
+      if (!m.power?.length || g.specs.power?.length) continue;
+      g.role = "dacamp";
     }
+    const src = (quote) => [{ url: m.url, quote }];
+    if (m.power?.length && !g.specs.power?.length) g.specs.power = m.power.map(({ load, mw, quote }) => ({ load, mw, sources: src(quote), kind: "claimed" }));
+    if (m.zout?.length && !g.specs.zout?.length) g.specs.zout = m.zout.map(({ value, quote }) => ({ value, sources: src(quote), kind: "claimed" }));
+    if (m.outputs?.length && !g.outputs) g.outputs = m.outputs.map(({ jack, power, voltage, zout, quote }) => ({ jack, kind: "claimed", power, voltage, zout, source: m.url, quote }));
   }
 }
 

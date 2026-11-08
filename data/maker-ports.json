@@ -9,7 +9,30 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 45,
+    "quote": "Output Power : L+R≥45mW+45mW(16Ω，THD+N＜1%） : Output Impedance : ≤0.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW(32Ω，THD+N＜1%） : Channel Separation : ≥76dB"
+   },
+   {
+    "load": 300,
+    "mw": 3,
+    "quote": "L+R≥3mW+3mW(300Ω，THD+N＜1%） : Signal-to-Noise Ratio : ≥101dB(A-weighted)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output Power : L+R≥45mW+45mW(16Ω，THD+N＜1%） : Output Impedance : ≤0.5Ω"
+   }
+  ]
  },
  "fiio--btr13": {
   "url": "https://www.fiio.com/BTR13_parameters",
@@ -28,7 +51,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 120,
+    "quote": "Output power : L+R≥120mW+120mW (16Ω, THD+N＜1%) : Output impedance : ＜0.6Ω"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "L+R≥100mW+100mW (32Ω, THD+N＜1%) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW +10mW (300Ω, THD+N＜1%) : Output amplitude : 1.75Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 220,
+    "quote": "L+R≥220mW+220mW (32Ω, THD+N＜1%) : Crosstalk : ≥124dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω, THD+N＜1%) : Output amplitude : 2.7Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.6,
+    "quote": "Output power : L+R≥120mW+120mW (16Ω, THD+N＜1%) : Output impedance : ＜0.6Ω"
+   },
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   }
+  ]
  },
  "fiio--btr15": {
   "url": "https://www.fiio.com/BTR15_parameters",
@@ -45,7 +110,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω,THD+N<1%): channel separation: ≥ 78dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW +14mW(300Ω,THD+N<1%): output amplitude: 2Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 270,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "L+R≥340mW+340mW(32Ω,THD+N<1%): channel separation: ≥ 114dB"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "L+R≥50mW+50mW(300Ω,THD+N<1%): output amplitude: 3.2Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   }
+  ]
  },
  "fiio--btr17": {
   "url": "https://www.fiio.com/BTR17_parameters",
@@ -64,7 +171,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 330,
+    "quote": "Output power : L+R≥330mW+330mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 280,
+    "quote": "L+R≥280mW+280mW (32Ω, THD+N＜1%) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW +30mW (300Ω, THD+N＜1%) : Peak output voltage : 8.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 650,
+    "quote": "L+R≥650mW+650mW (32Ω, THD+N＜1%) : Crosstalk : ≥120dB"
+   },
+   {
+    "load": 300,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (300Ω, THD+N＜1%) : Peak output voltage : 17.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 140,
+    "quote": "L+R≥140mW+140mW (32Ω, THD+N＜1%) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW +20mW (300Ω, THD+N＜1%) : Peak output voltage : 6.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 180,
+    "quote": "Output power : L+R≥180mW+180mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "L+R≥300mW+300mW (32Ω, THD+N＜1%) : Crosstalk : ≥105dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%) : Peak output voltage : 9.3Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥330mW+330mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--class-a": {
   "url": "https://www.fiio.com/CLASSA_parameters",
@@ -103,7 +282,209 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 2000,
+    "quote": "Output power : L+R≥2000mW+2000mW (16Ω, THD+N＜1%, 5.7Vrms) : Input sensitivity : 1.9Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 2850,
+    "quote": "L+R≥2850mW+2850mW (32Ω, THD+N＜1%, 9.6Vrms) : 3Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 350,
+    "quote": "L+R≥350mW+350mW (300Ω, THD+N＜1%, 10.3Vrms) : 3.2Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 565,
+    "quote": "Output power : L+R≥565mW+565mW (16Ω, THD+N＜1%, 3Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 310,
+    "quote": "L+R≥310mW+310mW (32Ω, THD+N＜1%, 3.1Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%, 3.3Vrms) : 4.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 280,
+    "quote": "Output power : L+R≥280mW+280mW (16Ω, THD+N＜1%, 2.1Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 155,
+    "quote": "L+R≥155mW+155mW (32Ω, THD+N＜1%, 2.2Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW+20mW (300Ω, THD+N＜1%, 2.3Vrms) : 4.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 70,
+    "quote": "Output power : L+R≥70mW+70mW (16Ω, THD+N＜1%, 1.1Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 40,
+    "quote": "L+R≥40mW+40mW (32Ω, THD+N＜1%, 1.1Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.2Vrms) : 4.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 4000,
+    "quote": "L+R≥4000mW+4000mW (32Ω, THD+N＜1%, 11.4Vrms) : 1.9Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 1360,
+    "quote": "L+R≥1360mW+1360mW (300Ω, THD+N＜1%, 20.2Vrms) : 3.1Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 1965,
+    "quote": "Output power : L+R≥1965mW+1965mW (16Ω, THD+N＜1%, 5.6Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 1150,
+    "quote": "L+R≥1150mW+1150mW (32Ω, THD+N＜1%, 6.1Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 140,
+    "quote": "L+R≥140mW+140mW (300Ω, THD+N＜1%, 6.5Vrms) : 4.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 990,
+    "quote": "Output power : L+R≥990mW+990mW (16Ω, THD+N＜1%, 4Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 580,
+    "quote": "L+R≥580mW+580mW (32Ω, THD+N＜1%, 4.3Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 70,
+    "quote": "L+R≥70mW+70mW (300Ω, THD+N＜1%, 4.6Vrms) : 4.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 250,
+    "quote": "Output power : L+R≥250mW+250mW (16Ω, THD+N＜1%, 2 Vrms) : Input sensitivity : 4.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 145,
+    "quote": "L+R≥145mW+145mW (32Ω, THD+N＜1%, 2.2Vrms) : 4.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 965,
+    "quote": "Output power : L+R≥965mW+965mW (16Ω, THD+N＜1%, 3.9Vrms) : Input sensitivity : 11.5Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 530,
+    "quote": "L+R≥530mW+530mW (32Ω, THD+N＜1%, 4.1Vrms) : 11.5Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 60,
+    "quote": "L+R≥60mW+60mW (300Ω, THD+N＜1%, 4.3Vrms) : 11.5Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 475,
+    "quote": "Output power : L+R≥475mW+475mW (16Ω, THD+N＜1%, 2.8Vrms) : Input sensitivity : 11.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 260,
+    "quote": "L+R≥260mW+260mW (32Ω, THD+N＜1%, 2.9Vrms) : 11.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (300Ω, THD+N＜1%, 3Vrms) : 11.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 120,
+    "quote": "Output power : L+R≥120mW+120mW (16Ω, THD+N＜1%, 1.4Vrms) : Input sensitivity : 11.5Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 65,
+    "quote": "L+R≥65mW+65mW (32Ω, THD+N＜1%, 1.5Vrms) : 11.5Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N＜1%, 1.5Vrms) : 11.5Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 1975,
+    "quote": "L+R≥1975mW+1975mW (32Ω, THD+N＜1%, 7.9Vrms) : 11.5Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "L+R≥240mW+240mW (300Ω, THD+N＜1%, 8.5Vrms) : 11.5Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 1670,
+    "quote": "Output power : L+R≥1670mW+1670mW (16Ω, THD+N＜1%, 5.2Vrms) : Input sensitivity : 11.4Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 970,
+    "quote": "L+R≥970mW+970mW (32Ω, THD+N＜1%, 5.6Vrms) : 11.4Vrms (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 120,
+    "quote": "L+R≥120mW+120mW (300Ω, THD+N＜1%, 6Vrms) : 11.4Vrms (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 16,
+    "mw": 425,
+    "quote": "Output power : L+R≥425mW+425mW (16Ω, THD+N＜1%, 2.6Vrms) : Input sensitivity : 11.5Vrms (16Ω, THD+N＜1%)"
+   },
+   {
+    "load": 32,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (32Ω, THD+N＜1%, 2.8Vrms) : 11.5Vrms (32Ω, THD+N＜1%)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "THD+N : PCM: 0.0006% (1kHz/-0.6dBV@32Ω) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "THD+N : PCM: 0.0006% (1kHz/-3.2dBV@32Ω) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--disc": {
   "url": "https://www.fiio.com/DISC_parameters",
@@ -127,7 +508,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 135,
+    "quote": "Output power : L+R≥135mW+135mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω, THD+N＜1%, , 2.0Vrms) : Crosstalk : ≥73dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW+15mW (300Ω, THD+N＜1%, 2.0Vrms) : Peak output voltage : 5.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 60,
+    "quote": "Output power : L+R≥60mW+60mW (16Ω, THD+N＜1%, 1.0Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (32Ω, THD+N＜1%, 1.0Vrms) : Crosstalk : ≥73dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.0Vrms) : Peak output voltage : 2.9Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 145,
+    "quote": "Output power : L+R≥145mW+145mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.5Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 280,
+    "quote": "L+R≥280mW+280mW (32Ω, THD+N＜1%, 3.0Vrms) : Crosstalk : ≥123dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω, THD+N＜1%, 4.0Vrms) : Peak output voltage : 11.5Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power : L+R≥135mW+135mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "value": 0.5,
+    "quote": "Output power : L+R≥145mW+145mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--dm15": {
   "url": "https://www.fiio.com/DM15_parameters",
@@ -219,7 +657,50 @@
    "6.35"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 30,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%, 0.7Vrms) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 60,
+    "quote": "L+R≥60mW+60mW (32Ω, THD+N＜1%, 1.4Vrms) : Noise floor : ＜25uV (A-weighted)"
+   },
+   {
+    "load": 300,
+    "mw": 185,
+    "quote": "L+R≥185mW+185mW (300Ω, THD+N＜1%, 7.4Vrms) : SNR : ≥95dB (A-weighted)"
+   },
+   {
+    "load": 4,
+    "mw": 18000,
+    "quote": "Output power : L+R≥18000mW+18000mW (4Ω, THD+N＜1%, 8.5Vrms) : Output impedance : ＜1.5Ω (4Ω)"
+   },
+   {
+    "load": 4,
+    "mw": 28000,
+    "quote": "L+R≥28000mW+28000mW (4Ω, THD+N＜5%, 10.6Vrms) : Crosstalk : ≥77dB (1kHz@4Ω)"
+   },
+   {
+    "load": 8,
+    "mw": 18000,
+    "quote": "Output power : L+R≥18000mW+18000mW (8Ω, THD+N＜1%, 12Vrms) : Output impedance : ＜1.5Ω (8Ω)"
+   },
+   {
+    "load": 8,
+    "mw": 28000,
+    "quote": "L+R≥28000mW+28000mW (8Ω, THD+N＜5%, 15Vrms) : Crosstalk : ≥77dB (1kHz@8Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥18000mW+18000mW (4Ω, THD+N＜1%, 8.5Vrms) : Output impedance : ＜1.5Ω (4Ω)"
+   }
+  ]
  },
  "fiio--echo-nano": {
   "url": "https://www.fiio.com/ECHONANO_parameters",
@@ -237,7 +718,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 125,
+    "quote": "Output power: L+R≥125mW+125mW (16Ω, THD+N＜1%, 1.4Vrms): Output impedance: ＜0.3Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω, THD+N＜1%, , 2.0Vrms): Crosstalk: ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW+15mW (300Ω, THD+N＜1%, 2.0Vrms): Peak output voltage: 5.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 60,
+    "quote": "Output power: L+R≥60mW+60mW (16Ω, THD+N＜1%, 1.0Vrms): Output impedance: ＜0.2Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (32Ω, THD+N＜1%, 1.0Vrms): Crosstalk: ≥76dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.0Vrms): Peak output voltage: 2.9Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.3,
+    "quote": "Output power: L+R≥125mW+125mW (16Ω, THD+N＜1%, 1.4Vrms): Output impedance: ＜0.3Ω (32Ω)"
+   },
+   {
+    "value": 0.2,
+    "quote": "Output power: L+R≥60mW+60mW (16Ω, THD+N＜1%, 1.0Vrms): Output impedance: ＜0.2Ω (32Ω)"
+   }
+  ]
  },
  "fiio--jm21": {
   "url": "https://www.fiio.com/JM21_parameters",
@@ -266,7 +789,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 360,
+    "quote": "Output power : L+R≥360mW+360mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 245,
+    "quote": "L+R≥245mW+245mW (32Ω, THD+N＜1%) : Crosstalk : ≥70dB"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (300Ω, THD+N＜1%) : Peak output voltage : 7.9Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 605,
+    "quote": "Output power : L+R≥605mW+605mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 700,
+    "quote": "L+R≥700mW+700mW (32Ω, THD+N＜1%) : Crosstalk : ≥110dB"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "L+R≥80mW+80mW (300Ω, THD+N＜1%) : Peak output voltage : 13.2Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥360mW+360mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥605mW+605mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--k11": {
   "url": "https://www.fiio.com/K11_parameters",
@@ -302,7 +867,49 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 720,
+    "quote": "Output power : L+R≥720mW +720mW (16Ω, THD+N＜1%) : Output impedance : ＜1.2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 520,
+    "quote": "L+R≥520mW +520mW (32Ω, THD+N＜1%) : Crosstalk : ≥71dB"
+   },
+   {
+    "load": 300,
+    "mw": 60,
+    "quote": "L+R≥60mW+60mW (300Ω, THD+N＜1%) : Peak output voltage : 12Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 570,
+    "quote": "Output power : L+R≥570mW+570mW (16Ω, THD+N＜1%) : Output impedance : ＜2.4Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1400,
+    "quote": "L+R≥1400mW+1400mW (32Ω, THD+N＜1%) : Crosstalk : ≥106dB"
+   },
+   {
+    "load": 300,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (300Ω, THD+N＜1%) : Peak output voltage : 24.5Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.2,
+    "quote": "Output power : L+R≥720mW +720mW (16Ω, THD+N＜1%) : Output impedance : ＜1.2Ω"
+   },
+   {
+    "value": 2.4,
+    "quote": "Output power : L+R≥570mW+570mW (16Ω, THD+N＜1%) : Output impedance : ＜2.4Ω"
+   }
+  ]
  },
  "fiio--k11-r2r": {
   "url": "https://www.fiio.com/K11R2R_parameters",
@@ -337,7 +944,49 @@
    "6.35"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 660,
+    "quote": "Output power : L+R≥660mW +660mW(16Ω，THD+N＜1%) : THD+N : About 0.025% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 460,
+    "quote": "L+R≥460mW +460mW(32Ω，THD+N＜1%) : SNR : ≥115dB (A-weighted)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "L+R≥50mW+50mW (300Ω，THD+N＜1%） : Noise floor : ＜7.2uV (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 520,
+    "quote": "Output power : L+R≥520mW+520mW (16Ω, THD+N＜1%) : THD+N : About 0.025% (1kHz/-11.6dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1300,
+    "quote": "L+R≥1300mW+1300mW (32Ω, THD+N＜1%) : SNR : ≥115dB (A-weighted)"
+   },
+   {
+    "load": 300,
+    "mw": 220,
+    "quote": "L+R≥220mW+220mW (300Ω, THD+N＜1%） : Noise floor : ＜14.1uV (A-weighted)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Frequency response : 20Hz~50kHz: damping＜1.3dB : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Frequency response : 20Hz~50kHz: damping＜1.3dB : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--k13": {
   "url": "https://www.fiio.com/K13_parameters",
@@ -377,7 +1026,98 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1200,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1220,
+    "quote": "Output power 2 : L+R≥1220mW+1220mW (32Ω, THD+N＜1%, 6.2Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 150,
+    "quote": "Output power 3 : L+R≥150mW+150mW (300Ω, THD+N＜1%, 6.7Vrms) : THD+N : About 0.000435% (1kHz/-2dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 660,
+    "quote": "Output power 1 : L+R≥660mW+660mW (16Ω, THD+N＜1%, 3.3Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "Output power 2 : L+R≥340mW+340mW (32Ω, THD+N＜1%, 3.3Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "Output power 3 : L+R≥35mW+35mW (300Ω, THD+N＜1%, 3.3Vrms) : THD+N : About 0.0004% (1kHz/-3dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "Output power 1 : L+R≥165mW+165mW (16Ω, THD+N＜1%, 1.6Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 85,
+    "quote": "Output power 2 : L+R≥85mW+85mW (32Ω, THD+N＜1%, 1.6Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "Output power 3 : L+R≥10mW+10mW (300Ω, THD+N＜1%, 1.6Vrms) : THD+N : About 0.00049% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2400,
+    "quote": "Output power 2 : L+R≥2400mW+2400mW (32Ω, THD+N＜1%, 8.8Vrms) : Crosstalk : ≥111dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 600,
+    "quote": "Output power 3 : L+R≥600mW+600mW (300Ω, THD+N＜1%, 13.5Vrms) : THD+N : About 0.00034% (1kHz/-4dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1300,
+    "quote": "Output power 2 : L+R≥1300mW+1300mW (32Ω, THD+N＜1%, 6.5Vrms) : Crosstalk : ≥112dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 145,
+    "quote": "Output power 3 : L+R≥145mW+145mW (300Ω, THD+N＜1%, 6.6Vrms) : THD+N : About 0.00036% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 610,
+    "quote": "Output power 1 : L+R≥610mW+610mW (16Ω, THD+N＜1%, 3.1Vrms) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 330,
+    "quote": "Output power 2 : L+R≥330mW+330mW (32Ω, THD+N＜1%, 3.2Vrms) : Crosstalk : ≥110dB (1kHz@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "value": 200,
+    "quote": "Output impedance : ＜200Ω (10KΩ) : 　 :"
+   },
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜1Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k13-r2r": {
   "url": "https://www.fiio.com/K13R2R_parameters",
@@ -413,7 +1153,94 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1200,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms ) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1220,
+    "quote": "Output power 2 : L+R≥1220mW+1220mW (32Ω, THD+N＜1%, 6.2Vrms ) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 150,
+    "quote": "Output power 3 : L+R≥150mW+150mW (300Ω , THD+N＜1%, 6.7Vrms ) : THD+N : About 0.0173% (1kHz/-6dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 660,
+    "quote": "Output power 1 : L+R≥660mW+660mW (16Ω, THD+N＜1%, 3.3Vrms ) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "Output power 2 : L+R≥340mW+340mW (32Ω, THD+N＜1%, 3.3Vrms ) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "Output power 3 : L+R≥35mW+35mW (300Ω , THD+N＜1%, 3.3Vrms ) : THD+N : About 0.0173% (1kHz/-6dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "Output power 1 : L+R≥165mW+165mW (16Ω, THD+N＜1%, 1.6Vrms ) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 85,
+    "quote": "Output power 2 : L+R≥85mW+85mW (32Ω, THD+N＜1%, 1.6Vrms ) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "Output power 3 : L+R≥10mW+10mW (300Ω , THD+N＜1%, 1.6Vrms ) : THD+N : About 0.0179% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2400,
+    "quote": "Output power 2 : L+R≥2400mW+2400mW (32Ω, THD+N＜1%, 8.8Vrms ) : Crosstalk : ≥110dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 600,
+    "quote": "Output power 3 : L+R≥600mW+600mW (300Ω , THD+N＜1%, 13.5Vrms ) : THD+N : About 0.0173% (1kHz/-6dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1300,
+    "quote": "Output power 2 : L+R≥1300mW+1300mW (32Ω, THD+N＜1%, 6.5Vrms ) : Crosstalk : ≥112dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 145,
+    "quote": "Output power 3 : L+R≥145mW+145mW (300Ω , THD+N＜1%, 6.6Vrms ) : THD+N : About 0.0173% (1kHz/-6dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 610,
+    "quote": "Output power 1 : L+R≥610mW+610mW (16Ω, THD+N＜1%, 3.1Vrms ) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 330,
+    "quote": "Output power 2 : L+R≥330mW+330mW (32Ω, THD+N＜1%, 3.2Vrms ) : Crosstalk : ≥110dB (1kHz@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms ) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms ) : Output impedance : ＜1Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k15": {
   "url": "https://www.fiio.com/K15_parameters",
@@ -459,7 +1286,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1400,
+    "quote": "Output power 2 : L+R≥1400mW+1400mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 180,
+    "quote": "Output power 3 : L+R≥180mW+180mW (300Ω , THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 760,
+    "quote": "Output power 2 : L+R≥760mW+760mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "Output power 3 : L+R≥90mW+90mW (300Ω , THD+N＜1%) : THD+N : ＜0.00058% (1kHz/-10dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 3000,
+    "quote": "Output power 2 : L+R≥3000mW+3000mW (32Ω, THD+N＜1%) : Crosstalk : ≥116dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 700,
+    "quote": "Output power 3 : L+R≥700mW+700mW (300Ω , THD+N＜1%) : THD+N : ＜0.00059% (1kHz/-13dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2800,
+    "quote": "Output power 2 : L+R≥2800mW+2800mW (32Ω, THD+N＜1%) : Crosstalk : ≥116dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 350,
+    "quote": "Output power 3 : L+R≥350mW+350mW (300Ω , THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-9dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k17": {
   "url": "https://www.fiio.com/K17_parameters",
@@ -513,7 +1397,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1800,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "Output power 3 : L+R≥240mW+240mW (300Ω, THD+N＜1%) : THD+N : ＜0.0005% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "Output power 2 : L+R≥1000mW+1000mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 120,
+    "quote": "Output power 3 : L+R≥120mW+120mW (300Ω, THD+N＜1%) : THD+N : ＜0.00056% (1kHz/-9dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 4000,
+    "quote": "Output power 2 : L+R≥4000mW+4000mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 950,
+    "quote": "Output power 3 : L+R≥950mW+950mW (300Ω, THD+N＜1%) : THD+N : ＜0.00049% (1kHz/-13dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 3900,
+    "quote": "Output power 2 : L+R≥3900mW+3900mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 480,
+    "quote": "Output power 3 : L+R≥480mW+480mW (300Ω, THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-10dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k17-r2r": {
   "url": "https://www.fiio.com/K17R2R_parameters",
@@ -567,7 +1508,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1800,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "Output power 3 : L+R≥240mW+240mW (300Ω, THD+N＜1%) : THD+N : ＜0.0005% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "Output power 2 : L+R≥1000mW+1000mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 120,
+    "quote": "Output power 3 : L+R≥120mW+120mW (300Ω, THD+N＜1%) : THD+N : ＜0.00056% (1kHz/-9dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 4000,
+    "quote": "Output power 2 : L+R≥4000mW+4000mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 950,
+    "quote": "Output power 3 : L+R≥950mW+950mW (300Ω, THD+N＜1%) : THD+N : ＜0.00049% (1kHz/-13dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 3900,
+    "quote": "Output power 2 : L+R≥3900mW+3900mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 480,
+    "quote": "Output power 3 : L+R≥480mW+480mW (300Ω, THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-10dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k19": {
   "url": "https://www.fiio.com/K19_parameters",
@@ -616,7 +1614,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 0.6,
+    "quote": "Output power 1 : L+R≥4000mW+4000mW（16Ω，THD+N＜1%) : Output impedance : ＜0.6Ω（32Ω）"
+   }
+  ]
  },
  "fiio--k7": {
   "url": "https://www.fiio.com/K7_parameters",
@@ -651,7 +1655,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power1 : L+R≥1220mW+1220mW（32Ω /THD+N＜1%) : Output impedance : ＜1Ω（32Ω）"
+   }
+  ]
  },
  "fiio--k9-akm": {
   "url": "https://www.fiio.com/K9AKM_parameters",
@@ -696,7 +1706,40 @@
    "6.35"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1000,
+    "quote": "Output power 1 : L+R≥1000mW+1000mW (16Ω, THD+N＜1%, AUX/UAC/SPDIF/BT IN) : output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1500,
+    "quote": "Output power 2 : L+R≥1500mW+1500mW (32Ω, THD+N＜1%, AUX/UAC/SPDIF/BT IN) : channel separation : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 200,
+    "quote": "Output power 3 : L+R≥200mW+200mW (300Ω, THD+N＜1%, AUX IN) : distortion plus noise : ＜0.00026% (1kHz/-1.3dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2000,
+    "quote": "Output power 2 : L+R≥2000mW+2000mW (32Ω, THD+N＜1%, AUX/UAC/SPDIF/BT IN) : channel separation : ≥116dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 780,
+    "quote": "Output power 3 : L+R≥780mW+780mW (300Ω, THD+N＜1%, AUX IN) : distortion plus noise : ＜0.00029% (1kHz/-9.5dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1000mW+1000mW (16Ω, THD+N＜1%, AUX/UAC/SPDIF/BT IN) : output impedance : ＜1Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k9-pro-ess": {
   "url": "https://www.fiio.com/K9PROESS_parameters",
@@ -742,7 +1785,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Continuous undistorted output power 1 : ≥1.1W（16Ω / THD+N＜1%， AUX IN) : Output impedance : ＜1Ω（32Ω）"
+   }
+  ]
  },
  "fiio--ka13": {
   "url": "https://www.fiio.com/KA13_parameters",
@@ -767,7 +1816,69 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 290,
+    "quote": "Output power : L+R>290mW+290mW@16Ω(Desktop Mode ON) L+R≥70mW+70mW@16Ω(Desktop Mode OFF) : Peak output voltage : ≥2.3V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 16,
+    "mw": 70,
+    "quote": "Output power : L+R>290mW+290mW@16Ω(Desktop Mode ON) L+R≥70mW+70mW@16Ω(Desktop Mode OFF) : Peak output voltage : ≥2.3V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 170,
+    "quote": "L+R>170mW+170mW@32Ω(Desktop Mode ON)"
+   },
+   {
+    "load": 32,
+    "mw": 50,
+    "quote": "L+R>50mW+50mW@32Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 300,
+    "mw": 19.5,
+    "quote": "L+R>19.5mW+19.5mW@300Ω(Desktop Mode ON)"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R>5mW+5mW@300Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 16,
+    "mw": 500,
+    "quote": "Output power : L+R>500mW+500mW@16Ω(Desktop Mode ON) L+R>260mW+260mW@32Ω(Desktop Mode OFF) : Peak output voltage : ≥4.2V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 260,
+    "quote": "Output power : L+R>500mW+500mW@16Ω(Desktop Mode ON) L+R>260mW+260mW@32Ω(Desktop Mode OFF) : Peak output voltage : ≥4.2V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 550,
+    "quote": "L+R>550mW+550mW@32Ω(Desktop Mode ON) L+R≥170mW+170mW@16Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 16,
+    "mw": 170,
+    "quote": "L+R>550mW+550mW@32Ω(Desktop Mode ON) L+R≥170mW+170mW@16Ω(Desktop Mode OFF)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.7,
+    "quote": ": Output impedance : <1.7Ω"
+   },
+   {
+    "value": 1.8,
+    "quote": "L+R>78mW+78mW@300(Desktop Mode ON) L+R>20mW+20mW@160(Desktop Mode OFF) : Output impedance : <1.8Ω"
+   }
+  ]
  },
  "fiio--ka15": {
   "url": "https://www.fiio.com/KA15_parameters",
@@ -792,7 +1903,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 290,
+    "quote": "Output power : L+R≥290mW+290mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥2.4V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 180,
+    "quote": "L+R≥180mW+180mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 19,
+    "quote": "L+R≥19mW+19mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.8Ω"
+   },
+   {
+    "load": 16,
+    "mw": 510,
+    "quote": "Output power : L+R≥510mW+510mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥4.2V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 560,
+    "quote": "L+R≥560mW+560mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 78,
+    "quote": "L+R≥78mW+78mW (300Ω, THD+N<1%, USB IN) : Output impedance : <1.2Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.8,
+    "quote": "L+R≥19mW+19mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.8Ω"
+   },
+   {
+    "value": 1.2,
+    "quote": "L+R≥78mW+78mW (300Ω, THD+N<1%, USB IN) : Output impedance : <1.2Ω"
+   }
+  ]
  },
  "fiio--ka17": {
   "url": "https://www.fiio.com/KA17_parameters",
@@ -817,7 +1970,74 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 320,
+    "quote": "Output power : L+R≥320mW+320mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 270,
+    "quote": "L+R≥270mW+270mW (32Ω, THD+N＜1%) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW +30mW (300Ω, THD+N＜1%) : Output amplitude : 3Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 460,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 650,
+    "quote": "L+R≥650mW+650mW (32Ω, THD+N＜1%) : Crosstalk : ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (300Ω, THD+N＜1%) : Output amplitude : 4.5Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 110,
+    "quote": "Output power : L+R≥110mW+110mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 140,
+    "quote": "L+R≥140mW+140mW (32Ω, THD+N＜1%) : Crosstalk : ≥80dB"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW +20mW (300Ω, THD+N＜1%) : Output amplitude : 2Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "L+R≥300mW+300mW (32Ω, THD+N＜1%) : Crosstalk : ≥110dB"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥320mW+320mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--ka5": {
   "url": "https://www.fiio.com/KA5_parameters",
@@ -833,7 +2053,39 @@
   },
   "jacks": [],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 136,
+    "quote": "Output power : L+R≥136mW+136mW (16Ω, THD+N<1%, USB IN) : Max output voltage : ≥1.99V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 122,
+    "quote": "L+R≥122mW+122mW (32Ω, THD+N<1%, USB IN) : ≥2V (600Ω, THD+N<1%)"
+   },
+   {
+    "load": 300,
+    "mw": 13.5,
+    "quote": "L+R≥13.5mW+13.5mW (300Ω, THD+N<1%, USB IN) :"
+   },
+   {
+    "load": 16,
+    "mw": 154,
+    "quote": "output power : L+R≥154mW+154mW (16Ω, THD+N<1%.USB IN) : peak output voltage : ≥2.9V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 265,
+    "quote": "L+R≥265mW+265mW (32Ω, THD+N<1%, USB IN) : ≥4V (600Ω, THD+N<1%)"
+   },
+   {
+    "load": 300,
+    "mw": 54,
+    "quote": "L+R≥54mW+54mW (300Ω, THD+N<1%, USB IN) :"
+   }
+  ]
  },
  "fiio--m11s": {
   "url": "https://www.fiio.com/M11S_parameters",
@@ -865,7 +2117,13 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "zout": [
+   {
+    "value": 1.5,
+    "quote": ": Output impedance : ≤1.5Ω"
+   }
+  ]
  },
  "fiio--m15s": {
   "url": "https://www.fiio.com/M15S_parameters",
@@ -897,7 +2155,74 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 535,
+    "quote": "Output power 1 : L+R≥535mW+535mW(16Ω / THD+N<1%) : Output impedance : ≤ 1.4 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 580,
+    "quote": "Output power 2 : L+R≥580mW+580mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 93,
+    "quote": "Output power 3 : L+R≥93mW+93mW(300Ω / THD+N<1%) :"
+   },
+   {
+    "load": 16,
+    "mw": 475,
+    "quote": "Output power 1 : L+R≥475mW+475mW(16Ω / THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 395,
+    "quote": "Output power 2 : L+R≥395mW+395mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 57,
+    "quote": "Output power 3 : L+R≥57mW+57mW(300Ω / THD+N<1%) :"
+   },
+   {
+    "load": 16,
+    "mw": 531,
+    "quote": "Output Power 1 : L+R≥531mW+531mW(16Ω / THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": "Output Power 2 : L+R≥1200mW+1200mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 368,
+    "quote": "Output Power 3 : L+R≥368mW+368mW(300Ω /THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 990,
+    "quote": "Output Power 2 : L+R≥990mW+990mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 226,
+    "quote": "Output Power 3 : L+R≥226mW+226mW(300Ω /THD+N<1%) :"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.4,
+    "quote": "Output power 1 : L+R≥535mW+535mW(16Ω / THD+N<1%) : Output impedance : ≤ 1.4 Ω(32 Ω)"
+   },
+   {
+    "value": 2.3,
+    "quote": "Output Power 1 : L+R≥531mW+531mW(16Ω / THD+N<1%) : Output impedance : ≤ 2.3 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--m17": {
   "url": "https://www.fiio.com/M17_parameters",
@@ -933,7 +2258,17 @@
    "2.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : ≥740mW（16Ω / THD+N＜1%) : Output impedance : ≤1Ω（32Ω）"
+   },
+   {
+    "value": 2,
+    "quote": "Output power : ≥1.5W（16Ω / THD+N＜1%) : Output impedance : ≤2Ω（32Ω）"
+   }
+  ]
  },
  "fiio--m21": {
   "url": "https://www.fiio.com/M21_parameters",
@@ -963,7 +2298,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 405,
+    "quote": "L+R≥405mW+405mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (300Ω, THD+N＜1%) : Peak output voltage : 10.6Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 380,
+    "quote": "Output power : L+R≥380mW+380mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 290,
+    "quote": "L+R≥290mW+290mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%) : Peak output voltage : 9.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 540,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 950,
+    "quote": "L+R≥950mW+950mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 185,
+    "quote": "L+R≥185mW+185mW (300Ω, THD+N＜1%) : Peak output voltage : 21.2Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 600,
+    "quote": "Output power : L+R≥600mW+600mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 720,
+    "quote": "L+R≥720mW+720mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (300Ω, THD+N＜1%) : Peak output voltage : 15Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--m23": {
   "url": "https://www.fiio.com/M23_parameters",
@@ -993,7 +2400,84 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω , THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 440,
+    "quote": "L+R≥440mW+440mW (32Ω, THD+N＜1%) : THD+N & Noise : ≤0.00038% (1kHz/-6dB@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 60,
+    "quote": "L+R≥60mW+60mW (300Ω, THD+N＜1%) : SNR : ≥125dB (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 235,
+    "quote": "Output power : L+R≥235mW+235mW (16Ω , THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω, THD+N＜1%) : THD+N & Noise : ≤0.00046% (1kHz/-4.1dB@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW+15mW (300Ω, THD+N＜1%) : SNR : ≥120dB (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 730,
+    "quote": "Output power : L+R≥730mW+730mW (16Ω , THD+N＜1%) : Output impedance : <2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "L+R≥1000mW+1000mW (32Ω, THD+N＜1%) : THD+N & Noise : ≤0.00038% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "L+R≥240mW+240mW (300Ω, THD+N＜1%) : SNR : ≥125dB (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 630,
+    "quote": "Output power : L+R≥630mW+630mW (16Ω , THD+N＜1%) : Output impedance : <2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "L+R≥475mW+475mW (32Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω, THD+N＜1%)"
+   },
+   {
+    "load": 300,
+    "mw": 91,
+    "quote": "L+R≥91mW+91mW (300Ω, THD+N＜1%，HiFi Boost Mode ON)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω , THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "value": 2,
+    "quote": "Output power : L+R≥730mW+730mW (16Ω , THD+N＜1%) : Output impedance : <2Ω"
+   }
+  ]
  },
  "fiio--m27": {
   "url": "https://www.fiio.com/M27_parameters",
@@ -1036,7 +2520,154 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 2650,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1800,
+    "quote": "Output power 2 : L+R≥1800mW+1800mW(32Ω,THD+N<1%,7.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 200,
+    "quote": "Output power 3 : L+R≥200mW+200mW(300Ω ,THD+N<1%,7.8Vrms) : THD+N : 0.00029%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1100,
+    "quote": "Output power 1 : L+R≥1100mW+1100mW(16Ω,THD+N<1%,4.2Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 660,
+    "quote": "Output power 2 : L+R≥660mW+660mW(32Ω,THD+N<1%,4.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "Output power 3 : L+R≥80mW+80mW(300Ω ,THD+N<1%,4.9Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 900,
+    "quote": "Output power 1 : L+R≥900mW+900mW(16Ω,THD+N<1%,3.8Vrms) : output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW(32Ω,THD+N<1%,3.9Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "output power 3 : L+R≥50mW+50mW(300Ω ,THD+N<1%,3.9Vrms) : THD+N : 0.00034%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 360,
+    "quote": "Output power 1 : L+R≥360mW+360mW(16Ω,THD+N<1%,2.4Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 185,
+    "quote": "Output power 2 : L+R≥185mW+185mW(32Ω,THD+N<1%,2.4Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "Output power 3 : L+R≥20mW+20mW(300Ω ,THD+N<1%,2.5Vrms) : THD+N : 0.00038%(1kHz/0dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 140,
+    "quote": "Output power 1 : L+R≥140mW+140mW(16Ω,THD+N<1%,1.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "Output power 2 : L+R≥70mW+70mW(32Ω,THD+N<1%,1.5Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 8,
+    "quote": "Output power 3 : L+R≥8mW+8mW(300Ω ,THD+N<1%,1.5Vrms) : THD+N : 0.00054%(1kHz/-1dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 3500,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 5000,
+    "quote": "Output power 2 : L+R≥5000mW+5000mW(32Ω,THD+N<1%,12.7Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 805,
+    "quote": "output power 3 : L+R≥805mW+805mW(300Ω ,THD+N<1%,15.5Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 2550,
+    "quote": "Output power 1 : L+R≥2550mW+2550mW(16Ω,THD+N<1%,6.4Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2250,
+    "quote": "Output power 2 : L+R≥2250mW+2250mW(32Ω,THD+N<1%,8.5Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 320,
+    "quote": "output power 3 : L+R≥320mW+320mW(300Ω ,THD+N<1%,9.8Vrms) : THD+N : 0.00036%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW(32Ω,THD+N<1%,7.7Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW(16Ω,THD+N<1%,4.8Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 730,
+    "quote": "Output power 2 : L+R≥730mW+730mW(32Ω,THD+N<1%,4.8Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 550,
+    "quote": "Output power 1 : L+R≥550mW+550mW(16Ω,THD+N<1%,3.0Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 285,
+    "quote": "Output power 2 : L+R≥285mW+285mW(32Ω,THD+N<1%,3.0Vrms) : Crosstalk : ≥ 110dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "Output power 3 : L+R≥30mW+30mW(300Ω ,THD+N<1%,3.1Vrms) : THD+N : 0.00043%(1kHz/-3dB @ 32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "value": 0.6,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--m33-r2r": {
   "url": "https://www.fiio.com/M33R2R_parameters",
@@ -1070,7 +2701,69 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 540,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW (32Ω, THD+N＜1%, 3.9Vrms) : Crosstalk : ≥74dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 60,
+    "quote": "Output power 3 : L+R≥60mW+60mW (300Ω, THD+N＜1%, 4.2Vrms) : Noise floor : ＜5.5&mu;V (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 465,
+    "quote": "Output power 1 : L+R≥465mW+465mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "Output power 2 : L+R≥300mW+300mW (32Ω, THD+N＜1%, 3.1Vrms) : Crosstalk : ≥74dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "Output power 3 : L+R≥50mW+50mW (300Ω, THD+N＜1%, 3.9Vrms) : Noise floor : ＜4.9&mu;V (A-weighted)"
+   },
+   {
+    "load": 32,
+    "mw": 1100,
+    "quote": "Output power 2 : L+R≥1100mW+1100mW (32Ω, THD+N＜1%, 6Vrms) : Crosstalk : ≥104dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "Output power 3 : L+R≥240mW+240mW (300Ω , THD+N＜1%, 8.5Vrms) : Noise floor : ＜10.3&mu;V (A-weighted)"
+   },
+   {
+    "load": 32,
+    "mw": 900,
+    "quote": "Output power 2 : L+R≥900mW+900mW (32Ω, THD+N＜1%, 5.4Vrms) : Crosstalk : ≥104dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 165,
+    "quote": "Output power 3 : L+R≥165mW+165mW (300Ω , THD+N＜1%, 7Vrms) : Noise floor : ＜9.1&mu;V (A-weighted)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.8,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--q7": {
   "url": "https://www.fiio.com/Q7_parameters",
@@ -1099,7 +2792,73 @@
    "2.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1500,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1100,
+    "quote": "1100mW (32Ω，THD+N＜1%): Crosstalk: ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 130,
+    "quote": "130mW (300Ω，THD+N＜1%）: Peak output voltage: 17.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 750,
+    "quote": "Output power: 750mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 550,
+    "quote": "550mW (32Ω，THD+N＜1%): Crosstalk: ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 65,
+    "quote": "65mW (300Ω，THD+N＜1%）: Peak output voltage: 12.4Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 3000,
+    "quote": "3000mW (32Ω，THD+N＜1%): Crosstalk: ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 500,
+    "quote": "500mW (300Ω，THD+N＜1%）: Output level: 35.3Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 1500,
+    "quote": "1500mW (32Ω，THD+N＜1%): Crosstalk: ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 260,
+    "quote": "260mW (300Ω，THD+N＜1%）: Peak output voltage: 25Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.2,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "value": 1.7,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.7Ω"
+   },
+   {
+    "value": 2.2,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜2.2Ω"
+   }
+  ]
  },
  "fiio--qx11": {
   "url": "https://www.fiio.com/QX11_parameters",
@@ -1128,7 +2887,129 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 420,
+    "quote": "Output power : L+R≥420mW+420mW (16Ω, THD+N＜1%, 2.6Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 295,
+    "quote": "L+R≥295mW+295mW (32Ω, THD+N＜1%, 3Vrms) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%, 3.2Vrms) : Peak output voltage : 9.25Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 80,
+    "quote": "L+R≥80mW+80mW (32Ω, THD+N＜1%, 1.6Vrms) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N＜1%, 1.6Vrms) : Peak output voltage : 4.6Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 460,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 800,
+    "quote": "L+R≥800mW+800mW (32Ω, THD+N＜1%, 5.1Vrms) : Crosstalk : ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 95,
+    "quote": "L+R≥95mW+95mW (300Ω, THD+N＜1%, 5.3Vrms) : Peak output voltage : 15.4Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 315,
+    "quote": "Output power : L+R≥315mW+315mW (16Ω, THD+N＜1%, 2.2Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 180,
+    "quote": "L+R≥180mW+180mW (32Ω, THD+N＜1%, 2.4Vrms) : Crosstalk : ≥112dB"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW+20mW (300Ω, THD+N＜1%, 2.5Vrms) : Peak output voltage : 7.3Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 320,
+    "quote": "Output power : L+R≥320mW+320mW (16Ω, THD+N＜1%, 2.3Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 175,
+    "quote": "L+R≥175mW+175mW (32Ω, THD+N＜1%, 2.3Vrms) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 16,
+    "mw": 80,
+    "quote": "Output power : L+R≥80mW+80mW (16Ω, THD+N＜1%, 1.1Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (32Ω, THD+N＜1%, 1.1Vrms) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.2Vrms) : Peak output voltage : 3.4Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 450,
+    "quote": "Output power : L+R≥450mW+450mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 360,
+    "quote": "L+R≥360mW+360mW (32Ω, THD+N＜1%, 3.4Vrms) : Crosstalk : ≥113dB"
+   },
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (300Ω, THD+N＜1%, 3.6Vrms) : Peak output voltage : 10.3Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 160,
+    "quote": "Output power : L+R≥160mW+160mW (16Ω, THD+N＜1%, 1.6Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (32Ω, THD+N＜1%, 1.7Vrms) : Crosstalk : ≥110dB"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥420mW+420mW (16Ω, THD+N＜1%, 2.6Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--qx13": {
   "url": "https://www.fiio.com/QX13_parameters",
@@ -1152,7 +3033,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 440,
+    "quote": "Output power : L+R≥440mW+440mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 310,
+    "quote": "L+R≥310mW+310mW (32Ω, THD+N＜1%) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "L+R≥40mW+40mW (300Ω, THD+N＜1%) : Peak output voltage : 9.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 900,
+    "quote": "L+R≥900mW+900mW (32Ω, THD+N＜1%) : Crosstalk : ≥113dB"
+   },
+   {
+    "load": 300,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (300Ω, THD+N＜1%) : Peak output voltage : 17.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 370,
+    "quote": "Output power : L+R≥370mW+370mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (32Ω, THD+N＜1%) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (300Ω, THD+N＜1%) : Peak output voltage : 8.7Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 470,
+    "quote": "Output power : L+R≥470mW+470mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 605,
+    "quote": "L+R≥605mW+605mW (32Ω, THD+N＜1%) : Crosstalk : ≥113dB"
+   },
+   {
+    "load": 300,
+    "mw": 70,
+    "quote": "L+R≥70mW+70mW (300Ω, THD+N＜1%) : Peak output voltage : 13Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥440mW+440mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--r7": {
   "url": "https://www.fiio.com/R7_parameters",
@@ -1201,7 +3154,79 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1850,
+    "quote": "Output power : L+R≥1850mW+1850mW (16Ω，THD+N＜1%) : Output impedance : < 0.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1250,
+    "quote": "L+R≥1250mW+1250mW (32Ω，THD+N＜1%) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 300,
+    "mw": 160,
+    "quote": "L+R≥160mW+160mW (300Ω，THD+N＜1%） : Peak voltage : 18Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 1450,
+    "quote": "Output power : L+R≥1450mW +1450mW(16Ω，THD+N＜1%) : Output impedance : < 0.4Ω"
+   },
+   {
+    "load": 32,
+    "mw": 750,
+    "quote": "L+R≥750mW +750mW(32Ω，THD+N＜1%) : Crosstalk : ≥73dB"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "L+R≥80mW+80mW (300Ω，THD+N＜1%） : Peak voltage : 14Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 1000,
+    "quote": "Output power : L+R≥1000mW+1000mW (16Ω，THD+N＜1%) : Output impedance : < 0.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 3650,
+    "quote": "L+R≥3650mW+3650mW (32Ω，THD+N＜1%) : Crosstalk : ≥116dB"
+   },
+   {
+    "load": 300,
+    "mw": 630,
+    "quote": "L+R≥630mW+630mW (300Ω，THD+N＜1%） : Peak voltage : 39Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 800,
+    "quote": "Output power : L+R≥800mW+800mW (16Ω，THD+N＜1%) : Output impedance : < 0.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 3000,
+    "quote": "L+R≥3000mW +3000mW(32Ω，THD+N＜1%) : Crosstalk : ≥116dB"
+   },
+   {
+    "load": 300,
+    "mw": 320,
+    "quote": "L+R≥320mW+320mW (300Ω，THD+N＜1%） : Peak voltage : 27.7Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output power : L+R≥1850mW+1850mW (16Ω，THD+N＜1%) : Output impedance : < 0.5Ω"
+   },
+   {
+    "value": 0.4,
+    "quote": "Output power : L+R≥1450mW +1450mW(16Ω，THD+N＜1%) : Output impedance : < 0.4Ω"
+   }
+  ]
  },
  "fiio--retro-nano": {
   "url": "https://www.fiio.com/RETRONANO_parameters",
@@ -1220,7 +3245,45 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 120,
+    "quote": "Output power : L+R≥120mW+120mW (16Ω, THD+N＜1%) : Output impedance : ＜0.3Ω"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "L+R≥100mW+100mW (32Ω, THD+N＜1%) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW +10mW (300Ω, THD+N＜1%) : Output amplitude : 1.75Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N＜1%) : Output impedance : ＜0.3Ω"
+   },
+   {
+    "load": 32,
+    "mw": 220,
+    "quote": "L+R≥220mW+220mW (32Ω, THD+N＜1%) : Crosstalk : ≥124dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω, THD+N＜1%) : Output amplitude : 2.7Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.3,
+    "quote": "Output power : L+R≥120mW+120mW (16Ω, THD+N＜1%) : Output impedance : ＜0.3Ω"
+   }
+  ]
  },
  "fiio--rr11": {
   "url": "https://www.fiio.com/RR11_parameters",
@@ -1232,7 +3295,30 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 30,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 40,
+    "quote": "L+R≥40mW+40mW (32Ω, THD+N＜1%) : Crosstalk : ≥65dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW +5mW (300Ω, THD+N＜1%) : Output amplitude : 1.1Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   }
+  ]
  },
  "fiio--rr13": {
   "url": "https://www.fiio.com/RR13_parameters",
@@ -1244,7 +3330,35 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 8,
+    "mw": 75,
+    "quote": "Output level : L+R≥75mW+75mW (8Ω, THD+N＜1%, 780mVrms) : Noise-limited sensitivity : ≤15dBuV (S/N=30dB)"
+   },
+   {
+    "load": 16,
+    "mw": 65,
+    "quote": "Output power : L+R≥65mW+65mW (16Ω, THD+N＜1%, 1Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 80,
+    "quote": "L+R≥80mW+80mW (32Ω, THD+N＜1%, 1.6Vrms) : Crosstalk : ≥68dB"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW +10mW (300Ω, THD+N＜1%, 1.8Vrms） : Input sensitivity : 2.5V"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥65mW+65mW (16Ω, THD+N＜1%, 1Vrms) : Output impedance : ＜1Ω"
+   }
+  ]
  },
  "fiio--s15": {
   "url": "https://www.fiio.com/S15_parameters",
@@ -1359,7 +3473,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW(16Ω,THD+N<1%,USB IN) : Peak output voltage : ≥1.9V(32Ω,THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 120,
+    "quote": "L+R≥120mW+120mW(32Ω,THD+N<1%,USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 13,
+    "quote": "L+R≥13mW+13mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW(16Ω,THD+N<1%.USB IN) : Peak output voltage : ≥2.9V(32Ω,THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 260,
+    "quote": "L+R≥260mW+260mW(32Ω,THD+N<1%,USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 54,
+    "quote": "L+R≥54mW+54mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.7Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "L+R≥13mW+13mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.7,
+    "quote": "L+R≥54mW+54mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.7Ω"
+   }
+  ]
  },
  "fiio--echo-mini": {
   "url": "https://www.fiio.com/ECHOMINI_parameters",
@@ -1377,7 +3533,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥1.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "L+R≥100mW+100mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥2.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 43,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.7,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ]
  },
  "ifi--go-bar": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1394,7 +3592,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-10th-anniversary-gold": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1411,7 +3621,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-gold-bar-ultraportable-c-pre": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1428,7 +3650,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-kensei": {
   "url": "https://ifi-audio.com/products/go-bar-kensei",
@@ -1443,7 +3677,19 @@
    "out": {}
   },
   "jacks": [],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 477,
+    "quote": "RMS OUTPUT POWER : Balanced: 477mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "S-Bal: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-kensei-ultraportable": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1460,7 +3706,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-kensei-ultraportable-c-pre": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1477,7 +3735,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-bar-kensei-ultraportable-k2hd-technology": {
   "url": "https://ifi-audio.com/products/go-bar",
@@ -1494,7 +3764,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 475,
+    "quote": "RMS OUTPUT POWER : Balanced: 475mW@32Ω; 7.2V@600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "UnBAL: 300mW@32Ω; 3.8V@600Ω"
+   }
+  ]
  },
  "ifi--go-blu": {
   "url": "https://ifi-audio.com/products/go-blu",
@@ -1516,7 +3798,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 245,
+    "quote": "RMS OUTPUT POWER : Balanced: 245mW @ 32Ω; 5.6v @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 165,
+    "quote": "SE: 165mW @ 32Ω; 2.8v @ 600Ω"
+   }
+  ]
  },
  "ifi--go-blu-air": {
   "url": "https://ifi-audio.com/products/go-blu-air",
@@ -1572,7 +3866,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 245,
+    "quote": "RMS OUTPUT POWER : Balanced: 245mW @ 32Ω; 5.6v @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 165,
+    "quote": "SE: 165mW @ 32Ω; 2.8v @ 600Ω"
+   }
+  ]
  },
  "ifi--go-link": {
   "url": "https://ifi-audio.com/products/go-link",
@@ -1587,7 +3893,19 @@
    "out": {}
   },
   "jacks": [],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "RMS OUTPUT POWER : ≥1.5V/70mW @ 32Ω; 2V/14mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 14,
+    "quote": "RMS OUTPUT POWER : ≥1.5V/70mW @ 32Ω; 2V/14mW @ 300Ω"
+   }
+  ]
  },
  "ifi--go-link-2": {
   "url": "https://ifi-audio.com/products/go-link-2",
@@ -1598,7 +3916,19 @@
   "jacks": [
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 79,
+    "quote": ": ≥1.59V/79mW @ 32Ω;"
+   },
+   {
+    "load": 300,
+    "mw": 14,
+    "quote": "≥2.0V/14mW @ 300Ω"
+   }
+  ]
  },
  "ifi--go-link-2-c": {
   "url": "https://ifi-audio.com/products/go-link-2",
@@ -1609,7 +3939,19 @@
   "jacks": [
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 79,
+    "quote": ": ≥1.59V/79mW @ 32Ω;"
+   },
+   {
+    "load": 300,
+    "mw": 14,
+    "quote": "≥2.0V/14mW @ 300Ω"
+   }
+  ]
  },
  "ifi--go-link-2-max": {
   "url": "https://ifi-audio.com/products/go-link-2-max",
@@ -1627,7 +3969,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 241,
+    "quote": ": ≥241mW @ 32Ω; 4V @ 300Ω (Balanced);"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "≥100mW @ 32Ω; 2V @ 300Ω (S-Balanced*)"
+   }
+  ]
  },
  "ifi--go-link-2-max-c": {
   "url": "https://ifi-audio.com/products/go-link-2-max",
@@ -1645,7 +3999,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 241,
+    "quote": ": ≥241mW @ 32Ω; 4V @ 300Ω (Balanced);"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "≥100mW @ 32Ω; 2V @ 300Ω (S-Balanced*)"
+   }
+  ]
  },
  "ifi--go-link-c": {
   "url": "https://ifi-audio.com/products/go-link",
@@ -1660,7 +4026,19 @@
    "out": {}
   },
   "jacks": [],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "RMS OUTPUT POWER : ≥1.5V/70mW @ 32Ω; 2V/14mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 14,
+    "quote": "RMS OUTPUT POWER : ≥1.5V/70mW @ 32Ω; 2V/14mW @ 300Ω"
+   }
+  ]
  },
  "ifi--go-link-max": {
   "url": "https://ifi-audio.com/products/go-link-max",
@@ -1678,7 +4056,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 241,
+    "quote": ": 241mW @ 32Ω; 4V @ 300Ω via 4.4mm"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "100mW @ 32Ω; 2V @ 300Ω via 3.5mm"
+   }
+  ]
  },
  "ifi--go-link-max-3-5-output": {
   "url": "https://ifi-audio.com/products/go-link-max",
@@ -1696,7 +4086,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 241,
+    "quote": ": 241mW @ 32Ω; 4V @ 300Ω via 4.4mm"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "100mW @ 32Ω; 2V @ 300Ω via 3.5mm"
+   }
+  ]
  },
  "ifi--go-link-max-c": {
   "url": "https://ifi-audio.com/products/go-link-max",
@@ -1714,7 +4116,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 241,
+    "quote": ": 241mW @ 32Ω; 4V @ 300Ω via 4.4mm"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "100mW @ 32Ω; 2V @ 300Ω via 3.5mm"
+   }
+  ]
  },
  "ifi--hip-dac3": {
   "url": "https://ifi-audio.com/products/hip-dac-3",
@@ -1732,7 +4146,19 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 400,
+    "quote": "RMS OUTPUT POWER : Balanced: 400mW @ 32Ω; 6.3V @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 280,
+    "quote": "UnBAL: 280mW @ 32Ω; 3.2V @ 600Ω"
+   }
+  ]
  },
  "ifi--idsd-diablo-2": {
   "url": "https://ifi-audio.com/products/idsd-diablo-2",
@@ -1764,7 +4190,60 @@
    "6.35",
    "4.4"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 600,
+    "mw": 611,
+    "quote": ">19.2V/611mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 5180,
+    "quote": ">12.87V/5180mW (@32Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 153,
+    "quote": ">9.6V/153mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2450,
+    "quote": ">8.85V/2450mW (@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1710,
+    "quote": ">7.4/1710mW (@32Ω);"
+   },
+   {
+    "load": 64,
+    "mw": 2060,
+    "quote": ">11.5/2060mW (@64Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 150,
+    "quote": ">9.6V/150mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2050,
+    "quote": ">8.1V/2050mW (@32Ω);"
+   },
+   {
+    "load": 64,
+    "mw": 1360,
+    "quote": ">9.3V/1360mW (@64Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 200,
+    "quote": "OUTPUT IMPEDANCE : ≤200Ω"
+   }
+  ]
  },
  "ifi--idsd-gr-2": {
   "url": "https://ifi-audio.com/products/idsd-gr-2",
@@ -1817,7 +4296,29 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1513,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 119,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 32,
+    "mw": 567,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 30,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   }
+  ]
  },
  "ifi--idsd-gr-2-mt": {
   "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
@@ -1870,7 +4371,29 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1513,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 119,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 32,
+    "mw": 567,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 30,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   }
+  ]
  },
  "ifi--idsd-gr-2-mt-ultra-res-master-tuned-series": {
   "url": "https://ifi-audio.com/products/idsd-gr-2-mt",
@@ -1923,7 +4446,29 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1513,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 119,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 32,
+    "mw": 567,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 30,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   }
+  ]
  },
  "ifi--idsd-phantom": {
   "url": "https://ifi-audio.com/products/idsd-phantom",
@@ -2062,7 +4607,39 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 5700,
+    "quote": "13.5V/5,700mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 640,
+    "quote": "19.6V/640mW (@600Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2475,
+    "quote": "8.9V/2,475mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 160,
+    "quote": "9.8V/160mW (@600Ω)"
+   },
+   {
+    "load": 64,
+    "mw": 2250,
+    "quote": "12.0V/2,250mW (@64Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2258,
+    "quote": "8.5V/2,258mW (@32Ω);"
+   }
+  ]
  },
  "ifi--idsd-valkyrie-mastering-black": {
   "url": "https://ifi-audio.com/products/idsd-valkyrie",
@@ -2119,7 +4696,39 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 5700,
+    "quote": "13.5V/5,700mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 640,
+    "quote": "19.6V/640mW (@600Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2475,
+    "quote": "8.9V/2,475mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 160,
+    "quote": "9.8V/160mW (@600Ω)"
+   },
+   {
+    "load": 64,
+    "mw": 2250,
+    "quote": "12.0V/2,250mW (@64Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2258,
+    "quote": "8.5V/2,258mW (@32Ω);"
+   }
+  ]
  },
  "ifi--idsd-valkyrie-transportable": {
   "url": "https://ifi-audio.com/products/idsd-valkyrie",
@@ -2176,7 +4785,39 @@
    "4.4",
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 5700,
+    "quote": "13.5V/5,700mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 640,
+    "quote": "19.6V/640mW (@600Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2475,
+    "quote": "8.9V/2,475mW (@32Ω);"
+   },
+   {
+    "load": 600,
+    "mw": 160,
+    "quote": "9.8V/160mW (@600Ω)"
+   },
+   {
+    "load": 64,
+    "mw": 2250,
+    "quote": "12.0V/2,250mW (@64Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2258,
+    "quote": "8.5V/2,258mW (@32Ω);"
+   }
+  ]
  },
  "ifi--neo-idsd-2": {
   "url": "https://ifi-audio.com/products/neo-idsd-2",
@@ -2209,7 +4850,49 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 600,
+    "mw": 650,
+    "quote": "Balanced: >19.5V/650 mW (@ 600Ω); >13.3V/5,551 mW (@ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 5551,
+    "quote": "Balanced: >19.5V/650 mW (@ 600Ω); >13.3V/5,551 mW (@ 32Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 184,
+    "quote": "UnBAL: >10.5V/184 mW (@ 600Ω); >9.5V/2,832 mW (@ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2832,
+    "quote": "UnBAL: >10.5V/184 mW (@ 600Ω); >9.5V/2,832 mW (@ 32Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 620,
+    "quote": "Balanced: >19.3V/620 mW (@ 600Ω); >12.7V/2530 mW (@ 64Ω)"
+   },
+   {
+    "load": 64,
+    "mw": 2530,
+    "quote": "Balanced: >19.3V/620 mW (@ 600Ω); >12.7V/2530 mW (@ 64Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 157,
+    "quote": "UnBAL: >9.7V/157 mW (@ 600Ω); >9.4V/1390 mW (@ 64Ω)"
+   },
+   {
+    "load": 64,
+    "mw": 1390,
+    "quote": "UnBAL: >9.7V/157 mW (@ 600Ω); >9.4V/1390 mW (@ 64Ω)"
+   }
+  ]
  },
  "ifi--neo-idsd-3": {
   "url": "https://ifi-audio.com/products/neo-idsd-3",
@@ -2253,7 +4936,25 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 64,
+    "mw": 2532,
+    "quote": "HEADPHONE OUTPUT RMS : 4.4mm ≥12.7V/2,532mW @ 64Ω (RMS)"
+   },
+   {
+    "load": 32,
+    "mw": 2244,
+    "quote": "6.3mm ≥8.4V/2,244mW @ 32Ω (RMS)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "HEADPHONE OUTPUT IMPEDANCE : ≤1Ω; ≤7Ω when iEMatch enabled"
+   }
+  ]
  },
  "ifi--neo-stream-3": {
   "url": "https://ifi-audio.com/products/neo-stream-3",
@@ -2298,7 +4999,13 @@
    }
   },
   "jacks": [],
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 74,
+    "quote": "OUTPUT IMPEDANCE : Balanced ≤74Ω;"
+   }
+  ]
  },
  "ifi--neo-stream-3-network": {
   "url": "https://ifi-audio.com/products/neo-stream-3",
@@ -2343,7 +5050,13 @@
    }
   },
   "jacks": [],
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 74,
+    "quote": "OUTPUT IMPEDANCE : Balanced ≤74Ω;"
+   }
+  ]
  },
  "ifi--neo-stream-3-wi-fi-transport": {
   "url": "https://ifi-audio.com/products/neo-stream-3",
@@ -2388,7 +5101,13 @@
    }
   },
   "jacks": [],
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 74,
+    "quote": "OUTPUT IMPEDANCE : Balanced ≤74Ω;"
+   }
+  ]
  },
  "ifi--pro-idsd-signature-class-interface-controller": {
   "url": "https://ifi-audio.com/products/pro-idsd-signature",
@@ -2431,7 +5150,19 @@
    "out": {}
   },
   "jacks": [],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 211,
+    "quote": ">≥211mW @ 32Ω; 39mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 39,
+    "quote": ">≥211mW @ 32Ω; 39mW @ 300Ω"
+   }
+  ]
  },
  "ifi--up-play-up-play-max-c-transmitters": {
   "url": "https://ifi-audio.com/products/up-play-max",
@@ -2461,7 +5192,39 @@
    "out": {}
   },
   "jacks": [],
-  "category": "portable"
+  "category": "portable",
+  "power": [
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 32,
+    "mw": 380,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 16,
+    "mw": 600,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 600,
+    "mw": 90,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 800,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   }
+  ]
  },
  "ifi--xcan-dual-mono": {
   "url": "https://ifi-audio.com/products/xcan",
@@ -2476,7 +5239,39 @@
    "out": {}
   },
   "jacks": [],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 32,
+    "mw": 380,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 16,
+    "mw": 600,
+    "quote": "MAXIMUM OUTPUT POWER : S-Balanced: > 3.8V / 45 mW (@ 300 Ohm)> 3.5V / 380 mW (@ 32 Ohm)> 3.1V / 600 mW (@ 16 Ohm"
+   },
+   {
+    "load": 600,
+    "mw": 90,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 800,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "Balanced: > 7.6V / 90 mW (@ 600 Ohm)> 7.2V / 800 mW (@ 64 Ohm)> 5.7V / 1,000 mW (@ 32 Ohm)"
+   }
+  ]
  },
  "ifi--xdsd-gryphon-black": {
   "url": "https://ifi-audio.com/products/xdsd-gryphon",
@@ -2503,7 +5298,29 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "The xDSD Gryphon’s PureWave amplification delivers 1,000mW at 32 Ohms with a powerful max output of 6.7V , effortlessly driving high-impedance headphones."
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": ">74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": ">320mW @ 32Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": ">40mW @ 300Ω"
+   }
+  ]
  },
  "ifi--zen-air-blue": {
   "url": "https://ifi-audio.com/products/zen-air-blue",
@@ -2597,7 +5414,34 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": "BAL 4.4mm: >15.1V/385mW (@ 600 Ohms), >6.2V/1,200mW (@ 32 Ohms)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": "BAL 4.4mm: >15.1V/385mW (@ 600 Ohms), >6.2V/1,200mW (@ 32 Ohms)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": "SE 6.35mm: >7.6V/98mW (@ 600 Ohms), >7.2V/1,600mW (@ 32 Ohms)"
+   },
+   {
+    "load": 32,
+    "mw": 1600,
+    "quote": "SE 6.35mm: >7.6V/98mW (@ 600 Ohms), >7.2V/1,600mW (@ 32 Ohms)"
+   },
+   {
+    "load": 64,
+    "mw": 2000,
+    "quote": "BAL 4.4mm: >11.5V/2,000mW (@ 64 Ohms)"
+   }
+  ]
  },
  "ifi--zen-can-3-pre": {
   "url": "https://ifi-audio.com/products/zen-can-3",
@@ -2624,7 +5468,34 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": "BAL 4.4mm: >15.1V/385mW (@ 600 Ohms), >6.2V/1,200mW (@ 32 Ohms)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": "BAL 4.4mm: >15.1V/385mW (@ 600 Ohms), >6.2V/1,200mW (@ 32 Ohms)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": "SE 6.35mm: >7.6V/98mW (@ 600 Ohms), >7.2V/1,600mW (@ 32 Ohms)"
+   },
+   {
+    "load": 32,
+    "mw": 1600,
+    "quote": "SE 6.35mm: >7.6V/98mW (@ 600 Ohms), >7.2V/1,600mW (@ 32 Ohms)"
+   },
+   {
+    "load": 64,
+    "mw": 2000,
+    "quote": "BAL 4.4mm: >11.5V/2,000mW (@ 64 Ohms)"
+   }
+  ]
  },
  "ifi--zen-can-signature": {
   "url": "https://ifi-audio.com/products/zen-can-signature",
@@ -2635,7 +5506,54 @@
   "jacks": [
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": ">15.1V/385 mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 1890,
+    "quote": ">11.0V/1890 mW (@ 64 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": ">6.2V/1200 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": ">7.6V/98mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 870,
+    "quote": ">7.4V/870 mW (@ 64 Ohm)"
+   }
+  ]
  },
  "ifi--zen-can-signature-6xx": {
   "url": "https://ifi-audio.com/products/zen-can-signature",
@@ -2646,7 +5564,54 @@
   "jacks": [
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": ">15.1V/385 mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 1890,
+    "quote": ">11.0V/1890 mW (@ 64 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": ">6.2V/1200 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": ">7.6V/98mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 870,
+    "quote": ">7.4V/870 mW (@ 64 Ohm)"
+   }
+  ]
  },
  "ifi--zen-can-signature-hfm": {
   "url": "https://ifi-audio.com/products/zen-can-signature",
@@ -2657,7 +5622,54 @@
   "jacks": [
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": ">15.1V/385 mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 1890,
+    "quote": ">11.0V/1890 mW (@ 64 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": ">6.2V/1200 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": ">7.6V/98mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 870,
+    "quote": ">7.4V/870 mW (@ 64 Ohm)"
+   }
+  ]
  },
  "ifi--zen-can-signature-mz99": {
   "url": "https://ifi-audio.com/products/zen-can-signature",
@@ -2668,7 +5680,54 @@
   "jacks": [
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": ">15.1V/385 mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 1890,
+    "quote": ">11.0V/1890 mW (@ 64 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": ">6.2V/1200 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": ">7.6V/98mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 870,
+    "quote": ">7.4V/870 mW (@ 64 Ohm)"
+   }
+  ]
  },
  "ifi--zen-can-signature-pre": {
   "url": "https://ifi-audio.com/products/zen-can-signature",
@@ -2679,7 +5738,54 @@
   "jacks": [
    "3.5"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 600,
+    "mw": 74,
+    "quote": "BAL: >1000mW @ 32Ω; >74mW @ 600Ω"
+   },
+   {
+    "load": 32,
+    "mw": 320,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 300,
+    "mw": 40,
+    "quote": "UNBAL: >320mW @ 32Ω; >40mW @ 300Ω"
+   },
+   {
+    "load": 600,
+    "mw": 385,
+    "quote": ">15.1V/385 mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 1890,
+    "quote": ">11.0V/1890 mW (@ 64 Ohm)"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": ">6.2V/1200 mW (@ 32 Ohm)"
+   },
+   {
+    "load": 600,
+    "mw": 98,
+    "quote": ">7.6V/98mW (@ 600 Ohm)"
+   },
+   {
+    "load": 64,
+    "mw": 870,
+    "quote": ">7.4V/870 mW (@ 64 Ohm)"
+   }
+  ]
  },
  "ifi--zen-one-signature": {
   "url": "https://ifi-audio.com/products/zen-one-signature",
@@ -2985,7 +6091,60 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 600,
+    "mw": 611,
+    "quote": ">19.2V/611mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 5180,
+    "quote": ">12.87V/5180mW (@32Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 153,
+    "quote": ">9.6V/153mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2450,
+    "quote": ">8.85V/2450mW (@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1710,
+    "quote": ">7.4/1710mW (@32Ω);"
+   },
+   {
+    "load": 64,
+    "mw": 2060,
+    "quote": ">11.5/2060mW (@64Ω)"
+   },
+   {
+    "load": 600,
+    "mw": 150,
+    "quote": ">9.6V/150mW (@600Ω);"
+   },
+   {
+    "load": 32,
+    "mw": 2050,
+    "quote": ">8.1V/2050mW (@32Ω);"
+   },
+   {
+    "load": 64,
+    "mw": 1360,
+    "quote": ">9.3V/1360mW (@64Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 200,
+    "quote": "OUTPUT IMPEDANCE : ≤200Ω"
+   }
+  ]
  },
  "ifi--idsd-gr-2-ultra-res": {
   "url": "https://ifi-audio.com/products/idsd-gr-2",
@@ -3038,7 +6197,29 @@
    "4.4",
    "3.5"
   ],
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 32,
+    "mw": 1513,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 119,
+    "quote": ": 6.94V/1,513mW @ 32Ω; 8.60V/119mW @ 600Ω (Bal)"
+   },
+   {
+    "load": 32,
+    "mw": 567,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   },
+   {
+    "load": 600,
+    "mw": 30,
+    "quote": "4.26V/567mW @ 32Ω; 4.27V/30mW @ 600Ω (S-Bal)"
+   }
+  ]
  },
  "ifi--neo-idsd-3-ultra-res": {
   "url": "https://ifi-audio.com/products/neo-idsd-3",
@@ -3082,7 +6263,25 @@
    "6.35",
    "4.4"
   ],
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 64,
+    "mw": 2532,
+    "quote": "HEADPHONE OUTPUT RMS : 4.4mm ≥12.7V/2,532mW @ 64Ω (RMS)"
+   },
+   {
+    "load": 32,
+    "mw": 2244,
+    "quote": "6.3mm ≥8.4V/2,244mW @ 32Ω (RMS)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "HEADPHONE OUTPUT IMPEDANCE : ≤1Ω; ≤7Ω when iEMatch enabled"
+   }
+  ]
  },
  "ifi--neo-stream-3-ultra-res-network-integrated": {
   "url": "https://ifi-audio.com/products/neo-stream-3",
@@ -3127,7 +6326,13 @@
    }
   },
   "jacks": [],
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 74,
+    "quote": "OUTPUT IMPEDANCE : Balanced ≤74Ω;"
+   }
+  ]
  },
  "fiio--btr15-daul-dsd256": {
   "url": "https://www.fiio.com/BTR15_parameters",
@@ -3144,7 +6349,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω,THD+N<1%): channel separation: ≥ 78dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW +14mW(300Ω,THD+N<1%): output amplitude: 2Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 270,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "L+R≥340mW+340mW(32Ω,THD+N<1%): channel separation: ≥ 114dB"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "L+R≥50mW+50mW(300Ω,THD+N<1%): output amplitude: 3.2Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   }
+  ]
  },
  "fiio--btr15-high-fidelity": {
   "url": "https://www.fiio.com/BTR15_parameters",
@@ -3161,7 +6408,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω,THD+N<1%): channel separation: ≥ 78dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW +14mW(300Ω,THD+N<1%): output amplitude: 2Vrms"
+   },
+   {
+    "load": 16,
+    "mw": 270,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "L+R≥340mW+340mW(32Ω,THD+N<1%): channel separation: ≥ 114dB"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "L+R≥50mW+50mW(300Ω,THD+N<1%): output amplitude: 3.2Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "output power: L+R≥165mW+165mW (16Ω,THD+N<1%): output impedance: <1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "output power: L+R≥270mW+270mW(16Ω,THD+N<1%): output impedance: <1.5Ω"
+   }
+  ]
  },
  "fiio--btr17-2": {
   "url": "https://www.fiio.com/BTR17_parameters",
@@ -3180,7 +6469,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 330,
+    "quote": "Output power : L+R≥330mW+330mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 280,
+    "quote": "L+R≥280mW+280mW (32Ω, THD+N＜1%) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "L+R≥30mW +30mW (300Ω, THD+N＜1%) : Peak output voltage : 8.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 650,
+    "quote": "L+R≥650mW+650mW (32Ω, THD+N＜1%) : Crosstalk : ≥120dB"
+   },
+   {
+    "load": 300,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (300Ω, THD+N＜1%) : Peak output voltage : 17.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 140,
+    "quote": "L+R≥140mW+140mW (32Ω, THD+N＜1%) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW +20mW (300Ω, THD+N＜1%) : Peak output voltage : 6.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 180,
+    "quote": "Output power : L+R≥180mW+180mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "L+R≥300mW+300mW (32Ω, THD+N＜1%) : Crosstalk : ≥105dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%) : Peak output voltage : 9.3Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥330mW+330mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--disc-player": {
   "url": "https://www.fiio.com/DISC_parameters",
@@ -3204,7 +6565,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 135,
+    "quote": "Output power : L+R≥135mW+135mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (32Ω, THD+N＜1%, , 2.0Vrms) : Crosstalk : ≥73dB"
+   },
+   {
+    "load": 300,
+    "mw": 15,
+    "quote": "L+R≥15mW+15mW (300Ω, THD+N＜1%, 2.0Vrms) : Peak output voltage : 5.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 60,
+    "quote": "Output power : L+R≥60mW+60mW (16Ω, THD+N＜1%, 1.0Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 30,
+    "quote": "L+R≥30mW+30mW (32Ω, THD+N＜1%, 1.0Vrms) : Crosstalk : ≥73dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.0Vrms) : Peak output voltage : 2.9Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 145,
+    "quote": "Output power : L+R≥145mW+145mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.5Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 280,
+    "quote": "L+R≥280mW+280mW (32Ω, THD+N＜1%, 3.0Vrms) : Crosstalk : ≥123dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω, THD+N＜1%, 4.0Vrms) : Peak output voltage : 11.5Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power : L+R≥135mW+135mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "value": 0.5,
+    "quote": "Output power : L+R≥145mW+145mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜0.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--echo-mini-512mb": {
   "url": "https://www.fiio.com/ECHOMINI_parameters",
@@ -3222,7 +6640,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥1.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "L+R≥100mW+100mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥2.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 43,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.7,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ]
  },
  "fiio--echo-mini-player-512mb": {
   "url": "https://www.fiio.com/ECHOMINI_parameters",
@@ -3240,7 +6700,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥1.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 100,
+    "quote": "L+R≥100mW+100mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N<1%, USB IN) : Peak output voltage : ≥2.8V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 250,
+    "quote": "L+R≥250mW+250mW (32Ω, THD+N<1%, USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 43,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.7,
+    "quote": "L+R≥43mW+43mW (300Ω, THD+N<1%, USB IN) : Output impedance : <0.7Ω"
+   }
+  ]
  },
  "fiio--echo-player": {
   "url": "https://www.fiio.com/ECHO_parameters",
@@ -3258,7 +6760,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 130,
+    "quote": "Output power : L+R≥130mW+130mW(16Ω,THD+N<1%,USB IN) : Peak output voltage : ≥1.9V(32Ω,THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 120,
+    "quote": "L+R≥120mW+120mW(32Ω,THD+N<1%,USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 13,
+    "quote": "L+R≥13mW+13mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW(16Ω,THD+N<1%.USB IN) : Peak output voltage : ≥2.9V(32Ω,THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 260,
+    "quote": "L+R≥260mW+260mW(32Ω,THD+N<1%,USB IN)"
+   },
+   {
+    "load": 300,
+    "mw": 54,
+    "quote": "L+R≥54mW+54mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.7Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "L+R≥13mW+13mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.7,
+    "quote": "L+R≥54mW+54mW(300Ω,THD+N<1%,USB IN) : Output impedance : <0.7Ω"
+   }
+  ]
  },
  "fiio--k13-2": {
   "url": "https://www.fiio.com/K13_parameters",
@@ -3298,7 +6842,98 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1200,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1220,
+    "quote": "Output power 2 : L+R≥1220mW+1220mW (32Ω, THD+N＜1%, 6.2Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 150,
+    "quote": "Output power 3 : L+R≥150mW+150mW (300Ω, THD+N＜1%, 6.7Vrms) : THD+N : About 0.000435% (1kHz/-2dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 660,
+    "quote": "Output power 1 : L+R≥660mW+660mW (16Ω, THD+N＜1%, 3.3Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 340,
+    "quote": "Output power 2 : L+R≥340mW+340mW (32Ω, THD+N＜1%, 3.3Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "Output power 3 : L+R≥35mW+35mW (300Ω, THD+N＜1%, 3.3Vrms) : THD+N : About 0.0004% (1kHz/-3dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 165,
+    "quote": "Output power 1 : L+R≥165mW+165mW (16Ω, THD+N＜1%, 1.6Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 85,
+    "quote": "Output power 2 : L+R≥85mW+85mW (32Ω, THD+N＜1%, 1.6Vrms) : Crosstalk : ≥77dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "Output power 3 : L+R≥10mW+10mW (300Ω, THD+N＜1%, 1.6Vrms) : THD+N : About 0.00049% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2400,
+    "quote": "Output power 2 : L+R≥2400mW+2400mW (32Ω, THD+N＜1%, 8.8Vrms) : Crosstalk : ≥111dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 600,
+    "quote": "Output power 3 : L+R≥600mW+600mW (300Ω, THD+N＜1%, 13.5Vrms) : THD+N : About 0.00034% (1kHz/-4dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1300,
+    "quote": "Output power 2 : L+R≥1300mW+1300mW (32Ω, THD+N＜1%, 6.5Vrms) : Crosstalk : ≥112dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 145,
+    "quote": "Output power 3 : L+R≥145mW+145mW (300Ω, THD+N＜1%, 6.6Vrms) : THD+N : About 0.00036% (1kHz/0dB@32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 610,
+    "quote": "Output power 1 : L+R≥610mW+610mW (16Ω, THD+N＜1%, 3.1Vrms) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 330,
+    "quote": "Output power 2 : L+R≥330mW+330mW (32Ω, THD+N＜1%, 3.2Vrms) : Crosstalk : ≥110dB (1kHz@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜0.4Ω (32Ω)"
+   },
+   {
+    "value": 200,
+    "quote": "Output impedance : ＜200Ω (10KΩ) : 　 :"
+   },
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1200mW+1200mW (16Ω, THD+N＜1%, 4.4Vrms) : Output impedance : ＜1Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k15-2-powerful": {
   "url": "https://www.fiio.com/K15_parameters",
@@ -3344,7 +6979,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1400,
+    "quote": "Output power 2 : L+R≥1400mW+1400mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 180,
+    "quote": "Output power 3 : L+R≥180mW+180mW (300Ω , THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 760,
+    "quote": "Output power 2 : L+R≥760mW+760mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "Output power 3 : L+R≥90mW+90mW (300Ω , THD+N＜1%) : THD+N : ＜0.00058% (1kHz/-10dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 3000,
+    "quote": "Output power 2 : L+R≥3000mW+3000mW (32Ω, THD+N＜1%) : Crosstalk : ≥116dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 700,
+    "quote": "Output power 3 : L+R≥700mW+700mW (300Ω , THD+N＜1%) : THD+N : ＜0.00059% (1kHz/-13dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2800,
+    "quote": "Output power 2 : L+R≥2800mW+2800mW (32Ω, THD+N＜1%) : Crosstalk : ≥116dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 350,
+    "quote": "Output power 3 : L+R≥350mW+350mW (300Ω , THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-9dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--k17-2": {
   "url": "https://www.fiio.com/K17_parameters",
@@ -3398,7 +7090,64 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1800,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "Output power 3 : L+R≥240mW+240mW (300Ω, THD+N＜1%) : THD+N : ＜0.0005% (1kHz/-12dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1000,
+    "quote": "Output power 2 : L+R≥1000mW+1000mW (32Ω, THD+N＜1%) : Crosstalk : ≥76dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 120,
+    "quote": "Output power 3 : L+R≥120mW+120mW (300Ω, THD+N＜1%) : THD+N : ＜0.00056% (1kHz/-9dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 4000,
+    "quote": "Output power 2 : L+R≥4000mW+4000mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 950,
+    "quote": "Output power 3 : L+R≥950mW+950mW (300Ω, THD+N＜1%) : THD+N : ＜0.00049% (1kHz/-13dB@32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 3900,
+    "quote": "Output power 2 : L+R≥3900mW+3900mW (32Ω, THD+N＜1%) : Crosstalk : ≥119dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 480,
+    "quote": "Output power 3 : L+R≥480mW+480mW (300Ω, THD+N＜1%) : THD+N : ＜0.00054% (1kHz/-10dB@32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥1800mW+1800mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--m15s-5-inch": {
   "url": "https://www.fiio.com/M15S_parameters",
@@ -3430,7 +7179,74 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 535,
+    "quote": "Output power 1 : L+R≥535mW+535mW(16Ω / THD+N<1%) : Output impedance : ≤ 1.4 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 580,
+    "quote": "Output power 2 : L+R≥580mW+580mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 93,
+    "quote": "Output power 3 : L+R≥93mW+93mW(300Ω / THD+N<1%) :"
+   },
+   {
+    "load": 16,
+    "mw": 475,
+    "quote": "Output power 1 : L+R≥475mW+475mW(16Ω / THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 395,
+    "quote": "Output power 2 : L+R≥395mW+395mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 57,
+    "quote": "Output power 3 : L+R≥57mW+57mW(300Ω / THD+N<1%) :"
+   },
+   {
+    "load": 16,
+    "mw": 531,
+    "quote": "Output Power 1 : L+R≥531mW+531mW(16Ω / THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 1200,
+    "quote": "Output Power 2 : L+R≥1200mW+1200mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 368,
+    "quote": "Output Power 3 : L+R≥368mW+368mW(300Ω /THD+N<1%) :"
+   },
+   {
+    "load": 32,
+    "mw": 990,
+    "quote": "Output Power 2 : L+R≥990mW+990mW(32Ω /THD+N<1%) :"
+   },
+   {
+    "load": 300,
+    "mw": 226,
+    "quote": "Output Power 3 : L+R≥226mW+226mW(300Ω /THD+N<1%) :"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.4,
+    "quote": "Output power 1 : L+R≥535mW+535mW(16Ω / THD+N<1%) : Output impedance : ≤ 1.4 Ω(32 Ω)"
+   },
+   {
+    "value": 2.3,
+    "quote": "Output Power 1 : L+R≥531mW+531mW(16Ω / THD+N<1%) : Output impedance : ≤ 2.3 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--m21-4-mp3": {
   "url": "https://www.fiio.com/M21_parameters",
@@ -3460,7 +7276,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 405,
+    "quote": "L+R≥405mW+405mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (300Ω, THD+N＜1%) : Peak output voltage : 10.6Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 380,
+    "quote": "Output power : L+R≥380mW+380mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 290,
+    "quote": "L+R≥290mW+290mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%) : Peak output voltage : 9.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 540,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 950,
+    "quote": "L+R≥950mW+950mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 185,
+    "quote": "L+R≥185mW+185mW (300Ω, THD+N＜1%) : Peak output voltage : 21.2Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 600,
+    "quote": "Output power : L+R≥600mW+600mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 720,
+    "quote": "L+R≥720mW+720mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (300Ω, THD+N＜1%) : Peak output voltage : 15Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--m21-player": {
   "url": "https://www.fiio.com/M21_parameters",
@@ -3490,7 +7378,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 480,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 405,
+    "quote": "L+R≥405mW+405mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (300Ω, THD+N＜1%) : Peak output voltage : 10.6Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 380,
+    "quote": "Output power : L+R≥380mW+380mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 290,
+    "quote": "L+R≥290mW+290mW (32Ω, THD+N＜1%) : Crosstalk : ≥74dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%) : Peak output voltage : 9.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 540,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 950,
+    "quote": "L+R≥950mW+950mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 185,
+    "quote": "L+R≥185mW+185mW (300Ω, THD+N＜1%) : Peak output voltage : 21.2Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 600,
+    "quote": "Output power : L+R≥600mW+600mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 720,
+    "quote": "L+R≥720mW+720mW (32Ω, THD+N＜1%) : Crosstalk : ≥109dB"
+   },
+   {
+    "load": 300,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (300Ω, THD+N＜1%) : Peak output voltage : 15Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥480mW+480mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥540mW+540mW (16Ω, THD+N＜1%) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--m27-player-aluminium-black": {
   "url": "https://www.fiio.com/M27_parameters",
@@ -3533,7 +7493,154 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 2650,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1800,
+    "quote": "Output power 2 : L+R≥1800mW+1800mW(32Ω,THD+N<1%,7.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 200,
+    "quote": "Output power 3 : L+R≥200mW+200mW(300Ω ,THD+N<1%,7.8Vrms) : THD+N : 0.00029%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1100,
+    "quote": "Output power 1 : L+R≥1100mW+1100mW(16Ω,THD+N<1%,4.2Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 660,
+    "quote": "Output power 2 : L+R≥660mW+660mW(32Ω,THD+N<1%,4.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "Output power 3 : L+R≥80mW+80mW(300Ω ,THD+N<1%,4.9Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 900,
+    "quote": "Output power 1 : L+R≥900mW+900mW(16Ω,THD+N<1%,3.8Vrms) : output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW(32Ω,THD+N<1%,3.9Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "output power 3 : L+R≥50mW+50mW(300Ω ,THD+N<1%,3.9Vrms) : THD+N : 0.00034%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 360,
+    "quote": "Output power 1 : L+R≥360mW+360mW(16Ω,THD+N<1%,2.4Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 185,
+    "quote": "Output power 2 : L+R≥185mW+185mW(32Ω,THD+N<1%,2.4Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "Output power 3 : L+R≥20mW+20mW(300Ω ,THD+N<1%,2.5Vrms) : THD+N : 0.00038%(1kHz/0dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 140,
+    "quote": "Output power 1 : L+R≥140mW+140mW(16Ω,THD+N<1%,1.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "Output power 2 : L+R≥70mW+70mW(32Ω,THD+N<1%,1.5Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 8,
+    "quote": "Output power 3 : L+R≥8mW+8mW(300Ω ,THD+N<1%,1.5Vrms) : THD+N : 0.00054%(1kHz/-1dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 3500,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 5000,
+    "quote": "Output power 2 : L+R≥5000mW+5000mW(32Ω,THD+N<1%,12.7Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 805,
+    "quote": "output power 3 : L+R≥805mW+805mW(300Ω ,THD+N<1%,15.5Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 2550,
+    "quote": "Output power 1 : L+R≥2550mW+2550mW(16Ω,THD+N<1%,6.4Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2250,
+    "quote": "Output power 2 : L+R≥2250mW+2250mW(32Ω,THD+N<1%,8.5Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 320,
+    "quote": "output power 3 : L+R≥320mW+320mW(300Ω ,THD+N<1%,9.8Vrms) : THD+N : 0.00036%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW(32Ω,THD+N<1%,7.7Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW(16Ω,THD+N<1%,4.8Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 730,
+    "quote": "Output power 2 : L+R≥730mW+730mW(32Ω,THD+N<1%,4.8Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 550,
+    "quote": "Output power 1 : L+R≥550mW+550mW(16Ω,THD+N<1%,3.0Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 285,
+    "quote": "Output power 2 : L+R≥285mW+285mW(32Ω,THD+N<1%,3.0Vrms) : Crosstalk : ≥ 110dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "Output power 3 : L+R≥30mW+30mW(300Ω ,THD+N<1%,3.1Vrms) : THD+N : 0.00043%(1kHz/-3dB @ 32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "value": 0.6,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--m27-player-titanium-gold": {
   "url": "https://www.fiio.com/M27_parameters",
@@ -3576,7 +7683,154 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 2650,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1800,
+    "quote": "Output power 2 : L+R≥1800mW+1800mW(32Ω,THD+N<1%,7.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 200,
+    "quote": "Output power 3 : L+R≥200mW+200mW(300Ω ,THD+N<1%,7.8Vrms) : THD+N : 0.00029%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1100,
+    "quote": "Output power 1 : L+R≥1100mW+1100mW(16Ω,THD+N<1%,4.2Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 660,
+    "quote": "Output power 2 : L+R≥660mW+660mW(32Ω,THD+N<1%,4.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "Output power 3 : L+R≥80mW+80mW(300Ω ,THD+N<1%,4.9Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 900,
+    "quote": "Output power 1 : L+R≥900mW+900mW(16Ω,THD+N<1%,3.8Vrms) : output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW(32Ω,THD+N<1%,3.9Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "output power 3 : L+R≥50mW+50mW(300Ω ,THD+N<1%,3.9Vrms) : THD+N : 0.00034%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 360,
+    "quote": "Output power 1 : L+R≥360mW+360mW(16Ω,THD+N<1%,2.4Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 185,
+    "quote": "Output power 2 : L+R≥185mW+185mW(32Ω,THD+N<1%,2.4Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "Output power 3 : L+R≥20mW+20mW(300Ω ,THD+N<1%,2.5Vrms) : THD+N : 0.00038%(1kHz/0dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 140,
+    "quote": "Output power 1 : L+R≥140mW+140mW(16Ω,THD+N<1%,1.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "Output power 2 : L+R≥70mW+70mW(32Ω,THD+N<1%,1.5Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 8,
+    "quote": "Output power 3 : L+R≥8mW+8mW(300Ω ,THD+N<1%,1.5Vrms) : THD+N : 0.00054%(1kHz/-1dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 3500,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 5000,
+    "quote": "Output power 2 : L+R≥5000mW+5000mW(32Ω,THD+N<1%,12.7Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 805,
+    "quote": "output power 3 : L+R≥805mW+805mW(300Ω ,THD+N<1%,15.5Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 2550,
+    "quote": "Output power 1 : L+R≥2550mW+2550mW(16Ω,THD+N<1%,6.4Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2250,
+    "quote": "Output power 2 : L+R≥2250mW+2250mW(32Ω,THD+N<1%,8.5Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 320,
+    "quote": "output power 3 : L+R≥320mW+320mW(300Ω ,THD+N<1%,9.8Vrms) : THD+N : 0.00036%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW(32Ω,THD+N<1%,7.7Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW(16Ω,THD+N<1%,4.8Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 730,
+    "quote": "Output power 2 : L+R≥730mW+730mW(32Ω,THD+N<1%,4.8Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 550,
+    "quote": "Output power 1 : L+R≥550mW+550mW(16Ω,THD+N<1%,3.0Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 285,
+    "quote": "Output power 2 : L+R≥285mW+285mW(32Ω,THD+N<1%,3.0Vrms) : Crosstalk : ≥ 110dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "Output power 3 : L+R≥30mW+30mW(300Ω ,THD+N<1%,3.1Vrms) : THD+N : 0.00043%(1kHz/-3dB @ 32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "value": 0.6,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--m33-r2r-player-dap": {
   "url": "https://www.fiio.com/M33R2R_parameters",
@@ -3610,7 +7864,69 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 540,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW (32Ω, THD+N＜1%, 3.9Vrms) : Crosstalk : ≥74dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 60,
+    "quote": "Output power 3 : L+R≥60mW+60mW (300Ω, THD+N＜1%, 4.2Vrms) : Noise floor : ＜5.5&mu;V (A-weighted)"
+   },
+   {
+    "load": 16,
+    "mw": 465,
+    "quote": "Output power 1 : L+R≥465mW+465mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 300,
+    "quote": "Output power 2 : L+R≥300mW+300mW (32Ω, THD+N＜1%, 3.1Vrms) : Crosstalk : ≥74dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "Output power 3 : L+R≥50mW+50mW (300Ω, THD+N＜1%, 3.9Vrms) : Noise floor : ＜4.9&mu;V (A-weighted)"
+   },
+   {
+    "load": 32,
+    "mw": 1100,
+    "quote": "Output power 2 : L+R≥1100mW+1100mW (32Ω, THD+N＜1%, 6Vrms) : Crosstalk : ≥104dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 240,
+    "quote": "Output power 3 : L+R≥240mW+240mW (300Ω , THD+N＜1%, 8.5Vrms) : Noise floor : ＜10.3&mu;V (A-weighted)"
+   },
+   {
+    "load": 32,
+    "mw": 900,
+    "quote": "Output power 2 : L+R≥900mW+900mW (32Ω, THD+N＜1%, 5.4Vrms) : Crosstalk : ≥104dB (1kHz@32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 165,
+    "quote": "Output power 3 : L+R≥165mW+165mW (300Ω , THD+N＜1%, 7Vrms) : Noise floor : ＜9.1&mu;V (A-weighted)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.8,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜0.8Ω (32Ω)"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power 1 : L+R≥540mW+540mW (16Ω, THD+N＜1%, 2.9Vrms) : Output impedance : ＜1.5Ω (32Ω)"
+   }
+  ]
  },
  "fiio--q11-high-fidelity": {
   "url": "https://www.fiio.com/Q11_parameters",
@@ -3629,7 +7945,49 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 310,
+    "quote": "Output power : 310mW(16Ω，THD+N<1%.USB IN) : Output amplitude : ≥2.3V(32Ω，THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 165,
+    "quote": "165mW(32Ω，THD+N<1%,USB IN) : ≥ 2.4V (no-load)"
+   },
+   {
+    "load": 300,
+    "mw": 19,
+    "quote": "19mW(300Ω，THD+N<1%,USB IN) : Output impedance : < 1.2Ω"
+   },
+   {
+    "load": 16,
+    "mw": 640,
+    "quote": "Output power : 640mW(16Ω，THD+N<1%.USB IN) : Output amplitude : ≥4.5V(32Ω，THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 650,
+    "quote": "650mW(32Ω，THD+N<1%,USB IN) : ≥ 4.8V (no-load)"
+   },
+   {
+    "load": 300,
+    "mw": 75,
+    "quote": "75mW(300Ω，THD+N<1%,USB IN) : Output impedance : < 2.0Ω"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.2,
+    "quote": "19mW(300Ω，THD+N<1%,USB IN) : Output impedance : < 1.2Ω"
+   },
+   {
+    "value": 2,
+    "quote": "75mW(300Ω，THD+N<1%,USB IN) : Output impedance : < 2.0Ω"
+   }
+  ]
  },
  "fiio--q7-high-fidelity": {
   "url": "https://www.fiio.com/Q7_parameters",
@@ -3658,7 +8016,73 @@
    "2.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 1500,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1100,
+    "quote": "1100mW (32Ω，THD+N＜1%): Crosstalk: ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 130,
+    "quote": "130mW (300Ω，THD+N＜1%）: Peak output voltage: 17.8Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 750,
+    "quote": "Output power: 750mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "load": 32,
+    "mw": 550,
+    "quote": "550mW (32Ω，THD+N＜1%): Crosstalk: ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 65,
+    "quote": "65mW (300Ω，THD+N＜1%）: Peak output voltage: 12.4Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 3000,
+    "quote": "3000mW (32Ω，THD+N＜1%): Crosstalk: ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 500,
+    "quote": "500mW (300Ω，THD+N＜1%）: Output level: 35.3Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 1500,
+    "quote": "1500mW (32Ω，THD+N＜1%): Crosstalk: ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 260,
+    "quote": "260mW (300Ω，THD+N＜1%）: Peak output voltage: 25Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.2,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.2Ω"
+   },
+   {
+    "value": 1.7,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜1.7Ω"
+   },
+   {
+    "value": 2.2,
+    "quote": "Output power: 1500mW (16Ω，THD+N＜1%): Output impedance: ＜2.2Ω"
+   }
+  ]
  },
  "fiio--qx11-2": {
   "url": "https://www.fiio.com/QX11_parameters",
@@ -3687,7 +8111,129 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 420,
+    "quote": "Output power : L+R≥420mW+420mW (16Ω, THD+N＜1%, 2.6Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 295,
+    "quote": "L+R≥295mW+295mW (32Ω, THD+N＜1%, 3Vrms) : Crosstalk : ≥78dB"
+   },
+   {
+    "load": 300,
+    "mw": 35,
+    "quote": "L+R≥35mW+35mW (300Ω, THD+N＜1%, 3.2Vrms) : Peak output voltage : 9.25Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 150,
+    "quote": "Output power : L+R≥150mW+150mW (16Ω, THD+N＜1%, 1.5Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 80,
+    "quote": "L+R≥80mW+80mW (32Ω, THD+N＜1%, 1.6Vrms) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 300,
+    "mw": 10,
+    "quote": "L+R≥10mW+10mW (300Ω, THD+N＜1%, 1.6Vrms) : Peak output voltage : 4.6Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 460,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 800,
+    "quote": "L+R≥800mW+800mW (32Ω, THD+N＜1%, 5.1Vrms) : Crosstalk : ≥114dB"
+   },
+   {
+    "load": 300,
+    "mw": 95,
+    "quote": "L+R≥95mW+95mW (300Ω, THD+N＜1%, 5.3Vrms) : Peak output voltage : 15.4Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 315,
+    "quote": "Output power : L+R≥315mW+315mW (16Ω, THD+N＜1%, 2.2Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 180,
+    "quote": "L+R≥180mW+180mW (32Ω, THD+N＜1%, 2.4Vrms) : Crosstalk : ≥112dB"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "L+R≥20mW+20mW (300Ω, THD+N＜1%, 2.5Vrms) : Peak output voltage : 7.3Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 320,
+    "quote": "Output power : L+R≥320mW+320mW (16Ω, THD+N＜1%, 2.3Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 175,
+    "quote": "L+R≥175mW+175mW (32Ω, THD+N＜1%, 2.3Vrms) : Crosstalk : ≥77dB"
+   },
+   {
+    "load": 16,
+    "mw": 80,
+    "quote": "Output power : L+R≥80mW+80mW (16Ω, THD+N＜1%, 1.1Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (32Ω, THD+N＜1%, 1.1Vrms) : Crosstalk : ≥75dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW+5mW (300Ω, THD+N＜1%, 1.2Vrms) : Peak output voltage : 3.4Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 450,
+    "quote": "Output power : L+R≥450mW+450mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 360,
+    "quote": "L+R≥360mW+360mW (32Ω, THD+N＜1%, 3.4Vrms) : Crosstalk : ≥113dB"
+   },
+   {
+    "load": 300,
+    "mw": 45,
+    "quote": "L+R≥45mW+45mW (300Ω, THD+N＜1%, 3.6Vrms) : Peak output voltage : 10.3Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 160,
+    "quote": "Output power : L+R≥160mW+160mW (16Ω, THD+N＜1%, 1.6Vrms) : Output impedance : ＜1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 90,
+    "quote": "L+R≥90mW+90mW (32Ω, THD+N＜1%, 1.7Vrms) : Crosstalk : ≥110dB"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥420mW+420mW (16Ω, THD+N＜1%, 2.6Vrms) : Output impedance : ＜1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥460mW+460mW (16Ω, THD+N＜1%, 2.7Vrms) : Output impedance : ＜1.5Ω"
+   }
+  ]
  },
  "fiio--rr11-receiver": {
   "url": "https://www.fiio.com/RR11_parameters",
@@ -3699,7 +8245,30 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 30,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 40,
+    "quote": "L+R≥40mW+40mW (32Ω, THD+N＜1%) : Crosstalk : ≥65dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW +5mW (300Ω, THD+N＜1%) : Output amplitude : 1.1Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   }
+  ]
  },
  "fiio--rr11-si4831": {
   "url": "https://www.fiio.com/RR11_parameters",
@@ -3711,7 +8280,30 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 30,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 40,
+    "quote": "L+R≥40mW+40mW (32Ω, THD+N＜1%) : Crosstalk : ≥65dB"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R≥5mW +5mW (300Ω, THD+N＜1%) : Output amplitude : 1.1Vrms"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥30mW+30mW (16Ω, THD+N＜1%) : Output impedance : ＜1Ω"
+   }
+  ]
  },
  "fiio--s15-music": {
   "url": "https://www.fiio.com/S15_parameters",
@@ -3917,7 +8509,69 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 290,
+    "quote": "Output power : L+R>290mW+290mW@16Ω(Desktop Mode ON) L+R≥70mW+70mW@16Ω(Desktop Mode OFF) : Peak output voltage : ≥2.3V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 16,
+    "mw": 70,
+    "quote": "Output power : L+R>290mW+290mW@16Ω(Desktop Mode ON) L+R≥70mW+70mW@16Ω(Desktop Mode OFF) : Peak output voltage : ≥2.3V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 170,
+    "quote": "L+R>170mW+170mW@32Ω(Desktop Mode ON)"
+   },
+   {
+    "load": 32,
+    "mw": 50,
+    "quote": "L+R>50mW+50mW@32Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 300,
+    "mw": 19.5,
+    "quote": "L+R>19.5mW+19.5mW@300Ω(Desktop Mode ON)"
+   },
+   {
+    "load": 300,
+    "mw": 5,
+    "quote": "L+R>5mW+5mW@300Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 16,
+    "mw": 500,
+    "quote": "Output power : L+R>500mW+500mW@16Ω(Desktop Mode ON) L+R>260mW+260mW@32Ω(Desktop Mode OFF) : Peak output voltage : ≥4.2V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 260,
+    "quote": "Output power : L+R>500mW+500mW@16Ω(Desktop Mode ON) L+R>260mW+260mW@32Ω(Desktop Mode OFF) : Peak output voltage : ≥4.2V (32Ω, THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 550,
+    "quote": "L+R>550mW+550mW@32Ω(Desktop Mode ON) L+R≥170mW+170mW@16Ω(Desktop Mode OFF)"
+   },
+   {
+    "load": 16,
+    "mw": 170,
+    "quote": "L+R>550mW+550mW@32Ω(Desktop Mode ON) L+R≥170mW+170mW@16Ω(Desktop Mode OFF)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.7,
+    "quote": ": Output impedance : <1.7Ω"
+   },
+   {
+    "value": 1.8,
+    "quote": "L+R>78mW+78mW@300(Desktop Mode ON) L+R>20mW+20mW@160(Desktop Mode OFF) : Output impedance : <1.8Ω"
+   }
+  ]
  },
  "fiio--m27-dual-ess-sabre-pro-dacs-dap": {
   "url": "https://www.fiio.com/M27_parameters",
@@ -3960,7 +8614,154 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dap"
+  "category": "dap",
+  "power": [
+   {
+    "load": 16,
+    "mw": 2650,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1800,
+    "quote": "Output power 2 : L+R≥1800mW+1800mW(32Ω,THD+N<1%,7.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 200,
+    "quote": "Output power 3 : L+R≥200mW+200mW(300Ω ,THD+N<1%,7.8Vrms) : THD+N : 0.00029%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1100,
+    "quote": "Output power 1 : L+R≥1100mW+1100mW(16Ω,THD+N<1%,4.2Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 660,
+    "quote": "Output power 2 : L+R≥660mW+660mW(32Ω,THD+N<1%,4.6Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 80,
+    "quote": "Output power 3 : L+R≥80mW+80mW(300Ω ,THD+N<1%,4.9Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 900,
+    "quote": "Output power 1 : L+R≥900mW+900mW(16Ω,THD+N<1%,3.8Vrms) : output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 470,
+    "quote": "Output power 2 : L+R≥470mW+470mW(32Ω,THD+N<1%,3.9Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 50,
+    "quote": "output power 3 : L+R≥50mW+50mW(300Ω ,THD+N<1%,3.9Vrms) : THD+N : 0.00034%(1kHz/-4dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 360,
+    "quote": "Output power 1 : L+R≥360mW+360mW(16Ω,THD+N<1%,2.4Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 185,
+    "quote": "Output power 2 : L+R≥185mW+185mW(32Ω,THD+N<1%,2.4Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 20,
+    "quote": "Output power 3 : L+R≥20mW+20mW(300Ω ,THD+N<1%,2.5Vrms) : THD+N : 0.00038%(1kHz/0dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 140,
+    "quote": "Output power 1 : L+R≥140mW+140mW(16Ω,THD+N<1%,1.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 70,
+    "quote": "Output power 2 : L+R≥70mW+70mW(32Ω,THD+N<1%,1.5Vrms) : Crosstalk : ≥ 77dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 8,
+    "quote": "Output power 3 : L+R≥8mW+8mW(300Ω ,THD+N<1%,1.5Vrms) : THD+N : 0.00054%(1kHz/-1dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 3500,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 5000,
+    "quote": "Output power 2 : L+R≥5000mW+5000mW(32Ω,THD+N<1%,12.7Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 805,
+    "quote": "output power 3 : L+R≥805mW+805mW(300Ω ,THD+N<1%,15.5Vrms) : THD+N : 0.00031%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 2550,
+    "quote": "Output power 1 : L+R≥2550mW+2550mW(16Ω,THD+N<1%,6.4Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 2250,
+    "quote": "Output power 2 : L+R≥2250mW+2250mW(32Ω,THD+N<1%,8.5Vrms) : Crosstalk : ≥ 114dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 320,
+    "quote": "output power 3 : L+R≥320mW+320mW(300Ω ,THD+N<1%,9.8Vrms) : THD+N : 0.00036%(1kHz/-6dB @ 32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 1850,
+    "quote": "Output power 2 : L+R≥1850mW+1850mW(32Ω,THD+N<1%,7.7Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 1400,
+    "quote": "Output power 1 : L+R≥1400mW+1400mW(16Ω,THD+N<1%,4.8Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 730,
+    "quote": "Output power 2 : L+R≥730mW+730mW(32Ω,THD+N<1%,4.8Vrms) : Crosstalk : ≥ 112dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 16,
+    "mw": 550,
+    "quote": "Output power 1 : L+R≥550mW+550mW(16Ω,THD+N<1%,3.0Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 285,
+    "quote": "Output power 2 : L+R≥285mW+285mW(32Ω,THD+N<1%,3.0Vrms) : Crosstalk : ≥ 110dB (1kHz @ 32Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 30,
+    "quote": "Output power 3 : L+R≥30mW+30mW(300Ω ,THD+N<1%,3.1Vrms) : THD+N : 0.00043%(1kHz/-3dB @ 32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "Output power 1 : L+R≥2650mW+2650mW(16Ω,THD+N<1%,6.5Vrms) : Output impedance : <0.5 Ω(32 Ω)"
+   },
+   {
+    "value": 0.6,
+    "quote": "Output power 1 : L+R≥3500mW+3500mW(16Ω,THD+N<1%,7.5Vrms) : Output impedance : <0.6 Ω(32 Ω)"
+   }
+  ]
  },
  "fiio--warmer-r2r-tube": {
   "url": "https://www.fiio.com/WARMERR2R_parameters",
@@ -4064,7 +8865,35 @@
    "2.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 220,
+    "quote": "(3.5mm headphone output) : 220mW(16Ω); 120mW(32Ω) : Output Power 2"
+   },
+   {
+    "load": 32,
+    "mw": 120,
+    "quote": "(3.5mm headphone output) : 220mW(16Ω); 120mW(32Ω) : Output Power 2"
+   },
+   {
+    "load": 16,
+    "mw": 320,
+    "quote": "(2.5mm headphone output) : 320mW(16Ω); 200mW(32Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 200,
+    "quote": "(2.5mm headphone output) : 320mW(16Ω); 200mW(32Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.04,
+    "quote": "THD+N : ≤0.004% : Output Impedance : ＜1.04 Ω"
+   }
+  ]
  },
  "fiio--ka1-lightning": {
   "url": "https://www.fiio.com/KA1_parameters",
@@ -4076,7 +8905,35 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 43,
+    "quote": "output power : 43mW (16Ω,THD+N<1%) : output amplitude : 1.2V(32Ω/THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 45,
+    "quote": "45mW (32Ω,THD+N<1%) : channel separation : ≥ 73dB(1Khz,32 Ω load)"
+   },
+   {
+    "load": 300,
+    "mw": 13,
+    "quote": "13mW (300Ω,THD+N<1%)"
+   },
+   {
+    "load": 600,
+    "mw": 6.8,
+    "quote": "6.8mW(600Ω,THD+N<1%) : output impedance : <1.5 Ω (load 32 Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1.5,
+    "quote": "6.8mW(600Ω,THD+N<1%) : output impedance : <1.5 Ω (load 32 Ω)"
+   }
+  ]
  },
  "fiio--ka2-output": {
   "url": "https://www.fiio.com/KA2_parameters",
@@ -4088,7 +8945,35 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 112,
+    "quote": "output power : 112mW (16Ω,THD+N<1%) : output amplitude : 2.2V(32Ω/THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 153,
+    "quote": "153mW (32Ω,THD+N<1%) : channel separation : ≥ 91dB(1Khz,32 Ω load)"
+   },
+   {
+    "load": 300,
+    "mw": 54,
+    "quote": "54mW (300Ω,THD+N<1%)"
+   },
+   {
+    "load": 600,
+    "mw": 27,
+    "quote": "27mW(600Ω,THD+N<1%) : output impedance : <0.5 Ω (load 32 Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "27mW(600Ω,THD+N<1%) : output impedance : <0.5 Ω (load 32 Ω)"
+   }
+  ]
  },
  "fiio--ka3": {
   "url": "https://www.fiio.com/KA3_parameters",
@@ -4107,7 +8992,54 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 120,
+    "quote": "Output power : 120mW (16Ω,THD+N<1%) : Output Level : 2V(32Ω/THD+N<1%)"
+   },
+   {
+    "load": 32,
+    "mw": 130,
+    "quote": "130mW (32Ω,THD+N<1%) : Crosstalk : ≥ 76dB(1Khz,32 Ω load)"
+   },
+   {
+    "load": 300,
+    "mw": 14,
+    "quote": "14mW (300Ω,THD+N<1%) : ≥ 118dB(1Khz, no-load)"
+   },
+   {
+    "load": 600,
+    "mw": 7,
+    "quote": "7mW (600Ω,THD+N<1%) : Output impedance : <0.5 Ω (load 32 Ω)"
+   },
+   {
+    "load": 32,
+    "mw": 240,
+    "quote": "240mW (32Ω,THD+N<1%) : Crosstalk : ≥ 106dB(1Khz,32 Ω)"
+   },
+   {
+    "load": 300,
+    "mw": 56,
+    "quote": "56mW (300Ω,THD+N<1%) : ≥ 115dB(1Khz, no-load)"
+   },
+   {
+    "load": 600,
+    "mw": 28,
+    "quote": "28mW (600Ω,THD+N<1%) : Output impedance : <0.7 Ω ( 32 Ω)"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.5,
+    "quote": "7mW (600Ω,THD+N<1%) : Output impedance : <0.5 Ω (load 32 Ω)"
+   },
+   {
+    "value": 0.7,
+    "quote": "28mW (600Ω,THD+N<1%) : Output impedance : <0.7 Ω ( 32 Ω)"
+   }
+  ]
  },
  "fiio--q15": {
   "url": "https://www.fiio.com/Q15_parameters",
@@ -4145,7 +9077,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "dongle"
+  "category": "dongle",
+  "power": [
+   {
+    "load": 16,
+    "mw": 750,
+    "quote": "Output power : L+R≥750mW+750mW (16Ω, THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 625,
+    "quote": "L+R≥625mW+625mW (32Ω, THD+N＜1%) : Crosstalk : ≥ 72dB"
+   },
+   {
+    "load": 300,
+    "mw": 85,
+    "quote": "L+R≥85mW+85mW (300Ω,THD+N<1%) : peak output voltage : 14.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 520,
+    "quote": "Output power : L+R≥520mW+520mW (16Ω,THD+N<1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 400,
+    "quote": "L+R≥400mW+400mW (32Ω,THD+N<1%) : Crosstalk : ≥ 72dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω,THD+N<1%) : Peak output voltage : 11.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 635,
+    "quote": "Output power : L+R≥635mW+635mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1610,
+    "quote": "L+R≥1610mW+1610mW (32Ω,THD+N<1%) : Crosstalk : ≥ 113dB"
+   },
+   {
+    "load": 300,
+    "mw": 340,
+    "quote": "L+R≥340mW+340mW (300Ω,THD+N<1%) : Peak output voltage : 29Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 675,
+    "quote": "Output power : L+R≥675mW+675mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1060,
+    "quote": "L+R≥1060mW+1060mW (32Ω,THD+N<1%) : Crosstalk : ≥ 113dB"
+   },
+   {
+    "load": 300,
+    "mw": 215,
+    "quote": "L+R≥215mW+215mW (300Ω,THD+N<1%) : Peak output voltage : 23Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥750mW+750mW (16Ω, THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥635mW+635mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   }
+  ]
  },
  "fiio--r9": {
   "url": "https://www.fiio.com/R9_parameters",
@@ -4194,7 +9198,77 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 3500,
+    "quote": "Output power : L+R≥3500mW+3500mW (16Ω, THD+N＜1%) : Output impedance : <0.4Ω"
+   },
+   {
+    "load": 32,
+    "mw": 2100,
+    "quote": "L+R≥2100mW+2100mW (32Ω,THD+N<1%) : Crosstalk : ≥ 77dB"
+   },
+   {
+    "load": 300,
+    "mw": 245,
+    "quote": "L+R≥245mW+245mW (300Ω,THD+N<1%) : Peak output voltage : 24.4Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 2250,
+    "quote": "Output power : L+R≥2250mW +2250mW(16Ω,THD+N<1%) : Output impedance : <0.3Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1400,
+    "quote": "L+R≥1400mW +1400mW(32Ω,THD+N<1%) : Crosstalk : ≥ 73dB"
+   },
+   {
+    "load": 300,
+    "mw": 125,
+    "quote": "L+R≥125mW+125mW (300Ω,THD+N<1%) : Peak output voltage : 17.3Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 7300,
+    "quote": "L+R≥7300mW+7300mW (32Ω,THD+N<1%) : Crosstalk : ≥ 117dB"
+   },
+   {
+    "load": 300,
+    "mw": 1000,
+    "quote": "L+R≥1000mW+1000mW (300Ω,THD+N<1%) : Peak output voltage : 50Vp-p"
+   },
+   {
+    "load": 32,
+    "mw": 4500,
+    "quote": "L+R≥4500mW +4500mW(32Ω,THD+N<1%) : Crosstalk : ≥ 117dB"
+   },
+   {
+    "load": 300,
+    "mw": 490,
+    "quote": "L+R≥490mW+490mW (300Ω,THD+N<1%) : Peak output voltage : 34.5Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 0.4,
+    "quote": "Output power : L+R≥3500mW+3500mW (16Ω, THD+N＜1%) : Output impedance : <0.4Ω"
+   },
+   {
+    "value": 0.3,
+    "quote": "Output power : L+R≥2250mW +2250mW(16Ω,THD+N<1%) : Output impedance : <0.3Ω"
+   },
+   {
+    "value": 0.6,
+    "quote": "Output power : L+R≥3500mW+3500mW (16Ω,THD+N<1%) : Output impedance : <0.6Ω"
+   },
+   {
+    "value": 0.5,
+    "quote": "Output power : L+R≥3500mW+3500mW (16Ω,THD+N<1%) : Output impedance : <0.5Ω"
+   }
+  ]
  },
  "fiio--air-power": {
   "url": "https://www.fiio.com/AIRAMP_parameters",
@@ -4236,7 +9310,17 @@
   },
   "jacks": [],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 0.1,
+    "quote": "Output power : L+R≥120W+120W (4Ω, THD+N＜1%, 22Vrms) : Output impedance : ＜0.1Ω (4Ω)"
+   },
+   {
+    "value": 135,
+    "quote": "Output level : 4.7Vrms (@20Hz) : Output impedance : ＜135Ω (10kΩ)"
+   }
+  ]
  },
  "fiio--dm15-akm": {
   "url": "https://www.fiio.com/DM15_parameters",
@@ -4309,7 +9393,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power1 : L+R≥1220mW+1220mW（32Ω /THD+N＜1%) : Output impedance : ＜1Ω（32Ω）"
+   }
+  ]
  },
  "fiio--k7-bt-decktop": {
   "url": "https://www.fiio.com/k7_parameters",
@@ -4344,7 +9434,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power1 : L+R≥1220mW+1220mW（32Ω /THD+N＜1%) : Output impedance : ＜1Ω（32Ω）"
+   }
+  ]
  },
  "fiio--k9-thx-aaa-qcc5124": {
   "url": "https://www.fiio.com/k9proess_parameters",
@@ -4390,7 +9486,13 @@
    "4.4"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Continuous undistorted output power 1 : ≥1.1W（16Ω / THD+N＜1%， AUX IN) : Output impedance : ＜1Ω（32Ω）"
+   }
+  ]
  },
  "fiio--q15-akm-combo": {
   "url": "https://www.fiio.com/Q15_parameters",
@@ -4428,7 +9530,79 @@
    "3.5"
   ],
   "complete": true,
-  "category": "desktop"
+  "category": "desktop",
+  "power": [
+   {
+    "load": 16,
+    "mw": 750,
+    "quote": "Output power : L+R≥750mW+750mW (16Ω, THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 625,
+    "quote": "L+R≥625mW+625mW (32Ω, THD+N＜1%) : Crosstalk : ≥ 72dB"
+   },
+   {
+    "load": 300,
+    "mw": 85,
+    "quote": "L+R≥85mW+85mW (300Ω,THD+N<1%) : peak output voltage : 14.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 520,
+    "quote": "Output power : L+R≥520mW+520mW (16Ω,THD+N<1%) : Output impedance : <1Ω"
+   },
+   {
+    "load": 32,
+    "mw": 400,
+    "quote": "L+R≥400mW+400mW (32Ω,THD+N<1%) : Crosstalk : ≥ 72dB"
+   },
+   {
+    "load": 300,
+    "mw": 55,
+    "quote": "L+R≥55mW+55mW (300Ω,THD+N<1%) : Peak output voltage : 11.5Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 635,
+    "quote": "Output power : L+R≥635mW+635mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1610,
+    "quote": "L+R≥1610mW+1610mW (32Ω,THD+N<1%) : Crosstalk : ≥ 113dB"
+   },
+   {
+    "load": 300,
+    "mw": 340,
+    "quote": "L+R≥340mW+340mW (300Ω,THD+N<1%) : Peak output voltage : 29Vp-p"
+   },
+   {
+    "load": 16,
+    "mw": 675,
+    "quote": "Output power : L+R≥675mW+675mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   },
+   {
+    "load": 32,
+    "mw": 1060,
+    "quote": "L+R≥1060mW+1060mW (32Ω,THD+N<1%) : Crosstalk : ≥ 113dB"
+   },
+   {
+    "load": 300,
+    "mw": 215,
+    "quote": "L+R≥215mW+215mW (300Ω,THD+N<1%) : Peak output voltage : 23Vp-p"
+   }
+  ],
+  "zout": [
+   {
+    "value": 1,
+    "quote": "Output power : L+R≥750mW+750mW (16Ω, THD+N＜1%) : Output impedance : <1Ω"
+   },
+   {
+    "value": 1.5,
+    "quote": "Output power : L+R≥635mW+635mW (16Ω,THD+N<1%) : Output impedance : <1.5Ω"
+   }
+  ]
  },
  "smsl--a100": {
   "url": "https://www.smsl-audio.com/upload/portal/download/A100Manual.pdf",

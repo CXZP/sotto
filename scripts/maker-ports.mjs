@@ -5,6 +5,8 @@
 // catalog build fills in what stores don't list from it.
 //
 // Run: node scripts/maker-ports.mjs [fiio|ifi|schiit|topping|smsl ...]
+// then node scripts/maker-specs.mjs (it adds output power from the same pages,
+// which this script's rewrite of each entry drops).
 // Topping needs pdftotext (poppler) on the PATH.
 // Slow on purpose (one page every few seconds), pages cached in cache/makers/.
 

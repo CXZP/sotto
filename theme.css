@@ -700,3 +700,7 @@ main:not(.page-home) { min-height: 50svh; }
 [data-toc] { scroll-margin-top: 96px; }
 @media (max-width: 960px) { .toc-layout { grid-template-columns: minmax(0, 1fr); } .toc { display: none; } }
 .item-title .item-specs { width: 100%; box-sizing: border-box; }
+/* Product page: the spec card runs full width under the photo and title, in two columns when there is room. */
+.spec-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 48px; align-items: start; }
+.spec-cols > div > :first-child { margin-top: 0; }
+@media (max-width: 900px) { .spec-cols { grid-template-columns: minmax(0, 1fr); } }

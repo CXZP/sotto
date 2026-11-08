@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7s4x67";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7slcpc";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -140,12 +140,33 @@ export async function flag(reportId, reason) {
 
 // ---------------------------------------------------------------- prices people paid
 
+// Demo price reports (data/demo-prices.json), marked demo: true so the page labels them.
+let demoP = null;
+const demoPrices = () =>
+  (demoP ??= fetch("data/demo-prices.json?v=mw7slcpc")
+    .then((r) => (r.ok ? r.json() : { rows: [] }))
+    .then(({ rows }) => rows.map((r) => ({ ...r, paid_on: new Date(Date.now() - r.days_ago * 864e5).toISOString().slice(0, 10), created_at: new Date(Date.now() - r.days_ago * 864e5).toISOString(), evidence_url: "", author: `demo:${r.author_name}`, demo: true })))
+    .catch(() => []));
+
 export async function pricesFor(itemIds) {
+  const demo = (await demoPrices()).filter((r) => itemIds.includes(r.item_id));
   const sb = await client();
-  if (!sb) return { ok: false, rows: [] };
+  if (!sb) return demo.length ? { ok: true, rows: demo } : { ok: false, rows: [] };
   const { data, error } = await sb.from("price_feed").select("*").in("item_id", itemIds).order("paid_on", { ascending: false }).limit(500);
-  if (error) return { ok: false, rows: [] };
-  return { ok: true, rows: data };
+  if (error) return demo.length ? { ok: true, rows: demo } : { ok: false, rows: [] };
+  return { ok: true, rows: [...data, ...demo].sort((a, b) => String(b.paid_on).localeCompare(String(a.paid_on))) };
+}
+
+/** The newest price reports across every model, for the Real price page. */
+export async function latestPrices(limit = 12) {
+  const demo = await demoPrices();
+  const sb = await client();
+  let real = [];
+  if (sb) {
+    const { data, error } = await sb.from("price_feed").select("*").order("created_at", { ascending: false }).limit(limit);
+    if (!error) real = data;
+  }
+  return [...real, ...demo].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, limit);
 }
 
 export async function addPrice(row) {
@@ -258,7 +279,7 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mw7s4x67")
+    demo = fetch("data/demo-threads.json?v=mw7slcpc")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();

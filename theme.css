@@ -645,3 +645,18 @@ main > .narrow { margin-left: 0; margin-right: auto; }
 .post-actions > *:hover { text-decoration: none; background: color-mix(in srgb, var(--text) 9%, var(--surface-2)); }
 .post-actions > .vote.row:hover { background: var(--surface-2); }
 .thread-meta .back { width: 36px; height: 36px; padding: 0; }
+
+/* Real price: find a model, latest reports, then the code calculator under its own heading. */
+.deal-find .search { width: 100%; }
+.deal-find-list { display: grid; gap: 2px; margin-top: 8px; }
+.deal-find-row, .deal-recent-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 10px; border-radius: 14px; color: var(--text); text-decoration: none; }
+.deal-find-row { grid-template-columns: 40px minmax(0, 1fr); }
+.deal-find-row:hover, .deal-recent-row:hover { background: color-mix(in srgb, var(--text) 5%, transparent); text-decoration: none; }
+.deal-find-row .thumb { width: 40px; height: 40px; }
+.deal-recent-list { list-style: none; margin: 8px 0 12px; padding: 0; display: grid; gap: 2px; }
+.deal-recent-main { display: grid; gap: 2px; min-width: 0; }
+.deal-recent-main b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.deal-recent-amt { font-family: var(--display); font-size: 19px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.deal-sub { margin: 36px 0 4px; }
+.deal-sub h2 { margin: 0 0 6px; font-family: var(--display); font-size: clamp(24px, 2vw, 32px); font-weight: 600; letter-spacing: -0.03em; }
+.deal-item .pill { margin-top: 8px; }

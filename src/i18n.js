@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw7s4x67";
-import { ZH } from "./i18n-zh.js?v=mw7s4x67";
+import { JA } from "./i18n-ja.js?v=mw7slcpc";
+import { ZH } from "./i18n-zh.js?v=mw7slcpc";
 
 export const STRINGS = {
   th: {
@@ -973,6 +973,12 @@ export const STRINGS = {
     demo_label: "ตัวอย่าง",
     demo_hint: "โพสต์ตัวอย่างที่ทีม Sotto เขียนขึ้นเพื่อสาธิต ชื่อผู้ใช้สมมติ ไม่ใช่ผู้ใช้จริง",
     demo_note: "เธรดตัวอย่าง: ทีม Sotto เขียนขึ้นเพื่อสาธิตว่าหน้าพูดคุยทำงานอย่างไร ชื่อผู้ใช้เป็นชื่อสมมติ โหวตและตอบกลับไม่ได้",
+    dl_lead2: "ราคาในแอปไม่ใช่ราคาที่คนจ่ายจริง ทั้งโค้ด แคมเปญ ค่าส่ง และมือสองทำให้ราคาต่างกันมาก หน้านี้รวมราคาที่ผู้ใช้จ่ายจริงพร้อมหลักฐาน แสดงเป็นช่วง ไม่ใช่ราคาเดียว",
+    dl_find_h: "รุ่นนี้คนจ่ายกันเท่าไหร่",
+    dl_open_item: "ดูราคาทั้งหมดของรุ่นนี้",
+    dl_recent_h: "ราคาที่รายงานล่าสุด",
+    dl_recent_cta: "เพิ่งซื้อมา? เปิดหน้าสินค้าแล้วกด \"รายงานราคาที่จ่าย\" แนบสลิปหรือภาพหน้าจอ ชื่อ ที่อยู่ เลขออเดอร์ จะถูกปิดให้ก่อน",
+    dl_calc_h: "มีโค้ดอยู่ในมือ? คำนวณราคาก่อนกดจ่าย",
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
@@ -1955,6 +1961,12 @@ export const STRINGS = {
     demo_label: "Demo",
     demo_hint: "A demo post written by the Sotto team; the username is made up, not a real user",
     demo_note: "Demo thread: written by the Sotto team to show how Discuss works. The usernames are made up. Voting and replies are off.",
+    dl_lead2: "The app price isn't what people pay: codes, campaigns, shipping and second-hand all move it. This page collects what people actually paid, with proof, shown as ranges rather than one number.",
+    dl_find_h: "What do people pay for this model?",
+    dl_open_item: "See every price for this model",
+    dl_recent_h: "Latest reported prices",
+    dl_recent_cta: "Just bought one? Open its product page and press \"Report what you paid\" with a screenshot; name, address and order number get blacked out first.",
+    dl_calc_h: "Holding codes? Work out your checkout before you pay",
     footer: "Code MIT · Data CC BY-SA 4.0 · No ads, no tracking cookies",
   },
 };

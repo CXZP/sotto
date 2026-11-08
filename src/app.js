@@ -1,27 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7s4x67";
-import { scope } from "./scope.js?v=mw7s4x67";
-import { navPill } from "./navpill.js?v=mw7s4x67";
-import { enhanceDropdowns } from "./dropdown.js?v=mw7s4x67";
-import { pickFront } from "./front.js?v=mw7s4x67";
-import { unframe } from "./frame.js?v=mw7s4x67";
-import { heroArt } from "./heroart.js?v=mw7s4x67";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7s4x67";
-import { renderChart } from "./chart.js?v=mw7s4x67";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7s4x67";
-import { makeT } from "./i18n.js?v=mw7s4x67";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mw7s4x67";
-import { LEGAL } from "./legal.js?v=mw7s4x67";
-import { track, stats, trackingOff } from "./analytics.js?v=mw7s4x67";
-import * as community from "./community.js?v=mw7s4x67";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7s4x67";
-import { redactImage } from "./redact.js?v=mw7s4x67";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7s4x67";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7s4x67";
-import { chainLinks } from "./chain.js?v=mw7s4x67";
-import { fits } from "./dcfit.js?v=mw7s4x67";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mw7s4x67";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7s4x67";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7s4x67";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7slcpc";
+import { scope } from "./scope.js?v=mw7slcpc";
+import { navPill } from "./navpill.js?v=mw7slcpc";
+import { enhanceDropdowns } from "./dropdown.js?v=mw7slcpc";
+import { pickFront } from "./front.js?v=mw7slcpc";
+import { unframe } from "./frame.js?v=mw7slcpc";
+import { heroArt } from "./heroart.js?v=mw7slcpc";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7slcpc";
+import { renderChart } from "./chart.js?v=mw7slcpc";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7slcpc";
+import { makeT } from "./i18n.js?v=mw7slcpc";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw7slcpc";
+import { LEGAL } from "./legal.js?v=mw7slcpc";
+import { track, stats, trackingOff } from "./analytics.js?v=mw7slcpc";
+import * as community from "./community.js?v=mw7slcpc";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7slcpc";
+import { redactImage } from "./redact.js?v=mw7slcpc";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7slcpc";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7slcpc";
+import { chainLinks } from "./chain.js?v=mw7slcpc";
+import { fits } from "./dcfit.js?v=mw7slcpc";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw7slcpc";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7slcpc";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7slcpc";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1735,7 +1735,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mw7s4x67").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw7slcpc").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2541,15 +2541,23 @@ function dealPage() {
   const field = (id, label, k, hint = "") =>
     `<label class="dfield"><span>${esc(label)}</span><input class="search num" id="${id}" inputmode="decimal" autocomplete="off" value="${num(k)}" placeholder="${esc(hint)}"></label>`;
   return `<div class="deal">
-    <header class="deal-head"><h1>${esc(t("dl_title"))}</h1><p class="muted">${esc(t("dl_lead"))}</p></header>
+    <header class="deal-head"><h1>${esc(t("dl_title"))}</h1><p class="muted">${esc(t("dl_lead2"))}</p></header>
+    <section class="card pad deal-find"><h3>${esc(t("dl_find_h"))}</h3>
+      <input class="search" id="d-find" placeholder="${esc(t("search"))}" autocomplete="off" value="${esc(item ? displayName(item) : "")}">
+      <div class="deal-find-list" id="d-find-list"></div></section>
     ${
       item
         ? `<div class="card pad deal-item with-thumb">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer">` : ""}
           <div><a class="strong" href="#item/${encodeURIComponent(item.id)}">${esc(displayName(item))}</a>
           <div class="muted small">${feed ? esc(t("dl_feed_ref", { price: money(feed.price, feed.currency), store: db.stores[feed.store]?.name ?? feed.store })) : ""}</div>
-          <div class="small" id="deal-paid"></div></div></div>`
+          <div class="small" id="deal-paid"></div>
+          <a class="pill small" href="#item/${encodeURIComponent(item.id)}" data-jump="prices">${esc(t("dl_open_item"))}</a></div></div>`
         : ""
     }
+    <section class="card pad deal-recent"><h3>${esc(t("dl_recent_h"))}</h3><p class="muted small">${esc(t("pr_disclaimer"))}</p>
+      <ul class="deal-recent-list" id="d-recent"><li class="muted small">${esc(t("cm_loading"))}</li></ul>
+      <p class="small muted">${esc(t("dl_recent_cta"))}</p></section>
+    <header class="deal-sub"><h2>${esc(t("dl_calc_h"))}</h2><p class="muted">${esc(t("dl_lead"))}</p></header>
     <div class="deal-grid">
       <section class="card pad deal-codes"><h3>${esc(t("dl_codes_h"))}</h3>
         <div id="d-codes">${codesHtml(codes)}</div>
@@ -2579,6 +2587,44 @@ function dealPage() {
     <p class="muted small">${esc(t("dl_assume"))} <a href="#learn/marketplace-prices">${esc(t("dl_how"))}</a></p>
     <p class="muted small">${esc(t("aff_note"))}</p>
   </div>`;
+}
+
+/** Type a model name, pick it: the page shows what people paid for it and store prices. */
+function wireDealFind(main) {
+  const input = main.querySelector("#d-find");
+  const list = main.querySelector("#d-find-list");
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 2) return void (list.innerHTML = "");
+    const words = q.split(/\s+/);
+    const hits = db.items.filter((i) => words.every((w) => displayName(i).toLowerCase().includes(w))).sort((a, b) => b.offers.length - a.offers.length).slice(0, 6);
+    list.innerHTML = hits
+      .map((i) => {
+        const im = imageOf(i);
+        return `<a class="deal-find-row" href="#deal?item=${encodeURIComponent(i.id)}">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer">` : '<span class="thumb"></span>'}<span>${esc(displayName(i))}</span></a>`;
+      })
+      .join("");
+  });
+}
+
+/** The newest price reports across all models, each with its model, channel, date and who sent it. */
+async function fillRecentPrices(el) {
+  if (!el) return;
+  const rows = await community.latestPrices(10);
+  if (!el.isConnected) return;
+  el.innerHTML = rows.length
+    ? rows
+        .map((r) => {
+          const i = findItem(r.item_id);
+          const im = i ? imageOf(i) : null;
+          return `<li><a class="deal-recent-row" href="#deal?item=${encodeURIComponent(i?.id ?? r.item_id)}">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer">` : '<span class="thumb"></span>'}
+            <span class="deal-recent-main"><b>${esc(i ? displayName(i) : r.item_id)}</b>
+            <span class="muted small">${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}${r.campaign ? ` · ${esc(r.campaign)}` : ""}${r.condition && r.condition !== "new" ? ` · ${esc(t(`pr_cond_${r.condition}`))}` : ""} · ${esc(r.author_name || t("cm_user"))}${demoBadge(r)}</span></span>
+            <span class="deal-recent-amt">${money(r.amount, r.currency)}</span></a></li>`;
+        })
+        .join("")
+    : `<li class="muted small">${esc(t("pr_empty"))}</li>`;
 }
 
 // Codes laid out like the app's voucher picker: a ticket per code, the one
@@ -2635,6 +2681,8 @@ function sampleCodesHtml(open) {
 
 function wireDeal(main) {
   const $ = (s) => main.querySelector(s);
+  wireDealFind(main);
+  fillRecentPrices(main.querySelector("#d-recent"));
   const val = (el) => {
     const v = Number(String(el?.value ?? "").replace(/[,฿¥\s]/g, ""));
     return el?.value.trim() && Number.isFinite(v) ? v : null;
@@ -3035,7 +3083,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7s4x67" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7slcpc" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3430,14 +3478,14 @@ async function renderPaid(el, item) {
   };
   const rowHtml = (r) => {
     const own = s && r.author === s.user.id;
-    const evidence = r.evidence_url.includes(EVIDENCE_HOST)
+    const evidence = r.demo ? `<span class="ev-link">${demoBadge(r)}</span>` : r.evidence_url.includes(EVIDENCE_HOST)
       ? `<a class="ev-thumb" href="${esc(r.evidence_url)}" target="_blank" rel="noopener"><img src="${esc(r.evidence_url)}" alt="${esc(t("pr_evidence"))}" loading="lazy"></a>`
       : `<span class="ev-link">${srcLink(r.evidence_url)}</span>`;
     return `<li class="pr-row">${evidence}<div>
       <div><b>${money(r.amount, r.currency)}</b> · ${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}
         ${r.campaign ? `<span class="tag">${esc(r.campaign)}</span>` : ""}${r.includes_shipping ? ` <span class="tag">${esc(t("pr_ship_incl"))}</span>` : ""}${r.condition !== "new" ? ` <span class="tag">${esc(t(`pr_cond_${r.condition}`))}</span>` : ""}</div>
       ${r.note ? `<div class="small">${esc(r.note)}</div>` : ""}
-      <div class="muted small">${esc(r.author_name || t("cm_user"))}${s && !own ? ` · <button class="link small" data-pflag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}${own ? ` · <button class="link small" data-pdel="${r.id}">${esc(t("cm_delete"))}</button>` : ""}</div>
+      <div class="muted small">${esc(r.author_name || t("cm_user"))}${demoBadge(r)}${s && !own && !r.demo ? ` · <button class="link small" data-pflag="${r.id}">${esc(t("cm_flag"))}</button>` : ""}${own ? ` · <button class="link small" data-pdel="${r.id}">${esc(t("cm_delete"))}</button>` : ""}</div>
     </div></li>`;
   };
 
@@ -3557,7 +3605,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7s4x67" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7slcpc" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

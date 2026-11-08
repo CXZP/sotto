@@ -689,7 +689,9 @@ main:not(.page-home) { min-height: 50svh; }
 .item-title .item-specs { margin-top: 24px; }
 .item-grid.solo { grid-template-columns: minmax(0, 1fr); }
 /* Text pages (terms, privacy, about): contents list in the right column. */
-.toc-layout { display: grid; grid-template-columns: minmax(0, 760px) minmax(200px, 280px); gap: clamp(40px, 5vw, 72px); justify-content: center; align-items: start; }
+/* Full width like the header: the article takes the row, the contents list sits at the right edge. */
+.toc-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 280px); gap: clamp(40px, 5vw, 72px); align-items: start; }
+.toc-layout > .prose { max-width: none; }
 .toc { position: sticky; top: 96px; display: grid; gap: 2px; padding: 20px; border-radius: 18px; background: var(--surface-2); }
 .toc-h { margin: 0 0 8px; font-weight: 600; font-size: 14px; color: var(--text-2); }
 .toc button { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 10px; font-size: 15px; line-height: 1.35; color: var(--text); }

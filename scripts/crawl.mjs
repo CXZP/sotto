@@ -15,6 +15,8 @@ import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { classify } from "./lib/classify.js";
 import { specBlock, noSheet } from "./lib/specpage.js";
 
+// getText() result when a store refuses product pages (HTTP 429).
+const BLOCKED = Symbol("blocked");
 const UA = "SottoBot/0.1 (+https://github.com/CXZP/sotto; open-source spec catalog)";
 const root = new URL("..", import.meta.url);
 const stores = JSON.parse(await readFile(new URL("scripts/stores.json", root), "utf8"));
@@ -193,6 +195,7 @@ async function addSpecPages(store, products) {
   let fetched = 0;
   let found = 0;
   let failedInRow = 0;
+  let blocked = false;
   for (const p of products) {
     if (!noSheet(p.body) || ["other", "skip"].includes(classify(p))) continue;
     let hit = seen[p.id];
@@ -204,7 +207,14 @@ async function addSpecPages(store, products) {
       if (fetched >= PAGE_BUDGET || failedInRow >= 5 || !timeLeft()) continue;
       await pause(store);
       fetched++;
-      const html = await getText(`https://${store.host}/products/${p.handle}`);
+      const html = await getText(`https://${store.host}/products/${p.handle}`, { patient: false });
+      // Shopify refuses product pages to automated clients (429) even while the
+      // feed is open. Waiting and retrying cost ~11 minutes per store for
+      // nothing, so the first refusal ends this store's pages for the run.
+      if (html === BLOCKED) {
+        blocked = true;
+        break;
+      }
       if (html == null) {
         failedInRow++;
         continue;
@@ -220,15 +230,16 @@ async function addSpecPages(store, products) {
     }
   }
   await save();
-  const stopped = failedInRow >= 5 ? ", stopped early: store asked to slow down" : !timeLeft() ? ", stopped: out of time" : "";
+  const stopped = blocked ? ", stopped: the store refuses product pages to bots (429)" : failedInRow >= 5 ? ", stopped early: store asked to slow down" : !timeLeft() ? ", stopped: out of time" : "";
   console.log(`${store.id.padEnd(16)} spec boxes from product pages: ${found} (${fetched} pages fetched${stopped})`);
 }
 
-async function getText(url) {
+async function getText(url, { patient = true } = {}) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const res = await fetch(url, { headers: { "user-agent": UA, accept: "text/html", cookie: "localization=US; cart_currency=USD" } });
       if (res.status === 429) {
+        if (!patient) return BLOCKED;
         await slowDown(res, attempt);
         continue;
       }

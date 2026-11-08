@@ -532,6 +532,8 @@ export const ZH = {
   "dl_lead": "App 上的价格不是大家实际付的钱：商家标高价，默认买家会叠券。输入你看到的价格和手上的优惠码，看看哪种组合最划算。全部在你的设备上计算，不发送任何数据。",
   "dl_feed_ref": "海外商店价格（商店数据）：{store} {price}",
   "dl_paid_ref": "在 {channel} 的实付报告：{min} – {max}（{n} 条）",
+  "dl_paid_one": "在 {channel} 的实付报告：{price}（1 条）",
+  "pr_list_ref": "店铺标价 {price}",
   "dl_paid_none": "你所在地区还没有人报告这款的价格",
   "dl_price_h": "1 · App 显示的价格",
   "dl_price": "显示价格（店铺折扣后、用券前）",

@@ -1,27 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7zlkaq";
-import { scope } from "./scope.js?v=mw7zlkaq";
-import { navPill } from "./navpill.js?v=mw7zlkaq";
-import { enhanceDropdowns } from "./dropdown.js?v=mw7zlkaq";
-import { pickFront } from "./front.js?v=mw7zlkaq";
-import { unframe } from "./frame.js?v=mw7zlkaq";
-import { heroArt } from "./heroart.js?v=mw7zlkaq";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7zlkaq";
-import { renderChart } from "./chart.js?v=mw7zlkaq";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7zlkaq";
-import { makeT } from "./i18n.js?v=mw7zlkaq";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mw7zlkaq";
-import { LEGAL } from "./legal.js?v=mw7zlkaq";
-import { track, stats, trackingOff } from "./analytics.js?v=mw7zlkaq";
-import * as community from "./community.js?v=mw7zlkaq";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7zlkaq";
-import { redactImage } from "./redact.js?v=mw7zlkaq";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7zlkaq";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7zlkaq";
-import { chainLinks } from "./chain.js?v=mw7zlkaq";
-import { fits } from "./dcfit.js?v=mw7zlkaq";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mw7zlkaq";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7zlkaq";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7zlkaq";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw82b514";
+import { scope } from "./scope.js?v=mw82b514";
+import { navPill } from "./navpill.js?v=mw82b514";
+import { enhanceDropdowns } from "./dropdown.js?v=mw82b514";
+import { pickFront } from "./front.js?v=mw82b514";
+import { unframe } from "./frame.js?v=mw82b514";
+import { heroArt } from "./heroart.js?v=mw82b514";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw82b514";
+import { renderChart } from "./chart.js?v=mw82b514";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw82b514";
+import { makeT } from "./i18n.js?v=mw82b514";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw82b514";
+import { LEGAL } from "./legal.js?v=mw82b514";
+import { track, stats, trackingOff } from "./analytics.js?v=mw82b514";
+import * as community from "./community.js?v=mw82b514";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw82b514";
+import { redactImage } from "./redact.js?v=mw82b514";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw82b514";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw82b514";
+import { chainLinks } from "./chain.js?v=mw82b514";
+import { fits } from "./dcfit.js?v=mw82b514";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw82b514";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw82b514";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw82b514";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1762,7 +1762,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mw7zlkaq").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw82b514").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -2651,10 +2651,12 @@ async function fillRecentPrices(el) {
         .map((r) => {
           const i = findItem(r.item_id);
           const im = i ? imageOf(i) : null;
+          // The store's list price next to what was paid: the gap is the point of the page.
+          const list = i && (r.condition ?? "new") === "new" ? prices(i).cheapest : null;
           return `<li><a class="deal-recent-row" href="#deal?item=${encodeURIComponent(i?.id ?? r.item_id)}">${im ? `<img class="thumb" src="${esc(sized(im.src, 96))}" alt="" referrerpolicy="no-referrer">` : '<span class="thumb"></span>'}
             <span class="deal-recent-main"><b>${esc(i ? displayName(i) : r.item_id)}</b>
             <span class="muted small">${esc(t(`ch_${r.channel}`))} · ${esc(day(r.paid_on))}${r.campaign ? ` · ${esc(r.campaign)}` : ""}${r.condition && r.condition !== "new" ? ` · ${esc(t(`pr_cond_${r.condition}`))}` : ""} · ${esc(r.author_name || t("cm_user"))}${demoBadge(r)}</span></span>
-            <span class="deal-recent-amt">${money(r.amount, r.currency)}</span></a></li>`;
+            <span class="deal-recent-amt">${localPrice(r.amount, r.currency)}${list ? `<span class="muted small">${t("pr_list_ref", { price: localPrice(list.price, list.currency) })}</span>` : ""}</span></a></li>`;
         })
         .join("")
     : `<li class="muted small">${esc(t("pr_empty"))}</li>`;
@@ -2835,7 +2837,7 @@ function wireDeal(main) {
       if (!ok || !slot.isConnected) return;
       const th = summarize(rows.filter((r) => r.currency === cur() && !CHANNEL_CURRENCY[r.channel]));
       slot.innerHTML = th.length
-        ? th.map((g) => esc(t("dl_paid_ref", { channel: t(`ch_${g.channel}`), min: baht(g.min), max: baht(g.max), n: g.n }))).join("<br>")
+        ? th.map((g) => esc(g.n === 1 ? t("dl_paid_one", { channel: t(`ch_${g.channel}`), price: baht(g.min) }) : t("dl_paid_ref", { channel: t(`ch_${g.channel}`), min: baht(g.min), max: baht(g.max), n: g.n }))).join("<br>")
         : `<span class="muted">${esc(t("dl_paid_none"))}</span>`;
     });
 }
@@ -3116,7 +3118,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7zlkaq" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw82b514" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3504,9 +3506,9 @@ async function renderPaid(el, item) {
     const span = g.max - g.min || 1;
     return `<div class="pr-group">
       <div class="pr-group-head"><b>${esc(t(`ch_${g.channel}`))}</b> <span class="muted small">${esc(g.currency)}${g.condition !== "new" ? ` · ${esc(t(`pr_cond_${g.condition}`))}` : ""} · ${esc(t("pr_n", { n: g.n }))} · ${esc(g.first === g.last ? day(g.first) : `${day(g.first)} – ${day(g.last)}`)}</span></div>
-      <div class="pr-range"><span>${money(g.min, g.currency)}</span><div class="strip">${g.rows
+      ${g.n === 1 ? `<p class="pr-one"><b>${money(g.min, g.currency)}</b></p>` : `<div class="pr-range"><span>${money(g.min, g.currency)}</span><div class="strip">${g.rows
         .map((r) => `<i style="left:${g.n > 1 ? ((r.amount - g.min) / span) * 100 : 50}%" title="${esc(`${money(r.amount, r.currency)} · ${day(r.paid_on)}${r.campaign ? ` · ${r.campaign}` : ""}`)}"></i>`)
-        .join("")}</div><span>${money(g.max, g.currency)}</span></div>
+        .join("")}</div><span>${money(g.max, g.currency)}</span></div>`}
       ${g.n > 2 ? `<p class="muted small">${esc(t("pr_median", { v: money(g.median, g.currency) }))}</p>` : ""}</div>`;
   };
   const rowHtml = (r) => {
@@ -3638,7 +3640,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7zlkaq" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw82b514" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">

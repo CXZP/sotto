@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw7zlkaq";
-import { ZH } from "./i18n-zh.js?v=mw7zlkaq";
+import { JA } from "./i18n-ja.js?v=mw82b514";
+import { ZH } from "./i18n-zh.js?v=mw82b514";
 
 export const STRINGS = {
   th: {
@@ -538,6 +538,8 @@ export const STRINGS = {
     dl_lead: "ราคาในแอปไม่ใช่ราคาที่จ่าย ร้านตั้งราคาเผื่อให้คนเก็บโค้ด ใส่ราคาที่เห็นกับโค้ดที่คุณมี แล้วดูว่าใช้โค้ดไหนคุ้มที่สุด คิดในเครื่องคุณทั้งหมด ไม่มีการส่งข้อมูลออก",
     dl_feed_ref: "ราคาร้านต่างประเทศ (ฟีดร้าน): {price} ที่ {store}",
     dl_paid_ref: "คนรายงานว่าจ่ายจริงที่ {channel}: {min} – {max} ({n} รายงาน)",
+    dl_paid_one: "คนรายงานว่าจ่ายจริงที่ {channel}: {price} (1 รายงาน)",
+    pr_list_ref: "ราคาป้ายร้าน {price}",
     dl_paid_none: "ยังไม่มีใครรายงานราคาที่จ่ายจริงในประเทศของคุณสำหรับรุ่นนี้",
     dl_price_h: "1 · ราคาที่แอปแสดง",
     dl_price: "ราคาที่แสดง (หลังส่วนลดร้าน ก่อนโค้ด)",
@@ -1529,6 +1531,8 @@ export const STRINGS = {
     dl_lead: "The price in the app is not what people pay: shops list high and expect buyers to stack codes. Enter the price you see and the codes you hold to see which combination wins. Everything is calculated on your device; nothing is sent.",
     dl_feed_ref: "Overseas store price (store feed): {price} at {store}",
     dl_paid_ref: "Reported paid on {channel}: {min} – {max} ({n} reports)",
+    dl_paid_one: "Reported paid on {channel}: {price} (1 report)",
+    pr_list_ref: "store list price {price}",
     dl_paid_none: "No one in your region has reported a price for this model yet",
     dl_price_h: "1 · Price shown in the app",
     dl_price: "Shown price (after shop discount, before codes)",

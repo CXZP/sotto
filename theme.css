@@ -717,3 +717,7 @@ main:not(.page-home) { min-height: 50svh; }
 .page-contact .contact-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 /* Account, notifications and new thread: full width like the header. */
 .discuss.narrow { max-width: none; }
+/* Real price feed: paid price (reader's currency, store's own after it), the store list price under it. */
+.deal-recent-amt { display: grid; justify-items: end; gap: 2px; text-align: right; }
+.deal-recent-amt .small { font-family: var(--body, inherit); font-weight: 400; font-size: 13px; }
+.pr-one { margin: 6px 0 0; font-family: var(--display); font-size: 22px; }

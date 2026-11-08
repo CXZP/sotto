@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7zlkaq";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw82b514";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -143,7 +143,7 @@ export async function flag(reportId, reason) {
 // Demo price reports (data/demo-prices.json), marked demo: true so the page labels them.
 let demoP = null;
 const demoPrices = () =>
-  (demoP ??= fetch("data/demo-prices.json?v=mw7zlkaq")
+  (demoP ??= fetch("data/demo-prices.json?v=mw82b514")
     .then((r) => (r.ok ? r.json() : { rows: [] }))
     .then(({ rows }) => rows.map((r) => ({ ...r, paid_on: new Date(Date.now() - r.days_ago * 864e5).toISOString().slice(0, 10), created_at: new Date(Date.now() - r.days_ago * 864e5).toISOString(), evidence_url: "", author: `demo:${r.author_name}`, demo: true })))
     .catch(() => []));
@@ -279,7 +279,7 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mw7zlkaq")
+    demo = fetch("data/demo-threads.json?v=mw82b514")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();

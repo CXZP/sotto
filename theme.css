@@ -625,3 +625,7 @@ th { text-transform: none; letter-spacing: 0; font-size: 13px; }
 .stat-tiles .card b { display: block; margin-top: 10px; font-family: var(--display); font-size: clamp(40px, 4vw, 64px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 main > .prose, main > article.prose { margin-left: 0; margin-right: auto; }
 main > .narrow { margin-left: 0; margin-right: auto; }
+
+/* Demo threads (data/demo-threads.json): a small label by the name, and a note on the thread. */
+.demo-badge { display: inline-block; margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent, #e8862e) 16%, transparent); color: var(--text); font-size: 11px; font-weight: 600; line-height: 1.5; vertical-align: 1px; cursor: help; }
+.demo-note { margin: 0 0 10px; padding: 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--accent, #e8862e) 10%, transparent); font-size: 14px; }

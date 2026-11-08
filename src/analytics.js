@@ -3,7 +3,7 @@
 // stored in the browser. Skipped entirely when the browser asks not to be
 // tracked (Do Not Track or Global Privacy Control) and on localhost.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7r6qfo";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7rctqh";
 
 const off =
   navigator.doNotTrack === "1" ||

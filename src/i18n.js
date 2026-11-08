@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw7r6qfo";
-import { ZH } from "./i18n-zh.js?v=mw7r6qfo";
+import { JA } from "./i18n-ja.js?v=mw7rctqh";
+import { ZH } from "./i18n-zh.js?v=mw7rctqh";
 
 export const STRINGS = {
   th: {
@@ -970,6 +970,9 @@ export const STRINGS = {
     img_zoom_hint: "แตะเพื่อซูม · ลากเพื่อเลื่อน · ปัดเพื่อดูรูปถัดไป",
     it_issue_search: "ค้นปัญหาที่คนเจอ:",
     speakers: "ลำโพง? ดูที่ BuildHifi ↗",
+    demo_label: "ตัวอย่าง",
+    demo_hint: "โพสต์ตัวอย่างที่ทีม Sotto เขียนขึ้นเพื่อสาธิต ชื่อผู้ใช้สมมติ ไม่ใช่ผู้ใช้จริง",
+    demo_note: "เธรดตัวอย่าง: ทีม Sotto เขียนขึ้นเพื่อสาธิตว่าหน้าพูดคุยทำงานอย่างไร ชื่อผู้ใช้เป็นชื่อสมมติ โหวตและตอบกลับไม่ได้",
     footer: "โค้ด MIT · ข้อมูล CC BY-SA 4.0 · ไม่มีโฆษณา ไม่มีคุกกี้ติดตาม",
   },
   en: {
@@ -1949,6 +1952,9 @@ export const STRINGS = {
     img_zoom_hint: "Tap to zoom · drag to pan · swipe for the next photo",
     it_issue_search: "Search reported problems:",
     speakers: "Speakers? See BuildHifi ↗",
+    demo_label: "Demo",
+    demo_hint: "A demo post written by the Sotto team; the username is made up, not a real user",
+    demo_note: "Demo thread: written by the Sotto team to show how Discuss works. The usernames are made up. Voting and replies are off.",
     footer: "Code MIT · Data CC BY-SA 4.0 · No ads, no tracking cookies",
   },
 };

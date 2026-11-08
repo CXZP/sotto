@@ -964,5 +964,8 @@ export const ZH = {
   "img_zoom_hint": "点击放大 · 拖动平移 · 滑动看下一张",
   "it_issue_search": "搜索已报告的问题：",
   "speakers": "音箱？请看 BuildHifi ↗",
+  "demo_label": "示例",
+  "demo_hint": "Sotto 团队编写的示例帖子；用户名为虚构，并非真实用户",
+  "demo_note": "示例话题：由 Sotto 团队编写，用于展示讨论区的用法。用户名为虚构。无法投票和回复。",
   "footer": "代码 MIT · 数据 CC BY-SA 4.0 · 无广告，无追踪 Cookie"
 };

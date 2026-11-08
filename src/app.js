@@ -1,27 +1,27 @@
-import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7r6qfo";
-import { scope } from "./scope.js?v=mw7r6qfo";
-import { navPill } from "./navpill.js?v=mw7r6qfo";
-import { enhanceDropdowns } from "./dropdown.js?v=mw7r6qfo";
-import { pickFront } from "./front.js?v=mw7r6qfo";
-import { unframe } from "./frame.js?v=mw7r6qfo";
-import { heroArt } from "./heroart.js?v=mw7r6qfo";
-import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7r6qfo";
-import { renderChart } from "./chart.js?v=mw7r6qfo";
-import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7r6qfo";
-import { makeT } from "./i18n.js?v=mw7r6qfo";
-import { LEARN, aboutPage, REPO } from "./content.js?v=mw7r6qfo";
-import { LEGAL } from "./legal.js?v=mw7r6qfo";
-import { track, stats, trackingOff } from "./analytics.js?v=mw7r6qfo";
-import * as community from "./community.js?v=mw7r6qfo";
-import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7r6qfo";
-import { redactImage } from "./redact.js?v=mw7r6qfo";
-import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7r6qfo";
-import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7r6qfo";
-import { chainLinks } from "./chain.js?v=mw7r6qfo";
-import { fits } from "./dcfit.js?v=mw7r6qfo";
-import { BOOKMARKLET } from "./bookmarklet.js?v=mw7r6qfo";
-import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7r6qfo";
-import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7r6qfo";
+import { powerCheck, outputImpedanceCheck, bestConnection, deviceToDac, headphoneSpecs, required, availableVrms, JACKS } from "./calc.js?v=mw7rctqh";
+import { scope } from "./scope.js?v=mw7rctqh";
+import { navPill } from "./navpill.js?v=mw7rctqh";
+import { enhanceDropdowns } from "./dropdown.js?v=mw7rctqh";
+import { pickFront } from "./front.js?v=mw7rctqh";
+import { unframe } from "./frame.js?v=mw7rctqh";
+import { heroArt } from "./heroart.js?v=mw7rctqh";
+import { loadData, loadPhotos, hpModel, sourceOutputs, evaluate, prices as allPrices, convert, displayName, HEADPHONE_CATS, SOURCE_CATS } from "./data.js?v=mw7rctqh";
+import { renderChart } from "./chart.js?v=mw7rctqh";
+import { parseFR, normalize, smooth, dbAt, frSvg } from "./fr.js?v=mw7rctqh";
+import { makeT } from "./i18n.js?v=mw7rctqh";
+import { LEARN, aboutPage, REPO } from "./content.js?v=mw7rctqh";
+import { LEGAL } from "./legal.js?v=mw7rctqh";
+import { track, stats, trackingOff } from "./analytics.js?v=mw7rctqh";
+import * as community from "./community.js?v=mw7rctqh";
+import { combos, capPoint, parseCode, encodeCode, decodeCode, landed, summarize } from "./deal.js?v=mw7rctqh";
+import { redactImage } from "./redact.js?v=mw7rctqh";
+import { renderMd, MD_ACTIONS, applyMd } from "./markdown.js?v=mw7rctqh";
+import { TERMS, TERM, GLOSSARY_UPDATED } from "./glossary.js?v=mw7rctqh";
+import { chainLinks } from "./chain.js?v=mw7rctqh";
+import { fits } from "./dcfit.js?v=mw7rctqh";
+import { BOOKMARKLET } from "./bookmarklet.js?v=mw7rctqh";
+import { parseBlocks, reviewPost, reviewPostI18n, reviewKey, sourceHost, REVIEW_LABELS } from "./blocks.js?v=mw7rctqh";
+import { REGIONS, guessRegion, storeLinks, shipsTo } from "./region.js?v=mw7rctqh";
 
 const LEVELS = { quiet: 70, normal: 80, loud: 90 };
 const CREST = 15;
@@ -1727,7 +1727,7 @@ function itemPage(id) {
 let squigIndex;
 async function renderFrLinks(el, i) {
   if (!el) return;
-  squigIndex ??= fetch("data/squig.json?v=mw7r6qfo").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  squigIndex ??= fetch("data/squig.json?v=mw7rctqh").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   // One chip per site and database: a site listing the same model in two files shows once.
   const seen = new Map();
   for (const l of (await squigIndex)[i.id] ?? []) {
@@ -3027,7 +3027,7 @@ function toolsPage() {
       <p><a class="pill primary bookmarklet" href="${esc(BOOKMARKLET)}" onclick="event.preventDefault(); alert(this.dataset.msg)" data-msg="${esc(t("tl_bm_drag"))}">↗ ${esc(t("tl_bm_name"))}</a></p>
       <ol class="small"><li>${esc(t("tl_bm_1"))}</li><li>${esc(t("tl_bm_2"))}</li><li>${esc(t("tl_bm_3"))}</li></ol>
       <p class="muted small">${esc(t("tl_bm_rules"))}</p>
-      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7r6qfo" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
+      <p class="small"><a href="${REPO}/blob/main/src/bookmarklet.js?v=mw7rctqh" target="_blank" rel="noopener">${esc(t("tl_bm_code"))} ↗</a></p></section>
     <section class="card pad"><h3>${esc(t("fr_title"))}</h3><p>${esc(t("fr_lead"))}</p><p><a class="pill" href="#fr">${esc(t("fr_open"))}</a></p></section>
     <section class="card pad"><h3>${esc(t("tl_gm_h"))}</h3><p>${esc(t("tl_gm_what"))}</p>
       <p class="small"><a href="${REPO}/blob/main/docs/gemini-skill.md" target="_blank" rel="noopener">docs/gemini-skill.md ↗</a></p>
@@ -3549,7 +3549,7 @@ function learnPage(termId) {
           : ""
       }
       ${term.refs.length ? `<section class="card pad"><h3>${esc(t("lr_refs"))}</h3><ul class="small">${term.refs.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)} ↗</a></li>`).join("")}</ul></section>` : ""}
-      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7r6qfo" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
+      <p class="muted small">${esc(t("lr_fix"))} <a href="${REPO}/blob/main/src/glossary.js?v=mw7rctqh" target="_blank" rel="noopener">src/glossary.js ↗</a></p>
     </article>`;
   }
   return `<div class="learn">
@@ -3737,7 +3737,8 @@ function ago(iso) {
 
 const authorName = (r) => (r.author ? r.author_name || t("cm_user") : t("ds_deleted"));
 /** Name plus a verified-brand badge when the author is a brand representative. */
-const authorHtml = (r) => `${esc(authorName(r))}${r.author_brand ? ` <span class="brand-badge" title="${esc(t("br_verified_hint"))}">✓ ${esc(r.author_brand)}</span>` : ""}`;
+const demoBadge = (r) => (r.demo ? ` <span class="demo-badge" title="${esc(t("demo_hint"))}">${esc(t("demo_label"))}</span>` : "");
+const authorHtml = (r) => `${esc(authorName(r))}${demoBadge(r)}${r.author_brand ? ` <span class="brand-badge" title="${esc(t("br_verified_hint"))}">✓ ${esc(r.author_brand)}</span>` : ""}`;
 
 function voteBox(kind, id, score, mine, signedIn, row = false) {
   return `<div class="vote${row ? " row" : ""}" data-kind="${kind}" data-id="${id}">
@@ -3830,7 +3831,7 @@ function discussPage() {
 function threadRow(r, mine, signedIn) {
   const items = itemChips(r.item_ids);
   return `<article class="thread-row">
-    ${voteBox("thread", r.id, r.score, mine, signedIn)}
+    ${voteBox("thread", r.id, r.score, mine, signedIn && !r.demo)}
     <div class="thread-main">
       <a class="thread-title" href="#discuss/${r.id}">${esc(r.title)}</a>
       <div class="muted small"><span class="tag">${esc(t(`dc_${r.category}`))}</span> ${authorHtml(r)} · ${esc(ago(r.created_at))} · <a href="#discuss/${r.id}">${esc(t("ds_n_comments", { n: r.comment_count }))}</a></div>
@@ -3840,7 +3841,7 @@ function threadRow(r, mine, signedIn) {
 
 /** An empty list: its message as a heading, and the next step as a button ("No threads yet." / "Start the first one"). */
 function emptyState(text, href) {
-  const m = text.match(/^(.+?[.。!?])s*(.+?)[.。]?$/u) ?? text.match(/^(S+)s+(.+)$/u);
+  const m = text.match(/^(.+?[.。!?])\s*(.+?)[.。]?$/u) ?? text.match(/^(\S+)\s+(.+)$/u);
   const [head, act] = m ? [m[1], m[2]] : [text, ""];
   return `<div class="empty-state"><p class="empty-head">${esc(head)}</p>${act ? `<a class="pill primary" href="${href}">${esc(act)}</a>` : ""}</div>`;
 }
@@ -4080,7 +4081,7 @@ function threadPage(id) {
 
 async function wireThread(main) {
   const el = main.querySelector("#thread");
-  const id = Number(el.dataset.id);
+  const id = /^demo-/.test(el.dataset.id) ? el.dataset.id : Number(el.dataset.id); // demo threads have text ids
   const load = async () => {
     const res = await community.getThread(id);
     if (!el.isConnected) return;
@@ -4102,7 +4103,8 @@ async function wireThread(main) {
       if (!kids.has(k)) kids.set(k, []);
       kids.get(k).push(c);
     }
-    const canPost = !!(s && profile);
+    const canPost = !!(s && profile) && !th.demo;
+    const live = !!s && !th.demo;
     const own = (r) => s && r.author === s.user.id;
     const actions = (kind, r) =>
       `${canPost && kind === "comment" ? `<button type="button" class="link small" data-reply="${r.id}">${esc(t("ds_reply"))}</button>` : ""}${
@@ -4118,22 +4120,23 @@ async function wireThread(main) {
           <div class="comment-rest">
           ${c.body ? `<div class="comment-body md">${richText(c.body)}</div>` : ""}
           ${gallery(c.images, "small")}
-          <div class="post-actions">${voteBox("comment", c.id, c.score, cv.get(c.id), !!s, true)}${actions("comment", c)}</div>
+          <div class="post-actions">${voteBox("comment", c.id, c.score, cv.get(c.id), live, true)}${actions("comment", c)}</div>
           <div class="reply-slot"></div>
           ${kids.has(c.id) ? `<div class="children">${tree(c.id, depth + 1)}</div>` : ""}</div></div></div>`,
         )
         .join("");
     el.innerHTML = `<div class="thread-layout"><div class="thread-col"><article class="thread card pad">
         <p class="muted small thread-meta"><a class="back" href="#discuss" aria-label="${esc(t("nav_discuss"))}">←</a><span class="tag">${esc(t(`dc_${th.category}`))}</span> ${authorHtml(th)} · ${esc(ago(th.created_at))}${th.edited_at ? ` · ${esc(t("ds_edited"))}` : ""}</p>
+        ${th.demo ? `<p class="demo-note">${esc(t("demo_note"))}</p>` : ""}
         <h1 class="thread-h1">${esc(th.title)}</h1>
         ${th.body ? `<div class="thread-body md">${richText(th.body)}</div>` : ""}
         ${gallery(th.images)}
         ${th.item_ids?.length ? `<div class="chips">${itemChips(th.item_ids)}</div>` : ""}
-        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), !!s, true)}<a class="pill small" href="#discuss/${esc(th.id)}" data-jump="comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
+        <div class="post-actions bar">${voteBox("thread", th.id, th.score, tv.get(th.id), live, true)}<a class="pill small" href="#discuss/${esc(th.id)}" data-jump="comments">💬 ${res.comments.length}</a>${bmButton("thread", th.id)}<button type="button" class="pill small" data-share>${esc(t("ds_share"))}</button>${actions("thread", th)}</div>
       </article>
       <section class="card pad" id="comments">
         <h3>${esc(t("ds_n_comments", { n: res.comments.length }))}</h3>
-        ${canPost ? `<form class="cm-form" data-form="comment">${mdEditor("body", 3, t("ds_comment_ph"), 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
+        ${th.demo ? "" : canPost ? `<form class="cm-form" data-form="comment">${mdEditor("body", 3, t("ds_comment_ph"), 5000)}${photoPickerHtml(4)}<div class="row-inline"><button class="pill primary">${esc(t("ds_send"))}</button><span class="muted small">${esc(t("cm_as", { name: profile.display_name }))}</span></div><p class="small status" role="status"></p></form>` : authBlock(s, profile, location.hash)}
         <div class="comments">${tree(0, 0) || `<p class="muted">${esc(t("ds_no_comments"))}</p>`}</div>
       </section></div>
       <aside class="thread-aside">${asideProducts(th.item_ids, th.category)}<section class="card pad related"><h3>${esc(t("ds_related"))}</h3><div class="related-list"><p class="muted small">${esc(t("cm_loading"))}</p></div></section></aside></div>`;

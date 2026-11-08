@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7r6qfo";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mw7rctqh";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -252,8 +252,43 @@ export async function uploadEvidence(blob, bucket = "evidence") {
 
 const PAGE = 30;
 
+// Demo threads (data/demo-threads.json): written by the team to show how Discuss works, every
+// row marked demo: true so the page labels it. Times count back from page load. They are
+// mixed into the first page of real threads and can't be voted on or replied to.
+let demo = null;
+async function demoThreads() {
+  if (!demo)
+    demo = fetch("data/demo-threads.json?v=mw7rctqh")
+      .then((r) => (r.ok ? r.json() : { threads: [] }))
+      .then(({ threads }) => {
+        const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();
+        return threads.map((th) => {
+          const comments = th.comments.map((c) => ({ id: c.id, thread_id: th.id, parent_id: c.parent ?? null, body: c.body, images: [], score: c.score, created_at: at(c.hours_ago), author: `demo:${c.author_name}`, author_name: c.author_name, demo: true }));
+          return {
+            row: { id: th.id, category: th.category, title: th.title, body: th.body, item_ids: th.item_ids, images: [], score: th.score, comment_count: comments.length, created_at: at(th.hours_ago), last_activity: comments.length ? comments.reduce((a, c) => (c.created_at > a ? c.created_at : a), at(th.hours_ago)) : at(th.hours_ago), author: `demo:${th.author_name}`, author_name: th.author_name, demo: true },
+            comments,
+          };
+        });
+      })
+      .catch(() => []);
+  return demo;
+}
+const isDemo = (id) => String(id).startsWith("demo-");
+
 /** Threads, newest activity or top score first; optionally only those linked to an item. */
-export async function listThreads({ sort = "new", category = "", item = "", page = 0, withImages = false } = {}) {
+export async function listThreads(opts = {}) {
+  const res = await listRealThreads(opts);
+  if ((opts.page ?? 0) > 0) return res;
+  const { sort = "new", category = "", item = "", withImages = false } = opts;
+  const extra = (await demoThreads())
+    .map((d) => d.row)
+    .filter((r) => (Array.isArray(category) ? category.includes(r.category) : !category || r.category === category) && (!item || r.item_ids.includes(item)) && (!withImages || r.images.length));
+  if (!extra.length) return res;
+  const key = (r) => (sort === "top" ? r.score : Date.parse(r.last_activity ?? r.created_at));
+  return { ok: true, rows: [...(res.rows ?? []), ...extra].sort((a, b) => key(b) - key(a)), more: res.more };
+}
+
+async function listRealThreads({ sort = "new", category = "", item = "", page = 0, withImages = false } = {}) {
   const sb = await client();
   if (!sb) return { ok: false, rows: [] };
   let q = sb.from("thread_feed").select("*");
@@ -268,6 +303,10 @@ export async function listThreads({ sort = "new", category = "", item = "", page
 }
 
 export async function getThread(id) {
+  if (isDemo(id)) {
+    const d = (await demoThreads()).find((x) => x.row.id === id);
+    return { ok: true, thread: d?.row ?? null, comments: d?.comments ?? [] };
+  }
   const sb = await client();
   if (!sb) return { ok: false };
   const [t, c] = await Promise.all([
@@ -330,6 +369,7 @@ export async function vote(kind, id, value) {
 export async function myVotes(kind, ids) {
   const sb = await client();
   const s = await session();
+  ids = ids.filter((id) => !isDemo(id)); // demo rows aren't in the database
   if (!sb || !s || !ids.length) return new Map();
   const table = kind === "thread" ? "thread_votes" : "comment_votes";
   const col = kind === "thread" ? "thread_id" : "comment_id";

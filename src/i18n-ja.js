@@ -964,5 +964,8 @@ export const JA = {
   "img_zoom_hint": "タップで拡大 · ドラッグで移動 · スワイプで次の写真",
   "it_issue_search": "報告された不具合を検索：",
   "speakers": "スピーカーなら？BuildHifiへ ↗",
+  "demo_label": "デモ",
+  "demo_hint": "Sottoチームが作成したデモ投稿です。ユーザー名は架空で、実在のユーザーではありません",
+  "demo_note": "デモスレッド：話題ページの使い方を示すためにSottoチームが作成しました。ユーザー名は架空です。投票と返信はできません。",
   "footer": "コード MIT · データ CC BY-SA 4.0 · 広告なし、追跡Cookieなし"
 };

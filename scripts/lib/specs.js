@@ -31,27 +31,35 @@ export function textify(html) {
   const out = [];
   for (let i = 0; i < lines.length; i++) {
     const cur = lines[i];
-    const next = lines[i + 1];
+    // Some tables put the ":" in a cell of its own: "Impedance", ":", "61 Ω".
+    const colon = /^[:：]$/.test(lines[i + 1] ?? "") ? 1 : 0;
+    const next = lines[i + 1 + colon];
     if (next && LABEL_ONLY.test(cur) && /^[<≤≥~≈]?\s*\d/.test(next)) {
       out.push(`${cur.replace(/[:：]\s*$/, "")}: ${next}`);
-      i++;
+      i += 1 + colon;
     } else out.push(cur);
   }
   return out;
 }
 
-const LABEL_ONLY = /^(nominal\s+)?(output\s+|input\s+)?(impedance|sensitivity|output power|rated power)\s*[:：]?$/i;
+// "IMPEDANCE (OHM)", "Sensitivities (dB/mW)": a unit or test note in brackets is still a label.
+const LABEL_ONLY = /^(nominal\s+)?(output\s+|input\s+)?(impedance|sensitivit(?:y|ies)|output power|rated power)\s*(?:\([^)]{0,16}\))?\s*[:：]?$/i;
+// Between label and value: anything but digits, or a bracketed note that may hold digits ("(@1kHz)").
+// A bracket that holds the value itself ("impedance (23Ω)") is not a note;
+// a test condition starting with "@" is ("(@ 32 Ohms load): 0.5 Ohms").
+const GAP = "(?:\\(\\s*@[^)]{0,24}\\)|\\((?![^)]*\\d\\s*(?:Ω|ohm|dB))[^)]{0,16}\\)|[^\\d(]|\\((?=[<≤~≈]?\\s*\\d)){0,24}?";
 
 const NUM = "(\\d+(?:\\.\\d+)?)";
 const OHM = "\\s*(?:Ω|ohms?\\b)";
 
 const PATTERNS = {
-  impedance: new RegExp(`^(?!.*\\b(?:output|input|line)\\b)[^:]*?\\bimpedance\\b[^\\d]{0,24}?[:：]?\\s*[~≈]?\\s*${NUM}${OHM}`, "i"),
+  impedance: new RegExp(`^(?!.*\\b(?:output|input|line)\\b)[^:]*?\\bimpedance\\b${GAP}[:：]?\\s*[~≈]?\\s*${NUM}${OHM}`, "i"),
   // Not a line/RCA/pre output: that feeds an amp, not headphones.
-  zout: new RegExp(`^(?!.*\\b(?:line|rca|pre-?outs?|pre-?amp\\w*)\\b[^:]*:?[^:]*output\\s+impedance)(?!.*\\b(?:line|rca)\\s+output\\s+impedance).*?\\boutput\\s+impedance\\b[^\\d]{0,24}?[:：]?\\s*[<≤]?\\s*${NUM}${OHM}`, "i"),
+  zout: new RegExp(`^(?!.*\\b(?:line|rca|pre-?outs?|pre-?amp\\w*)\\b[^:]*:?[^:]*output\\s+impedance)(?!.*\\b(?:line|rca)\\s+output\\s+impedance).*?\\boutput\\s+impedance\\b${GAP}[:：]?\\s*[<≤]?\\s*${NUM}${OHM}`, "i"),
   sensitivity: new RegExp(
     // "Maximum SPL: >130 dB" is how loud it can go, not its sensitivity.
-    `\\b(?:sensitivity|(?<!\\bmax(?:imum)?\\.?\\s{0,3})SPL)\\b[^\\d]{0,24}?[:：]?\\s*${NUM}\\s*(?:±\\s*\\d+(?:\\.\\d+)?\\s*)?dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`,
+    // "Sensitivities" (Sony), "Sensitity" (a store typo), "Efficiency: 92dB/mW" (Hifiman).
+    `\\b(?:sensitivit(?:y|ies)|sensitity|efficiency|(?<!\\bmax(?:imum)?\\.?\\s{0,3})SPL)\\b${GAP}[:：]?\\s*${NUM}\\s*(?:(?:±|\\+\\/-)\\s*\\d+(?:\\.\\d+)?\\s*)?dB(?:\\s*SPL)?\\s*(?:\\/|per|@|\\(|at)?\\s*(?:1\\s*)?(V\\s*rms|Vrms|V\\b|mW)?`,
     "i",
   ),
 };

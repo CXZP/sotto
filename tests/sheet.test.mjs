@@ -68,3 +68,16 @@ test("prose that is about other headphones is not the product's impedance", () =
   const { specs } = extractSpecs(p);
   assert.deepEqual(specs.impedance.map((e) => e.value), [10]);
 });
+
+test("label variants: brackets, a lone ':' cell, Sensitivities, Efficiency, +/-", () => {
+  const val = (html, k) => extractSpecs(html).specs[k].map((e) => e.value + (e.unit ?? ""));
+  assert.deepEqual(val("<p>Impedance (@1kHz): 200Ω</p>", "impedance"), ["200"]);
+  assert.deepEqual(val("<dt>IMPEDANCE (OHM)</dt><dd>35ohm (1kHz)</dd>", "impedance"), ["35"]);
+  assert.deepEqual(val("<table><tr><td>Impedance</td></tr><tr><td>:</td></tr><tr><td>61 Ω</td></tr></table>", "impedance"), ["61"]);
+  assert.deepEqual(val("<p>Low impedance (23Ω) and high sensitivity (108dB)</p>", "impedance"), ["23"]);
+  assert.deepEqual(val("<p>Sensitivities (dB/mW) : 102dB/mW</p>", "sensitivity"), ["102dB/mW"]);
+  assert.deepEqual(val("<p>Sensitity: 109dB/Vrms (@1kHz)</p>", "sensitivity"), ["109dB/V"]);
+  assert.deepEqual(val("<p>Efficiency: ~94dB/mW</p>", "sensitivity"), ["94dB/mW"]);
+  assert.deepEqual(val("<p>Sensitivity: 112+/-2 dB/mW</p>", "sensitivity"), ["112dB/mW"]);
+  assert.deepEqual(val("<p>- Output Impedance (@ 32 Ohms load): 0.5 Ohms (3.5mm SE)</p>", "zout"), ["0.5"]);
+});

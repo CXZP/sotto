@@ -796,7 +796,7 @@ export const ZH = {
   "st_lead": "Sotto 的真实使用情况，向所有人公开。统计不使用 Cookie，也不识别任何人。原理：",
   "st_you_off": "你的浏览器发送了 Do Not Track 或 GPC，因此你的访问不计入。",
   "st_views": "页面浏览量（30 天）",
-  "st_visitors": "每日访客合计（30 天）",
+  "st_visitors": "30 天每日访客数相加（同一人不同日重复计算）",
   "st_clicks": "点击前往商店（30 天）",
   "st_daily": "每日",
   "st_views_s": "浏览",

@@ -796,7 +796,7 @@ export const JA = {
   "st_lead": "Sottoの実際の利用状況を誰にでも公開しています。Cookieを使わず、個人を特定せずに集計しています。仕組み：",
   "st_you_off": "お使いのブラウザがDo Not TrackまたはGPCを送信しているため、あなたの訪問は集計されません。",
   "st_views": "ページビュー（30日）",
-  "st_visitors": "日別訪問者の合計（30日）",
+  "st_visitors": "日別訪問者数を30日分足した数（同じ人も日ごとに数える）",
   "st_clicks": "ショップへのクリック（30日）",
   "st_daily": "日別",
   "st_views_s": "ビュー",

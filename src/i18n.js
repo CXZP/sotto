@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mw95hb0j";
-import { ZH } from "./i18n-zh.js?v=mw95hb0j";
+import { JA } from "./i18n-ja.js?v=mwbmcc7z";
+import { ZH } from "./i18n-zh.js?v=mwbmcc7z";
 
 export const STRINGS = {
   th: {
@@ -802,7 +802,7 @@ export const STRINGS = {
     st_lead: "ยอดใช้งานจริงของ Sotto เปิดให้ทุกคนดู นับแบบไม่ใช้คุกกี้และไม่ระบุตัวตน ดูวิธีเก็บได้ที่",
     st_you_off: "เบราว์เซอร์ของคุณตั้ง Do Not Track หรือ GPC ไว้ เราจึงไม่นับการเข้าชมของคุณ",
     st_views: "เปิดหน้า (30 วัน)",
-    st_visitors: "ผู้เข้าชมรายวันรวม (30 วัน)",
+    st_visitors: "ยอดผู้เข้าชมต่อวัน บวกกัน 30 วัน (คนเดิมต่างวันนับซ้ำ)",
     st_clicks: "กดไปร้านค้า (30 วัน)",
     st_daily: "รายวัน",
     st_views_s: "เปิดหน้า",
@@ -1795,7 +1795,7 @@ export const STRINGS = {
     st_lead: "Sotto's real usage, public for everyone. Counted without cookies and without identifying anyone. How it works:",
     st_you_off: "Your browser sends Do Not Track or GPC, so your visits aren't counted.",
     st_views: "Page views (30 days)",
-    st_visitors: "Daily visitors, summed (30 days)",
+    st_visitors: "Daily visitor counts added up over 30 days (a returning visitor counts once per day)",
     st_clicks: "Clicks to stores (30 days)",
     st_daily: "Daily",
     st_views_s: "views",

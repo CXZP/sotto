@@ -1,7 +1,7 @@
 // UI strings. Short and plain. Keys identical in every language; Japanese and Chinese
 // live in their own files, and any key missing there falls back to English.
-import { JA } from "./i18n-ja.js?v=mwj55jo6";
-import { ZH } from "./i18n-zh.js?v=mwj55jo6";
+import { JA } from "./i18n-ja.js?v=mwrtb89f";
+import { ZH } from "./i18n-zh.js?v=mwrtb89f";
 
 export const STRINGS = {
   th: {
@@ -913,7 +913,9 @@ export const STRINGS = {
     cm_delete_q: "ลบโพสต์นี้?",
     cm_signin_why: "เข้าสู่ระบบเพื่อโพสต์หรือกด \"เจอเหมือนกัน\" — เราส่งลิงก์ไปทางอีเมล ไม่มีรหัสผ่าน",
     cm_signin: "ส่งลิงก์",
-    cm_check_email: "เช็กอีเมลแล้วกดลิงก์เพื่อกลับมาที่หน้านี้",
+    cm_check_email: "เช็กอีเมลแล้วกดลิงก์ล่าสุด เปิดจากเครื่องไหนก็ได้",
+    ac_link_expired: "ลิงก์นี้ใช้ไม่ได้แล้ว อาจหมดอายุ หรือมีลิงก์ใหม่กว่าส่งไปแทน ขอลิงก์ใหม่แล้วกดลิงก์ในอีเมลฉบับล่าสุด",
+    ac_link_failed: "เข้าสู่ระบบไม่สำเร็จ ลองขอลิงก์ใหม่อีกครั้ง",
     cm_name_why: "ตั้งชื่อที่จะแสดงกับโพสต์",
     cm_name: "ชื่อที่แสดง",
     cm_save: "บันทึก",
@@ -1906,7 +1908,9 @@ export const STRINGS = {
     cm_delete_q: "Delete this post?",
     cm_signin_why: "Sign in to post or press \"Me too\" — we email you a link, no password",
     cm_signin: "Send link",
-    cm_check_email: "Check your email and open the link to come back here",
+    cm_check_email: "Check your email and open the newest link, on any device",
+    ac_link_expired: "That link no longer works: it expired, or a newer one replaced it. Ask for a new link and open the newest email.",
+    ac_link_failed: "Sign-in didn't finish. Ask for a new link and try again.",
     cm_name_why: "Choose the name shown with your posts",
     cm_name: "Display name",
     cm_save: "Save",

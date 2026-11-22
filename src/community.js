@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mwj55jo6";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mwrtb89f";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -11,19 +11,25 @@ export function client() {
   clientPromise ??= import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm")
     .then(({ createClient }) =>
       createClient(SUPABASE_URL, SUPABASE_KEY, {
-        // PKCE puts ?code= in the query string, which leaves our #hash router alone.
-        auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true },
+        // Implicit, not PKCE: PKCE keeps a verifier in the browser that asked for the link, so a
+        // link opened on another device (or after asking twice) could never sign in. The
+        // tokens arrive in the #hash; finishSignIn() swaps them out before the router reads it.
+        auth: { flowType: "implicit", detectSessionInUrl: true, persistSession: true },
       }),
     )
     .catch(() => null);
   return clientPromise;
 }
 
-/** After a magic-link redirect, go back to the page the person started from. */
+/** After a magic-link redirect, go back to the page the person started from.
+ *  Returns null, or "expired" / "failed" when the link didn't sign in. */
 export async function finishSignIn() {
-  if (!new URLSearchParams(location.search).has("code")) return;
-  const sb = await client();
-  await sb?.auth.getSession(); // exchanges the code
+  const h = new URLSearchParams(location.hash.slice(1));
+  const q = new URLSearchParams(location.search);
+  // ?code= is a link sent before the switch from PKCE; it can't be exchanged any more.
+  if (!h.has("access_token") && !h.has("error_description") && !q.has("error_description") && !q.has("code")) return null;
+  const code = h.get("error_code") || q.get("error_code");
+  const ok = !code && !q.has("code") && (await session());
   let back = "";
   try {
     back = localStorage.getItem(RETURN_KEY) ?? "";
@@ -31,7 +37,8 @@ export async function finishSignIn() {
   } catch {
     /* ignore */
   }
-  history.replaceState(null, "", `${location.pathname}${back}`);
+  history.replaceState(null, "", `${location.pathname}${ok ? back : "#account"}`);
+  return ok ? null : code === "otp_expired" || q.has("code") ? "expired" : "failed";
 }
 
 // getSession() waits on a storage lock; in some browsers that wait can stall.
@@ -143,7 +150,7 @@ export async function flag(reportId, reason) {
 // Demo price reports (data/demo-prices.json), marked demo: true so the page labels them.
 let demoP = null;
 const demoPrices = () =>
-  (demoP ??= fetch("data/demo-prices.json?v=mwj55jo6")
+  (demoP ??= fetch("data/demo-prices.json?v=mwrtb89f")
     .then((r) => (r.ok ? r.json() : { rows: [] }))
     .then(({ rows }) => rows.map((r) => ({ ...r, paid_on: new Date(Date.now() - r.days_ago * 864e5).toISOString().slice(0, 10), created_at: new Date(Date.now() - r.days_ago * 864e5).toISOString(), evidence_url: "", author: `demo:${r.author_name}`, demo: true })))
     .catch(() => []));
@@ -279,7 +286,7 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mwj55jo6")
+    demo = fetch("data/demo-threads.json?v=mwrtb89f")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();

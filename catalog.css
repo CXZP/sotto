@@ -270,6 +270,7 @@ textarea.search { width: 100%; box-sizing: border-box; font: inherit; line-heigh
 .suggest button:hover { background: var(--surface-2); }
 .act { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 .danger-zone { border-color: var(--st-bad); }
+#account { display: grid; gap: 14px; }
 #account-btn.active { background: var(--surface-2); }
 @media (max-width: 600px) { .thread-h1 { font-size: 20px; } .children { padding-left: 6px; } }
 

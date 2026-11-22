@@ -1,7 +1,7 @@
 // Community layer on Supabase. The site works without it: every function
 // degrades to "unavailable" if the client can't load or the network fails.
 
-import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mwrtb89f";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js?v=mwrtcps7";
 
 let clientPromise;
 const RETURN_KEY = "sotto.returnHash";
@@ -63,9 +63,23 @@ export async function signIn(email) {
   if (error) throw error;
 }
 
+// supabase-js keeps the session when its server call fails (network, 5xx) or when it
+// stalls on the storage lock, and the button then did nothing. Sign out of this
+// browser only, give the library a few seconds, then drop the stored session anyway.
 export async function signOut() {
   const sb = await client();
-  await sb?.auth.signOut();
+  bmCache = null;
+  const timeout = new Promise((r) => setTimeout(r, 4000));
+  try {
+    await Promise.race([sb?.auth.signOut({ scope: "local" }), timeout]);
+  } catch {
+    /* removed below */
+  }
+  try {
+    for (const k of Object.keys(localStorage)) if (/^sb-.+-auth-token/.test(k)) localStorage.removeItem(k);
+  } catch {
+    /* storage blocked: nothing was persisted */
+  }
 }
 
 export async function myProfile() {
@@ -150,7 +164,7 @@ export async function flag(reportId, reason) {
 // Demo price reports (data/demo-prices.json), marked demo: true so the page labels them.
 let demoP = null;
 const demoPrices = () =>
-  (demoP ??= fetch("data/demo-prices.json?v=mwrtb89f")
+  (demoP ??= fetch("data/demo-prices.json?v=mwrtcps7")
     .then((r) => (r.ok ? r.json() : { rows: [] }))
     .then(({ rows }) => rows.map((r) => ({ ...r, paid_on: new Date(Date.now() - r.days_ago * 864e5).toISOString().slice(0, 10), created_at: new Date(Date.now() - r.days_ago * 864e5).toISOString(), evidence_url: "", author: `demo:${r.author_name}`, demo: true })))
     .catch(() => []));
@@ -286,7 +300,7 @@ const PAGE = 30;
 let demo = null;
 async function demoThreads() {
   if (!demo)
-    demo = fetch("data/demo-threads.json?v=mwrtb89f")
+    demo = fetch("data/demo-threads.json?v=mwrtcps7")
       .then((r) => (r.ok ? r.json() : { threads: [] }))
       .then(({ threads }) => {
         const at = (h) => new Date(Date.now() - h * 3600e3).toISOString();
@@ -439,7 +453,7 @@ export async function deleteAccount() {
   const sb = await client();
   const { error } = await sb.rpc("delete_my_account");
   if (error) throw error;
-  await sb.auth.signOut();
+  await signOut();
 }
 
 /** Sign in from any page, then come back to `back` (a #hash). */

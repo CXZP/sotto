@@ -117,15 +117,12 @@ jobs:
           done
           exit 1
 
-  deploy:
+  build:
     needs: crawl
     # Runs after the crawl, or on its own when the crawl was skipped (a push).
     if: ${{ !failure() && !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.pages.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -149,5 +146,18 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+
+  # Its own job: deploy-pages running right after the upload in the same job
+  # intermittently can't find the "github-pages" artifact (actions/deploy-pages,
+  # open issue of 2026-10-07; both pushes on 2026-11-22 failed that way).
+  deploy:
+    needs: build
+    if: ${{ !failure() && !cancelled() && needs.build.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
       - id: pages
         uses: actions/deploy-pages@v4
